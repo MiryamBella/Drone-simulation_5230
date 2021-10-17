@@ -4,7 +4,10 @@ using System.Text;
 
 namespace IDAL
 {
-    class Enum
+    namespace DO
     {
+        class Enum
+        {
+        }
     }
 }
