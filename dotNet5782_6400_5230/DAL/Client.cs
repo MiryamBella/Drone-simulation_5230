@@ -5,9 +5,12 @@ namespace IDAL
     
     namespace DO
     {
+        public struct Client
+        {
 
+        }
     }
-    public class Class1
+    public class Client
     {
     }
 }
