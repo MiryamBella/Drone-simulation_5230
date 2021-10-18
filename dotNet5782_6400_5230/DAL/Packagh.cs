@@ -12,7 +12,7 @@ namespace IDAL
             string sender { get; set; }
             string receiver { get; set; }
             string weight{ get; set; }
-            string priority { get; set; }
+            Priorities priority { get; set; }
             int idQuadocopter { get; set; }
 
             public override string ToString()

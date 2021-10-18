@@ -6,6 +6,8 @@ namespace IDAL
 {
     namespace DO
     {
+        enum WeighCategories {easy, middle, hevy}
+        enum Priorities { reggular, fast, emergency }
         class Enum
         {
         }

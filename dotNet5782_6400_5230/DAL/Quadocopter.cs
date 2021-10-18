@@ -10,7 +10,7 @@ namespace IDAL
         {
             int id { get; set; }
             string moodle { get; set; }
-            string weight { get; set; }
+            WeighCategories weight { get; set; }
             int battery { get; set; }
             string mode { get; set; }
 
