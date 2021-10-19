@@ -4,7 +4,13 @@ using System.Text;
 
 namespace DAL
 {
-    class Charging
+    namespace DO
     {
+        public struct Charging
+        {
+            public int baseStationID { get; set; }
+            public int quadocopterID { get; set; }
+            public ToString() { }
+        }
     }
 }

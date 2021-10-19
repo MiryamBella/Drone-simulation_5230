@@ -10,7 +10,4 @@ namespace IDAL
 
         }
     }
-    public class Client
-    {
-    }
 }
