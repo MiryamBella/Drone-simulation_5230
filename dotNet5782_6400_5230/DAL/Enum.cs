@@ -4,7 +4,12 @@ using System.Text;
 
 namespace IDAL
 {
-    class Enum
+    namespace DO
     {
+        enum WeighCategories {easy, middle, hevy}
+        enum Priorities { reggular, fast, emergency }
+        class Enum
+        {
+        }
     }
 }
