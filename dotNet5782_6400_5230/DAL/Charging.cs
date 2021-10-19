@@ -10,7 +10,11 @@ namespace DAL
         {
             public int baseStationID { get; set; }
             public int quadocopterID { get; set; }
-            public ToString() { }
+            public override string ToString()
+            {
+                return ("ID of base station: " + baseStationID + '\n' +
+                    "ID of quadocopter: " + quadocopterID + '\n');
+            }
         }
     }
 }
