@@ -12,7 +12,7 @@ namespace IDAL
             public string moodle { get; set; }
             public WeighCategories weight { get; set; }
             public int battery { get; set; }
-            public string mode { get; set; }
+            public statusOfQ  mode { get; set; }
 
             public override string ToString()
             {
