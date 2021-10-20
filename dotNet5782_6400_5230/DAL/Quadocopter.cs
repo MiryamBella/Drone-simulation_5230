@@ -6,7 +6,7 @@ namespace IDAL
 {
     namespace DO
     {
-        class Quadocopter
+        public struct Quadocopter
         {
             int id { get; set; }
             string moodle { get; set; }
