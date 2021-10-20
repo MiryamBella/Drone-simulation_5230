@@ -8,11 +8,11 @@ namespace IDAL
     {
         public struct Quadocopter
         {
-            int id { get; set; }
-            string moodle { get; set; }
-            WeighCategories weight { get; set; }
-            int battery { get; set; }
-            string mode { get; set; }
+            public int id { get; set; }
+            public string moodle { get; set; }
+            public WeighCategories weight { get; set; }
+            public int battery { get; set; }
+            public string mode { get; set; }
 
             public override string ToString()
             {
