@@ -16,12 +16,12 @@ namespace DalObject
         internal static class Config //new evrething in this class.
         {
             //i write all the indexs if we will.
-            static int index_quadocopter = 0;
-            static int index_baseStation = 0;
-            static int index_client = 0;
-            static int index_packagh = 0;
+            internal static int index_quadocopter = 0;
+            internal static int index_baseStation = 0;
+            internal static int index_client = 0;
+            internal static int index_packagh = 0;
 
-            static int runNum = 0;//for the id packagh.
+            internal static int runNum = 0;//for the id packagh.
                                   //i did the integger as static becuse i think it need to be only one like that because any id need to be difrent.
                            
             
