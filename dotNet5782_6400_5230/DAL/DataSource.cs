@@ -6,7 +6,7 @@ namespace DalObject
 {
     internal class DataSource
     {
-        //Quadocopter
+        Quadocopter quadocopter;
         //List<Quadocopter> l =new List<Quadocopter>;
 
 

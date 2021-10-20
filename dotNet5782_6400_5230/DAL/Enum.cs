@@ -8,8 +8,5 @@ namespace IDAL
     {
         enum WeighCategories {easy, middle, hevy}
         enum Priorities { reggular, fast, emergency }
-        class Enum
-        {
-        }
     }
 }
