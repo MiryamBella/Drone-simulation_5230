@@ -8,12 +8,12 @@ namespace IDAL
     {
         public struct Packagh
         { 
-            int id { get; set; }
-            string sender { get; set; }
-            string receiver { get; set; }
-            string weight{ get; set; }
-            Priorities priority { get; set; }
-            int idQuadocopter { get; set; }
+            public int id { get; set; }
+            public string sender { get; set; }
+            public string receiver { get; set; }
+            public WeighCategories weight { get; set; }
+            public Priorities priority { get; set; }
+            public int idQuadocopter { get; set; }
 
             public override string ToString()
             {
