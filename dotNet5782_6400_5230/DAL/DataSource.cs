@@ -31,10 +31,12 @@ namespace DalObject
 
         static int findQuadocopter()
         {
+            Random r = new Random();
             for(int i = 0; 0 < Config.index_quadocopter; i++)
             {
-                if (qpter[i].mode != statusOfQ.maintenance)
-                    return i;
+                int j = r.Next(0, Config.index_quadocopter);
+                if (qpter[j].mode != statusOfQ.maintenance)
+                    return j;
             }
             return 0;
         }
