@@ -12,9 +12,20 @@ namespace IDAL
             public string sender { get; set; }
             public string receiver { get; set; }
             public WeighCategories weight { get; set; }
+            /// <summary>
+            /// The typ of this packagh: reggular, fast, emergency.
+            /// </summary>
             public Priorities priority { get; set; }
             public int idQuadocopter { get; set; }
+            public DateTime time_Create { get; set; }
+            public DateTime time_Belong_quadocopter { get; set; }
+            /// <summary>
+            /// The time the packagh have been colected from the person who send the packagh.
+            /// </summary>
+            public DateTime time_ColctedFromSender { get; set; }
+            public DateTime time_ComeToColcter { get; set; }
 
+            //return the information as string.
             public override string ToString()
             {
                 return ("ID: "+id+'\n'+
