@@ -7,7 +7,7 @@ using IDAL.DO;
 namespace DalObject
 {
     public class DalObject
-    {
+    {//                 i add thos simbols ( ; (miryam)
         DalObject() { DataSource.Initialize(); }///When this class is built it first initializes the lists with the initial values defined in Initialize
 
         public void AddBaseStation() ///adding new base station

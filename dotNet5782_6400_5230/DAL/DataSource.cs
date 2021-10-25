@@ -44,7 +44,7 @@ namespace DalObject
         /// The func reset the arrys to random data.
         /// It reset 2 base station, 5 quadocopter, 10 clients and 10 packagh.
         /// </summary>
-        /*internal*/ static void Initialize()
+        internal static void Initialize()
         {
             //i reset the arrys.
             Random r = new Random();
