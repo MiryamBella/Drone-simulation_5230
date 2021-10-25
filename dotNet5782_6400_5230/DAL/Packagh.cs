@@ -9,8 +9,8 @@ namespace IDAL
         public struct Packagh
         { 
             public int id { get; set; }
-            public string sender { get; set; }
-            public string receiver { get; set; }
+            public int sender { get; set; }
+            public int receiver { get; set; }
             public WeighCategories weight { get; set; }
             /// <summary>
             /// The typ of this packagh: reggular, fast, emergency.

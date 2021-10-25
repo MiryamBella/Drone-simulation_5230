@@ -63,12 +63,82 @@ namespace DalObject
             c.latitude = int.Parse(help);
             DataSource.cli[DataSource.Config.index_client++] = c;
         }
-        public void AddPackage();
+        public int AddPackage() //adding new package
+        {
+            Packagh p = new Packagh();
+            Console.WriteLine("Please enter the ID of the sender of the package"); //accepting the id of the sender
+            string help = Console.ReadLine();  
+            p.sender = int.Parse(help);      
+            Console.WriteLine("Please enter the ID of the receiver of the package"); //accepting the id of the receiver
+            help = Console.ReadLine();
+            p.receiver = int.Parse(help);
+            Console.WriteLine("Please enter the weight of the package (enter 1 to easy,2 to middle,3 to heavy)"); //accepting the weight of the package
+            help = Console.ReadLine();
+            if (help == "1")
+                p.weight = WeighCategories.easy;
+            else if (help == "2")
+                p.weight = WeighCategories.middle;
+            else p.weight = WeighCategories.hevy;
+            Console.WriteLine("Please enter the priority of the package (enter 1 to reggular,2 to fast,3 to emergency)"); //accepting the priority of the package
+            help = Console.ReadLine();
+            if (help == "1")
+                p.priority = Priorities.reggular;
+            else if (help == "2")
+                p.priority = Priorities.fast;
+            else p.priority = Priorities.emergency;
+            int index = DataSource.Config.index_client++; //find the index of the empty place in the array of the packages and update it
+            p.id = DataSource.Config.runNum++;   // the id of the package will be according the run number
+            p.idQuadocopter = 0;  // the package have not quadocopter
+            p.time_Create = DateTime.Now;  // the time of the create is now
+            DataSource.packagh[index] = p;  // enter the new package into the array
+            return p.id;
+        }
 
-        public void AssignPtoQ();
-        public void CollectPbyQ();
-        public void DeliveringPtoClient();
-        public void SendQtoCharging(int station);
+        public void AssignPtoQ() //update package to be belong to a quadocopter
+        {
+            Console.WriteLine("Please enter the ID of the package"); //accepting the id of the package
+            string help = Console.ReadLine();
+            int id = int.Parse(help);
+            int i = 0;
+            for (; i < DataSource.Config.index_packagh; i++) // look for the index that the package in it
+                if (DataSource.packagh[i].id == id)
+                    break;
+            int j = 0;
+            for (; j < DataSource.Config.index_quadocopter; j++) // look for index that contain quadocopter whice can take this package
+                if (DataSource.qpter[j].mode == statusOfQ.available)
+                    if (DataSource.qpter[j].weight == DataSource.packagh[i].weight)
+                        break;
+            DataSource.qpter[j].mode = statusOfQ.delivery; //change the mode of the qpter to delivery
+            DataSource.packagh[i].idQuadocopter = DataSource.qpter[j].id; //enter the id of the qptr to the package
+            DataSource.packagh[i].time_Belong_quadocopter = DateTime.Now; //update the appropriate time to be now 
+        }
+        public void CollectPbyQ() //update package to be collected by quadocopter
+        {
+            Console.WriteLine("Please enter the ID of the package"); //accepting the id of the package
+            string help = Console.ReadLine();
+            int id = int.Parse(help);
+            for (int i = 0; i < DataSource.Config.index_packagh; i++) // look for the index that the package in it
+                if (DataSource.packagh[i].id == id)
+                {
+                    DataSource.packagh[i].time_ColctedFromSender = DateTime.Now; //update the time
+                    break;
+                }
+        }
+        public void DeliveringPtoClient()
+        {
+            Console.WriteLine("Please enter the ID of the package"); //accepting the id of the package
+            string help = Console.ReadLine();
+            int id = int.Parse(help);
+            int i = 0;
+            for (; i < DataSource.Config.index_packagh; i++)//look for the index of this package
+                if (DataSource.packagh[i].id == id)
+                    break;
+            DataSource.packagh[i].time_ComeToColcter = DateTime.Now; //update the time
+            for (int j = 0; j < DataSource.Config.index_quadocopter; j++) //look for index of the quadocopter whice take this package
+                if (DataSource.qpter[j].id == DataSource.packagh[i].idQuadocopter)
+                    DataSource.qpter[j].mode = statusOfQ.available; //update the qptr to be abailable
+        }
+        public void SendQtoCharging();
         public void ReleaseQfromCharging();
         public void StationDisplay() //print datails of statin
         {
