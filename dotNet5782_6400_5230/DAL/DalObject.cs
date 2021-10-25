@@ -8,8 +8,7 @@ namespace DalObject
 {
     public class DalObject
     {
-        DalObject() {  DataSource.Initialize())}///When this class is built it first initializes the lists with the initial values defined in Initialize
-
+        DalObject() { DataSource.Initialize(); }///When this class is built it first initializes the lists with the initial values defined in Initialize
         public void AddBaseStation() ///adding new base station
         {
             BaseStation station = new BaseStation(); /// i did new BaseStation
@@ -71,15 +70,86 @@ namespace DalObject
         public void DeliveringPtoClient();
         public void SendQtoCharging(int station);
         public void ReleaseQfromCharging();
-        public void StationDisplay(); //new: the methods of display
-        public void QuDisplay();
-        public void ClientDisplay();
-        public void PackageDisplay();
-        public void ListOfStations();//new: the methods of view Lists
-        public void ListOfQ();
-        public void ListOfClients();
-        public void ListOfPackages();
-        public void ListOfPwithoutQ();
-        public void ListOfStationsForCharging();
+        public void StationDisplay() //print datails of statin
+        {
+            Console.WriteLine("please enter id of station"); // the printing is by the id  that i asked from the user
+            string help = Console.ReadLine();
+            int number = int.Parse(help);
+            for (int i = 0; i < DataSource.Config.index_baseStation; i++)  //I run of all the array and looked for the one with the same id
+                if (DataSource.bstion[i].IDnumber == number)
+                {
+                    DataSource.bstion[i].ToString(); //I print it
+                    break;
+                }
+        }
+        public void QuDisplay()//print datails of quadocopter
+        {
+            Console.WriteLine("please enter id of quadocopter"); // the printing is by the id  that i asked from the user
+            string help = Console.ReadLine();
+            int number = int.Parse(help);
+            for (int i = 0; i < DataSource.Config.index_quadocopter; i++)  //I run of all the array and looked for the one with the same id
+                if (DataSource.qpter[i].id == number)
+                {
+                    DataSource.qpter[i].ToString(); //I print it
+                    break;
+                }
+        }
+        public void ClientDisplay()//print datails of client
+        {
+            Console.WriteLine("please enter id of client"); // the printing is by the id  that i asked from the user
+            string help = Console.ReadLine();
+            int number = int.Parse(help);
+            for (int i = 0; i < DataSource.Config.index_client; i++)  //I run of all the array and looked for the one with the same id
+                if (DataSource.cli[i].ID == number)
+                {
+                    DataSource.cli[i].ToString(); //I print it
+                    break;
+                }
+        }
+        public void PackageDisplay()//print datails of package
+        {
+            Console.WriteLine("please enter id of package"); // the printing is by the id  that i asked from the user
+            string help = Console.ReadLine();
+            int number = int.Parse(help);
+            for (int i = 0; i < DataSource.Config.index_packagh; i++)  //I run of all the array and looked for the one with the same id
+                if (DataSource.packagh[i].id == number)
+                {
+                    DataSource.packagh[i].ToString(); //I print it
+                    break;
+                }
+        }
+
+        public void ListOfStations() //print all the stations
+        {
+            for (int i = 0; i < DataSource.Config.index_baseStation; i++) // I run of all the stations and print them
+                DataSource.bstion[i].ToString();
+        }
+        public void ListOfQ()//print all the quadocpters
+        {
+            for (int i = 0; i < DataSource.Config.index_quadocopter; i++) // I run of all the qudocopters and print them
+                DataSource.qpter[i].ToString();
+        }
+        public void ListOfClients()//print all the clients
+        {
+            for (int i = 0; i < DataSource.Config.index_client; i++) // I run of all the clients and print them
+                DataSource.cli[i].ToString();
+        }
+        public void ListOfPackages()//print all the packages
+        {
+            for (int i = 0; i < DataSource.Config.index_packagh; i++) // I run of all the packages and print them
+                DataSource.packagh[i].ToString();
+        }
+        public void ListOfPwithoutQ()//print all the packages that dont assigned to quadocopter
+        {
+            for (int i = 0; i < DataSource.Config.index_packagh; i++) // I run of all the packages and print them if their idQuadocopter is 0
+               if (DataSource.packagh[i].idQuadocopter == 0)
+                    DataSource.packagh[i].ToString();
+        }
+        public void ListOfStationsForCharging()//print all the stations that have empty changing positions
+        {
+            for (int i = 0; i < DataSource.Config.index_baseStation; i++) // I run of all the stations and print them if their changingPosition is not 0
+                if (DataSource.bstion[i].chargingPositions != 0)
+                    DataSource.bstion[i].ToString();
+        }
     }
 }

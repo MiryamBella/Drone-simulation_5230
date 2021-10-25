@@ -13,7 +13,7 @@ namespace DalObject
         internal static Quadocopter[] qpter = new Quadocopter[10];
         internal static BaseStation[] bstion = new BaseStation[5];
         internal static Client[] cli = new Client[100];
-        static Packagh[] packagh = new Packagh[1000];
+        internal static Packagh[] packagh = new Packagh[1000];
 
         internal class Config
         {
