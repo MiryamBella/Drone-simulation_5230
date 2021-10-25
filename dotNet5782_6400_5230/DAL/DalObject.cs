@@ -8,7 +8,7 @@ namespace DalObject
 {
     public class DalObject
     {
-        DalObject() {  DataSource.Initialize)}///When this class is built it first initializes the lists with the initial values defined in Initialize
+        DalObject() {  DataSource.Initialize())}///When this class is built it first initializes the lists with the initial values defined in Initialize
 
         public void AddBaseStation() ///adding new base station
         {
@@ -65,7 +65,8 @@ namespace DalObject
             DataSource.cli[DataSource.Config.index_client++] = c;
         }
         public void AddPackage();
-        public void AssignPtoQ();//new: the methods of updating. p is package, q is quadocopter, because it so long
+
+        public void AssignPtoQ();
         public void CollectPbyQ();
         public void DeliveringPtoClient();
         public void SendQtoCharging(int station);
