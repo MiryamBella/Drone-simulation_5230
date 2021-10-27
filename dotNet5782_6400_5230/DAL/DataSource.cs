@@ -29,17 +29,6 @@ namespace DalObject
             
         }
 
-        static int findQuadocopter()
-        {
-            Random r = new Random();
-            for(int i = 0; 0 < Config.index_quadocopter; i++)
-            {
-                int j = r.Next(0, Config.index_quadocopter);
-                if (qpter[j].mode != statusOfQ.maintenance)
-                    return j;
-            }
-            return 0;
-        }
         /// <summary>
         /// The func reset the arrys to random data.
         /// It reset 2 base station, 5 quadocopter, 10 clients and 10 packagh.
@@ -112,191 +101,87 @@ namespace DalObject
 
 
             /*client*/
-
-            i = Config.index_client++;//1
-            cli[i] = new Client();
-            cli[i].ID = i;
-            cli[i].name = "David";
-            cli[i].phoneNumber = r.Next();
-            cli[i].latitude = r.Next();
-            cli[i].longitude = r.Next();
-
-            i = Config.index_client++;//2
-            cli[i] = new Client();
-            cli[i].ID = i;
-            cli[i].name = "Miryam";
-            cli[i].phoneNumber = r.Next();
-            cli[i].latitude = r.Next();
-            cli[i].longitude = r.Next();
-
-            i = Config.index_client++;//3
-            cli[i] = new Client();
-            cli[i].ID = i;
-            cli[i].name = "Rachel";
-            cli[i].phoneNumber = r.Next();
-            cli[i].latitude = r.Next();
-            cli[i].longitude = r.Next();
-
-            i = Config.index_client++;//4
-            cli[i] = new Client();
-            cli[i].ID = i;
-            cli[i].name = "David";
-            cli[i].phoneNumber = r.Next();
-            cli[i].latitude = r.Next();
-            cli[i].longitude = r.Next();
-
-            i = Config.index_client++;//5
-            cli[i] = new Client();
-            cli[i].ID = i;
-            cli[i].name = "Shara";
-            cli[i].phoneNumber = r.Next();
-            cli[i].latitude = r.Next();
-            cli[i].longitude = r.Next();
-
-            i = Config.index_client++;//6
-            cli[i] = new Client();
-            cli[i].ID = i;
-            cli[i].name = "Rebeka";
-            cli[i].phoneNumber = r.Next();
-            cli[i].latitude = r.Next();
-            cli[i].longitude = r.Next();
-
-            i = Config.index_client++;//7
-            cli[i] = new Client();
-            cli[i].ID = i;
-            cli[i].name = "Lea";
-            cli[i].phoneNumber = r.Next();
-            cli[i].latitude = r.Next();
-            cli[i].longitude = r.Next();
-
-            i = Config.index_client++;//8
-            cli[i] = new Client();
-            cli[i].ID = i;
-            cli[i].name = "Yosy";
-            cli[i].phoneNumber = r.Next();
-            cli[i].latitude = r.Next();
-            cli[i].longitude = r.Next();
-
-            i = Config.index_client++;//9
-            cli[i] = new Client();
-            cli[i].ID = i;
-            cli[i].name = "Yonatan";
-            cli[i].phoneNumber = r.Next();
-            cli[i].latitude = r.Next();
-            cli[i].longitude = r.Next();
-
-
-            i = Config.index_client++;//10
-            cli[i] = new Client();
-            cli[i].ID = i;
-            cli[i].name = "Moshe";
-            cli[i].phoneNumber = r.Next();
-            cli[i].latitude = r.Next();
-            cli[i].longitude = r.Next();
+            for (i = Config.index_client; i < 10; i++)
+            {
+                cli[i] = new Client();
+                cli[i].ID = i;
+                cli[i].name = getRandomName(i);
+                cli[i].phoneNumber = r.Next();
+                cli[i].latitude = r.Next();
+                cli[i].longitude = r.Next();
+            }
+            Config.index_client += 10;
 
 
             /*Packagh*/
 
-            i = Config.index_packagh++;//1
-            packagh[i] = new Packagh();
-            packagh[i].id = i;
-            packagh[i].sender = "Shara";
-            packagh[i].receiver = "Rebeka";
-            packagh[i].weight = WeighCategories.easy;
-            packagh[i].priority = Priorities.emergency;
-            packagh[i].idQuadocopter = findQuadocopter();
+            //loop for reset all 10 packaghs.
+            for (i = Config.index_packagh; i < 10; i++)
+            {
+                packagh[i] = new Packagh();
+                packagh[i].id = i;
+                packagh[i].sender = r.Next();
+                packagh[i].receiver = r.Next();
+                packagh[i].weight = (WeighCategories)r.Next(0, 3);
+                packagh[i].priority = (Priorities)r.Next(0, 3);
+                packagh[i].idQuadocopter = findQuadocopter();
+            }
+            Config.index_packagh += 10;//change the index.
 
-            i = Config.index_packagh++;//2
-            packagh[i] = new Packagh();
-            packagh[i] = new Packagh();
-            packagh[i].id = i;
-            packagh[i].sender = "Miryam";
-            packagh[i].receiver = "Rachel";
-            packagh[i].weight = WeighCategories.hevy;
-            packagh[i].priority = Priorities.fast;
-            packagh[i].idQuadocopter = findQuadocopter();
+            //the 3 package with difrent privorities and WeighCategories.
+            packagh[i-1].weight = WeighCategories.hevy;
+            packagh[i-1].priority = Priorities.fast;
 
-            i = Config.index_packagh++;//3
-            packagh[i] = new Packagh();
-            packagh[i] = new Packagh();
-            packagh[i].id = i;
-            packagh[i].sender = "Yosy";
-            packagh[i].receiver = "Yonatan";
-            packagh[i].weight = WeighCategories.middle;
-            packagh[i].priority = Priorities.reggular;
-            packagh[i].idQuadocopter = findQuadocopter();
+            packagh[i - 2].weight = WeighCategories.easy;
+            packagh[i - 2].priority = Priorities.emergency;
 
-            i = Config.index_packagh++;//4
-            packagh[Config.index_packagh++] = new Packagh();
-            packagh[i] = new Packagh();
-            packagh[i].id = i;
-            packagh[i].sender = "Simcha";
-            packagh[i].receiver = "Avraham";
-            packagh[i].weight = (WeighCategories)r.Next(0, 3);
-            packagh[i].priority = (Priorities)r.Next(0, 3);
-            packagh[i].idQuadocopter = findQuadocopter();
+            packagh[i - 3].weight = WeighCategories.middle;
+            packagh[i - 3].priority = Priorities.reggular;
+        }
 
 
-            i = Config.index_packagh++;
-            packagh[Config.index_packagh++] = new Packagh();//5
-            packagh[i] = new Packagh();
-            packagh[i].id = i;
-            packagh[i].sender = "David";
-            packagh[i].receiver = "Yosef";
-            packagh[i].weight = (WeighCategories)r.Next(0, 3);
-            packagh[i].priority = (Priorities)r.Next(0, 3);
-            packagh[i].idQuadocopter = findQuadocopter();
-
-            i = Config.index_packagh++;
-            packagh[Config.index_packagh++] = new Packagh();//6
-            packagh[i] = new Packagh();
-            packagh[i].id = i;
-            packagh[i].sender = "Mendy";
-            packagh[i].receiver = "Menachem";
-            packagh[i].weight = (WeighCategories)r.Next(0, 3);
-            packagh[i].priority = (Priorities)r.Next(0, 3);
-            packagh[i].idQuadocopter = findQuadocopter();
-
-            i = Config.index_packagh++;
-            packagh[Config.index_packagh++] = new Packagh();//7
-            packagh[i] = new Packagh();
-            packagh[i].id = i;
-            packagh[i].sender = "Root";
-            packagh[i].receiver = "Lea";
-            packagh[i].weight = (WeighCategories)r.Next(0, 3);
-            packagh[i].priority = (Priorities)r.Next(0, 3);
-            packagh[i].idQuadocopter = findQuadocopter();
-
-            i = Config.index_packagh++;
-            packagh[Config.index_packagh++] = new Packagh();//8
-            packagh[i] = new Packagh();
-            packagh[i].id = i;
-            packagh[i].sender = "Shira";
-            packagh[i].receiver = "Rebeka";
-            packagh[i].weight = (WeighCategories)r.Next(0, 3);
-            packagh[i].priority = (Priorities)r.Next(0, 3);
-            packagh[i].idQuadocopter = findQuadocopter();
-
-            i = Config.index_packagh++;
-            packagh[Config.index_packagh++] = new Packagh();//9
-            packagh[i] = new Packagh();
-            packagh[i].id = i;
-            packagh[i].sender = "Shara";
-            packagh[i].receiver = "Bella";
-            packagh[i].weight = (WeighCategories)r.Next(0, 3);
-            packagh[i].priority = (Priorities)r.Next(0, 3);
-            packagh[i].idQuadocopter = findQuadocopter();
-
-            i = Config.index_packagh++;
-            packagh[Config.index_packagh++] = new Packagh();//10
-            packagh[i] = new Packagh();
-            packagh[i].id = i;
-            packagh[i].sender = "Rachel";
-            packagh[i].receiver = "Rebeka";
-            packagh[i].weight = (WeighCategories)r.Next(0, 3);
-            packagh[i].priority = (Priorities)r.Next(0, 3);
-            packagh[i].idQuadocopter = findQuadocopter();
-
+        //-------------funcs that exsit for us-----------------------------------------------
+        
+        /*2 funcs for the reset func.*/
+        static string getRandomName(int num)
+        {
+            num = num % 10;
+            switch (num)
+            {
+                case 0:
+                    return "Moshe";
+                case 1: 
+                    return "Miryam";
+                case 2:
+                    return "Rachel";
+                case 3:
+                    return "David";
+                case 4:
+                    return "Shara";
+                case 5: 
+                    return "Rebeka";
+                case 6:
+                    return "Lea";
+                case 7:
+                    return "Yosy";
+                case 8:
+                    return "Yonatan";
+                case 9:
+                    return "Ester";
+                default:
+                    return "Dina";
+            }
+        }
+        static int findQuadocopter()
+        {
+            Random r = new Random();
+            for (int i = 0; 0 < Config.index_quadocopter; i++)
+            {
+                int j = r.Next(0, Config.index_quadocopter);
+                if (qpter[j].mode != statusOfQ.maintenance)
+                    return j;
+            }
+            return 0;
         }
 
     }

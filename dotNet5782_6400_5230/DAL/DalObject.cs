@@ -13,7 +13,7 @@ namespace DalObject
         {
             BaseStation station = new BaseStation(); /// i did new BaseStation
             Console.WriteLine("Please enter name of station"); ///I get information from the user and enter it into the new station
-            station.name = Console.ReadLine();                    
+            station.name = Console.ReadLine();
             Console.WriteLine("Please enter number of charging position");
             string helpSTR = Console.ReadLine();
             station.chargingPositions = int.Parse(helpSTR); /// i get a numbers as string and convert it to int
@@ -67,8 +67,8 @@ namespace DalObject
         {
             Packagh p = new Packagh();
             Console.WriteLine("Please enter the ID of the sender of the package"); //accepting the id of the sender
-            string help = Console.ReadLine();  
-            p.sender = int.Parse(help);      
+            string help = Console.ReadLine();
+            p.sender = int.Parse(help);
             Console.WriteLine("Please enter the ID of the receiver of the package"); //accepting the id of the receiver
             help = Console.ReadLine();
             p.receiver = int.Parse(help);
@@ -138,8 +138,44 @@ namespace DalObject
                 if (DataSource.qpter[j].id == DataSource.packagh[i].idQuadocopter)
                     DataSource.qpter[j].mode = statusOfQ.available; //update the qptr to be abailable
         }
-        public void SendQtoCharging();
-        public void ReleaseQfromCharging();
+        public void SendQtoCharging()
+        {
+            int[] indexs = new int[2];
+            bool allow = allwoToCharge(indexs);
+            int iq = indexs[0];
+            int jb = indexs[1];
+            if (!allow)
+                return;
+            if (DataSource.bstion[jb].chargingPositions == 0)
+            {
+                Console.WriteLine("The base station dont have plase to charging.");
+                return;
+            }
+
+
+            //now after we chek if we can we will start the charging.
+            DAL.DO.Charging charge = new DAL.DO.Charging();
+            charge.baseStationID = DataSource.bstion[jb].IDnumber;
+            charge.quadocopterID = DataSource.qpter[iq].id;
+            DataSource.bstion[jb].chargingPositions--;
+            DataSource.qpter[iq].battery = 100;
+            DataSource.qpter[iq].mode = statusOfQ.maintenance ;
+        }
+        public void ReleaseQfromCharging()
+        {
+
+            int[] indexs = new int[2];
+            bool allow = allwoToCharge(indexs);
+            if (!allow)
+                return;
+
+
+            //now after we chek if we can we will start the charging.
+            int iq = indexs[0];
+            int jb = indexs[1];
+            DataSource.bstion[jb].chargingPositions++;
+            DataSource.qpter[iq].mode = statusOfQ.available;
+        }
         public void StationDisplay() //print datails of statin
         {
             Console.WriteLine("please enter id of station"); // the printing is by the id  that i asked from the user
@@ -220,6 +256,60 @@ namespace DalObject
             for (int i = 0; i < DataSource.Config.index_baseStation; i++) // I run of all the stations and print them if their changingPosition is not 0
                 if (DataSource.bstion[i].chargingPositions != 0)
                     DataSource.bstion[i].ToString();
+        }
+
+
+        //---------------------------------------------------------------------------------------------------------------
+        // func to help us.
+
+        /// <summary>
+        /// the func get quadocopter's id and base station's id from the user and chak if they in our data.
+        /// </summary>
+        /// <returns></returns>
+        bool allwoToCharge(int[] indexs)
+        {
+            Console.WriteLine("Please enter the ID of the quadocopter you want to charge."); //accepting the id of the quadocopter
+            string temp_str = Console.ReadLine();
+            int id = int.Parse(temp_str);
+            int i;
+            bool exist = false;//to chak if we find the quadocopter's ID.
+            for (i = 0; i < DataSource.Config.index_quadocopter; i++) //look for index of the quadocopter with the quadocopter ID the user put.
+                if (DataSource.qpter[i].id == id)
+                {
+                    exist = true;//we find the quadocopter.
+                    break;
+                }
+            if (!exist)//if we didnt find the quadocopter.
+            {
+                Console.WriteLine("The quadocopter's ID not exist in our data.");
+                return false;
+            }
+
+            if (DataSource.qpter[i].mode != statusOfQ.available)
+            {
+                Console.WriteLine("The quadocopter are " + DataSource.qpter[i].mode + '.');
+                return false;
+            }
+
+            Console.WriteLine("Please enter the ID of the base station you want to charge in."); //accepting the id of the quadocopter
+            temp_str = Console.ReadLine();
+            id = int.Parse(temp_str);
+            int j;
+            exist = false;//to chak if we find the base station's ID.
+            for (j = 0; j < DataSource.Config.index_baseStation; j++) //look for index of the base station with the base station ID the user put.
+                if (DataSource.bstion[j].IDnumber == id)
+                {
+                    exist = true;//we find the quadocopter.
+                    break;
+                }
+            if (!exist)//if we didnt find the quadocopter.
+            {
+                Console.WriteLine("The base station's ID not exist in our data.");
+                return false;
+            }
+            indexs[0] = i;
+            indexs[1] = j;
+            return true;
         }
     }
 }
