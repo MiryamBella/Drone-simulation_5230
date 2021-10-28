@@ -8,7 +8,7 @@ namespace DalObject
 {
     public class DalObject
     {
-        DalObject() { DataSource.Initialize(); }///When this class is built it first initializes the lists with the initial values defined in Initialize
+        public DalObject() { DataSource.Initialize(); }///When this class is built it first initializes the lists with the initial values defined in Initialize
         public void AddBaseStation() ///adding new base station
         {
             BaseStation station = new BaseStation(); /// i did new BaseStation
@@ -63,7 +63,12 @@ namespace DalObject
             c.latitude = int.Parse(help);
             DataSource.cli[DataSource.Config.index_client++] = c;
         }
-        public int AddPackage() //adding new package
+
+        /// <summary>
+        /// adding new package.
+        /// </summary>
+        /// <returns>The pacjagh ID we add.</returns>
+        public int AddPackage() 
         {
             Packagh p = new Packagh();
             Console.WriteLine("Please enter the ID of the sender of the package"); //accepting the id of the sender
@@ -93,8 +98,10 @@ namespace DalObject
             DataSource.packagh[index] = p;  // enter the new package into the array
             return p.id;
         }
-
-        public void AssignPtoQ() //update package to be belong to a quadocopter
+        /// <summary>
+        /// update package to be belong to a quadocopter.
+        /// </summary>
+        public void AssignPtoQ() 
         {
             Console.WriteLine("Please enter the ID of the package"); //accepting the id of the package
             string help = Console.ReadLine();
@@ -112,7 +119,10 @@ namespace DalObject
             DataSource.packagh[i].idQuadocopter = DataSource.qpter[j].id; //enter the id of the qptr to the package
             DataSource.packagh[i].time_Belong_quadocopter = DateTime.Now; //update the appropriate time to be now 
         }
-        public void CollectPbyQ() //update package to be collected by quadocopter
+        /// <summary>
+        /// update package to be collected by quadocopter.
+        /// </summary>
+        public void CollectPbyQ() 
         {
             Console.WriteLine("Please enter the ID of the package"); //accepting the id of the package
             string help = Console.ReadLine();
@@ -138,10 +148,14 @@ namespace DalObject
                 if (DataSource.qpter[j].id == DataSource.packagh[i].idQuadocopter)
                     DataSource.qpter[j].mode = statusOfQ.available; //update the qptr to be abailable
         }
+        /// <summary>
+        /// Send the quadocopter to charging.
+        /// </summary>
         public void SendQtoCharging()
         {
             int[] indexs = new int[2];
-            bool allow = allwoToCharge(indexs);
+            bool charge = true;
+            bool allow = allwoToCharge(indexs, charge);
             int iq = indexs[0];
             int jb = indexs[1];
             if (!allow)
@@ -154,18 +168,23 @@ namespace DalObject
 
 
             //now after we chek if we can we will start the charging.
-            DAL.DO.Charging charge = new DAL.DO.Charging();
-            charge.baseStationID = DataSource.bstion[jb].IDnumber;
-            charge.quadocopterID = DataSource.qpter[iq].id;
+            Charging c = new Charging();
+            c.baseStationID = DataSource.bstion[jb].IDnumber;
+            c.quadocopterID = DataSource.qpter[iq].id;
             DataSource.bstion[jb].chargingPositions--;
             DataSource.qpter[iq].battery = 100;
             DataSource.qpter[iq].mode = statusOfQ.maintenance ;
+            DataSource.charge.Add(c);
         }
+        /// <summary>
+        /// release te quadocopter frp charging.
+        /// </summary>
         public void ReleaseQfromCharging()
         {
 
             int[] indexs = new int[2];
-            bool allow = allwoToCharge(indexs);
+            bool charge = false;
+            bool allow = allwoToCharge(indexs, charge);
             if (!allow)
                 return;
 
@@ -175,8 +194,16 @@ namespace DalObject
             int jb = indexs[1];
             DataSource.bstion[jb].chargingPositions++;
             DataSource.qpter[iq].mode = statusOfQ.available;
+
+            Charging c = new Charging();
+            c.baseStationID = DataSource.bstion[jb].IDnumber; 
+            c.quadocopterID =DataSource.qpter[iq].id;
+            DataSource.charge.Remove(c);
         }
-        public void StationDisplay() //print datails of statin
+        /// <summary>
+        /// print datails of statin
+        /// </summary>
+        public void StationDisplay()//print datails of statin 
         {
             Console.WriteLine("please enter id of station"); // the printing is by the id  that i asked from the user
             string help = Console.ReadLine();
@@ -188,6 +215,9 @@ namespace DalObject
                     break;
                 }
         }
+        /// <summary>
+        /// print datails of quadocopter.
+        /// </summary>
         public void QuDisplay()//print datails of quadocopter
         {
             Console.WriteLine("please enter id of quadocopter"); // the printing is by the id  that i asked from the user
@@ -200,6 +230,9 @@ namespace DalObject
                     break;
                 }
         }
+        /// <summary>
+        /// print datails of client.
+        /// </summary>
         public void ClientDisplay()//print datails of client
         {
             Console.WriteLine("please enter id of client"); // the printing is by the id  that i asked from the user
@@ -212,6 +245,9 @@ namespace DalObject
                     break;
                 }
         }
+        /// <summary>
+        /// print datails of package.
+        /// </summary>
         public void PackageDisplay()//print datails of package
         {
             Console.WriteLine("please enter id of package"); // the printing is by the id  that i asked from the user
@@ -225,32 +261,50 @@ namespace DalObject
                 }
         }
 
+        /// <summary>
+        /// print all the stations.
+        /// </summary>
         public void ListOfStations() //print all the stations
         {
             for (int i = 0; i < DataSource.Config.index_baseStation; i++) // I run of all the stations and print them
                 DataSource.bstion[i].ToString();
         }
+        /// <summary>
+        /// print all the quadocpters.
+        /// </summary>
         public void ListOfQ()//print all the quadocpters
         {
             for (int i = 0; i < DataSource.Config.index_quadocopter; i++) // I run of all the qudocopters and print them
                 DataSource.qpter[i].ToString();
         }
+        /// <summary>
+        /// print all the clients
+        /// </summary>
         public void ListOfClients()//print all the clients
         {
             for (int i = 0; i < DataSource.Config.index_client; i++) // I run of all the clients and print them
                 DataSource.cli[i].ToString();
         }
+        /// <summary>
+        /// print all the packages.
+        /// </summary>
         public void ListOfPackages()//print all the packages
         {
             for (int i = 0; i < DataSource.Config.index_packagh; i++) // I run of all the packages and print them
                 DataSource.packagh[i].ToString();
         }
+        /// <summary>
+        /// print all the packages that dont assigned to quadocopter.
+        /// </summary>
         public void ListOfPwithoutQ()//print all the packages that dont assigned to quadocopter
         {
             for (int i = 0; i < DataSource.Config.index_packagh; i++) // I run of all the packages and print them if their idQuadocopter is 0
                if (DataSource.packagh[i].idQuadocopter == 0)
                     DataSource.packagh[i].ToString();
         }
+        /// <summary>
+        /// print all the stations that have empty changing positions.
+        /// </summary>
         public void ListOfStationsForCharging()//print all the stations that have empty changing positions
         {
             for (int i = 0; i < DataSource.Config.index_baseStation; i++) // I run of all the stations and print them if their changingPosition is not 0
@@ -265,8 +319,8 @@ namespace DalObject
         /// <summary>
         /// the func get quadocopter's id and base station's id from the user and chak if they in our data.
         /// </summary>
-        /// <returns></returns>
-        bool allwoToCharge(int[] indexs)
+        /// <returns>if all datails from the user are treu</returns>
+        bool allwoToCharge(int[] indexs, bool charge=true)
         {
             Console.WriteLine("Please enter the ID of the quadocopter you want to charge."); //accepting the id of the quadocopter
             string temp_str = Console.ReadLine();
@@ -291,6 +345,10 @@ namespace DalObject
                 return false;
             }
 
+            if (charge)
+                ListOfStationsForCharging();
+            else
+                ListOfStations();
             Console.WriteLine("Please enter the ID of the base station you want to charge in."); //accepting the id of the quadocopter
             temp_str = Console.ReadLine();
             id = int.Parse(temp_str);

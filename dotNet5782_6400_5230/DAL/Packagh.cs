@@ -9,7 +9,13 @@ namespace IDAL
         public struct Packagh
         { 
             public int id { get; set; }
+            /// <summary>
+            /// The ID of the sender of the packagh.
+            /// </summary>
             public int sender { get; set; }
+            /// <summary>
+            /// The ID of the reciever of the packagh.
+            /// </summary>
             public int receiver { get; set; }
             public WeighCategories weight { get; set; }
             /// <summary>

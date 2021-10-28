@@ -15,6 +15,10 @@ namespace DalObject
         internal static Client[] cli = new Client[100];
         internal static Packagh[] packagh = new Packagh[1000];
 
+        /// <summary>
+        /// list of all the quadocopter that are charging.
+        /// </summary>
+        internal static List<Charging> charge;//the for the funcs "SendQtoCharging" and "ReleaseQfromCharging".
         internal class Config
         {
             //i write all the indexs if we will.
