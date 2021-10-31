@@ -64,9 +64,8 @@ namespace ConsoleUI
         {
             string direction = "You Choose tho add somthing to our data base.\n";
             direction += "\nChoose one of the following\n";
-            Console.WriteLine(direction);
-            direction = "bs: If you want to add a new base station to the list in our data base.\n";
-            direction+= "qu: If you want to add a new quadocopter to the list in our data base.\n";
+            direction += "bs: If you want to add a new base station to the list in our data base.\n";
+            direction += "qu: If you want to add a new quadocopter to the list in our data base.\n";
             direction += "cl: If you want to add a new client to the list in our data base.\n";
             direction += "pc: If you want to add a new packagh to the list in our data base.\n";
             direction += "ex: If you want to go back to the nain screan.\n";
@@ -101,8 +100,7 @@ namespace ConsoleUI
         {
             string direction = "You Choose tho update somthing to our data base.\n";
             direction += "\nChoose one of the following\n";
-            Console.WriteLine(direction);
-            direction = "conect: If you want to conect some packagh to quadocopter in our data base.\n";
+            direction += "conect: If you want to conect some packagh to quadocopter in our data base.\n";
             direction += "colect: If you want to colect the packagh from the quadocopter.\n";
             direction += "supply: If you want to update that the packagh was come to her place.\n";
             direction += "charge: If you want to send some quadocopter to charge.\n";
@@ -143,8 +141,7 @@ namespace ConsoleUI
         {
             string direction = "You Choose tho add somthing to our data base.\n";
             direction += "\nChoose one of the following\n";
-            Console.WriteLine(direction);
-            direction = "bs: If you want to print the datails of base station.\n";
+            direction += "bs: If you want to print the datails of base station.\n";
             direction += "qu: If you want to print the datails of quadocopter.\n";
             direction += "cl: If you want to print the datails of client.\n";
             direction += "pc: If you want to print the datails of packagh.\n";
@@ -180,13 +177,12 @@ namespace ConsoleUI
         {
             string direction = "You Choose tho add somthing to our data base.\n";
             direction += "\nChoose one of the following\n";
-            Console.WriteLine(direction);
-            direction = "bs: If you want to print all the base stations in our data base.\n";
+            direction += "bs: If you want to print all the base stations in our data base.\n";
             direction += "qu: If you want to print all the quadocopter in our data base.\n";
             direction += "cl: If you want to print all the client in our data base.\n";
             direction += "pc: If you want to print all the packagh in our data base.\n";
             direction += "pnq: If you want to print all the packagh that not conect to quadocopter in our data base.\n";
-            direction = "bec: If you want to print all the base stations with available charging positions in our data base.\n";
+            direction += "bec: If you want to print all the base stations with available charging positions in our data base.\n";
             direction += "ex: If you want to go back to the nain screan.\n";
             string userAnser;
             Console.WriteLine(direction);
