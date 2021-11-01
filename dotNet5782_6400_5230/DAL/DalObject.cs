@@ -211,7 +211,7 @@ namespace DalObject
             for (int i = 0; i < DataSource.Config.index_baseStation; i++)  //I run of all the array and looked for the one with the same id
                 if (DataSource.bstion[i].IDnumber == number)
                 {
-                    DataSource.bstion[i].ToString(); //I print it
+                    Console.WriteLine(DataSource.bstion[i]); //I print it
                     break;
                 }
         }
@@ -226,7 +226,7 @@ namespace DalObject
             for (int i = 0; i < DataSource.Config.index_quadocopter; i++)  //I run of all the array and looked for the one with the same id
                 if (DataSource.qpter[i].id == number)
                 {
-                    DataSource.qpter[i].ToString(); //I print it
+                    Console.WriteLine(DataSource.qpter[i]); //I print it
                     break;
                 }
         }
@@ -241,7 +241,7 @@ namespace DalObject
             for (int i = 0; i < DataSource.Config.index_client; i++)  //I run of all the array and looked for the one with the same id
                 if (DataSource.cli[i].ID == number)
                 {
-                    DataSource.cli[i].ToString(); //I print it
+                    Console.WriteLine(DataSource.cli[i]); //I print it
                     break;
                 }
         }
@@ -256,7 +256,7 @@ namespace DalObject
             for (int i = 0; i < DataSource.Config.index_packagh; i++)  //I run of all the array and looked for the one with the same id
                 if (DataSource.packagh[i].id == number)
                 {
-                    DataSource.packagh[i].ToString(); //I print it
+                    Console.WriteLine(DataSource.packagh[i]); //I print it
                     break;
                 }
         }
@@ -267,7 +267,7 @@ namespace DalObject
         public void ListOfStations() //print all the stations
         {
             for (int i = 0; i < DataSource.Config.index_baseStation; i++) // I run of all the stations and print them
-                DataSource.bstion[i].ToString();
+                Console.WriteLine(DataSource.bstion[i]);
         }
         /// <summary>
         /// print all the quadocpters.
@@ -275,7 +275,7 @@ namespace DalObject
         public void ListOfQ()//print all the quadocpters
         {
             for (int i = 0; i < DataSource.Config.index_quadocopter; i++) // I run of all the qudocopters and print them
-                DataSource.qpter[i].ToString();
+                Console.WriteLine(DataSource.qpter[i]);
         }
         /// <summary>
         /// print all the clients
@@ -283,7 +283,7 @@ namespace DalObject
         public void ListOfClients()//print all the clients
         {
             for (int i = 0; i < DataSource.Config.index_client; i++) // I run of all the clients and print them
-                DataSource.cli[i].ToString();
+                Console.WriteLine(DataSource.cli[i]);
         }
         /// <summary>
         /// print all the packages.
@@ -291,7 +291,7 @@ namespace DalObject
         public void ListOfPackages()//print all the packages
         {
             for (int i = 0; i < DataSource.Config.index_packagh; i++) // I run of all the packages and print them
-                DataSource.packagh[i].ToString();
+                Console.WriteLine(DataSource.packagh[i]);
         }
         /// <summary>
         /// print all the packages that dont assigned to quadocopter.
@@ -300,7 +300,7 @@ namespace DalObject
         {
             for (int i = 0; i < DataSource.Config.index_packagh; i++) // I run of all the packages and print them if their idQuadocopter is 0
                if (DataSource.packagh[i].idQuadocopter == 0)
-                    DataSource.packagh[i].ToString();
+                    Console.WriteLine(DataSource.packagh[i]);
         }
         /// <summary>
         /// print all the stations that have empty changing positions.
@@ -309,7 +309,7 @@ namespace DalObject
         {
             for (int i = 0; i < DataSource.Config.index_baseStation; i++) // I run of all the stations and print them if their changingPosition is not 0
                 if (DataSource.bstion[i].chargingPositions != 0)
-                    DataSource.bstion[i].ToString();
+                    Console.WriteLine(DataSource.bstion[i]);
         }
 
 
