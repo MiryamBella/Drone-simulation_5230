@@ -19,11 +19,11 @@ namespace DalObject
             station.chargingPositions = int.Parse(helpSTR); /// i get a numbers as string and convert it to int
             Console.WriteLine("Please enter longitude of station");
             helpSTR = Console.ReadLine();
-            station.longitude = int.Parse(helpSTR);
+            station.longitude = double.Parse(helpSTR);
             Console.WriteLine("Please enter latitude of station");
             helpSTR = Console.ReadLine();
-            station.latitude = int.Parse(helpSTR);
-
+            station.latitude = double.Parse(helpSTR);
+            
             int index = DataSource.Config.index_baseStation++; /// I save the first empty index and update it
             station.IDnumber = index + 1; ///the ID i dont asked from the user but decided to do numbers 1, 2, 3 and more as per the indexes
             DataSource.bstion[index] = station; /// i insert the new station into the array
