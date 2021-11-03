@@ -23,7 +23,11 @@ namespace DalObject
             Console.WriteLine("Please enter latitude of station");
             helpSTR = Console.ReadLine();
             station.latitude = double.Parse(helpSTR);
-            
+            //make the location in base 60.
+            station.toBaseSix = new BaseSixtin();
+            station.decSix = new DmsLocation();
+            station.decSix = station.toBaseSix.LocationSix(station.latitude, station.longitude);
+
             int index = DataSource.Config.index_baseStation++; /// I save the first empty index and update it
             station.IDnumber = index + 1; ///the ID i dont asked from the user but decided to do numbers 1, 2, 3 and more as per the indexes
             DataSource.bstion[index] = station; /// i insert the new station into the array

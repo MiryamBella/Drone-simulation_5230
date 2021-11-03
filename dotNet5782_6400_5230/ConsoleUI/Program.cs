@@ -139,7 +139,7 @@ namespace ConsoleUI
         /// </summary>
         void print() 
         {
-            string direction = "You Choose tho add somthing to our data base.\n";
+            string direction = "You Choose tho print somthing from our data base.\n";
             direction += "\nChoose one of the following\n";
             direction += "bs: If you want to print the datails of base station.\n";
             direction += "qu: If you want to print the datails of quadocopter.\n";
@@ -175,7 +175,7 @@ namespace ConsoleUI
         /// </summary>
         void printList()
         {
-            string direction = "You Choose tho add somthing to our data base.\n";
+            string direction = "You Choose tho print the lists from our data base.\n";
             direction += "\nChoose one of the following\n";
             direction += "bs: If you want to print all the base stations in our data base.\n";
             direction += "qu: If you want to print all the quadocopter in our data base.\n";

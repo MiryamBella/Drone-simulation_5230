@@ -52,6 +52,10 @@ namespace DalObject
             bstion[i].chargingPositions = r.Next();
             bstion[i].longitude = r.Next();
             bstion[i].latitude = r.Next();
+            bstion[i].toBaseSix = new BaseSixtin();
+            bstion[i].decSix = new DmsLocation();
+            bstion[i].decSix = bstion[i].toBaseSix.LocationSix(bstion[i].latitude, bstion[i].longitude);
+
 
             i = Config.index_baseStation++;
             bstion[i] = new BaseStation();//2
@@ -60,6 +64,9 @@ namespace DalObject
             bstion[i].chargingPositions = r.Next();
             bstion[i].longitude = r.Next();
             bstion[i].latitude = r.Next();
+            bstion[i].toBaseSix = new BaseSixtin();
+            bstion[i].decSix = new DmsLocation();
+            bstion[i].decSix = bstion[i].toBaseSix.LocationSix(bstion[i].latitude, bstion[i].longitude);
 
 
             /*Quadocopter*/
