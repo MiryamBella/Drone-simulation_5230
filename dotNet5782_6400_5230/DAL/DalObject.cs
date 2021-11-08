@@ -12,59 +12,39 @@ namespace DalObject
         public void AddBaseStation(int id, string name, int chargingPositions, double longitude, double latitude) ///adding new base station
         {
             BaseStation station = new BaseStation(); /// i did new BaseStation
-            //Console.WriteLine("Please enter name of station"); ///I get information from the user and enter it into the new station
-            station.name = name;// Console.ReadLine();
-            //Console.WriteLine("Please enter number of charging position");
-            //string helpSTR = Console.ReadLine();
-            station.chargingPositions = chargingPositions;// int.Parse(helpSTR); /// i get a numbers as string and convert it to int
-            //Console.WriteLine("Please enter longitude of station");
-            //helpSTR = Console.ReadLine();
-            station.longitude = longitude;// double.Parse(helpSTR);
-            //Console.WriteLine("Please enter latitude of station");
-            //helpSTR = Console.ReadLine();
-            station.latitude = latitude;// double.Parse(helpSTR);
+            station.name = name;
+            station.chargingPositions = chargingPositions;
+            station.longitude = longitude;
+            station.latitude = latitude;
+            
             //make the location in base 60.
             station.toBaseSix = new BaseSixtin();
             station.decSix = new DmsLocation();
             station.decSix = station.toBaseSix.LocationSix(station.latitude, station.longitude);
 
-            //int index = DataSource.Config.index_baseStation++; /// I save the first empty index and update it
-            station.IDnumber = id; ///the ID i dont asked from the user but decided to do numbers 1, 2, 3 and more as per the indexes
-            DataSource.bstion.Add(station); /// i insert the new station into the array
+            station.IDnumber = id;
+            DataSource.bstion.Add(station); /// i insert the new station into the list
         }
-        public void AddQuadocopter(int id)  ///adding new Quadocopter
+        public void AddQuadocopter(int id, string moodle, int weight, )  ///adding new Quadocopter
         {
             Quadocopter q = new Quadocopter();
-            Console.WriteLine("Please enter the modle of the quadocpter"); ///i get the modle of the Q and the Weight categories from the user
-            q.moodle = Console.ReadLine();
-            Console.WriteLine("Please enter the categorie of the weight (1 to easy, 2 to middle, 3 to heavy)");
-            string help = Console.ReadLine();     /// I get from the user the weight by 1, 2 or 3 and in accordance to it i enter the weight
-            if (help == "1") q.weight = WeighCategories.easy;
-            else if (help == "2") q.weight = WeighCategories.middle;
+            q.moodle = moodle;
+            if (weight == 1) q.weight = WeighCategories.easy;
+            else if (weight == 2) q.weight = WeighCategories.middle;
             else q.weight = WeighCategories.hevy;
-            //int index = DataSource.Config.index_quadocopter++;
             q.id = id;  /// I insert the id in according to the index
             q.battery = 100;   /// mode of bettery in the begining is 100%
             q.mode = statusOfQ.available; ///the Q in the begining is available
             DataSource.qpter.Add(q); ///I insert the new qptr to the array
         }
-        public void AddClient() ///adding new client
+        public void AddClient(int id, string name, int phoneNumber, double lon, double lat) ///adding new client
         {///I accept all the data from the user
             Client c = new Client();
-            Console.WriteLine("Please enter the ID of the client");
-            string help = Console.ReadLine();  ///accepting it as a string
-            c.ID = int.Parse(help);       ///convert the string to int
-            Console.WriteLine("Please enter the name of the client");
-            c.name = Console.ReadLine();
-            Console.WriteLine("Please enter the phone number of the client");
-            help = Console.ReadLine();
-            c.phoneNumber = int.Parse(help);
-            Console.WriteLine("Please enter the longitude of the home");
-            help = Console.ReadLine();
-            c.longitude = int.Parse(help);
-            Console.WriteLine("Please enter the latitude of the home");
-            help = Console.ReadLine();
-            c.latitude = int.Parse(help);
+            c.ID = id;
+            c.name = name;
+            c.phoneNumber = phoneNumber;
+            c.longitude = lon;
+            c.latitude = lat;
             DataSource.cli.Add(c);
         }
 
@@ -72,11 +52,9 @@ namespace DalObject
         /// adding new package.
         /// </summary>
         /// <returns>The pacjagh ID we add.</returns>
-        public int AddPackage() 
+        public void AddPackage() 
         {
             Packagh p = new Packagh();
-            Console.WriteLine("Please enter the ID of the sender of the package"); //accepting the id of the sender
-            string help = Console.ReadLine();
             p.sender = int.Parse(help);
             Console.WriteLine("Please enter the ID of the receiver of the package"); //accepting the id of the receiver
             help = Console.ReadLine();
@@ -100,7 +78,7 @@ namespace DalObject
             p.idQuadocopter = 0;  // the package have not quadocopter
             p.time_Create = DateTime.Now;  // the time of the create is now
             DataSource.packagh.Add(p);  // enter the new package into the array
-            return p.id;
+            //return p.id;
         }
         /// <summary>
         /// update package to be belong to a quadocopter.
@@ -207,7 +185,7 @@ namespace DalObject
         /// <summary>
         /// print datails of statin
         /// </summary>
-        public void StationDisplay()//print datails of statin 
+        public void StationDisplay()//print datails of station 
         {
             Console.WriteLine("please enter id of station"); // the printing is by the id  that i asked from the user
             string help = Console.ReadLine();
