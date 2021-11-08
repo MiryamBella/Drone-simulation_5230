@@ -9,30 +9,30 @@ namespace DalObject
     public class DalObject
     {
         public DalObject() { DataSource.Initialize(); }///When this class is built it first initializes the lists with the initial values defined in Initialize
-        public void AddBaseStation() ///adding new base station
+        public void AddBaseStation(int id, string name, int chargingPositions, double longitude, double latitude) ///adding new base station
         {
             BaseStation station = new BaseStation(); /// i did new BaseStation
-            Console.WriteLine("Please enter name of station"); ///I get information from the user and enter it into the new station
-            station.name = Console.ReadLine();
-            Console.WriteLine("Please enter number of charging position");
-            string helpSTR = Console.ReadLine();
-            station.chargingPositions = int.Parse(helpSTR); /// i get a numbers as string and convert it to int
-            Console.WriteLine("Please enter longitude of station");
-            helpSTR = Console.ReadLine();
-            station.longitude = double.Parse(helpSTR);
-            Console.WriteLine("Please enter latitude of station");
-            helpSTR = Console.ReadLine();
-            station.latitude = double.Parse(helpSTR);
+            //Console.WriteLine("Please enter name of station"); ///I get information from the user and enter it into the new station
+            station.name = name;// Console.ReadLine();
+            //Console.WriteLine("Please enter number of charging position");
+            //string helpSTR = Console.ReadLine();
+            station.chargingPositions = chargingPositions;// int.Parse(helpSTR); /// i get a numbers as string and convert it to int
+            //Console.WriteLine("Please enter longitude of station");
+            //helpSTR = Console.ReadLine();
+            station.longitude = longitude;// double.Parse(helpSTR);
+            //Console.WriteLine("Please enter latitude of station");
+            //helpSTR = Console.ReadLine();
+            station.latitude = latitude;// double.Parse(helpSTR);
             //make the location in base 60.
             station.toBaseSix = new BaseSixtin();
             station.decSix = new DmsLocation();
             station.decSix = station.toBaseSix.LocationSix(station.latitude, station.longitude);
 
-            int index = DataSource.Config.index_baseStation++; /// I save the first empty index and update it
-            station.IDnumber = index + 1; ///the ID i dont asked from the user but decided to do numbers 1, 2, 3 and more as per the indexes
-            DataSource.bstion[index] = station; /// i insert the new station into the array
+            //int index = DataSource.Config.index_baseStation++; /// I save the first empty index and update it
+            station.IDnumber = id; ///the ID i dont asked from the user but decided to do numbers 1, 2, 3 and more as per the indexes
+            DataSource.bstion.Add(station); /// i insert the new station into the array
         }
-        public void AddQuadocopter()  ///adding new Quadocopter
+        public void AddQuadocopter(int id)  ///adding new Quadocopter
         {
             Quadocopter q = new Quadocopter();
             Console.WriteLine("Please enter the modle of the quadocpter"); ///i get the modle of the Q and the Weight categories from the user
@@ -42,11 +42,11 @@ namespace DalObject
             if (help == "1") q.weight = WeighCategories.easy;
             else if (help == "2") q.weight = WeighCategories.middle;
             else q.weight = WeighCategories.hevy;
-            int index = DataSource.Config.index_quadocopter++;
-            q.id = index + 1;  /// I insert the id in according to the index
+            //int index = DataSource.Config.index_quadocopter++;
+            q.id = id;  /// I insert the id in according to the index
             q.battery = 100;   /// mode of bettery in the begining is 100%
             q.mode = statusOfQ.available; ///the Q in the begining is available
-            DataSource.qpter[index] = q; ///I insert the new qptr to the array
+            DataSource.qpter.Add(q); ///I insert the new qptr to the array
         }
         public void AddClient() ///adding new client
         {///I accept all the data from the user
@@ -65,7 +65,7 @@ namespace DalObject
             Console.WriteLine("Please enter the latitude of the home");
             help = Console.ReadLine();
             c.latitude = int.Parse(help);
-            DataSource.cli[DataSource.Config.index_client++] = c;
+            DataSource.cli.Add(c);
         }
 
         /// <summary>
@@ -95,11 +95,11 @@ namespace DalObject
             else if (help == "2")
                 p.priority = Priorities.fast;
             else p.priority = Priorities.emergency;
-            int index = DataSource.Config.index_client++; //find the index of the empty place in the array of the packages and update it
+            //int index = DataSource.Config.index_client++; //find the index of the empty place in the array of the packages and update it
             p.id = DataSource.Config.runNum++;   // the id of the package will be according the run number
             p.idQuadocopter = 0;  // the package have not quadocopter
             p.time_Create = DateTime.Now;  // the time of the create is now
-            DataSource.packagh[index] = p;  // enter the new package into the array
+            DataSource.packagh.Add(p);  // enter the new package into the array
             return p.id;
         }
         /// <summary>

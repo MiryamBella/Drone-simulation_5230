@@ -7,13 +7,13 @@ namespace DalObject
 {
     internal class DataSource // evrething is new in this class.
     {
- 
+
         /* i warite arrys and not lists because i think it will be more easy for us to get the data.
          */
-        internal static Quadocopter[] qpter = new Quadocopter[10];
-        internal static BaseStation[] bstion = new BaseStation[5];
-        internal static Client[] cli = new Client[100];
-        internal static Packagh[] packagh = new Packagh[1000];
+        internal static List<Quadocopter> qpter = new List<Quadocopter>();
+        internal static List<BaseStation> bstion = new List<BaseStation>();
+        internal static List<Client> cli = new List<Client>();
+        internal static List<Packagh> packagh = new List<Packagh>();
 
         /// <summary>
         /// list of all the quadocopter that are charging.
@@ -21,16 +21,9 @@ namespace DalObject
         internal static List<Charging> charge;//the for the funcs "SendQtoCharging" and "ReleaseQfromCharging".
         internal class Config
         {
-            //i write all the indexs if we will.
-            internal static int index_quadocopter = 0;
-            internal static int index_baseStation = 0;
-            internal static int index_client = 0;
-            internal static int index_packagh = 0;
 
             internal static int runNum = 0;//for the id packagh.
-                                  //i did the integger as static becuse i think it need to be only one like that because any id need to be difrent.
-                           
-            
+                                           //i did the integger as static becuse i think it need to be only one like that because any id need to be difrent.
         }
 
         /// <summary>
@@ -41,113 +34,127 @@ namespace DalObject
         {
             //i reset the arrys.
             Random r = new Random();
-            int i;
 
             /*base station*/
-            i = Config.index_baseStation++;
+            BaseStation b=new BaseStation();//1
+            b.IDnumber = 100;
+            b.name = "Jerusalem";
+            b.chargingPositions = r.Next();
+            b.longitude = r.Next();
+            b.latitude = r.Next();
+            b.toBaseSix = new BaseSixtin();
+            b.decSix = new DmsLocation();
+            b.decSix = b.toBaseSix.LocationSix(b.latitude, b.longitude);
+            bstion.Add(b);
 
-            bstion[i] = new BaseStation();//1
-            bstion[i].IDnumber = i;
-            bstion[i].name = "Jerusalem";
-            bstion[i].chargingPositions = r.Next();
-            bstion[i].longitude = r.Next();
-            bstion[i].latitude = r.Next();
-            bstion[i].toBaseSix = new BaseSixtin();
-            bstion[i].decSix = new DmsLocation();
-            bstion[i].decSix = bstion[i].toBaseSix.LocationSix(bstion[i].latitude, bstion[i].longitude);
 
-
-            i = Config.index_baseStation++;
-            bstion[i] = new BaseStation();//2
-            bstion[i].IDnumber = i;
-            bstion[i].name = "Tel Aviv";
-            bstion[i].chargingPositions = r.Next();
-            bstion[i].longitude = r.Next();
-            bstion[i].latitude = r.Next();
-            bstion[i].toBaseSix = new BaseSixtin();
-            bstion[i].decSix = new DmsLocation();
-            bstion[i].decSix = bstion[i].toBaseSix.LocationSix(bstion[i].latitude, bstion[i].longitude);
-
+            BaseStation baseStation = new BaseStation();//2
+            baseStation.IDnumber = 101;
+            baseStation.name = "Tel Aviv";
+            baseStation.chargingPositions = r.Next();
+            baseStation.longitude = r.Next();
+            baseStation.latitude = r.Next();
+            baseStation.toBaseSix = new BaseSixtin();
+            baseStation.decSix = new DmsLocation();
+            baseStation.decSix = baseStation.toBaseSix.LocationSix(baseStation.latitude, baseStation.longitude);
+            bstion.Add(baseStation);
 
             /*Quadocopter*/
-            i = Config.index_quadocopter++;//1
-            qpter[i] = new Quadocopter();
-            qpter[i].id = i;
-            qpter[i].moodle = "a";
-            qpter[i].weight = WeighCategories.easy;
-            qpter[i].battery = r.Next(0, 101);
-            qpter[i].mode = statusOfQ.available;
+            Quadocopter qa = new Quadocopter();//1
+            qa.id = 100;
+            qa.moodle = "a";
+            qa.weight = WeighCategories.easy;
+            qa.battery = r.Next(0, 101);
+            qa.mode = statusOfQ.available;
+            qpter.Add(qa);
 
-         i = Config.index_quadocopter++;//2
-            qpter[i] = new Quadocopter();
-            qpter[i].id = i;
-            qpter[i].moodle = "b";
-            qpter[i].weight = WeighCategories.hevy;
-            qpter[i].battery = r.Next(0, 101);
-            qpter[i].mode = statusOfQ.maintenance;
+            Quadocopter qb = new Quadocopter();//2
+            qb = new Quadocopter();
+            qb.id = 101;
+            qb.moodle = "b";
+            qb.weight = WeighCategories.hevy;
+            qb.battery = r.Next(0, 101);
+            qb.mode = statusOfQ.maintenance;
+            qpter.Add(qb);
 
-            i = Config.index_quadocopter++;//3
-            qpter[i] = new Quadocopter();
-            qpter[i].id = i;
-            qpter[i].moodle = "c";
-            qpter[i].weight = WeighCategories.middle;
-            qpter[i].battery = r.Next(0, 101);
-            qpter[i].mode = statusOfQ.delivery;
+            Quadocopter qc = new Quadocopter();//3
+            qc = new Quadocopter();
+            qc.id = 102;
+            qc.moodle = "c";
+            qc.weight = WeighCategories.middle;
+            qc.battery = r.Next(0, 101);
+            qc.mode = statusOfQ.delivery;
+            qpter.Add(qc);
 
-            i = Config.index_quadocopter++;//4
-            qpter[i] = new Quadocopter();
-            qpter[i].id = i;
-            qpter[i].moodle = "d";
-            qpter[i].weight = (WeighCategories)r.Next(0, 3);
-            qpter[i].battery = r.Next(0, 101);
-            qpter[i].mode = (statusOfQ)r.Next(0, 3);
+            Quadocopter qd = new Quadocopter();//4
+            qd = new Quadocopter();
+            qd.id = 103;
+            qd.moodle = "d";
+            qd.weight = (WeighCategories)r.Next(0, 3);
+            qd.battery = r.Next(0, 101);
+            qd.mode = (statusOfQ)r.Next(0, 3);
+            qpter.Add(qd);
 
-            i = Config.index_quadocopter++;//5
-            qpter[i] = new Quadocopter();
-            qpter[i].id = i;
-            qpter[i].moodle = "e";
-            qpter[i].weight = (WeighCategories)r.Next(0, 3);
-            qpter[i].battery = r.Next(0, 101);
-            qpter[i].mode = (statusOfQ)r.Next(0, 3);
+            Quadocopter qe = new Quadocopter();//5
+            qe = new Quadocopter();
+            qe.id = 104;
+            qe.moodle = "e";
+            qe.weight = (WeighCategories)r.Next(0, 3);
+            qe.battery = r.Next(0, 101);
+            qe.mode = (statusOfQ)r.Next(0, 3);
+            qpter.Add(qe);
 
 
             /*client*/
-            for (i = Config.index_client; i < 10; i++)
+            for (int i =0; i < 10; i++)
             {
-                cli[i] = new Client();
-                cli[i].ID = i;
-                cli[i].name = getRandomName(i);
-                cli[i].phoneNumber = r.Next();
-                cli[i].latitude = r.Next();
-                cli[i].longitude = r.Next();
+                Client c = new Client();
+                c.ID = (int)(i*100);
+                c.name = getRandomName(i);
+                c.phoneNumber = r.Next();
+                c.latitude = r.Next();
+                c.longitude = r.Next();
+                cli.Add(c);
             }
-            Config.index_client += 10;
-
+            
 
             /*Packagh*/
-
             //loop for reset all 10 packaghs.
-            for (i = Config.index_packagh; i < 10; i++)
+            for (int i = 0; i < 10; i++)
             {
-                packagh[i] = new Packagh();
-                packagh[i].id = i;
-                packagh[i].sender = r.Next();
-                packagh[i].receiver = r.Next();
-                packagh[i].weight = (WeighCategories)r.Next(0, 3);
-                packagh[i].priority = (Priorities)r.Next(0, 3);
-                packagh[i].idQuadocopter = findQuadocopter();
+                Packagh p = new Packagh();
+                p.id = Config.runNum;
+                Config.runNum++;
+                p.sender = r.Next();
+                p.receiver = r.Next();
+                p.weight = (WeighCategories)r.Next(0, 3);
+                p.priority = (Priorities)r.Next(0, 3);
+                p.idQuadocopter = r.Next(100,104);
+                
+                //the 3 package with difrent privorities and WeighCategories.
+                if(i==0)
+                {
+                    p.weight = WeighCategories.hevy;
+                    p.priority = Priorities.fast;
+
+                }
+                else if (i == 1)
+                {
+                    p.weight = WeighCategories.easy;
+                    p.priority = Priorities.emergency;
+
+                }
+                else if (i == 2)
+                {
+
+                    p.weight = WeighCategories.middle;
+                    p.priority = Priorities.reggular;
+
+                }
+                packagh.Add(p);
             }
-            Config.index_packagh += 10;//change the index.
 
-            //the 3 package with difrent privorities and WeighCategories.
-            packagh[i-1].weight = WeighCategories.hevy;
-            packagh[i-1].priority = Priorities.fast;
 
-            packagh[i - 2].weight = WeighCategories.easy;
-            packagh[i - 2].priority = Priorities.emergency;
-
-            packagh[i - 3].weight = WeighCategories.middle;
-            packagh[i - 3].priority = Priorities.reggular;
         }
 
 
@@ -182,17 +189,6 @@ namespace DalObject
                 default:
                     return "Dina";
             }
-        }
-        static int findQuadocopter()
-        {
-            Random r = new Random();
-            for (int i = 0; 0 < Config.index_quadocopter; i++)
-            {
-                int j = r.Next(0, Config.index_quadocopter);
-                if (qpter[j].mode != statusOfQ.maintenance)
-                    return j;
-            }
-            return 0;
         }
 
     }
