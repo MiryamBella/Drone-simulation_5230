@@ -75,13 +75,13 @@ namespace ConsoleUI
             switch (userAnser)
             {
                 case "bs":
-                    dalObject.AddBaseStation();
+                    //dalObject.AddBaseStation();
                     break;
                 case "qu":
-                    dalObject.AddQuadocopter();
+                    //dalObject.AddQuadocopter();
                     break;
                 case "cl":
-                    dalObject.AddClient();
+                    //dalObject.AddClient();
                     break;
                 case "pc":
                     dalObject.AddPackage();

@@ -194,13 +194,13 @@ namespace ConsoleUI_BL
             switch (userAnser)
             {
                 case "qua":
-
+                    program.up_Q();
                     break;
                 case "bst":
-
+                    program.up_baseStation();
                     break;
                 case "cli":
-
+                    program.up_client();
                     break;
                 case "yes charge":
                     program.SendQtoCharging();
@@ -209,7 +209,7 @@ namespace ConsoleUI_BL
                     program.ReleaseQfromCharging();
                     break;
                 case "conect":
-                    program.AssignPtoQ();
+                    program.AssignPackageToQuadocopter();
                     break;
                 case "colect":
                     program.CollectPbyQ();
@@ -226,99 +226,126 @@ namespace ConsoleUI_BL
 
         }
 
-        void SendQtoCharging()
+        //update function
+        void up_Q()
         {
+            Console.WriteLine("Please enter the ID of the quadocopter.");
+            string helpSTR =Console.ReadLine();
+            int id = int.Parse(helpSTR);
+            Console.WriteLine("Please enter the name of the moodle of the quadocopter you want to change.");
+            string moodle =Console.ReadLine();
 
-            int[] indexs = new int[2];
-            bool charge = true;
-            bool allow = allwoToCharge(indexs, charge);
-            int iq = indexs[0];
-            int jb = indexs[1];
-            if (!allow)
-                return;
-            if (DataSource.bstion[jb].chargingPositions == 0)
+            //send(id, noodle)
+        }
+        void up_baseStation()
+        {
+            string helpSTR;
+            int id = 0;
+            string anser = "";
+            string name = "";
+            int numCharge = 0;
+            Console.WriteLine("Please enter the ID of the base station.");
+            helpSTR = Console.ReadLine();
+            id = int.Parse(helpSTR);
+            Console.WriteLine("ys: If you want to update the name of the base station.\nno: If you don't want to update the name.");
+            anser = Console.ReadLine();
+            if(anser=="ys")
             {
-                Console.WriteLine("The base station dont have plase to charging.");
-                return;
+                Console.WriteLine("Please enter the new name.");
+                name = Console.ReadLine();
+            }
+            Console.WriteLine("ys: If you want to update the number of charging in the base station.\nno: If you don't want.");
+            anser = Console.ReadLine();
+            if (anser == "ys")
+            {
+                Console.WriteLine("Please enter the new number of charging positions..");
+                helpSTR = Console.ReadLine();
+                numCharge = int.Parse(helpSTR);
             }
 
-
-            //now after we chek if we can we will start the charging.
-            Charging c = new Charging();
-            c.baseStationID = DataSource.bstion[jb].IDnumber;
-            c.quadocopterID = DataSource.qpter[iq].id;
-            DataSource.bstion[jb].chargingPositions--;
-            DataSource.qpter[iq].battery = 100;
-            DataSource.qpter[iq].mode = statusOfQ.maintenance;
-            DataSource.charge.Add(c);
+            //send(id, name, numCharge)
         }
+        void up_client()
+        {
+            string helpSTR;
+            int id = 0;
+            string anser = "";
+            string name = "";
+            int numPon = 0;
+            Console.WriteLine("Please enter the ID of the client.");
+            helpSTR = Console.ReadLine();
+            id = int.Parse(helpSTR);
+            Console.WriteLine("ys: If you want to update the name of the client.\nno: If you don't want.");
+            anser = Console.ReadLine();
+            if (anser == "ys")
+            {
+                Console.WriteLine("Please enter the new name.");
+                name = Console.ReadLine();
+            }
+            Console.WriteLine("ys: If you want to update the number phon of the client.\nno: If you don't want.");
+            anser = Console.ReadLine();
+            if (anser == "ys")
+            {
+                Console.WriteLine("Please enter the new number of charging positions..");
+                helpSTR = Console.ReadLine();
+                numPon = int.Parse(helpSTR);
+            }
+
+            //send(id, name, numPon)
+        }
+
+
+        void SendQtoCharging()
+        {
+            Console.WriteLine("Please enter the ID of the quadocopter you want to charge."); //accepting the id of the quadocopter
+            string temp_str = Console.ReadLine();
+            int id = int.Parse(temp_str);
+
+            //send(id)
+        }
+        /// <summary>
+        /// release the quadocopter frp charging.
+        /// </summary>
         void ReleaseQfromCharging()
         {
+            Console.WriteLine("Please enter the ID of the quadocopter you want to charge."); //accepting the id of the quadocopter
+            string temp_str = Console.ReadLine();
+            int id = int.Parse(temp_str);
 
-            int[] indexs = new int[2];
-            bool charge = false;
-            bool allow = allwoToCharge(indexs, charge);
-            if (!allow)
-                return;
+            Console.WriteLine("Please enter the time the quadocopter was charging."); //accepting the id of the quadocopter
+            temp_str = Console.ReadLine();
+            DateTime time = DateTime.Parse(temp_str);
 
-
-            //now after we chek if we can we will start the charging.
-            int iq = indexs[0];
-            int jb = indexs[1];
-            DataSource.bstion[jb].chargingPositions++;
-            DataSource.qpter[iq].mode = statusOfQ.available;
-
-            Charging c = new Charging();
-            c.baseStationID = DataSource.bstion[jb].IDnumber;
-            c.quadocopterID = DataSource.qpter[iq].id;
-            DataSource.charge.Remove(c);
+            //send(id, time)
         }
         /// <summary>
         /// update package to be belong to a quadocopter.
         /// </summary>
-        void AssignPtoQ()
+        void AssignPackageToQuadocopter()
         {
             Console.WriteLine("Please enter the ID of the package"); //accepting the id of the package
             string help = Console.ReadLine();
             int id = int.Parse(help);
-            int i = 0;
-            for (; i < DataSource.Config.index_packagh; i++) // look for the index that the package in it
-                if (DataSource.packagh[i].id == id)
-                    break;
-            int j = 0;
-            for (; j < DataSource.Config.index_quadocopter; j++) // look for index that contain quadocopter whice can take this package
-                if (DataSource.qpter[j].mode == statusOfQ.available)
-                    if (DataSource.qpter[j].weight == DataSource.packagh[i].weight)
-                        break;
-            DataSource.qpter[j].mode = statusOfQ.delivery; //change the mode of the qpter to delivery
-            DataSource.packagh[i].idQuadocopter = DataSource.qpter[j].id; //enter the id of the qptr to the package
-            DataSource.packagh[i].time_Belong_quadocopter = DateTime.Now; //update the appropriate time to be now 
+
+            //send(id)
         }
+        /// <summary>
+        /// update package to be collected by quadocopter.
+        /// </summary>
         void CollectPbyQ()
         {
             Console.WriteLine("Please enter the ID of the package"); //accepting the id of the package
             string help = Console.ReadLine();
             int id = int.Parse(help);
-            for (int i = 0; i < DataSource.Config.index_packagh; i++) // look for the index that the package in it
-                if (DataSource.packagh[i].id == id)
-                {
-                    DataSource.packagh[i].time_ColctedFromSender = DateTime.Now; //update the time
-                    break;
-                }
+
+            //send(id)
         }
         void DeliveringPtoClient()
         {
             Console.WriteLine("Please enter the ID of the package"); //accepting the id of the package
             string help = Console.ReadLine();
             int id = int.Parse(help);
-            int i = 0;
-            for (; i < DataSource.Config.index_packagh; i++)//look for the index of this package
-                if (DataSource.packagh[i].id == id)
-                    break;
-            DataSource.packagh[i].time_ComeToColcter = DateTime.Now; //update the time
-            for (int j = 0; j < DataSource.Config.index_quadocopter; j++) //look for index of the quadocopter whice take this package
-                if (DataSource.qpter[j].id == DataSource.packagh[i].idQuadocopter)
-                    DataSource.qpter[j].mode = statusOfQ.available; //update the qptr to be abailable
+            //send(id)
         }
 
         /*end of update*/
@@ -338,19 +365,38 @@ namespace ConsoleUI_BL
             string userAnser;
             Console.WriteLine(direction);
             userAnser = Console.ReadLine();
+
+            int id = 0;///it is temp id to send to BL.
+            string help = "";
             switch (userAnser)
             {
                 case "bs":
-                    dalObject.StationDisplay();
+                    Console.WriteLine("please enter id of station"); // the printing is by the id  that i asked from the user
+                    help = Console.ReadLine();
+                    id = int.Parse(help);
+
+                    //send(id)
                     break;
                 case "qu":
-                    dalObject.QuDisplay();
+                    Console.WriteLine("please enter id of quadocopter"); // the printing is by the id  that i asked from the user
+                    help = Console.ReadLine();
+                    id = int.Parse(help);
+
+                    //send(id)
                     break;
                 case "cl":
-                    dalObject.ClientDisplay();
+                    Console.WriteLine("please enter id of client"); // the printing is by the id  that i asked from the user
+                    help = Console.ReadLine();
+                    id = int.Parse(help);
+
+                    //send(id)
                     break;
                 case "pc":
-                    dalObject.PackageDisplay();
+                    Console.WriteLine("please enter id of package"); // the printing is by the id  that i asked from the user
+                    help = Console.ReadLine();
+                    id = int.Parse(help);
+
+                    //send(id)
                     break;
                 case "ex":
                     break;
@@ -381,22 +427,22 @@ namespace ConsoleUI_BL
             switch (userAnser)
             {
                 case "bs":
-                    dalObject.ListOfStations();
+                    //call to BL
                     break;
                 case "qu":
-                    dalObject.ListOfQ();
+                    //call to BL
                     break;
                 case "cl":
-                    dalObject.ListOfClients();
+                    //call to BL
                     break;
                 case "pc":
-                    dalObject.ListOfPackages();
+                    //call to BL
                     break;
                 case "pc not qu":
-                    dalObject.ListOfPwithoutQ();
+                    //call to BL
                     break;
                 case "bs yes ch":
-                    dalObject.ListOfStationsForCharging();
+                    //call to BL
                     break;
                 case "ex":
                     break;
