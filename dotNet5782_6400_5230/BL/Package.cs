@@ -4,8 +4,10 @@ using System.Text;
 
 namespace IBL
 {
-    interface IBL
+    namespace BO
     {
-        //public addS();
+        class package
+        {
+        }
     }
 }

@@ -4,8 +4,8 @@ using System.Text;
 
 namespace IBL
 {
-    interface IBL
+    public partial class BL
     {
-        //public addS();
+        //dal d
     }
 }
