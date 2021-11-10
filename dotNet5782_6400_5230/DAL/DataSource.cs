@@ -21,7 +21,6 @@ namespace DalObject
         internal static List<Charging> charge;//the for the funcs "SendQtoCharging" and "ReleaseQfromCharging".
         internal class Config
         {
-
             internal static int runNum = 0;//for the id packagh.
                                            //i did the integger as static becuse i think it need to be only one like that because any id need to be difrent.
         }
@@ -64,8 +63,8 @@ namespace DalObject
             qa.id = 100;
             qa.moodle = "a";
             qa.weight = WeighCategories.easy;
-            qa.battery = r.Next(0, 101);
-            qa.mode = statusOfQ.available;
+            ///qa.battery = r.Next(0, 101);
+            ///qa.mode = statusOfQ.available;
             qpter.Add(qa);
 
             Quadocopter qb = new Quadocopter();//2
@@ -73,8 +72,8 @@ namespace DalObject
             qb.id = 101;
             qb.moodle = "b";
             qb.weight = WeighCategories.hevy;
-            qb.battery = r.Next(0, 101);
-            qb.mode = statusOfQ.maintenance;
+            ///qb.battery = r.Next(0, 101);
+            ///qb.mode = statusOfQ.maintenance;
             qpter.Add(qb);
 
             Quadocopter qc = new Quadocopter();//3
@@ -82,8 +81,8 @@ namespace DalObject
             qc.id = 102;
             qc.moodle = "c";
             qc.weight = WeighCategories.middle;
-            qc.battery = r.Next(0, 101);
-            qc.mode = statusOfQ.delivery;
+            ///qc.battery = r.Next(0, 101);
+            ///qc.mode = statusOfQ.delivery;
             qpter.Add(qc);
 
             Quadocopter qd = new Quadocopter();//4
@@ -91,8 +90,8 @@ namespace DalObject
             qd.id = 103;
             qd.moodle = "d";
             qd.weight = (WeighCategories)r.Next(0, 3);
-            qd.battery = r.Next(0, 101);
-            qd.mode = (statusOfQ)r.Next(0, 3);
+            ///qd.battery = r.Next(0, 101);
+            ///qd.mode = (statusOfQ)r.Next(0, 3);
             qpter.Add(qd);
 
             Quadocopter qe = new Quadocopter();//5
@@ -100,8 +99,8 @@ namespace DalObject
             qe.id = 104;
             qe.moodle = "e";
             qe.weight = (WeighCategories)r.Next(0, 3);
-            qe.battery = r.Next(0, 101);
-            qe.mode = (statusOfQ)r.Next(0, 3);
+            ///qe.battery = r.Next(0, 101);
+            ///qe.mode = (statusOfQ)r.Next(0, 3);
             qpter.Add(qe);
 
 
@@ -158,7 +157,7 @@ namespace DalObject
         }
 
 
-        //-------------funcs that exsit for us-----------------------------------------------
+        //-------------------funcs that exsit for us-----------------------------------------------
         
         /*2 funcs for the reset func.*/
         static string getRandomName(int num)
