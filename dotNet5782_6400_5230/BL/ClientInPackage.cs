@@ -6,8 +6,10 @@ namespace IBL
 {
     namespace BO
     {
-        class clientInPackage
+        public class clientInPackage
         {
+            public int ID { get; set; }
+            public string name { get; set; }
         }
     }
 }
