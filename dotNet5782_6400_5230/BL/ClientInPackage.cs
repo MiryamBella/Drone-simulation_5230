@@ -10,6 +10,11 @@ namespace IBL
         {
             public int ID { get; set; }
             public string name { get; set; }
+            public override string ToString()
+            {
+                return ("ID: " + ID + '\n' +
+                    "name: " + name + '\n');
+            }
         }
     }
 }
