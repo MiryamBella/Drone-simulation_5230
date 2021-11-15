@@ -23,6 +23,11 @@ namespace DalObject
         {
             internal static int runNum = 0;//for the id packagh.
                                            //i did the integger as static becuse i think it need to be only one like that because any id need to be difrent.
+            internal static double Available { get { return 1; } }
+            internal static double easy { get { return 2; } }
+            internal static double hevy { get { return 3; } }
+            internal static double middle_toCare { get { return 4; } }
+            internal static double charghingRate = 0;
         }
 
         /// <summary>
