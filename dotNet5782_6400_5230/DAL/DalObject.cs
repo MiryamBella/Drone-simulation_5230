@@ -176,15 +176,17 @@ namespace DalObject
         /// <summary>
         /// print all the stations.
         /// </summary>
-        public void ListOfStations() //print all the stations
+        public List<BaseStation> ListOfStations() //return list of all the stations
         {
+            List<BaseStation> l = new List<BaseStation>();
             foreach (BaseStation b in  DataSource.bstion) // I run of all the stations and print them
-                Console.WriteLine(b);
+                l.Add(b);
+            return l;
         }
         /// <summary>
-        /// print all the quadocpters.
+        /// return list of all the quadocpters.
         /// </summary>
-        public List<IDAL.DO.Quadocopter> ListOfQ()//print all the quadocpters
+        public List<IDAL.DO.Quadocopter> ListOfQ()//return list of all the quadocpters
         {
             List<IDAL.DO.Quadocopter> list = new List<Quadocopter>();
             foreach (Quadocopter q in DataSource.qpter) // I run of all the stations and print them
@@ -194,38 +196,46 @@ namespace DalObject
         /// <summary>
         /// print all the clients
         /// </summary>
-        public void ListOfClients()//print all the clients
+        public List<Client> ListOfClients()//print all the clients
         {
+            List<Client> l = new List<Client>();
             foreach (Client c in DataSource.cli) // I run of all the stations and print them
-                Console.WriteLine(c);
+                l.Add(c);
+            return l;
         }
         /// <summary>
         /// print all the packages.
         /// </summary>
-        public void ListOfPackages()//print all the packages
+        public List<Packagh> ListOfPackages()//print all the packages
         {
+            List<Packagh> l = new List<Packagh>();
             foreach (Packagh p in DataSource.packagh) // I run of all the stations and print them
-                Console.WriteLine(p);
+                l.Add(p);
+            return l;
         }
         /// <summary>
         /// print all the packages that dont assigned to quadocopter.
         /// </summary>
-        public void ListOfPwithoutQ()//print all the packages that dont assigned to quadocopter
+        public List<Packagh> ListOfPwithoutQ()//return list of all the packages that dont assigned to quadocopter
         {
+            List<Packagh> l = new List<Packagh>();
             foreach (Packagh p in DataSource.packagh) // I run of all the packages and print them if their idQuadocopter is 0
                 if (p.idQuadocopter == 0)
-                    Console.WriteLine(p);
+                    l.Add(p);
+            return l;
 
         }
         /// <summary>
         /// print all the stations that have empty changing positions.
         /// </summary>
-        public void ListOfStationsForCharging()//print all the stations that have empty changing positions
+        public List<BaseStation> ListOfStationsForCharging()//print all the stations that have empty changing positions
         {
+            List<BaseStation> lbs = new List<BaseStation>();
             // I run of all the stations and print them if their changingPosition is not 0
             foreach (BaseStation b in DataSource.bstion) 
                 if (b.chargingPositions != 0)
-                    Console.WriteLine(b);
+                    lbs.Add(b);
+            return lbs;
         }
         public double[] askForElectric()//the quadocopter ask.
         {

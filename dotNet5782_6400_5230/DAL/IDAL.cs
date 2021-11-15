@@ -33,17 +33,17 @@ namespace IDAL
         /// print datails of package.
         public void PackageDisplay(Packagh p);
         /// print all the stations.
-        public void ListOfStations();
+        public List<BaseStation> ListOfStations();
         /// print all the quadocpters.
         public List<Quadocopter> ListOfQ();
         /// print all the clients
-        public void ListOfClients();
+        public List<Client> ListOfClients();
         /// print all the packages.
-        public void ListOfPackages();
+        public List<Packagh> ListOfPackages();
         /// print all the packages that dont assigned to quadocopter.
-        public void ListOfPwithoutQ();
-        /// print all the stations that have empty changing positions.
-        public void ListOfStationsForCharging();
+        public List<Packagh> ListOfPwithoutQ();
+        /// return list of all the stations that have empty changing positions.
+        public List<BaseStation> ListOfStationsForCharging();
         ///the quadocopter ask.
         public double[] askForElectric();
     }
