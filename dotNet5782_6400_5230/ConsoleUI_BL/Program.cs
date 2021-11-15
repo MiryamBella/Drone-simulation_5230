@@ -129,7 +129,7 @@ namespace ConsoleUI_BL
             helpSTR = Console.ReadLine();/// I get from the user the id.
             int id_bs = int.Parse(helpSTR);
 
-            //send(id, moodle, weigh, id_bs)
+            bl.AddQuadocopter(id, moodle, weigh, id_bs);
         }
         void AddClient() 
         {

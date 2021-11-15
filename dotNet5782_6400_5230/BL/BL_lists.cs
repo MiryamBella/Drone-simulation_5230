@@ -33,5 +33,30 @@ namespace IBL
 
             return new_q;
         }
+
+
+        //--------cover base station---------------------------------------------------
+
+        List<BaseStation> cover_to_our_list(List<IDAL.DO.BaseStation> old_l)
+        {
+            List<BaseStation> new_l = new List<BaseStation>();
+            foreach (IDAL.DO.BaseStation q in old_l)
+                new_l.Add(cover(q));
+            return new_l;
+        }
+        BaseStation cover(IDAL.DO.BaseStation b)
+        {
+            BaseStation new_bs = new BaseStation();
+            new_bs.ID = b.IDnumber;
+            new_bs.name = b.name;
+            new_bs.thisLocation.latitude =b.latitude;
+            new_bs.thisLocation.longitude = b.longitude;
+            new_bs.thisLocation.decSix = new_bs.thisLocation.toBaseSix.LocationSix(b.latitude, b.longitude);
+            
+            return new_bs;
+        }
+
+
+
     }
 }

@@ -36,6 +36,14 @@ class DecimalLocation
 
 public class DmsLocation
 {
+    public DmsLocation() { }
+    public DmsLocation(double lat, double lon)
+    {
+        BaseSixtin b = new BaseSixtin();
+        Latitude = b.LocationSix(lat, lon).Latitude;
+        Longitude = b.LocationSix(lat, lon).Longitude;
+    }
+
     public DmsPoint Latitude { get; set; }
     public DmsPoint Longitude { get; set; }
 
