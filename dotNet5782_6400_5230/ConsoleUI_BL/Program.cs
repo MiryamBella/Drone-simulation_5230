@@ -6,12 +6,12 @@ namespace ConsoleUI_BL
     class Program
     {
         static Program program;
-        IBL.BL bl;
+        BL bl;
 
         static void Main(string[] args)
         {
             program = new Program();//start the pogram, so i can use the methods.
-            //program.bl = new IBL.BL();//start the BL.
+            program.bl = new BL();//start the BL.
 
             Console.WriteLine("Hello user!");
             string welcoming;
