@@ -184,10 +184,12 @@ namespace DalObject
         /// <summary>
         /// print all the quadocpters.
         /// </summary>
-        public void ListOfQ()//print all the quadocpters
+        public List<IDAL.DO.Quadocopter> ListOfQ()//print all the quadocpters
         {
+            List<IDAL.DO.Quadocopter> list = new List<Quadocopter>();
             foreach (Quadocopter q in DataSource.qpter) // I run of all the stations and print them
-                Console.WriteLine(q);
+                list.Add(q);
+            return list;
         }
         /// <summary>
         /// print all the clients

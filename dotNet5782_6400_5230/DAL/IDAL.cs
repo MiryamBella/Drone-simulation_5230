@@ -5,7 +5,7 @@ using IDAL.DO;
 
 namespace IDAL
 {
-    interface IDAL
+    public interface IDAL
     {
         ///adding new base station    
         public void AddBaseStation(int id, string name, int chargingPositions, double longitude, double latitude);
@@ -35,7 +35,7 @@ namespace IDAL
         /// print all the stations.
         public void ListOfStations();
         /// print all the quadocpters.
-        public void ListOfQ();
+        public List<Quadocopter> ListOfQ();
         /// print all the clients
         public void ListOfClients();
         /// print all the packages.

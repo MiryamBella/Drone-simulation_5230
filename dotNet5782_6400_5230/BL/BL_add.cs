@@ -1,9 +1,15 @@
 ﻿using System;
-
+using DalObject;
 namespace IBL
 {
-    public partial class BL
+    public partial class BL: IBL
     {
-        //dal d
+        IDAL.IDAL dal;
+        BL() { 
+            dal = new DalObject.DalObject();
+            help_list=dal.ListOfQ();
+           }
+        
+
     }
 }
