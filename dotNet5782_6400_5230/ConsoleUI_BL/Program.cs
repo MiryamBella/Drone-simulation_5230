@@ -112,8 +112,8 @@ namespace ConsoleUI_BL
             Console.WriteLine("Please enter number of charging position");
             helpSTR = Console.ReadLine();
             int numCharge = int.Parse(helpSTR);// i get a numbers as string and convert it to int
-            
-            //send(id, name, on, lan, numCharge)
+
+            program.bl.AddBaseStation(id, name, lon, lat, numCharge);
         }
         void AddQuadocopter()
         {
@@ -129,7 +129,7 @@ namespace ConsoleUI_BL
             helpSTR = Console.ReadLine();/// I get from the user the id.
             int id_bs = int.Parse(helpSTR);
 
-            bl.AddQuadocopter(id, moodle, weigh, id_bs);
+            program.bl.AddQuadocopter(id, moodle, weigh, id_bs);
         }
         void AddClient() 
         {
@@ -148,7 +148,7 @@ namespace ConsoleUI_BL
             helpSTR = Console.ReadLine();
             double lat = double.Parse(helpSTR);
 
-            //send(id, name, phoneNumber, lon, lat)
+            program.bl.AddClient(id, name, phoneNumber, lon, lat);
         }
         void AddPackage()
         {
@@ -165,7 +165,7 @@ namespace ConsoleUI_BL
             helpSTR = Console.ReadLine();
             int priority = int.Parse(helpSTR);
 
-            //send(id_send, id_colect, weigh, priority)
+            program.bl.AddPackage(id_send, id_colect, weigh, priority);
         }
 
         /*end of add.*/

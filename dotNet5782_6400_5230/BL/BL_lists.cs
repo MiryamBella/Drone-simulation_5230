@@ -56,6 +56,27 @@ namespace IBL
             return new_bs;
         }
 
+        //--------cover client---------------------------------------------------
+
+        List<client> cover_to_our_list(List<IDAL.DO.Client> old_l)
+        {
+            List<client> new_l = new List<client>();
+            foreach (IDAL.DO.Client q in old_l)
+                new_l.Add(cover(q));
+            return new_l;
+        }
+        client cover(IDAL.DO.Client c)
+        {
+            client new_c = new client();
+            new_c.ID = c.ID;
+            new_c.name = c.name;
+            new_c.phoneNumber = c.phoneNumber;
+            new_c.thisLocation.latitude = c.latitude;
+            new_c.thisLocation.longitude = c.longitude;
+            new_c.thisLocation.decSix = new_c.thisLocation.toBaseSix.LocationSix(c.latitude, c.longitude);
+
+            return new_c;
+        }
 
 
     }
