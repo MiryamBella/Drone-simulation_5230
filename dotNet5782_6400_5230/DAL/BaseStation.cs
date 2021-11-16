@@ -11,6 +11,7 @@ namespace IDAL
             public int IDnumber { get; set; }
             public string name { get; set; }
             public int chargingPositions { get; set; }
+            public int freechargingPositions { get; set; }
             public double longitude { get; set; }
             public double latitude { get; set; }
             public BaseSixtin toBaseSix { get; set; }
