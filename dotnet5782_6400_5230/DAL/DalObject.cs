@@ -15,6 +15,7 @@ namespace DalObject
             BaseStation station = new BaseStation(); /// i did new BaseStation
             station.name = name;
             station.chargingPositions = chargingPositions;
+            station.freechargingPositions = chargingPositions;
             station.longitude = longitude;
             station.latitude = latitude;
             
@@ -75,11 +76,23 @@ namespace DalObject
         /// <summary>
         /// update the modle of qudocopter
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="modle"></param>
         public void updateQd(Quadocopter q, string modle)
         {
                     q.moodle = modle;
+        }
+        ///update name and number of charging positions of a base station
+        public void updateSdata(BaseStation b, string name, int chargingPositions)
+        {
+            if (name != null) b.name = name;
+            if (chargingPositions != -1) b.chargingPositions = chargingPositions;
+        }
+        /// <summary>
+        /// update name and phone of client
+        /// </summary>
+        public void updateCdata(Client c, string name = null, int phone = 0)
+        {
+            if (name != null) c.name = name;
+            if (phone != 0) c.phoneNumber = phone;
         }
         /// <summary>
         /// update package to be belong to a quadocopter.
@@ -136,9 +149,7 @@ namespace DalObject
             Charging c = new Charging();
             c.baseStationID = b.IDnumber;
             c.quadocopterID = q.id;
-            b.chargingPositions--;
-            //DataSource.qpter[iq].battery = 100;
-            //DataSource.qpter[iq].mode = statusOfQ.maintenance ;
+            b.freechargingPositions--;
             DataSource.charge.Add(c);
         }
         /// <summary>
@@ -146,7 +157,7 @@ namespace DalObject
         /// </summary>
         public void ReleaseQfromCharging(BaseStation b, Quadocopter q)
         {
-            b.chargingPositions++;
+            b.freechargingPositions++;
             //DataSource.qpter[iq].mode = statusOfQ.available;
 
             Charging c = new Charging();
@@ -157,30 +168,57 @@ namespace DalObject
         /// <summary>
         /// print datails of statin
         /// </summary>
-        public void StationDisplay(BaseStation b)//print datails of station 
+        public BaseStation StationDisplay(int id)//print datails of station 
         {
-                    Console.WriteLine(b); //I print it
+            foreach (BaseStation temp in DataSource.bstion)
+            {
+                if (temp.IDnumber == id)
+                    return temp;
+            }
+            BaseStation b = new BaseStation { IDnumber = (int)0 };
+            return b;
         }
         /// <summary>
         /// print datails of quadocopter.
         /// </summary>
-        public void QuDisplay(Quadocopter q)//print datails of quadocopter
+        public Quadocopter QuDisplay(int id)//print datails of quadocopter
         {
-                    Console.WriteLine(q); //I print it
+            foreach (Quadocopter temp in DataSource.qpter)
+            {
+                if (temp.id == id)
+                    return temp;
+            }
+            Quadocopter q = new Quadocopter { id = 0 };
+
+            return q;
         }
         /// <summary>
         /// print datails of client.
         /// </summary>
-        public void ClientDisplay(Client c)//print datails of client
+        public Client ClientDisplay(int id)//print datails of client
         {
-                    Console.WriteLine(c); //I print it
+            foreach (Client temp in DataSource.cli)
+            {
+                if (temp.ID == id)
+                    return temp;
+            }
+            Client c = new Client { ID = 0 };
+
+            return c;
         }
         /// <summary>
         /// print datails of package.
         /// </summary>
-        public void PackageDisplay(Packagh p)//print datails of package
+        public Packagh PackageDisplay(int id)//print datails of package
         {
-                    Console.WriteLine(p); //I print it
+            foreach (Packagh temp in DataSource.packagh)
+            {
+                if (temp.id == id)
+                    return temp;
+            }
+            Packagh p = new Packagh { id = 0 };
+
+            return p;
         }
 
         /// <summary>
@@ -243,7 +281,7 @@ namespace DalObject
             List<BaseStation> lbs = new List<BaseStation>();
             // I run of all the stations and print them if their changingPosition is not 0
             foreach (BaseStation b in DataSource.bstion) 
-                if (b.chargingPositions != 0)
+                if (b.freechargingPositions != 0)
                     lbs.Add(b);
             return lbs;
         }
