@@ -76,20 +76,16 @@ namespace ConsoleUI
             switch (userAnser)
             {
                 case "bs":
-                    IDAL.DO.BaseStation b = acceptBS();
-                    dalObject.AddBaseStation(b);
+                    addBS();
                     break;
                 case "qu":
-                    IDAL.DO.Quadocopter q = acceptQU();
-                    dalObject.AddQuadocopter(q);
+                    addQU();
                     break;
                 case "cl":
-                    IDAL.DO.Client c = acceptCL();
-                    dalObject.AddClient(c);
+                    addCL();
                     break;
                 case "pc":
-                    IDAL.DO.Packagh p = acceptPC();
-                    dalObject.AddPackage(p);
+                    addPC();
                     break;
                 case "ex":
                     break;
@@ -232,70 +228,64 @@ namespace ConsoleUI
             }
 
         }
-        //------------the function that accept from the user data of base station, package, client and qudocopter  
+        //------------the function that do the work af accept the data and add it----------  
         /// <summary>
-        /// accept base station
+        /// add base station
         /// </summary>
-        IDAL.DO.BaseStation acceptBS()
+        void addBS()
         {
             Console.WriteLine("enter id, name, number of charging position and location(longitude and latitude)");
-            IDAL.DO.BaseStation b = new IDAL.DO.BaseStation();
-            b.IDnumber = int.Parse(Console.ReadLine());
-            b.name = Console.ReadLine();
-            b.chargingPositions = int.Parse(Console.ReadLine());
-            b.longitude = double.Parse(Console.ReadLine());
-            b.latitude = double.Parse(Console.ReadLine());
-            return b;
+            int id, num;
+            double lon, lat;
+            string name;
+            id = int.Parse(Console.ReadLine());
+            name = Console.ReadLine();
+            num = int.Parse(Console.ReadLine());
+            lon = double.Parse(Console.ReadLine());
+            lat = double.Parse(Console.ReadLine());
+            dalObject.AddBaseStation(id, name, num, lon, lat);
         }
         /// <summary>
-        /// accept qudocopter 
+        /// add qudocopter 
         /// </summary>
-        IDAL.DO.Quadocopter acceptQU()
+        void addQU()
         {
             Console.WriteLine("enter id, moodle and whight(1 to easy, 2 to middle, 3 to heavy");
-            int whight;
-            IDAL.DO.Quadocopter q = new IDAL.DO.Quadocopter();
-            q.id = int.Parse(Console.ReadLine());
-            q.moodle = Console.ReadLine();
+            int id, whight;
+            string moodle;
+            id = int.Parse(Console.ReadLine());
+            moodle = Console.ReadLine();
             whight = int.Parse(Console.ReadLine());
-            if (whight == 1) q.weight = IDAL.DO.WeighCategories.easy;
-            else if (whight == 2) q.weight = IDAL.DO.WeighCategories.middle;
-            else if (whight == 3) q.weight = IDAL.DO.WeighCategories.hevy;
-            return q;
+            dalObject.AddQuadocopter(id, moodle, whight);
         }
         /// <summary>
-        /// accept client 
+        /// add client 
         /// </summary>
-        IDAL.DO.Client acceptCL()
+        void addCL()
         {
             Console.WriteLine("enter id, name, phone number and location(longitude and latitude)");
-            IDAL.DO.Client c = new IDAL.DO.Client();
-            c.ID = int.Parse(Console.ReadLine());
-            c.name = Console.ReadLine();
-            c.phoneNumber = int.Parse(Console.ReadLine());
-            c.longitude = double.Parse(Console.ReadLine());
-            c.latitude = double.Parse(Console.ReadLine());
-            return c;
+            int id, phone;
+            double lon, lat;
+            string name;
+            id = int.Parse(Console.ReadLine());
+            name = Console.ReadLine();
+            phone = int.Parse(Console.ReadLine());
+            lon = double.Parse(Console.ReadLine());
+            lat = double.Parse(Console.ReadLine());
+            dalObject.AddClient(id, name, phone, lon, lat);
         }
         /// <summary>
-        /// accept package 
+        /// add package 
         /// </summary>
-        IDAL.DO.Packagh acceptPC()
+        void addPC()
         {
             Console.WriteLine("enter id of sender, id of colecter, whight and priority(1 to reggular, 2 to fast, 3 to emergency)");
-            int weight, priority;
-            IDAL.DO.Packagh p = new IDAL.DO.Packagh();
-            p.sender = int.Parse(Console.ReadLine());
-            p.receiver = int.Parse(Console.ReadLine());
+            int sender, receiver, weight, priority;
+            sender = int.Parse(Console.ReadLine());
+            receiver = int.Parse(Console.ReadLine());
             weight = int.Parse(Console.ReadLine());
             priority = int.Parse(Console.ReadLine());
-            if (weight == 1) p.weight = IDAL.DO.WeighCategories.easy;
-            else if (weight == 2) p.weight = IDAL.DO.WeighCategories.middle;
-            else if (weight == 3) p.weight = IDAL.DO.WeighCategories.hevy;
-            if (priority == 1) p.priority = IDAL.DO.Priorities.reggular;
-            else if (priority == 2) p.priority = IDAL.DO.Priorities.fast;
-            else if (priority == 3) p.priority = IDAL.DO.Priorities.emergency;
-            return p;
+            dalObject.AddPackage(sender, receiver, weight, priority);
         }
     }
 }
