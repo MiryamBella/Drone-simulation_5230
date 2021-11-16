@@ -1,5 +1,6 @@
 ﻿using System;
 using DalObject;
+using System.Collections.Generic;
 
 namespace ConsoleUI
 {
@@ -194,22 +195,34 @@ namespace ConsoleUI
             switch (userAnser)
             {
                 case "bs":
-                    dalObject.ListOfStations();
+                    IEnumerable<IDAL.DO.BaseStation> b = dalObject.ListOfStations();
+                    foreach (IDAL.DO.BaseStation i in b)
+                        Console.WriteLine(i);
                     break;
                 case "qu":
-                    dalObject.ListOfQ();
+                    IEnumerable<IDAL.DO.Quadocopter> q = dalObject.ListOfQ();
+                    foreach (IDAL.DO.Quadocopter i in q)
+                        Console.WriteLine(i);
                     break;
                 case "cl":
-                    dalObject.ListOfClients();
+                    IEnumerable<IDAL.DO.Client> c = dalObject.ListOfClients();
+                    foreach (IDAL.DO.Client i in c)
+                        Console.WriteLine(i);
                     break;
                 case "pc":
-                    dalObject.ListOfPackages();
+                    IEnumerable<IDAL.DO.Packagh> p = dalObject.ListOfPackages();
+                    foreach (IDAL.DO.Packagh i in p)
+                        Console.WriteLine(i);
                     break;
                 case "pnq":
-                    dalObject.ListOfPwithoutQ();
+                    IEnumerable<IDAL.DO.Packagh> pWithoutQ = dalObject.ListOfPwithoutQ();
+                    foreach (IDAL.DO.Packagh i in pWithoutQ)
+                        Console.WriteLine(i);
                     break;
                 case "bec":
-                    dalObject.ListOfStationsForCharging();
+                    IEnumerable<IDAL.DO.BaseStation> station = dalObject.ListOfStationsForCharging();
+                    foreach (IDAL.DO.BaseStation i in station)
+                        Console.WriteLine(i);
                     break;
                 case "ex":
                     break;

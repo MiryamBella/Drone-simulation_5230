@@ -180,7 +180,7 @@ namespace DalObject //miryam, i saw that the functions need somtimes
         /// <summary>
         /// print all the stations.
         /// </summary>
-        public List<BaseStation> ListOfStations() //return list of all the stations
+        public IEnumerable<BaseStation> ListOfStations() //return list of all the stations
         {
             List<BaseStation> l = new List<BaseStation>();
             foreach (BaseStation b in  DataSource.bstion) // I run of all the stations and print them
@@ -190,7 +190,7 @@ namespace DalObject //miryam, i saw that the functions need somtimes
         /// <summary>
         /// return list of all the quadocpters.
         /// </summary>
-        public List<IDAL.DO.Quadocopter> ListOfQ()//return list of all the quadocpters
+        public IEnumerable<IDAL.DO.Quadocopter> ListOfQ()//return list of all the quadocpters
         {
             List<IDAL.DO.Quadocopter> list = new List<Quadocopter>();
             foreach (Quadocopter q in DataSource.qpter) // I run of all the stations and print them
@@ -200,7 +200,7 @@ namespace DalObject //miryam, i saw that the functions need somtimes
         /// <summary>
         /// print all the clients
         /// </summary>
-        public List<Client> ListOfClients()//print all the clients
+        public IEnumerable<Client> ListOfClients()//print all the clients
         {
             List<Client> l = new List<Client>();
             foreach (Client c in DataSource.cli) // I run of all the stations and print them
@@ -210,7 +210,7 @@ namespace DalObject //miryam, i saw that the functions need somtimes
         /// <summary>
         /// print all the packages.
         /// </summary>
-        public List<Packagh> ListOfPackages()//print all the packages
+        public IEnumerable<Packagh> ListOfPackages()//print all the packages
         {
             List<Packagh> l = new List<Packagh>();
             foreach (Packagh p in DataSource.packagh) // I run of all the stations and print them
@@ -220,7 +220,7 @@ namespace DalObject //miryam, i saw that the functions need somtimes
         /// <summary>
         /// print all the packages that dont assigned to quadocopter.
         /// </summary>
-        public List<Packagh> ListOfPwithoutQ()//return list of all the packages that dont assigned to quadocopter
+        public IEnumerable<Packagh> ListOfPwithoutQ()//return list of all the packages that dont assigned to quadocopter
         {
             List<Packagh> l = new List<Packagh>();
             foreach (Packagh p in DataSource.packagh) // I run of all the packages and print them if their idQuadocopter is 0
@@ -232,7 +232,7 @@ namespace DalObject //miryam, i saw that the functions need somtimes
         /// <summary>
         /// print all the stations that have empty changing positions.
         /// </summary>
-        public List<BaseStation> ListOfStationsForCharging()//print all the stations that have empty changing positions
+        public IEnumerable<BaseStation> ListOfStationsForCharging()//print all the stations that have empty changing positions
         {
             List<BaseStation> lbs = new List<BaseStation>();
             // I run of all the stations and print them if their changingPosition is not 0
