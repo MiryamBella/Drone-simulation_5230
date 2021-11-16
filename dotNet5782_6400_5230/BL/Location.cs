@@ -112,7 +112,7 @@ public class BaseSixtin
 
     //this part will cover to base 60.********************************************************************************
     /// <summary>
-    /// the main func we will use, and she will call the  others and do all the hard work.
+    /// the main func we will use, and she will call the  others and do all the hard work. we dont use her!
     /// </summary>
     /// <param name="decimalLocation"></param>
     /// <returns></returns>
