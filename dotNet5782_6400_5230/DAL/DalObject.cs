@@ -4,67 +4,71 @@ using System.Text;
 using IDAL.DO;
 
 
-namespace DalObject
+namespace DalObject //miryam, i saw that the functions need somtimes
+                    //accept a BaseStations, Client est from the consoleUI 
+                    //so i do in the console functions that produce it 
+                    //and do all the function in this file to accept it
+                    //(and not accept the data in int id, int name est...)
 {
     public class DalObject : IDAL.IDAL
     {
         ///When this class is built it first initializes the lists with the initial values defined in Initialize
         public DalObject() { DataSource.Initialize(); }
-        public void AddBaseStation(int id, string name, int chargingPositions, double longitude, double latitude) ///adding new base station
+        public void AddBaseStation(BaseStation station) ///adding new base station
         {
-            BaseStation station = new BaseStation(); /// i did new BaseStation
-            station.name = name;
-            station.chargingPositions = chargingPositions;
-            station.longitude = longitude;
-            station.latitude = latitude;
+            //BaseStation station = new BaseStation(); /// i did new BaseStation
+            //station.name = name;
+            //station.chargingPositions = chargingPositions;
+            //station.longitude = longitude;
+            //station.latitude = latitude;
             
             //make the location in base 60.
             station.toBaseSix = new BaseSixtin();
             station.decSix = new DmsLocation();
             station.decSix = station.toBaseSix.LocationSix(station.latitude, station.longitude);
 
-            station.IDnumber = id;
+            //station.IDnumber = id;
             DataSource.bstion.Add(station); /// i insert the new station into the list
         }
-        public void AddQuadocopter(int id, string moodle, int weight)  ///adding new Quadocopter
+        public void AddQuadocopter(Quadocopter q)  ///adding new Quadocopter
         {
-            Quadocopter q = new Quadocopter();
-            q.moodle = moodle;
-            if (weight == 1) q.weight = WeighCategories.easy;
-            else if (weight == 2) q.weight = WeighCategories.middle;
-            else q.weight = WeighCategories.hevy;
-            q.id = id;  /// I insert the id in according to the index
+            //Quadocopter q = new Quadocopter();
+            //q.moodle = moodle;
+            //if (weight == 1) q.weight = WeighCategories.easy;
+            //else if (weight == 2) q.weight = WeighCategories.middle;
+            //else q.weight = WeighCategories.hevy;
+            //q.id = id;  /// I insert the id in according to the index
             DataSource.qpter.Add(q); ///I insert the new qptr to the array
         }
-        public void AddClient(int id, string name, int phoneNumber, double lon, double lat) ///adding new client
+        public void AddClient(Client c) ///adding new client
         {///I accept all the data from the user
-            Client c = new Client();
-            c.ID = id;
-            c.name = name;
-            c.phoneNumber = phoneNumber;
-            c.longitude = lon;
-            c.latitude = lat;
+            //Client c = new Client();
+            //c.ID = id;
+            //c.name = name;
+            //c.phoneNumber = phoneNumber;
+            //c.longitude = lon;
+            //c.latitude = lat;
             DataSource.cli.Add(c);
         }
         /// <summary>
         /// adding new package.
         /// </summary>
         /// <returns>The pacjagh ID we add.</returns>
-        public void AddPackage(int sender, int colecter, int weigh, int priority) 
+        public void AddPackage(Packagh p) 
         {
-            Packagh p = new Packagh();
-            p.sender = sender;
-            p.receiver = colecter;
-            if (weigh == 1)
-                p.weight = WeighCategories.easy;
-            else if (weigh == 2)
-                p.weight = WeighCategories.middle;
-            else p.weight = WeighCategories.hevy;
-            if (priority == 1)
-                p.priority = Priorities.reggular;
-            else if (priority == 2)
-                p.priority = Priorities.fast;
-            else p.priority = Priorities.emergency;
+            //Packagh p = new Packagh();
+            //p.sender = sender;
+            //p.receiver = colecter;
+            //if (weigh == 1)
+            //    p.weight = WeighCategories.easy;
+            //else if (weigh == 2)
+            //    p.weight = WeighCategories.middle;
+            //else p.weight = WeighCategories.hevy;
+            //if (priority == 1)
+            //    p.priority = Priorities.reggular;
+            //else if (priority == 2)
+            //    p.priority = Priorities.fast;
+            //else p.priority = Priorities.emergency;
             p.id = DataSource.Config.runNum++;   // the id of the package will be according the run number
             p.idQuadocopter = 0;  // the package have not quadocopter
             p.time_Create = DateTime.Now;  // the time of the create is now
