@@ -77,7 +77,29 @@ namespace IBL
 
             return new_c;
         }
+        //--------cover qudocopter---------------------------------------------------
 
+        /*List<Quadocopter> cover_to_our_list(List<IDAL.DO.Quadocopter> old_l)
+        {
+            List<Quadocopter> new_l = new List<Quadocopter>();
+            foreach (IDAL.DO.Quadocopter q in old_l)
+                new_l.Add(cover(q);
+            return new_l;
+        }
+        Quadocopter cover(IDAL.DO.Quadocopter q)
+        {
+            Quadocopter new_q = new Quadocopter();
+            new_q.ID = q.id;
+            new_q.moodle = q.moodle;
+            if (q.weight == IDAL.DO.WeighCategories.easy) new_q.weight = WeighCategories.easy;
+            else if (q.weight == IDAL.DO.WeighCategories.middle) new_q.weight = WeighCategories.middle;
+            else if(q.weight == IDAL.DO.WeighCategories.hevy) new_q.weight = WeighCategories.hevy;
+            new_q.thisLocation.latitude = q.latitude;
+            new_q.thisLocation.longitude = q.longitude;
+            new_q.thisLocation.decSix = new_q.thisLocation.toBaseSix.LocationSix(q.latitude, q.longitude);
+
+            return new_c;*/
+        }
 
     }
 }

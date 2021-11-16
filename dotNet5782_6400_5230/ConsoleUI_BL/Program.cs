@@ -99,19 +99,15 @@ namespace ConsoleUI_BL
         void AddBaseStation() 
         {
             Console.WriteLine("Please enter ID to the base station."); ///I get information from the user and enter it into the new station
-            string helpSTR = Console.ReadLine();
-            int id = int.Parse(helpSTR);// i get a numbers as string and convert it to int
+            int id = int.Parse(Console.ReadLine());// 
             Console.WriteLine("Please enter nema for the base station.");
             string name = Console.ReadLine();
             Console.WriteLine("Please enter longitude of station");
-            helpSTR = Console.ReadLine();
-            double lon = double.Parse(helpSTR);
+            double lon = double.Parse(Console.ReadLine());
             Console.WriteLine("Please enter latitude of station");
-            helpSTR = Console.ReadLine();
-            double lat = double.Parse(helpSTR);
+            double lat = double.Parse(Console.ReadLine());
             Console.WriteLine("Please enter number of charging position");
-            helpSTR = Console.ReadLine();
-            int numCharge = int.Parse(helpSTR);// i get a numbers as string and convert it to int
+            int numCharge = int.Parse(Console.ReadLine());
 
             program.bl.AddBaseStation(id, name, lon, lat, numCharge);
         }

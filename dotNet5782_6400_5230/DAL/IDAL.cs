@@ -15,6 +15,12 @@ namespace IDAL
         public void AddClient(int id, string name, int phoneNumber, double lon, double lat);
         /// adding new package.
         public void AddPackage(int sender, int colecter, int weigh, int priority);
+        /// update name of quadocopter
+        public void updateQd(Quadocopter q, string modle);
+        ///update name and number of charging positions of a base station
+        public void updateSdata(BaseStation b, string name = null, int chargingPositions = -1);
+        /// update name and phone of client
+        public void updateCdata(Client c, string name = null, int phone = 0);
         /// update package to be belong to a quadocopter.
         public void AssignPtoQ(Packagh P, int id_q);
         /// update package to be collected by quadocopter.
