@@ -73,27 +73,75 @@ namespace DalObject
             //return p.id;
         }
         //-----------------update functions----------
+        #region updateQuadocopter;
         /// <summary>
         /// update the modle of qudocopter
         /// </summary>
-        public void updateQd(Quadocopter q, string modle)
+        public void updateQd(int id, string modle)
         {
-                    q.moodle = modle;
+            Quadocopter newQ = new Quadocopter();
+            bool finded = false;
+            foreach (Quadocopter q in DataSource.qpter)
+                if (q.id == id)
+                {
+                    finded = true;
+                    newQ = q;
+                    DataSource.qpter.Remove(q);
+                }
+            if (finded)
+            {
+                newQ.moodle = modle;
+                DataSource.qpter.Add(newQ);
+            }
+            else Console.WriteLine("ERROR");        
         }
+        #endregion;
+        #region updateBaseStation;
         ///update name and number of charging positions of a base station
-        public void updateSdata(BaseStation b, string name, int chargingPositions)
+        public void updateSdata(int id, string name, int chargingPositions)
         {
-            if (name != null) b.name = name;
-            if (chargingPositions != -1) b.chargingPositions = chargingPositions;
+            BaseStation newBS = new BaseStation();
+            bool finded = false;
+            foreach (BaseStation bs in DataSource.bstion)
+                if (bs.IDnumber == id)
+                {
+                    finded = true;
+                    newBS = bs;
+                    DataSource.bstion.Remove(bs);
+                }
+            if (finded)
+            {
+                if (name != null) newBS.name = name;
+                if (chargingPositions != -1) newBS.chargingPositions = chargingPositions;
+                DataSource.bstion.Add(newBS);
+            }
+            else Console.WriteLine("ERROR");
         }
+        #endregion;
+        #region updateClient;
         /// <summary>
         /// update name and phone of client
         /// </summary>
-        public void updateCdata(Client c, string name = null, int phone = 0)
+        public void updateCdata(int id, string name = null, int phone = 0)
         {
-            if (name != null) c.name = name;
-            if (phone != 0) c.phoneNumber = phone;
+            Client newC = new Client();
+            bool finded = false;
+            foreach (Client c in DataSource.cli)
+                if (c.ID == id)
+                {
+                    finded = true;
+                    newC = c;
+                    DataSource.cli.Remove(c);
+                }
+            if (finded)
+            {
+                if (name != null) newC.name = name;
+                if (phone != 0) newC.phoneNumber = phone;
+                DataSource.cli.Add(newC);
+            }
+            else Console.WriteLine("ERROR");
         }
+        #endregion;
         /// <summary>
         /// update package to be belong to a quadocopter.
         /// </summary>
@@ -295,6 +343,7 @@ namespace DalObject
             arry[4] = DataSource.Config.charghingRate;
             return arry;
         }
+
 
 
         //---------------------------------------------------------------------------------------------------------------
