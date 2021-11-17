@@ -15,6 +15,7 @@ namespace DalObject
             BaseStation station = new BaseStation(); /// i did new BaseStation
             station.name = name;
             station.chargingPositions = chargingPositions;
+            station.freechargingPositions = chargingPositions;
             station.longitude = longitude;
             station.latitude = latitude;
             
@@ -75,11 +76,23 @@ namespace DalObject
         /// <summary>
         /// update the modle of qudocopter
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="modle"></param>
         public void updateQd(Quadocopter q, string modle)
         {
                     q.moodle = modle;
+        }
+        ///update name and number of charging positions of a base station
+        public void updateSdata(BaseStation b, string name, int chargingPositions)
+        {
+            if (name != null) b.name = name;
+            if (chargingPositions != -1) b.chargingPositions = chargingPositions;
+        }
+        /// <summary>
+        /// update name and phone of client
+        /// </summary>
+        public void updateCdata(Client c, string name = null, int phone = 0)
+        {
+            if (name != null) c.name = name;
+            if (phone != 0) c.phoneNumber = phone;
         }
         /// <summary>
         /// update package to be belong to a quadocopter.
@@ -136,9 +149,7 @@ namespace DalObject
             Charging c = new Charging();
             c.baseStationID = b.IDnumber;
             c.quadocopterID = q.id;
-            b.chargingPositions--;
-            //DataSource.qpter[iq].battery = 100;
-            //DataSource.qpter[iq].mode = statusOfQ.maintenance ;
+            b.freechargingPositions--;
             DataSource.charge.Add(c);
         }
         /// <summary>
@@ -146,7 +157,7 @@ namespace DalObject
         /// </summary>
         public void ReleaseQfromCharging(BaseStation b, Quadocopter q)
         {
-            b.chargingPositions++;
+            b.freechargingPositions++;
             //DataSource.qpter[iq].mode = statusOfQ.available;
 
             Charging c = new Charging();
@@ -243,7 +254,7 @@ namespace DalObject
             List<BaseStation> lbs = new List<BaseStation>();
             // I run of all the stations and print them if their changingPosition is not 0
             foreach (BaseStation b in DataSource.bstion) 
-                if (b.chargingPositions != 0)
+                if (b.freechargingPositions != 0)
                     lbs.Add(b);
             return lbs;
         }
