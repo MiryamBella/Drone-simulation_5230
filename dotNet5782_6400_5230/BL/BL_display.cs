@@ -7,9 +7,9 @@ namespace IBL
 {
     public partial class BL
     {
-        public BO.BaseStation baseStationDisplay(int id)
+        public BaseStation baseStationDisplay(int id)
         {
-
+            BaseStation bs = new BaseStation();
             bs = cover(dal.StationDisplay(id));
             if (bs.ID <= 0)
                 Console.WriteLine("error");
@@ -41,7 +41,7 @@ namespace IBL
                         Console.WriteLine("error");
                 }
 
-
+                return bs;
             }
         }
         public BO.Quadocopter QuDisplay(int id)
