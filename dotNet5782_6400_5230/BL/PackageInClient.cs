@@ -6,7 +6,7 @@ namespace IBL
 {
     namespace BO
     {
-        public class packageInClient
+        public class PackageInClient
         {
             public int ID { get; set; }
             public WeighCategories weight { get; set; }

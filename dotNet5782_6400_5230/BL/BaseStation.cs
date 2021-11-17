@@ -13,7 +13,7 @@ namespace IBL
             public int freeChargingPositions { get; set; }
             public location thisLocation { get; set; }
             
-            List<QuadocopterInCharge> qudocopters = new List<QuadocopterInCharge>();
+            public List<QuadocopterInCharge> qudocopters = new List<QuadocopterInCharge>();
             public override string ToString()
             {
                 return ("ID: " + ID + '\n' +

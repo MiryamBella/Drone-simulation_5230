@@ -370,29 +370,25 @@ namespace ConsoleUI_BL
                     Console.WriteLine("please enter id of station"); // the printing is by the id  that i asked from the user
                     help = Console.ReadLine();
                     id = int.Parse(help);
-
-                    //send(id)
+                    Console.WriteLine(program.bl.baseStationDisplay(id));
                     break;
                 case "qu":
                     Console.WriteLine("please enter id of quadocopter"); // the printing is by the id  that i asked from the user
                     help = Console.ReadLine();
                     id = int.Parse(help);
-
-                    //send(id)
+                    Console.WriteLine(program.bl.QuDisplay(id));
                     break;
                 case "cl":
                     Console.WriteLine("please enter id of client"); // the printing is by the id  that i asked from the user
                     help = Console.ReadLine();
                     id = int.Parse(help);
-
-                    //send(id)
+                    Console.WriteLine(program.bl.ClientDisplay(id));
                     break;
                 case "pc":
                     Console.WriteLine("please enter id of package"); // the printing is by the id  that i asked from the user
                     help = Console.ReadLine();
                     id = int.Parse(help);
-
-                    //send(id)
+                    Console.WriteLine(program.bl.PackageDisplay(id));
                     break;
                 case "ex":
                     break;
@@ -423,22 +419,22 @@ namespace ConsoleUI_BL
             switch (userAnser)
             {
                 case "bs":
-                    //call to BL
+                    Console.WriteLine(program.bl.ListOfBaseStations());
                     break;
                 case "qu":
-                    //call to BL
+                    Console.WriteLine(program.bl.ListOfQ());
                     break;
                 case "cl":
-                    //call to BL
+                    Console.WriteLine(program.bl.ListOfClients());
                     break;
                 case "pc":
-                    //call to BL
+                    Console.WriteLine(program.bl.ListOfPackages());
                     break;
                 case "pc not qu":
-                    //call to BL
+                    Console.WriteLine(program.bl.ListOfPwithoutQ());
                     break;
                 case "bs yes ch":
-                    //call to BL
+                    Console.WriteLine(program.bl.ListOfStationsForCharging());
                     break;
                 case "ex":
                     break;

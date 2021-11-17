@@ -31,13 +31,13 @@ namespace IDAL
         /// release te quadocopter frp charging.
         public void ReleaseQfromCharging(BaseStation b, Quadocopter q);
         /// print datails of statin
-        public void StationDisplay(BaseStation b);
+        public BaseStation StationDisplay(int id);
         /// print datails of quadocopter.
-        public void QuDisplay(Quadocopter q);
+        public Quadocopter QuDisplay(int id);
         /// print datails of client.
-        public void ClientDisplay(Client c);
+        public Client ClientDisplay(int id);
         /// print datails of package.
-        public void PackageDisplay(Packagh p);
+        public Packagh PackageDisplay( int id);
         /// print all the stations.
         public List<BaseStation> ListOfStations();
         /// print all the quadocpters.
@@ -51,6 +51,7 @@ namespace IDAL
         /// return list of all the stations that have empty changing positions.
         public List<BaseStation> ListOfStationsForCharging();
         ///the quadocopter ask.
+        public List<Charging> GetChargings() { return DalObject.DataSource.charge; }
         public double[] askForElectric();
     }
 }

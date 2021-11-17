@@ -6,11 +6,11 @@ namespace IBL
 {
     namespace BO
     {
-        public class package
+        public class Package
         {
             public int ID { get; set; }
-            public client sender { get; set; }
-            public client receiver { get; set; }
+            public Client sender { get; set; }
+            public Client receiver { get; set; }
             public WeighCategories weight { get; set; }
             public Priorities priority { get; set; }
             public QuadocopterInPackage q { get; set; }

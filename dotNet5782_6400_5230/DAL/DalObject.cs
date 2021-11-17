@@ -168,30 +168,57 @@ namespace DalObject
         /// <summary>
         /// print datails of statin
         /// </summary>
-        public void StationDisplay(BaseStation b)//print datails of station 
+        public BaseStation StationDisplay(int id)//print datails of station 
         {
-                    Console.WriteLine(b); //I print it
+            foreach (BaseStation temp in DataSource.bstion)
+            {
+                if (temp.IDnumber == id)
+                    return temp;
+            }
+            BaseStation b = new BaseStation { IDnumber = (int)0 };
+            return b;
         }
         /// <summary>
         /// print datails of quadocopter.
         /// </summary>
-        public void QuDisplay(Quadocopter q)//print datails of quadocopter
+        public Quadocopter QuDisplay(int id)//print datails of quadocopter
         {
-                    Console.WriteLine(q); //I print it
+            foreach (Quadocopter temp in DataSource.qpter)
+            {
+                if (temp.id == id)
+                    return temp;
+            }
+            Quadocopter q = new Quadocopter { id = 0 };
+
+            return q;
         }
         /// <summary>
         /// print datails of client.
         /// </summary>
-        public void ClientDisplay(Client c)//print datails of client
+        public Client ClientDisplay(int id)//print datails of client
         {
-                    Console.WriteLine(c); //I print it
+            foreach (Client temp in DataSource.cli)
+            {
+                if (temp.ID == id)
+                    return temp;
+            }
+            Client c = new Client { ID = 0 };
+
+            return c;
         }
         /// <summary>
         /// print datails of package.
         /// </summary>
-        public void PackageDisplay(Packagh p)//print datails of package
+        public Packagh PackageDisplay(int id)//print datails of package
         {
-                    Console.WriteLine(p); //I print it
+            foreach (Packagh temp in DataSource.packagh)
+            {
+                if (temp.id == id)
+                    return temp;
+            }
+            Packagh p = new Packagh { id = 0 };
+
+            return p;
         }
 
         /// <summary>
