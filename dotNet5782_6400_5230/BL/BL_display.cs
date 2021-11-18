@@ -151,7 +151,8 @@ namespace IBL
                 temp.ID = c.ID;
                 temp.name = c.name;
                 temp.phoneNumber = c.phoneNumber;
-                temp.setAndDeliverP;
+
+                temp.setAndDeliverP =c;
                 temp.setAndNotDeliverP;
                 temp.getAndDeliverP;
                 temp.getAndNotDeliverP;
