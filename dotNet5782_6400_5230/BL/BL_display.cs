@@ -138,7 +138,7 @@ namespace IBL
 
             return bs_l;
         }
-            /// return list of all the clients
+        /// return list of all the clients
         public List<BO.ClientToList> ListOfClients()
         {
             List<ClientToList> new_l = new List<ClientToList>();
@@ -151,11 +151,31 @@ namespace IBL
                 temp.ID = c.ID;
                 temp.name = c.name;
                 temp.phoneNumber = c.phoneNumber;
+                temp.setAndNotDeliverP = 0;
+                temp.setAndDeliverP = 0;
+                temp.getAndNotDeliverP=0;
+                temp.getAndDeliverP = 0;
 
-                temp.setAndDeliverP =c;
-                temp.setAndNotDeliverP;
-                temp.getAndDeliverP;
-                temp.getAndNotDeliverP;
+                List<IDAL.DO.Package> p_list = new List<IDAL.DO.Package>();
+                p_list = dal.ListOfPackages();
+                foreach(IDAL.DO.Package p in p_list)
+                {
+                    if (p.sender == c.ID)
+                    {
+                        if (p.time_ColctedFromSender == null)
+                            temp.setAndNotDeliverP++;
+                        else
+                            temp.setAndDeliverP++;
+                    }
+                    if (p.receiver == c.ID)
+                    {
+                        if (p.time_ColctedFromSender == null)
+                            temp.getAndNotDeliverP++;
+                        else
+                            temp.getAndDeliverP++;
+                    }
+
+                }
 
                 new_l.Add(temp);
             }
@@ -163,14 +183,98 @@ namespace IBL
             return new_l;
 
         }
-        public List<BO.QuadocopterToList> ListOfQ();
-        /// return list of all the packages.
-        public List<BO.PackageToList> ListOfPackages();
-        /// return list of all the packages that dont assigned to quadocopter.
-        public List<BO.PackageToList> ListOfPwithoutQ();
-            /// return list of all the stations that have empty changing positions.
-            public List<BO.BaseStationToList> ListOfStationsForCharging();
+        public List<BO.QuadocopterToList> ListOfQ()
+        {
+            List<QuadocopterToList> q_l = new List<QuadocopterToList>();
 
-       
+            List<IDAL.DO.Quadocopter> stractQ_list = new List<IDAL.DO.Quadocopter>();
+            stractQ_list = dal.ListOfQ();
+            foreach (IDAL.DO.Quadocopter q in stractQ_list)
+            {
+                QuadocopterToList temp = new QuadocopterToList();
+                temp = cover_list(q);
+
+                q_l.Add(temp);
+            }
+
+            return q_l;
+        }
+        /// return list of all the packages.
+        public List<BO.PackageToList> ListOfPackages()
+        {
+            List<PackageToList> p_l = new List<PackageToList>();
+
+            List<IDAL.DO.Package> stractP_list = new List<IDAL.DO.Package>();
+            stractP_list = dal.ListOfPackages();
+            foreach (IDAL.DO.Package p in stractP_list)
+            {
+                Package temp = new Package();
+                temp = cover(p);
+                PackageToList p_tl = new PackageToList();
+                p_tl.ID = temp.ID;
+                p_tl.priority = temp.priority;
+                p_tl.receiverName = temp.receiver.name;
+                p_tl.senderName = temp.sender.name;
+                //p_tl.state = temp;     need to fix//*************************************!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!************************************!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*****************************************************
+                p_tl.weight = temp.weight;
+
+                p_l.Add(p_tl);
+            }
+
+            return p_l;
+        }
+        /// return list of all the packages that dont assigned to quadocopter.
+        public List<BO.PackageToList> ListOfPwithoutQ()
+        {
+            List<PackageToList> p_l = new List<PackageToList>();
+
+            List<IDAL.DO.Package> stractP_list = new List<IDAL.DO.Package>();
+            stractP_list = dal.ListOfPackages();
+            foreach (IDAL.DO.Package p in stractP_list)
+            {
+                if (p.idQuadocopter == 0)
+                {
+
+                    Package temp = new Package();
+                    temp = cover(p);
+                    PackageToList p_tl = new PackageToList();
+                    p_tl.ID = temp.ID;
+                    p_tl.priority = temp.priority;
+                    p_tl.receiverName = temp.receiver.name;
+                    p_tl.senderName = temp.sender.name;
+                    //p_tl.state = temp;     need to fix//*************************************!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!************************************!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*****************************************************
+                    p_tl.weight = temp.weight;
+
+                    p_l.Add(p_tl);
+                }
+            }
+
+            return p_l;
+
+        }
+        /// return list of all the stations that have empty changing positions.
+        public List<BO.BaseStationToList> ListOfStationsForCharging()
+        {
+            List<BaseStationToList> bs_l = new List<BaseStationToList>();
+
+            List<IDAL.DO.BaseStation> bs_list = new List<IDAL.DO.BaseStation>();
+            bs_list = dal.ListOfStationsForCharging();
+            foreach (IDAL.DO.BaseStation bs in bs_list)
+            {
+                if (bs.freechargingPositions != 0)
+                {
+                    BaseStationToList temp = new BaseStationToList();
+                    temp.ID = bs.IDnumber;
+                    temp.name = bs.name;
+                    temp.busyChargingPositions = bs.chargingPositions - bs.freechargingPositions;
+                    temp.freeChargingPositions = bs.freechargingPositions;
+
+                    bs_l.Add(temp);
+                }
+            }
+
+            return bs_l;
+
+        }
     }
 }

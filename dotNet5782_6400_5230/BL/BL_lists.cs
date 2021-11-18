@@ -13,26 +13,6 @@ namespace IBL
         /// to cover fro list from IDAL to list from IBL.
         /// </summary>
         List<IDAL.DO.Quadocopter> help_list = new List<IDAL.DO.Quadocopter>();
-        List<QuadocopterToList> cover_to_our_list(List<IDAL.DO.Quadocopter> old_l)
-        {
-            List<QuadocopterToList> new_l = new List<QuadocopterToList>();
-            foreach(IDAL.DO.Quadocopter q in old_l)
-            {
-                QuadocopterToList temp = new QuadocopterToList();
-                temp = cover(q);
-                new_l.Add(temp);
-            }
-
-            return new_l;
-        }
-        QuadocopterToList cover(IDAL.DO.Quadocopter q)
-        {
-            QuadocopterToList new_q = new QuadocopterToList();
-            new_q.ID = q.id;
-
-
-            return new_q;
-        }
 
         #region cover base station
         //--------cover base station---------------------------------------------------
@@ -185,30 +165,47 @@ namespace IBL
         }
         #endregion
 
-
+        #region cover qudocopter
         //--------cover qudocopter---------------------------------------------------
+        List<QuadocopterToList> cover_to_our_list(List<IDAL.DO.Quadocopter> old_l)
+        {
+            List<QuadocopterToList> new_l = new List<QuadocopterToList>();
+            foreach (IDAL.DO.Quadocopter q in old_l)
+            {
+                QuadocopterToList temp = new QuadocopterToList();
+                temp = cover(q);
+                new_l.Add(temp);
+            }
 
-        //List<Quadocopter> cover_to_our_list(List<IDAL.DO.Quadocopter> old_l)
-        //{
-        //    List<Quadocopter> new_l = new List<Quadocopter>();
-        //    foreach (IDAL.DO.Quadocopter q in old_l)
-        //        new_l.Add(cover(q);
-        //    return new_l;
-        //}
-        //Quadocopter cover(IDAL.DO.Quadocopter q)
-        //{
-        //    Quadocopter new_q = new Quadocopter();
-        //    new_q.ID = q.id;
-        //    new_q.moodle = q.moodle;
-        //    if (q.weight == IDAL.DO.WeighCategories.easy) new_q.weight = WeighCategories.easy;
-        //    else if (q.weight == IDAL.DO.WeighCategories.middle) new_q.weight = WeighCategories.middle;
-        //    else if(q.weight == IDAL.DO.WeighCategories.hevy) new_q.weight = WeighCategories.hevy;
-        //    new_q.thisLocation.latitude = q.latitude;
-        //    new_q.thisLocation.longitude = q.longitude;
-        //    new_q.thisLocation.decSix = new_q.thisLocation.toBaseSix.LocationSix(q.latitude, q.longitude);
+            return new_l;
+        }
+        QuadocopterToList cover_list(IDAL.DO.Quadocopter q)
+        {
+            QuadocopterToList new_q = new QuadocopterToList();
+            //new_q.ID = q.id;
+            //new_q.mode =;
+            //new_q.moodle = q.moodle;
+            //new_q.packageNumber;
+            //new_q.thisLocation;
+            //new_q.weight = q.weight;
+            //new_q.battery;
 
-        //    return new_q;
-        //}
+            return new_q;
+        }
+        Quadocopter cover(IDAL.DO.Quadocopter q)
+        {
+            Quadocopter new_q = new Quadocopter();
+            new_q.ID = q.id;
+            //new_q.mode =;
+            //new_q.moodle = q.moodle;
+            //new_q.thisPackage;
+            //new_q.thisLocation;
+            //new_q.weight = q.weight;
+            //new_q.battery;
 
+            return new_q;
+
+        }
+        #endregion
     }
 }
