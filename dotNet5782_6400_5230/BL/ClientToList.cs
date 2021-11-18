@@ -11,7 +11,15 @@ namespace IBL
             public int ID { get; set; }
             public string name { get; set; }
             public int phoneNumber { get; set; }
+            /// <summary>
+            /// number of pa
+            /// </summary>
             public int setAndDeliverP { get; set; }
+            מספר חבילות ששלח וסופקו
+מספר חבילות ששלח אך עוד לא סופקו
+מספר חבילות שקיבל
+מספר חבילות שבדרך אל הלקוח
+
             public int setAndNotDeliverP { get; set; }
             public int getAndDeliverP { get; set; } 
             public int getAndNotDeliverP { get; set; }

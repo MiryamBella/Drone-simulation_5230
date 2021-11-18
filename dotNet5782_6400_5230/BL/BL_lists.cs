@@ -111,8 +111,8 @@ namespace IBL
             new_c.thisLocation.longitude = c.longitude;
             new_c.thisLocation.decSix = new_c.thisLocation.toBaseSix.LocationSix(c.latitude, c.longitude);
 
-            List<IDAL.DO.Packagh> p_l = new List<IDAL.DO.Packagh>();
-            foreach (IDAL.DO.Packagh p in p_l)
+            List<IDAL.DO.Package> p_l = new List<IDAL.DO.Package>();
+            foreach (IDAL.DO.Package p in p_l)
             {
                 //id=the ID of our client.
                 if (p.sender == new_c.ID)
@@ -127,14 +127,14 @@ namespace IBL
 
         #region cover package
         //--------cover package---------------------------------------------------
-        List<Package> cover_to_our_list(List<IDAL.DO.Packagh> old_l)
+        List<Package> cover_to_our_list(List<IDAL.DO.Package> old_l)
         {
             List<Package> new_l = new List<Package>();
-            foreach (IDAL.DO.Packagh p in old_l)
+            foreach (IDAL.DO.Package p in old_l)
                 new_l.Add(cover(p));
             return new_l;
         }
-        Package cover(IDAL.DO.Packagh p)
+        Package cover(IDAL.DO.Package p)
         {
             Package new_p = new Package();
             new_p.ID = p.id;

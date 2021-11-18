@@ -206,13 +206,13 @@ namespace ConsoleUI
                         Console.WriteLine(i);
                     break;
                 case "pc":
-                    IEnumerable<IDAL.DO.Packagh> p = dalObject.ListOfPackages();
-                    foreach (IDAL.DO.Packagh i in p)
+                    IEnumerable<IDAL.DO.Package> p = dalObject.ListOfPackages();
+                    foreach (IDAL.DO.Package i in p)
                         Console.WriteLine(i);
                     break;
                 case "pnq":
-                    IEnumerable<IDAL.DO.Packagh> pWithoutQ = dalObject.ListOfPwithoutQ();
-                    foreach (IDAL.DO.Packagh i in pWithoutQ)
+                    IEnumerable<IDAL.DO.Package> pWithoutQ = dalObject.ListOfPwithoutQ();
+                    foreach (IDAL.DO.Package i in pWithoutQ)
                         Console.WriteLine(i);
                     break;
                 case "bec":

@@ -52,9 +52,9 @@ namespace IBL
             }
             if (!exist)
                 Console.WriteLine("error");
-            List<IDAL.DO.Packagh> p_list = new List<IDAL.DO.Packagh>();
+            List<IDAL.DO.Package> p_list = new List<IDAL.DO.Package>();
             p_list = dal.ListOfPackages();
-            foreach (IDAL.DO.Packagh p in p_list)
+            foreach (IDAL.DO.Package p in p_list)
             {
                 if (p.idQuadocopter == id)
                 {
@@ -103,10 +103,10 @@ namespace IBL
             if (id <= 0)
                 Console.WriteLine("error");
 
-            List<IDAL.DO.Packagh> p_list = new List<IDAL.DO.Packagh>();
+            List<IDAL.DO.Package> p_list = new List<IDAL.DO.Package>();
             p_list = dal.ListOfPackages();
             bool exist = false;
-            foreach (IDAL.DO.Packagh p in p_list)
+            foreach (IDAL.DO.Package p in p_list)
             {
                 if (p.id == id)
                 {
@@ -139,8 +139,30 @@ namespace IBL
             return bs_l;
         }
             /// return list of all the clients
-            public List<BO.ClientToList> ListOfClients();
-            public List<BO.QuadocopterToList> ListOfQ();
+        public List<BO.ClientToList> ListOfClients()
+        {
+            List<ClientToList> new_l = new List<ClientToList>();
+
+            List<IDAL.DO.Client> old_list = new List<IDAL.DO.Client>();
+            old_list = dal.ListOfClients();
+            foreach (IDAL.DO.Client c in old_list)
+            {
+                ClientToList temp = new ClientToList();
+                temp.ID = c.ID;
+                temp.name = c.name;
+                temp.phoneNumber = c.phoneNumber;
+                temp.setAndDeliverP;
+                temp.setAndNotDeliverP;
+                temp.getAndDeliverP;
+                temp.getAndNotDeliverP;
+
+                new_l.Add(temp);
+            }
+
+            return new_l;
+
+        }
+        public List<BO.QuadocopterToList> ListOfQ();
         /// return list of all the packages.
         public List<BO.PackageToList> ListOfPackages();
         /// return list of all the packages that dont assigned to quadocopter.

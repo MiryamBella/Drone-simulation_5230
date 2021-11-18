@@ -13,7 +13,7 @@ namespace DalObject
         internal static List<Quadocopter> qpter = new List<Quadocopter>();
         internal static List<BaseStation> bstion = new List<BaseStation>();
         internal static List<Client> cli = new List<Client>();
-        internal static List<Packagh> packagh = new List<Packagh>();
+        internal static List<Package> packagh = new List<Package>();
 
         /// <summary>
         /// list of all the quadocopter that are charging.
@@ -126,7 +126,7 @@ namespace DalObject
             //loop for reset all 10 packaghs.
             for (int i = 0; i < 10; i++)
             {
-                Packagh p = new Packagh();
+                Package p = new Package();
                 p.id = Config.runNum;
                 Config.runNum++;
                 p.sender = r.Next();
