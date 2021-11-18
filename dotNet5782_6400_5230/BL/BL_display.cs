@@ -10,41 +10,27 @@ namespace IBL
         public BaseStation baseStationDisplay(int id)
         {
             BaseStation bs = new BaseStation();
-            bs = cover(dal.StationDisplay(id));
             if (bs.ID <= 0)
                 Console.WriteLine("error");
-            ///get all tha q that charging
-            List<IDAL.DO.Charging> chrgh_list = new List<IDAL.DO.Charging>();
-            chrgh_list = dal.GetChargings();
-            foreach (IDAL.DO.Charging chargeh in chrgh_list)
+            ///find if the base station in the data base.
+            List<IDAL.DO.BaseStation> bs_list = new List<IDAL.DO.BaseStation>();
+            bs_list = dal.ListOfStations();
+            bool exsit = false;
+            foreach (IDAL.DO.BaseStation bs_toList in bs_list)
             {
-                ///find what q is gharge in our base station
-                if (chargeh.baseStationID == bs.ID)
+                if (bs_toList.IDnumber ==id)
                 {
-                    bool exsit = false;
-                    ///chek if the q is exsit in our data base.
-                    foreach (QuadocopterToList q in q_list)
-                    {
-
-                        if (q.ID == chargeh.quadocopterID)
-                        {
-                            ///the q is exist.
-                            exsit = true;
-                            QuadocopterInCharge chargeQ = new QuadocopterInCharge();
-                            chargeQ.battery = q.battery;
-                            chargeQ.ID = q.ID;
-                            bs.qudocopters.Add(chargeQ);
-                            break;
-                        }
-                    }
-                    if (!exsit)
-                        Console.WriteLine("error");
+                    exsit = true;
+                    bs = cover(bs_toList);
+                    break;
                 }
-
-                return bs;
             }
+            if (!exsit)
+                Console.WriteLine("error");
+
+            return bs;
         }
-        public BO.Quadocopter QuDisplay(int id)
+        public Quadocopter QuDisplay(int id)
         {
             Quadocopter returnQ = new Quadocopter();
             if (id <= 0)
@@ -90,23 +76,75 @@ namespace IBL
             }
             return returnQ;
         }
-        public BO.Client ClientDisplay(int id)
+        public Client ClientDisplay(int id)
         {
+            Client returnC = new Client();
+            if(id<=0)
+                Console.WriteLine("error");
+            List<IDAL.DO.Client> c_l = new List<IDAL.DO.Client>();
+            c_l = dal.ListOfClients();
+            bool exist = false;
+            foreach(IDAL.DO.Client c in c_l)
+            {
+                if (c.ID == id)
+                {
+                    exist = true;
+                    returnC = cover(c);
+                }
+            }
+            if(!exist)
+                Console.WriteLine("error");
 
-
-
-
+            return returnC;
         }
-            public BO.Package PackageDisplay(int id);
+        public Package PackageDisplay(int id)
+        {
+            Package returnP = new Package();
+            if (id <= 0)
+                Console.WriteLine("error");
 
-            public List<BO.BaseStationToList> ListOfBaseStations();
-            /// print all the clients
+            List<IDAL.DO.Packagh> p_list = new List<IDAL.DO.Packagh>();
+            p_list = dal.ListOfPackages();
+            bool exist = false;
+            foreach (IDAL.DO.Packagh p in p_list)
+            {
+                if (p.id == id)
+                {
+                    exist = true;
+                    returnP = cover(p);
+                }
+            }
+            if(!exist)
+                Console.WriteLine("error");
+            return returnP;
+        }
+
+        public List<BO.BaseStationToList> ListOfBaseStations()
+        {
+            List<BaseStationToList> bs_l = new List<BaseStationToList>();
+
+            List<IDAL.DO.BaseStation> bs_list = new List<IDAL.DO.BaseStation>();
+            bs_list = dal.ListOfStations();
+            foreach (IDAL.DO.BaseStation bs in bs_list)
+            {
+                BaseStationToList temp = new BaseStationToList();
+                temp.ID = bs.IDnumber;
+                temp.name = bs.name;
+                temp.busyChargingPositions = bs.chargingPositions - bs.freechargingPositions;
+                temp.freeChargingPositions = bs.freechargingPositions;
+
+                bs_l.Add(temp);
+            }
+
+            return bs_l;
+        }
+            /// return list of all the clients
             public List<BO.ClientToList> ListOfClients();
             public List<BO.QuadocopterToList> ListOfQ();
-            /// print all the packages.
-            public List<BO.PackageToList> ListOfPackages();
-            /// print all the packages that dont assigned to quadocopter.
-            public List<BO.PackageToList> ListOfPwithoutQ();
+        /// return list of all the packages.
+        public List<BO.PackageToList> ListOfPackages();
+        /// return list of all the packages that dont assigned to quadocopter.
+        public List<BO.PackageToList> ListOfPwithoutQ();
             /// return list of all the stations that have empty changing positions.
             public List<BO.BaseStationToList> ListOfStationsForCharging();
 
