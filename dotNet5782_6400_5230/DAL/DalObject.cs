@@ -53,7 +53,7 @@ namespace DalObject
         /// <returns>The pacjagh ID we add.</returns>
         public void AddPackage(int sender, int colecter, int weight, int priority) 
         {
-            Packagh p = new Packagh();
+            Package p = new Package();
             p.sender = sender;
             p.receiver = colecter;
             if (weight == 1)
@@ -145,7 +145,7 @@ namespace DalObject
         /// <summary>
         /// update package to be belong to a quadocopter.
         /// </summary>
-        public void AssignPtoQ(Packagh P, int id_q) 
+        public void AssignPtoQ(Package P, int id_q) 
         {
             P.idQuadocopter = id_q;
             //int i = 0;
@@ -174,12 +174,12 @@ namespace DalObject
         /// <summary>
         /// update package to be collected by quadocopter.
         /// </summary>
-        public void CollectPbyQ(Packagh p) 
+        public void CollectPbyQ(Package p) 
         {
             p.time_ColctedFromSender = DateTime.Now; //update the time
 
         }
-        public void DeliveringPtoClient(Packagh p)
+        public void DeliveringPtoClient(Package p)
         {
                     p.time_ComeToColcter = DateTime.Now; //update the time
                     //foreach (Quadocopter q in DataSource.qpter) //look for index of the quadocopter whice take this package
@@ -257,14 +257,14 @@ namespace DalObject
         /// <summary>
         /// print datails of package.
         /// </summary>
-        public Packagh PackageDisplay(int id)//print datails of package
+        public Package PackageDisplay(int id)//print datails of package
         {
-            foreach (Packagh temp in DataSource.packagh)
+            foreach (Package temp in DataSource.packagh)
             {
                 if (temp.id == id)
                     return temp;
             }
-            Packagh p = new Packagh { id = 0 };
+            Package p = new Package { id = 0 };
 
             return p;
         }
@@ -302,20 +302,20 @@ namespace DalObject
         /// <summary>
         /// print all the packages.
         /// </summary>
-        public IEnumerable<Packagh> ListOfPackages()//print all the packages
+        public IEnumerable<Package> ListOfPackages()//print all the packages
         {
-            List<Packagh> l = new List<Packagh>();
-            foreach (Packagh p in DataSource.packagh) // I run of all the stations and print them
+            List<Package> l = new List<Package>();
+            foreach (Package p in DataSource.packagh) // I run of all the stations and print them
                 l.Add(p);
             return l;
         }
         /// <summary>
         /// print all the packages that dont assigned to quadocopter.
         /// </summary>
-        public IEnumerable<Packagh> ListOfPwithoutQ()//return list of all the packages that dont assigned to quadocopter
+        public IEnumerable<Package> ListOfPwithoutQ()//return list of all the packages that dont assigned to quadocopter
         {
-            List<Packagh> l = new List<Packagh>();
-            foreach (Packagh p in DataSource.packagh) // I run of all the packages and print them if their idQuadocopter is 0
+            List<Package> l = new List<Package>();
+            foreach (Package p in DataSource.packagh) // I run of all the packages and print them if their idQuadocopter is 0
                 if (p.idQuadocopter == 0)
                     l.Add(p);
             return l;

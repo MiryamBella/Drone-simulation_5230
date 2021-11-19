@@ -22,10 +22,10 @@ namespace IDAL
         /// update name and phone of client
         public void updateCdata(int id, string name = null, int phone = 0);
         /// update package to be belong to a quadocopter.
-        public void AssignPtoQ(Packagh P, int id_q);
+        public void AssignPtoQ(Package P, int id_q);
         /// update package to be collected by quadocopter.
-        public void CollectPbyQ(Packagh p);
-        public void DeliveringPtoClient(Packagh p);
+        public void CollectPbyQ(Package p);
+        public void DeliveringPtoClient(Package p);
         /// Send the quadocopter to charging.
         public void SendQtoCharging(BaseStation b, Quadocopter q);
         /// release te quadocopter frp charging.
@@ -37,7 +37,7 @@ namespace IDAL
         /// print datails of client.
         public Client ClientDisplay(int id);
         /// print datails of package.
-        public Packagh PackageDisplay( int id);
+        public Package PackageDisplay( int id);
         /// print all the stations.
         public List<BaseStation> ListOfStations();
         /// print all the quadocpters.
@@ -45,9 +45,9 @@ namespace IDAL
         /// print all the clients
         public List<Client> ListOfClients();
         /// print all the packages.
-        public List<Packagh> ListOfPackages();
+        public List<Package> ListOfPackages();
         /// print all the packages that dont assigned to quadocopter.
-        public List<Packagh> ListOfPwithoutQ();
+        public List<Package> ListOfPwithoutQ();
         /// return list of all the stations that have empty changing positions.
         public List<BaseStation> ListOfStationsForCharging();
         ///the quadocopter ask.

@@ -68,8 +68,8 @@ namespace IBL
         {
             if (id <= 0 || phoneNumber < 0)
                 Console.WriteLine("error");
-            List<client> temp = cover_to_our_list(dal.ListOfClients());
-            foreach (client c in temp)
+            List<Client> temp = cover_to_our_list(dal.ListOfClients());
+            foreach (Client c in temp)
             {
                 if (c.ID == id)
                     Console.WriteLine("error");

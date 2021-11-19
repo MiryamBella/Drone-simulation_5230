@@ -11,9 +11,21 @@ namespace IBL
             public int ID { get; set; }
             public string name { get; set; }
             public int phoneNumber { get; set; }
+            /// <summary>
+            /// number of packages that send from this client and delivered.
+            /// </summary>
             public int setAndDeliverP { get; set; }
+            /// <summary>
+            /// number of packages that send from this client and not delivered.
+            /// </summary>
             public int setAndNotDeliverP { get; set; }
-            public int getAndDeliverP { get; set; } 
+            /// <summary>
+            /// number of packages that send to this client and delivered.
+            /// </summary>
+            public int getAndDeliverP { get; set; }
+            /// <summary>
+            /// number of packages that send to this client and not delivered.
+            /// </summary>
             public int getAndNotDeliverP { get; set; }
             public override string ToString()
             {

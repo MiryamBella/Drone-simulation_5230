@@ -6,7 +6,7 @@ namespace IDAL
 {
     namespace DO
     {
-        public struct Packagh
+        public struct Package
         { 
             public int id { get; set; }
             /// <summary>

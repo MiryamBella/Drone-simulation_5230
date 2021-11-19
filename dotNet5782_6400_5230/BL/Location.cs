@@ -112,7 +112,7 @@ public class BaseSixtin
 
     //this part will cover to base 60.********************************************************************************
     /// <summary>
-    /// the main func we will use, and she will call the  others and do all the hard work. we dont use her!
+    /// the main func to cover to base 60 and she will call the others and do all the hard work. we dont use her!
     /// </summary>
     /// <param name="decimalLocation"></param>
     /// <returns></returns>
@@ -160,10 +160,10 @@ public class BaseSixtin
         return (int)Math.Round((minutes - ExtractMinutes(value)) * 60);
     }
 
-    //*********************************************************************************
+    //**************the main functation*******************************************************************
 
     /// <summary>
-    /// get the Coordinates and make it to base 60. the firs num it is the Latitude and the second it's the Longitude.
+    /// the func we will use. get the Coordinates and make it to base 60. the firs num it is the Latitude and the second it's the Longitude.
     /// </summary>
     /// <param name="lat">get the Latitude</param>
     /// <param name="lon">get the Longitude</param>
