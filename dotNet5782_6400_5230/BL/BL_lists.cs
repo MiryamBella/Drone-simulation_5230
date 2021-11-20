@@ -192,17 +192,37 @@ namespace IBL
 
             return new_q;
         }
-        Quadocopter cover(IDAL.DO.Quadocopter q)
+        QuadocopterToList cover(IDAL.DO.Quadocopter q)
         {
-            Quadocopter new_q = new Quadocopter();
+            QuadocopterToList new_q = new QuadocopterToList();
             new_q.ID = q.id;
+            new_q.moodle = q.moodle;
+            if (q.weight == IDAL.DO.WeighCategories.easy) new_q.weight = WeighCategories.easy;
+            else if (q.weight == IDAL.DO.WeighCategories.middle) new_q.weight = WeighCategories.middle;
+            else new_q.weight = WeighCategories.hevy;
+            IDAL.DO.Package? p = dal.searchPinQ(q.id);
+            if (p != null)
+            {
+                new_q.mode = statusOfQ.delivery;
+                new_q.packageNumber = p.Value.id;
+                if (p.Value.time_ColctedFromSender != null)
+                {
+                    double lat = dal.searchLatOfsender(p.Value.sender);
+                    double lon = dal.searchLonOfsender(p.Value.sender);
+                    location l = new location();
+                    l.latitude = lat;
+                    l.longitude = lon;
+                    new_q.thisLocation = l;
+
+                }
+
+                //new_q.thisLocation;
+                //new_q.battery;
+            }
             //new_q.mode =;
-            //new_q.moodle = q.moodle;
             //new_q.thisPackage;
             //new_q.thisLocation;
-            //new_q.weight = q.weight;
             //new_q.battery;
-
             return new_q;
 
         }

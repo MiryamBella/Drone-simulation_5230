@@ -53,5 +53,17 @@ namespace IDAL
         ///the quadocopter ask.
         public List<Charging> GetChargings() { return DalObject.DataSource.charge; }
         public double[] askForElectric();
+        /// <summary>
+        ///accept id of qudocopter and return package that in it or null 
+        /// </summary>
+        public Package? searchPinQ(int qID);
+        /// <summary>
+        /// accept id of package and return the latitude of its sender
+        /// </summary>
+        double searchLatOfsender(int pID);
+        /// <summary>
+        /// accept id of package and return the longitude
+        /// </summary>
+        double searchLonOfsender(int pID);
     }
 }
