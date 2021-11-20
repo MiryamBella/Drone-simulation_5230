@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using IDAL.DO;
-using System
 
 
 namespace DalObject 
@@ -344,31 +343,8 @@ namespace DalObject
             arry[4] = DataSource.Config.charghingRate;
             return arry;
         }
-        /// <summary>
-        /// accept id of qudocopter and return the package in it or null
-        /// </summary>
-        /// <param name="qID"><>
-        /// <returns><int>
-        public Package? searchPinQ(int qID)
-        {
-            foreach (Package p in DataSource.packagh)
-                if (p.id == qID)
-                    return p;
-            return null;
-        }
-        /// <summary>
-        /// accept id of package and return the latitude of its sender
-        /// </summary>
-        Location searchLocationsender(int pID)
-        {
-            foreach (Client c in DataSource.cli)
-                if (c.ID == pID)
-                {
-                    Location l = new Location() { latitude = c.latitude, longitude = c.longitude };
-                    return l;
-                }
-            return null;         
-        }
+
+
 
         //---------------------------------------------------------------------------------------------------------------
         // func to help us.
