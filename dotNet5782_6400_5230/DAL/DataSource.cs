@@ -27,7 +27,7 @@ namespace DalObject
             internal static double easy { get { return 2; } }
             internal static double hevy { get { return 3; } }
             internal static double middle_toCare { get { return 4; } }
-            internal static double charghingRate = 0;
+            internal static double charghingRate { get { return 5; } }
         }
 
         /// <summary>
