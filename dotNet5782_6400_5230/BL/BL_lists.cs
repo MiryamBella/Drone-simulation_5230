@@ -194,6 +194,7 @@ namespace IBL
         }
         QuadocopterToList cover(IDAL.DO.Quadocopter q)
         {
+            Random r = new Random();
             QuadocopterToList new_q = new QuadocopterToList();
             new_q.ID = q.id;
             new_q.moodle = q.moodle;
@@ -205,24 +206,41 @@ namespace IBL
             {
                 new_q.mode = statusOfQ.delivery;
                 new_q.packageNumber = p.Value.id;
-                if (p.Value.time_ColctedFromSender != null)
+                if (p.Value.time_ColctedFromSender.Year != 0001)
                 {
-                    double lat = dal.searchLatOfsender(p.Value.sender);
-                    double lon = dal.searchLonOfsender(p.Value.sender);
+                    IDAL.DO.Location loc = dal.searchLocationOfsender(p.Value.sender);
                     location l = new location();
-                    l.latitude = lat;
-                    l.longitude = lon;
+                    l.latitude = loc.latitude;
+                    l.longitude = loc.longitude;
                     new_q.thisLocation = l;
-
+                    //battery
+                }
+                else
+                {
+                    //location = close base station
+                    //battery;
+                }
+            }
+            else
+            {
+                int x = r.Next(0, 1);
+                new_q.packageNumber = 0;
+                if (x == 0)
+                {
+                    new_q.mode = statusOfQ.available;
+                    //new_q.thisLocation;
+                    //new_q.battery;
                 }
 
-                //new_q.thisLocation;
-                //new_q.battery;
+                else
+                {
+                    new_q.mode = statusOfQ.maintenance;
+                    new_q.battery = r.Next(0, 20);
+                    var l = dal.randomLocation();
+                    new_q.thisLocation.latitude = dal.randomLatLocation();
+                    new_q.thisLocation.longitude = dal.randomLonLocation();
+                }
             }
-            //new_q.mode =;
-            //new_q.thisPackage;
-            //new_q.thisLocation;
-            //new_q.battery;
             return new_q;
 
         }

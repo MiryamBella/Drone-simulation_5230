@@ -359,24 +359,16 @@ namespace DalObject
         /// <summary>
         /// accept id of package and return the latitude of its sender
         /// </summary>
-        double searchLatOfsender(int pID)
+        Location searchLocationsender(int pID)
         {
             foreach (Client c in DataSource.cli)
                 if (c.ID == pID)
-                    return c.latitude;
-            return -1;         
+                {
+                    Location l = new Location() { latitude = c.latitude, longitude = c.longitude };
+                    return l;
+                }
+            return null;         
         }
-        /// <summary>
-        /// accept id of package and return the longitude
-        /// </summary>
-        double searchLonOfsender(int pID)
-        {
-            foreach (Client c in DataSource.cli)
-                if (c.ID == pID)
-                    return c.longitude;
-            return -1;
-        }
-
 
         //---------------------------------------------------------------------------------------------------------------
         // func to help us.

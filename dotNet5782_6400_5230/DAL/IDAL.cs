@@ -58,12 +58,9 @@ namespace IDAL
         /// </summary>
         public Package? searchPinQ(int qID);
         /// <summary>
-        /// accept id of package and return the latitude of its sender
+        /// accept id of package and return the location of its sender
         /// </summary>
-        double searchLatOfsender(int pID);
-        /// <summary>
-        /// accept id of package and return the longitude
-        /// </summary>
-        double searchLonOfsender(int pID);
+        public Location searchLocationOfsender(int pID);
+        public Location randomLocation()
     }
 }
