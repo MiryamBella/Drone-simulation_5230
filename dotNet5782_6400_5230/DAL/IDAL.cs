@@ -39,17 +39,17 @@ namespace IDAL
         /// print datails of package.
         public Package PackageDisplay( int id);
         /// print all the stations.
-        public List<BaseStation> ListOfStations();
+        public IEnumerable<BaseStation> ListOfStations();
         /// print all the quadocpters.
-        public List<Quadocopter> ListOfQ();
+        public IEnumerable<Quadocopter> ListOfQ();
         /// print all the clients
-        public List<Client> ListOfClients();
+        public IEnumerable<Client> ListOfClients();
         /// print all the packages.
-        public List<Package> ListOfPackages();
+        public IEnumerable<Package> ListOfPackages();
         /// print all the packages that dont assigned to quadocopter.
-        public List<Package> ListOfPwithoutQ();
+        public IEnumerable<Package> ListOfPwithoutQ();
         /// return list of all the stations that have empty changing positions.
-        public List<BaseStation> ListOfStationsForCharging();
+        public IEnumerable<BaseStation> ListOfStationsForCharging();
         ///the quadocopter ask.
         public List<Charging> GetChargings() { return DalObject.DataSource.charge; }
         public double[] askForElectric();

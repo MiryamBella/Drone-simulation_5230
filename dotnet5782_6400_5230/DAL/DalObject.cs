@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using IDAL.DO;
+using System
 
 
 namespace DalObject 
@@ -276,7 +277,7 @@ namespace DalObject
         {
             List<BaseStation> l = new List<BaseStation>();
             foreach (BaseStation b in  DataSource.bstion) // I run of all the stations and print them
-                l.Add(b);
+                l.Add((BaseStation)b.Clone());
             return l;
         }
         /// <summary>
@@ -343,12 +344,43 @@ namespace DalObject
             arry[4] = DataSource.Config.charghingRate;
             return arry;
         }
+        /// <summary>
+        /// accept id of qudocopter and return the package in it or null
+        /// </summary>
+        /// <param name="qID"><>
+        /// <returns><int>
+        public Package? searchPinQ(int qID)
+        {
+            foreach (Package p in DataSource.packagh)
+                if (p.id == qID)
+                    return p;
+            return null;
+        }
+        /// <summary>
+        /// accept id of package and return the latitude of its sender
+        /// </summary>
+        double searchLatOfsender(int pID)
+        {
+            foreach (Client c in DataSource.cli)
+                if (c.ID == pID)
+                    return c.latitude;
+            return -1;         
+        }
+        /// <summary>
+        /// accept id of package and return the longitude
+        /// </summary>
+        double searchLonOfsender(int pID)
+        {
+            foreach (Client c in DataSource.cli)
+                if (c.ID == pID)
+                    return c.longitude;
+            return -1;
+        }
 
 
-
-        //---------------------------------------------------------------------------------------------------------------
-        // func to help us.
-
+        ///---------------------------------------------------------------------------------------------------------------
+        /// func to help us.
+        ///
         /// <summary>
         /// the func get quadocopter's id and base station's id from the user and chak if they in our data.
         /// </summary>

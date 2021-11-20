@@ -57,7 +57,7 @@ namespace IBL
         public void sendQtoChrge(int id)
         {
             if (id < 100000000 || id > 999999999)//integrity checking of the id
-                Console.WriteLine("ERROR");
+                throw new BLException("error");
             bool flag = false;
             QuadocopterToList q = new QuadocopterToList();//i search the qudocopter in the q_list
             foreach (QuadocopterToList i in q_list)
@@ -66,8 +66,8 @@ namespace IBL
                     flag = true;
                     q = i;
                 }
-            if (!flag) Console.WriteLine("error");
-            if (q.mode != statusOfQ.available) Console.WriteLine("error");
+            if (!flag) throw new BLException("Id not found.");
+            if (q.mode != statusOfQ.available) throw new BLException("error");
             /*checking with battery and distance- if there is enough battery to do the distance to the close station*/
 
 

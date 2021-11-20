@@ -6,8 +6,9 @@ namespace IDAL
 {
     namespace DO
     {
-        public struct BaseStation
+        public struct BaseStation : ICloneable
         {
+               
             public int IDnumber { get; set; }
             public string name { get; set; }
             public int chargingPositions { get; set; }
@@ -16,6 +17,12 @@ namespace IDAL
             public double latitude { get; set; }
             public BaseSixtin toBaseSix { get; set; }
             public DmsLocation decSix { get; set; }
+
+            public object Clone()
+            {
+                return this.MemberwiseClone();
+            }
+
             public override string ToString() 
             {
                 return ("ID: " + IDnumber + '\n' +
@@ -25,6 +32,8 @@ namespace IDAL
                     "latitude: " + latitude + '\n') +
                     "location in base 60: " + decSix;
             }
+
+
         }
 
 

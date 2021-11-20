@@ -28,26 +28,33 @@ namespace ConsoleUI_BL
                 Console.WriteLine(welcoming);
                 userAnser = Console.ReadLine();
 
-                switch (userAnser)
+                try
                 {
-                    case "ad":
-                        program.add();
-                        break;
-                    case "up":
-                        program.update();
-                        break;
-                    case "pr":
-                        program.print();
-                        break;
-                    case "ls":
-                        program.printList();
-                        break;
-                    case "ex":
-                        Console.WriteLine("Goodby, come back again soon!");
-                        break;
-                    default:
-                        Console.WriteLine("ERROR: try again and lisen to the diraction.");
-                        break;
+                    switch (userAnser)
+                    {
+                        case "ad":
+                            program.add();
+                            break;
+                        case "up":
+                            program.update();
+                            break;
+                        case "pr":
+                            program.print();
+                            break;
+                        case "ls":
+                            program.printList();
+                            break;
+                        case "ex":
+                            Console.WriteLine("Goodby, come back again soon!");
+                            break;
+                        default:
+                            Console.WriteLine("ERROR: try again and lisen to the diraction.");
+                            break;
+                    }
+                }
+                catch (IBL.BO.BLException ex)
+                {
+                    Console.WriteLine("Error! " + ex.Message);
                 }
             } while (userAnser != "ex");
 
@@ -95,7 +102,7 @@ namespace ConsoleUI_BL
             }
         }
 
-        //add function
+        #region add function
         void AddBaseStation() 
         {
             Console.WriteLine("Please enter ID to the base station."); ///I get information from the user and enter it into the new station
@@ -164,7 +171,7 @@ namespace ConsoleUI_BL
             program.bl.AddPackage(id_send, id_colect, weigh, priority);
         }
 
-        /*end of add.*/
+        #endregion
 
         /// <summary>
         /// update things to our data base.
@@ -222,7 +229,7 @@ namespace ConsoleUI_BL
 
         }
 
-        //update function
+        #region update function
         void up_Q()
         {
             Console.WriteLine("Please enter the ID of the quadocopter.");
@@ -344,7 +351,7 @@ namespace ConsoleUI_BL
             //send(id)
         }
 
-        /*end of update*/
+        #endregion
 
         /// <summary>
         /// print the data about any object from our data base.
@@ -419,22 +426,22 @@ namespace ConsoleUI_BL
             switch (userAnser)
             {
                 case "bs":
-                    Console.WriteLine(program.bl.ListOfBaseStations());
+                    program.bl.ListOfBaseStations().ForEach(Console.WriteLine);
                     break;
                 case "qu":
-                    Console.WriteLine(program.bl.ListOfQ());
+                    program.bl.ListOfQ().ForEach(Console.WriteLine);
                     break;
                 case "cl":
-                    Console.WriteLine(program.bl.ListOfClients());
+                    program.bl.ListOfClients().ForEach(Console.WriteLine);
                     break;
                 case "pc":
-                    Console.WriteLine(program.bl.ListOfPackages());
+                    program.bl.ListOfPackages().ForEach(Console.WriteLine);
                     break;
                 case "pc not qu":
-                    Console.WriteLine(program.bl.ListOfPwithoutQ());
+                    program.bl.ListOfPwithoutQ().ForEach(Console.WriteLine);
                     break;
                 case "bs yes ch":
-                    Console.WriteLine(program.bl.ListOfStationsForCharging());
+                    program.bl.ListOfStationsForCharging().ForEach(Console.WriteLine);
                     break;
                 case "ex":
                     break;

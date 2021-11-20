@@ -12,12 +12,12 @@ namespace IBL
         /// <summary>
         /// to cover fro list from IDAL to list from IBL.
         /// </summary>
-        List<IDAL.DO.Quadocopter> help_list = new List<IDAL.DO.Quadocopter>();
+        IEnumerable<IDAL.DO.Quadocopter> help_list = new List<IDAL.DO.Quadocopter>();
 
         #region cover base station
         //--------cover base station---------------------------------------------------
 
-        List<BaseStation> cover_to_our_list(List<IDAL.DO.BaseStation> old_l)
+        List<BaseStation> cover_to_our_list(IEnumerable<IDAL.DO.BaseStation> old_l)
         {
             List<BaseStation> new_l = new List<BaseStation>();
             foreach (IDAL.DO.BaseStation q in old_l)
@@ -71,7 +71,7 @@ namespace IBL
 
         #region cover client
         //--------cover client---------------------------------------------------
-        List<Client> cover_to_our_list(List<IDAL.DO.Client> old_l)
+        List<Client> cover_to_our_list(IEnumerable<IDAL.DO.Client> old_l)
         {
             List<Client> new_l = new List<Client>();
             foreach (IDAL.DO.Client q in old_l)
@@ -167,13 +167,13 @@ namespace IBL
 
         #region cover qudocopter
         //--------cover qudocopter---------------------------------------------------
-        List<QuadocopterToList> cover_to_our_list(List<IDAL.DO.Quadocopter> old_l)
+        List<QuadocopterToList> cover_to_our_list(IEnumerable<IDAL.DO.Quadocopter> old_l)
         {
             List<QuadocopterToList> new_l = new List<QuadocopterToList>();
             foreach (IDAL.DO.Quadocopter q in old_l)
             {
                 QuadocopterToList temp = new QuadocopterToList();
-                temp = cover(q);
+                temp = cover_list(q);
                 new_l.Add(temp);
             }
 
