@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using IDAL.DO;
-using System
 
 
 namespace DalObject 
@@ -357,24 +356,47 @@ namespace DalObject
             return null;
         }
         /// <summary>
-        /// accept id of package and return the latitude of its sender
+        /// accept id of package and return the location of its sender
         /// </summary>
-        double searchLatOfsender(int pID)
+        public Location searchLocationOfsender(int pID)
         {
             foreach (Client c in DataSource.cli)
                 if (c.ID == pID)
-                    return c.latitude;
-            return -1;         
+                    return new Location { latitude = c.latitude, longitude = c.longitude };
+            return null;
         }
         /// <summary>
-        /// accept id of package and return the longitude
+        /// return location of ranomaly station
         /// </summary>
-        double searchLonOfsender(int pID)
+        public Location randomStationLocation()
         {
+            Random r = new Random();
+            int x = r.Next(0, DataSource.bstion.Count - 1);
+            Location l = new Location();
+            l.latitude = DataSource.bstion[x].latitude;
+            l.longitude = DataSource.bstion[x].longitude;
+            return l;
+        }
+        /// <summary>
+        /// return location of randomaly Client the get a package
+        /// </summary>
+        public Location randomCwithPLocation()
+        {
+            Random r = new Random();
+            List<int> sendersID = new List<int>();
+            foreach (Package p in DataSource.packagh)
+                if (p.time_ComeToColcter.Year != 0001)
+                    if (sendersID.Contains(p.sender) == false)
+                        sendersID.Add(p.sender);
+            List<Location> sendersL = new List<Location>();
             foreach (Client c in DataSource.cli)
-                if (c.ID == pID)
-                    return c.longitude;
-            return -1;
+                if (sendersID.Contains(c.ID))
+                {
+                    Location l = new Location() { latitude = c.latitude, longitude = c.longitude };
+                    sendersL.Add(l);
+                }
+            int x = r.Next(0, sendersL.Count - 1);
+            return sendersL[x];
         }
 
 

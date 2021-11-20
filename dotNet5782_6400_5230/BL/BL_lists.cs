@@ -228,17 +228,19 @@ namespace IBL
                 if (x == 0)
                 {
                     new_q.mode = statusOfQ.available;
-                    //new_q.thisLocation;
-                    //new_q.battery;
+                    var l = dal.randomCwithPLocation();
+                    new_q.thisLocation.latitude = l.latitude;
+                    new_q.thisLocation.longitude = l.longitude;
+                    //battery;
                 }
 
                 else
                 {
                     new_q.mode = statusOfQ.maintenance;
                     new_q.battery = r.Next(0, 20);
-                    var l = dal.randomLocation();
-                    new_q.thisLocation.latitude = dal.randomLatLocation();
-                    new_q.thisLocation.longitude = dal.randomLonLocation();
+                    var l = dal.randomStationLocation();
+                    new_q.thisLocation.latitude = l.latitude;
+                    new_q.thisLocation.longitude = l.longitude;
                 }
             }
             return new_q;

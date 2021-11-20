@@ -61,6 +61,13 @@ namespace IDAL
         /// accept id of package and return the location of its sender
         /// </summary>
         public Location searchLocationOfsender(int pID);
-        public Location randomLocation()
+        /// <summary>
+        /// return location of randomaly station
+        /// </summary>
+        public Location randomStationLocation();
+        /// <summary>
+        /// return location of randomaly Client the get a package
+        /// </summary>
+        public Location randomCwithPLocation();
     }
 }
