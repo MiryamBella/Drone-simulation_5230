@@ -6,7 +6,7 @@ namespace IDAL
 {
     namespace DO
     {
-        public struct Package
+        public struct Package: ICloneable
         { 
             public int id { get; set; }
             /// <summary>
@@ -30,6 +30,10 @@ namespace IDAL
             /// </summary>
             public DateTime time_ColctedFromSender { get; set; }
             public DateTime time_ComeToColcter { get; set; }
+            public object Clone()
+            {
+                return this.MemberwiseClone();
+            }
 
             //return the information as string.
             public override string ToString()

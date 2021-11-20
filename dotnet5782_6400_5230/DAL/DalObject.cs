@@ -276,7 +276,7 @@ namespace DalObject
         {
             List<BaseStation> l = new List<BaseStation>();
             foreach (BaseStation b in  DataSource.bstion) // I run of all the stations and print them
-                l.Add(b);
+                l.Add((BaseStation)b.Clone());
             return l;
         }
         /// <summary>
@@ -346,9 +346,9 @@ namespace DalObject
 
 
 
-        //---------------------------------------------------------------------------------------------------------------
-        // func to help us.
-
+        ///---------------------------------------------------------------------------------------------------------------
+        /// func to help us.
+        ///
         /// <summary>
         /// the func get quadocopter's id and base station's id from the user and chak if they in our data.
         /// </summary>

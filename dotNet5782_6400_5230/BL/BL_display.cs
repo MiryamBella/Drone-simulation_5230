@@ -9,32 +9,35 @@ namespace IBL
     {
         public BaseStation baseStationDisplay(int id)
         {
-            BaseStation bs = new BaseStation();
-            if (bs.ID <= 0)
-                Console.WriteLine("error");
+            //BaseStation bs = new BaseStation();
+            if (id <= 0)
+                throw new BLException("Invalid id.");
+            var bs = dal.StationDisplay(id);
+            if (bs.IDnumber <= 0)
+                throw new BLException("Id not found");
+            return cover(bs);
             ///find if the base station in the data base.
-            List<IDAL.DO.BaseStation> bs_list = new List<IDAL.DO.BaseStation>();
-            bs_list = dal.ListOfStations();
-            bool exsit = false;
-            foreach (IDAL.DO.BaseStation bs_toList in bs_list)
-            {
-                if (bs_toList.IDnumber ==id)
-                {
-                    exsit = true;
-                    bs = cover(bs_toList);
-                    break;
-                }
-            }
-            if (!exsit)
-                Console.WriteLine("error");
+            //IEnumerable<IDAL.DO.BaseStation> bs_list = dal.ListOfStations();
+            //bool exsit = false;
+            //foreach (IDAL.DO.BaseStation bs_toList in bs_list)
+            //{
+            //    if (bs_toList.IDnumber ==id)
+            //    {
+            //        exsit = true;
+            //        bs = cover(bs_toList);
+            //        break;
+            //    }
+            //}
+            //if (!exsit)
+            //    Console.WriteLine("error");
 
-            return bs;
+            //return bs;
         }
         public Quadocopter QuDisplay(int id)
         {
             Quadocopter returnQ = new Quadocopter();
             if (id <= 0)
-                Console.WriteLine("error");
+                new BLException("Invalid id.");
             bool exist = false;
             foreach (QuadocopterToList q in q_list)
             {
@@ -51,9 +54,8 @@ namespace IBL
                 }
             }
             if (!exist)
-                Console.WriteLine("error");
-            List<IDAL.DO.Package> p_list = new List<IDAL.DO.Package>();
-            p_list = dal.ListOfPackages();
+                new BLException("The quadocopter not exist.");
+            IEnumerable<IDAL.DO.Package> p_list = dal.ListOfPackages();
             foreach (IDAL.DO.Package p in p_list)
             {
                 if (p.idQuadocopter == id)
@@ -78,53 +80,60 @@ namespace IBL
         }
         public Client ClientDisplay(int id)
         {
-            Client returnC = new Client();
+            //Client returnC = new Client();
             if(id<=0)
-                Console.WriteLine("error");
-            List<IDAL.DO.Client> c_l = new List<IDAL.DO.Client>();
-            c_l = dal.ListOfClients();
-            bool exist = false;
-            foreach(IDAL.DO.Client c in c_l)
-            {
-                if (c.ID == id)
-                {
-                    exist = true;
-                    returnC = cover(c);
-                }
-            }
-            if(!exist)
-                Console.WriteLine("error");
+                new BLException("Invalid id.");
+            var client = dal.ClientDisplay(id);
+            if (client.ID <= 0)
+                throw new BLException("Id not found.");
+            return cover(client);
+            //List<IDAL.DO.Client> c_l = new List<IDAL.DO.Client>();
+            //c_l = dal.ListOfClients();
+            //bool exist = false;
+            //foreach(IDAL.DO.Client c in c_l)
+            //{
+            //    if (c.ID == id)
+            //    {
+            //        exist = true;
+            //        returnC = cover(c);
+            //    }
+            //}
+            //if(!exist)
+            //    new BLException("The client not exist.");
 
-            return returnC;
+            //return returnC;
         }
         public Package PackageDisplay(int id)
         {
-            Package returnP = new Package();
+            
+            //Package returnP = new Package();
             if (id <= 0)
-                Console.WriteLine("error");
-
-            List<IDAL.DO.Package> p_list = new List<IDAL.DO.Package>();
-            p_list = dal.ListOfPackages();
-            bool exist = false;
-            foreach (IDAL.DO.Package p in p_list)
-            {
-                if (p.id == id)
-                {
-                    exist = true;
-                    returnP = cover(p);
-                }
-            }
-            if(!exist)
-                Console.WriteLine("error");
-            return returnP;
+                new BLException("Invalid id.");
+            var pack = dal.PackageDisplay(id);
+            if (pack.id <= 0)
+                throw new BLException("Id not found.");
+            return cover(pack);
+            //List<IDAL.DO.Package> p_list = new List<IDAL.DO.Package>();
+            //p_list = dal.ListOfPackages();
+            //bool exist = false;
+            //foreach (IDAL.DO.Package p in p_list)
+            //{
+            //    if (p.id == id)
+            //    {
+            //        exist = true;
+            //        returnP = cover(p);
+            //    }
+            //}
+            //if(!exist)
+            //    new BLException("The package not exist..");
+            //return returnP;
         }
 
         public List<BO.BaseStationToList> ListOfBaseStations()
         {
             List<BaseStationToList> bs_l = new List<BaseStationToList>();
 
-            List<IDAL.DO.BaseStation> bs_list = new List<IDAL.DO.BaseStation>();
-            bs_list = dal.ListOfStations();
+            IEnumerable<IDAL.DO.BaseStation> bs_list = dal.ListOfStations();
             foreach (IDAL.DO.BaseStation bs in bs_list)
             {
                 BaseStationToList temp = new BaseStationToList();
@@ -143,8 +152,7 @@ namespace IBL
         {
             List<ClientToList> new_l = new List<ClientToList>();
 
-            List<IDAL.DO.Client> old_list = new List<IDAL.DO.Client>();
-            old_list = dal.ListOfClients();
+            IEnumerable<IDAL.DO.Client> old_list = dal.ListOfClients();
             foreach (IDAL.DO.Client c in old_list)
             {
                 ClientToList temp = new ClientToList();
@@ -156,8 +164,7 @@ namespace IBL
                 temp.getAndNotDeliverP=0;
                 temp.getAndDeliverP = 0;
 
-                List<IDAL.DO.Package> p_list = new List<IDAL.DO.Package>();
-                p_list = dal.ListOfPackages();
+                IEnumerable<IDAL.DO.Package> p_list = dal.ListOfPackages();
                 foreach(IDAL.DO.Package p in p_list)
                 {
                     if (p.sender == c.ID)
@@ -187,8 +194,7 @@ namespace IBL
         {
             List<QuadocopterToList> q_l = new List<QuadocopterToList>();
 
-            List<IDAL.DO.Quadocopter> stractQ_list = new List<IDAL.DO.Quadocopter>();
-            stractQ_list = dal.ListOfQ();
+            IEnumerable<IDAL.DO.Quadocopter> stractQ_list = dal.ListOfQ();
             foreach (IDAL.DO.Quadocopter q in stractQ_list)
             {
                 QuadocopterToList temp = new QuadocopterToList();
@@ -204,8 +210,7 @@ namespace IBL
         {
             List<PackageToList> p_l = new List<PackageToList>();
 
-            List<IDAL.DO.Package> stractP_list = new List<IDAL.DO.Package>();
-            stractP_list = dal.ListOfPackages();
+            IEnumerable<IDAL.DO.Package> stractP_list = dal.ListOfPackages();
             foreach (IDAL.DO.Package p in stractP_list)
             {
                 Package temp = new Package();
@@ -228,8 +233,7 @@ namespace IBL
         {
             List<PackageToList> p_l = new List<PackageToList>();
 
-            List<IDAL.DO.Package> stractP_list = new List<IDAL.DO.Package>();
-            stractP_list = dal.ListOfPackages();
+            IEnumerable<IDAL.DO.Package> stractP_list = dal.ListOfPackages();
             foreach (IDAL.DO.Package p in stractP_list)
             {
                 if (p.idQuadocopter == 0)
@@ -257,8 +261,7 @@ namespace IBL
         {
             List<BaseStationToList> bs_l = new List<BaseStationToList>();
 
-            List<IDAL.DO.BaseStation> bs_list = new List<IDAL.DO.BaseStation>();
-            bs_list = dal.ListOfStationsForCharging();
+            IEnumerable<IDAL.DO.BaseStation> bs_list = dal.ListOfStationsForCharging();
             foreach (IDAL.DO.BaseStation bs in bs_list)
             {
                 if (bs.freechargingPositions != 0)
