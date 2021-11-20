@@ -7,6 +7,7 @@ namespace IBL
 {
     public partial class BL
     {
+        int abc = 0;
         public BaseStation baseStationDisplay(int id)
         {
             //BaseStation bs = new BaseStation();
