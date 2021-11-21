@@ -343,7 +343,61 @@ namespace DalObject
             arry[4] = DataSource.Config.charghingRate;
             return arry;
         }
-
+        /// <summary>
+        /// accept id of qudocopter and return the package in it or null
+        /// </summary>
+        /// <param name="qID"><>
+        /// <returns><int>
+        public Package? searchPinQ(int qID)
+        {
+            foreach (Package p in DataSource.packagh)
+                if (p.id == qID)
+                    return p;
+            return null;
+        }
+        /// <summary>
+        /// accept id of package and return the location of its sender
+        /// </summary>
+        public Location searchLocationOfsender(int pID)
+        {
+            foreach (Client c in DataSource.cli)
+                if (c.ID == pID)
+                    return new Location { latitude = c.latitude, longitude = c.longitude };
+            return null;
+        }
+        /// <summary>
+        /// return location of ranomaly station
+        /// </summary>
+        public Location randomStationLocation()
+        {
+            Random r = new Random();
+            int x = r.Next(0, DataSource.bstion.Count - 1);
+            Location l = new Location();
+            l.latitude = DataSource.bstion[x].latitude;
+            l.longitude = DataSource.bstion[x].longitude;
+            return l;
+        }
+        /// <summary>
+        /// return location of randomaly Client the get a package
+        /// </summary>
+        public Location randomCwithPLocation()
+        {
+            Random r = new Random();
+            List<int> sendersID = new List<int>();
+            foreach (Package p in DataSource.packagh)
+                if (p.time_ComeToColcter.Year != 0001)
+                    if (sendersID.Contains(p.sender) == false)
+                        sendersID.Add(p.sender);
+            List<Location> sendersL = new List<Location>();
+            foreach (Client c in DataSource.cli)
+                if (sendersID.Contains(c.ID))
+                {
+                    Location l = new Location() { latitude = c.latitude, longitude = c.longitude };
+                    sendersL.Add(l);
+                }
+            int x = r.Next(0, sendersL.Count - 1);
+            return sendersL[x];
+        }
 
 
         ///---------------------------------------------------------------------------------------------------------------

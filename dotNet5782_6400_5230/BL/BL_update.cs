@@ -68,17 +68,18 @@ namespace IBL
                 }
             if (!flag) throw new BLException("Id not found.");
             if (q.mode != statusOfQ.available) throw new BLException("error");
-            /*checking with battery and distance- if there is enough battery to do the distance to the close station*/
-
-
-
+            IDAL.DO.BaseStation b = new IDAL.DO.BaseStation();
+            /* looked for the closest station with enpty charging positions.
+             *  checking with battery and distance- 
+             * if there is enough battery to do the distance to the close station*/
+            //dal.SendQtoCharging(idB, idQ);
         }
         #endregion;
         #region releaseQfronCharge;
         /// <summary>
         /// update qudocopter to be released from a charging positions
         /// </summary>
-        public void releaseQfromChrge()
+        public void releaseQfromChrge(int id, double hours)
         {
 
         }
