@@ -56,8 +56,6 @@ namespace IBL
         /// update qudocopter to be send to a charging position
         public void sendQtoChrge(int id)
         {
-            if (id < 100000000 || id > 999999999)//integrity checking of the id
-                throw new BLException("error");
             bool flag = false;
             QuadocopterToList q = new QuadocopterToList();//i search the qudocopter in the q_list
             foreach (QuadocopterToList i in q_list)
@@ -81,7 +79,21 @@ namespace IBL
         /// </summary>
         public void releaseQfromChrge(int id, double hours)
         {
-
+            bool flag = false;
+            QuadocopterToList q = new QuadocopterToList();//i search the qudocopter in the q_list
+            foreach (QuadocopterToList i in q_list)
+                if (i.ID == id)
+                {
+                    flag = true;
+                    q = i;
+                    break;
+                }
+            if (!flag) throw new BLException("Id not found.");
+            if (q.mode != statusOfQ.maintenance) throw new BLException("this q not in maintenance.");
+            q.mode = statusOfQ.available;
+            q.battery += (int)(dal.askForElectric()[4] * hours);
+            if (q.battery > 100) q.battery = 100;
+            dal.ReleaseQfromCharging(id);
         }
         #endregion;
         #region assignPtoQ;
@@ -90,6 +102,7 @@ namespace IBL
         /// </summary>
         public void assignPtoQ()
         {
+
 
         }
         #endregion;

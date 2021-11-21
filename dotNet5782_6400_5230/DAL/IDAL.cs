@@ -27,9 +27,9 @@ namespace IDAL
         public void CollectPbyQ(Package p);
         public void DeliveringPtoClient(Package p);
         /// Send the quadocopter to charging.
-        public void SendQtoCharging(BaseStation b, Quadocopter q);
+        public void SendQtoCharging(int bID, int qID);
         /// release te quadocopter frp charging.
-        public void ReleaseQfromCharging(BaseStation b, Quadocopter q);
+        public void ReleaseQfromCharging(int qID);
         /// print datails of statin
         public BaseStation StationDisplay(int id);
         /// print datails of quadocopter.

@@ -188,10 +188,11 @@ namespace DalObject
                     //        DataSource.qpter[j].mode = statusOfQ.available; //update the qptr to be abailable
                     //}
         }
+        #region sendQtoCharging;
         /// <summary>
         /// Send the quadocopter to charging.
         /// </summary>
-        public void SendQtoCharging(BaseStation b, Quadocopter q)
+        public void SendQtoCharging(int bID, int qID)
         {
 
             Charging c = new Charging();
@@ -200,19 +201,31 @@ namespace DalObject
             b.freechargingPositions--;
             DataSource.charge.Add(c);
         }
+        #endregion;
+        #region releaseQfromCharging;
         /// <summary>
-        /// release te quadocopter frp charging.
+        /// release te quadocopter from charging.
         /// </summary>
-        public void ReleaseQfromCharging(BaseStation b, Quadocopter q)
+        public void ReleaseQfromCharging(int qID)
         {
-            b.freechargingPositions++;
-            //DataSource.qpter[iq].mode = statusOfQ.available;
-
-            Charging c = new Charging();
-            c.baseStationID = b.IDnumber; 
-            c.quadocopterID =q.id;
-            DataSource.charge.Remove(c);
+            int bsID = 0;
+            foreach (Charging c in DataSource.charge)
+                if (c.quadocopterID == qID) 
+                {
+                    bsID = c.baseStationID;     //find the id of the base station
+                    DataSource.charge.Remove(c);//remove c
+                    break;
+                }
+            for (int i = 0; i < DataSource.bstion.Count; i++)
+                if (DataSource.bstion[i].IDnumber == bsID)
+                {
+                    BaseStation b = DataSource.bstion[i];
+                    b.freechargingPositions++;
+                    DataSource.bstion[i] = b;
+                    break;
+                }
         }
+        #endregion;
         /// <summary>
         /// print datails of statin
         /// </summary>
