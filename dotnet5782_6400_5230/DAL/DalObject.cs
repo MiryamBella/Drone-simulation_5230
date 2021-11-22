@@ -191,27 +191,56 @@ namespace DalObject
         /// <summary>
         /// Send the quadocopter to charging.
         /// </summary>
-        public void SendQtoCharging(BaseStation b, Quadocopter q)
+        public void SendQtoCharging(int bID, int qID)
         {
-
             Charging c = new Charging();
-            c.baseStationID = b.IDnumber;
-            c.quadocopterID = q.id;
-            b.freechargingPositions--;
-            DataSource.charge.Add(c);
+            foreach(BaseStation b in DataSource.bstion)
+            {
+                if (b.IDnumber == bID) ///find the base station
+                { 
+                    foreach(Quadocopter q in DataSource.qpter)
+                    {
+                        if (q.id == qID)///find the quadocopter.
+                        {
+                            SendQtoCharging_doingThat(b, q, c);
+                            return;
+                        }
+                    }
+                    throw new Exception();
+                }
+            }
+            throw new Exception();
         }
         /// <summary>
         /// release te quadocopter frp charging.
         /// </summary>
-        public void ReleaseQfromCharging(BaseStation b, Quadocopter q)
+        public void ReleaseQfromCharging(int qID)
         {
-            b.freechargingPositions++;
-            //DataSource.qpter[iq].mode = statusOfQ.available;
-
-            Charging c = new Charging();
-            c.baseStationID = b.IDnumber; 
-            c.quadocopterID =q.id;
-            DataSource.charge.Remove(c);
+            foreach(Quadocopter q in DataSource.qpter)
+            {
+                if (q.id == qID)///find if there is that quadocopter
+                {
+                    foreach (Charging c in DataSource.charge)
+                    {
+                        ///find if the quadocopter are charging
+                        if (c.quadocopterID == q.id)
+                        {
+                            foreach (BaseStation b in DataSource.bstion)
+                            {
+                                ///find the base station he in charge
+                                if (b.IDnumber == c.baseStationID)
+                                {
+                                    ReleaseQfromCharging_doingThat(b, q);
+                                    return;
+                                }
+                            }
+                            throw new Exception();
+                        }
+                    }
+                    throw new Exception();
+                }
+            }
+            throw new Exception();
         }
         /// <summary>
         /// print datails of statin
@@ -402,7 +431,23 @@ namespace DalObject
 
         ///---------------------------------------------------------------------------------------------------------------
         /// func to help us.
-        ///
+        void SendQtoCharging_doingThat(BaseStation b, Quadocopter q, Charging c)
+        {
+            c.baseStationID = b.IDnumber;
+            c.quadocopterID = q.id;
+            b.freechargingPositions--;
+            DataSource.charge.Add(c);
+        }
+        public void ReleaseQfromCharging_doingThat(BaseStation b, Quadocopter q)
+        {
+
+            b.freechargingPositions++;
+            Charging c = new Charging();
+            c.baseStationID = b.IDnumber;
+            c.quadocopterID = q.id;
+            DataSource.charge.Remove(c);
+        }
+
         /// <summary>
         /// the func get quadocopter's id and base station's id from the user and chak if they in our data.
         /// </summary>
