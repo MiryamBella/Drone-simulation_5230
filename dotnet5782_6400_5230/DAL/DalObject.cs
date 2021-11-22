@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using IDAL.DO;
+using DAL.exceptions.DO;
 
 
 namespace DalObject 
@@ -206,10 +207,10 @@ namespace DalObject
                             return;
                         }
                     }
-                    throw new Exception();
+                    throw new DALException("The ID of the quadocopter not exist.");
                 }
             }
-            throw new Exception();
+            throw new DALException("The ID of the base station not exist.");
         }
         /// <summary>
         /// release te quadocopter frp charging.
@@ -234,13 +235,13 @@ namespace DalObject
                                     return;
                                 }
                             }
-                            throw new Exception();
+                            throw new DALException("The base statation the quadocopter not exist.");
                         }
                     }
-                    throw new Exception();
+                    throw new DALException("The quadocopter not charging.");
                 }
             }
-            throw new Exception();
+            throw new DALException("The ID of the quadocopter not exist.");
         }
         /// <summary>
         /// print datails of statin
