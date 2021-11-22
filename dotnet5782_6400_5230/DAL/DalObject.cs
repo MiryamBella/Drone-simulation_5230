@@ -4,7 +4,7 @@ using System.Text;
 using IDAL.DO;
 
 
-namespace DalObject 
+namespace DalObject
 {
     public class DalObject : IDAL.IDAL
     {
@@ -18,7 +18,7 @@ namespace DalObject
             station.freechargingPositions = chargingPositions;
             station.longitude = longitude;
             station.latitude = latitude;
-            
+
             //make the location in base 60.
             station.toBaseSix = new BaseSixtin();
             station.decSix = new DmsLocation();
@@ -51,7 +51,7 @@ namespace DalObject
         /// adding new package.
         /// </summary>
         /// <returns>The pacjagh ID we add.</returns>
-        public void AddPackage(int sender, int colecter, int weight, int priority) 
+        public void AddPackage(int sender, int colecter, int weight, int priority)
         {
             Package p = new Package();
             p.sender = sender;
@@ -93,7 +93,7 @@ namespace DalObject
                 newQ.moodle = modle;
                 DataSource.qpter.Add(newQ);
             }
-            else Console.WriteLine("ERROR");        
+            else Console.WriteLine("ERROR");
         }
         #endregion;
         #region updateBaseStation;
@@ -145,7 +145,7 @@ namespace DalObject
         /// <summary>
         /// update package to be belong to a quadocopter.
         /// </summary>
-        public void AssignPtoQ(Package P, int id_q) 
+        public void AssignPtoQ(Package P, int id_q)
         {
             P.idQuadocopter = id_q;
             //int i = 0;
@@ -174,24 +174,25 @@ namespace DalObject
         /// <summary>
         /// update package to be collected by quadocopter.
         /// </summary>
-        public void CollectPbyQ(Package p) 
+        public void CollectPbyQ(Package p)
         {
             p.time_ColctedFromSender = DateTime.Now; //update the time
 
         }
         public void DeliveringPtoClient(Package p)
         {
-                    p.time_ComeToColcter = DateTime.Now; //update the time
-                    //foreach (Quadocopter q in DataSource.qpter) //look for index of the quadocopter whice take this package
-                    //{
-                    //    if (q.id == p.idQuadocopter)
-                    //        DataSource.qpter[j].mode = statusOfQ.available; //update the qptr to be abailable
-                    //}
+            p.time_ComeToColcter = DateTime.Now; //update the time
+                                                 //foreach (Quadocopter q in DataSource.qpter) //look for index of the quadocopter whice take this package
+                                                 //{
+                                                 //    if (q.id == p.idQuadocopter)
+                                                 //        DataSource.qpter[j].mode = statusOfQ.available; //update the qptr to be abailable
+                                                 //}
         }
+        #region sendQtoCharging;
         /// <summary>
         /// Send the quadocopter to charging.
         /// </summary>
-        public void SendQtoCharging(BaseStation b, Quadocopter q)
+        public void SendQtoCharging(int bID, int qID)
         {
 
             Charging c = new Charging();
@@ -200,19 +201,31 @@ namespace DalObject
             b.freechargingPositions--;
             DataSource.charge.Add(c);
         }
+        #endregion;
+        #region releaseQfromCharging;
         /// <summary>
-        /// release te quadocopter frp charging.
+        /// release te quadocopter from charging.
         /// </summary>
-        public void ReleaseQfromCharging(BaseStation b, Quadocopter q)
+        public void ReleaseQfromCharging(int qID)
         {
-            b.freechargingPositions++;
-            //DataSource.qpter[iq].mode = statusOfQ.available;
-
-            Charging c = new Charging();
-            c.baseStationID = b.IDnumber; 
-            c.quadocopterID =q.id;
-            DataSource.charge.Remove(c);
+            int bsID = 0;
+            foreach (Charging c in DataSource.charge)
+                if (c.quadocopterID == qID)
+                {
+                    bsID = c.baseStationID;     //find the id of the base station
+                    DataSource.charge.Remove(c);//remove c
+                    break;
+                }
+            for (int i = 0; i < DataSource.bstion.Count; i++)
+                if (DataSource.bstion[i].IDnumber == bsID)
+                {
+                    BaseStation b = DataSource.bstion[i];
+                    b.freechargingPositions++;
+                    DataSource.bstion[i] = b;
+                    break;
+                }
         }
+        #endregion;
         /// <summary>
         /// print datails of statin
         /// </summary>
@@ -275,7 +288,7 @@ namespace DalObject
         public IEnumerable<BaseStation> ListOfStations() //return list of all the stations
         {
             List<BaseStation> l = new List<BaseStation>();
-            foreach (BaseStation b in  DataSource.bstion) // I run of all the stations and print them
+            foreach (BaseStation b in DataSource.bstion) // I run of all the stations and print them
                 l.Add((BaseStation)b.Clone());
             return l;
         }
@@ -328,14 +341,14 @@ namespace DalObject
         {
             List<BaseStation> lbs = new List<BaseStation>();
             // I run of all the stations and print them if their changingPosition is not 0
-            foreach (BaseStation b in DataSource.bstion) 
+            foreach (BaseStation b in DataSource.bstion)
                 if (b.freechargingPositions != 0)
                     lbs.Add(b);
             return lbs;
         }
         public double[] askForElectric()//the quadocopter ask.
         {
-            double[] arry =new double[5];
+            double[] arry = new double[5];
             arry[0] = DataSource.Config.Available;
             arry[1] = DataSource.Config.easy;
             arry[2] = DataSource.Config.hevy;
