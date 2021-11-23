@@ -95,7 +95,7 @@ namespace DalObject
                 newQ.moodle = modle;
                 DataSource.qpter.Add(newQ);
             }
-            else Console.WriteLine("ERROR");        
+            else throw new DALException("ID not exist");        
         }
         #endregion;
         #region updateBaseStation;
@@ -117,7 +117,7 @@ namespace DalObject
                 if (chargingPositions != -1) newBS.chargingPositions = chargingPositions;
                 DataSource.bstion.Add(newBS);
             }
-            else Console.WriteLine("ERROR");
+            else throw new DALException("ID not exist");
         }
         #endregion;
         #region updateClient;
@@ -141,7 +141,7 @@ namespace DalObject
                 if (phone != 0) newC.phoneNumber = phone;
                 DataSource.cli.Add(newC);
             }
-            else Console.WriteLine("ERROR");
+            else throw new DALException("ID not exist");
         }
         #endregion;
         /// <summary>
