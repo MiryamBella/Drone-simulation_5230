@@ -35,17 +35,16 @@ namespace IBL
             new_bs.thisLocation.decSix = new_bs.thisLocation.toBaseSix.LocationSix(b.latitude, b.longitude);
             new_bs.freeChargingPositions = b.freechargingPositions;
             // now we will get the: new_bs.qudocopters.
-            if (new_bs.freeChargingPositions == 0)
-            {
-                new_bs.qudocopters = null;
-                return new_bs;
-            }
+
             ///get all tha q that charging
             List<IDAL.DO.Charging> chrgh_list = new List<IDAL.DO.Charging>();
             bool exsit = false;
             chrgh_list = dal.GetChargings();
             if (chrgh_list == null)
-                throw new BLException("there are problem in the qudocopters in the charging list.");
+            {
+                new_bs.qudocopters = null;
+                return new_bs;
+            }
             foreach (IDAL.DO.Charging chargeh in chrgh_list)
             {
                 ///find what q is gharge in our base station
