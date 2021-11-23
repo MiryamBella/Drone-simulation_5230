@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using IBL.BO;
+using System.Device.Location;
+using System.Linq;
 
 namespace IBL
 {
@@ -13,13 +15,16 @@ namespace IBL
         /// <int, string>
         public void updateQdata(int id, string modle)
         {
-            if (id < 100000000 || id > 999999999) // integrity checking
-                Console.WriteLine("ERROR");
-            dal.updateQd(id, modle); //update the data by the dalObject
-
+            bool flag = false;
             foreach (QuadocopterToList q in q_list)//update the q_list
                 if (q.ID == id)
+                {
                     q.moodle = modle;
+                    flag = true;
+                    break;
+                }
+            if (!flag) Console.WriteLine("error");
+            else dal.updateQd(id, modle); //update the data by the dalObject
         }
         #endregion;
         #region updataBSdata;
@@ -31,8 +36,6 @@ namespace IBL
             if (name == null && chargingPositions == -1)//inetgrity checking
                 Console.WriteLine("ERROR");
             if (chargingPositions < -1)
-                Console.WriteLine("ERROR");
-            if (id < 100000000 || id > 999999999)
                 Console.WriteLine("ERROR");
             dal.updateSdata(id, name, chargingPositions); //update the data by sending to the dalObject
         }
@@ -64,13 +67,22 @@ namespace IBL
                     flag = true;
                     q = i;
                 }
+            //integrity checking
             if (!flag) throw new BLException("Id not found.");
             if (q.mode != statusOfQ.available) throw new BLException("error");
-            IDAL.DO.BaseStation b = new IDAL.DO.BaseStation();
-            /* looked for the closest station with enpty charging positions.
-             *  checking with battery and distance- 
-             * if there is enough battery to do the distance to the close station*/
-            //dal.SendQtoCharging(idB, idQ);
+            //check if it have enough battery to go to base station
+            IDAL.DO.Location dalL = new IDAL.DO.Location() { longitude = q.thisLocation.longitude, latitude = q.thisLocation.latitude };
+            IDAL.DO.BaseStation b = dal.searchCloseEmptyStation(dalL);
+            double distance = dal.coverLtoG(dalL).GetDistanceTo(new GeoCoordinate(b.longitude, b.latitude));
+            int minBattery = (int)(distance * dal.askForElectric()[0]);
+            if (q.battery < minBattery) Console.WriteLine("error");
+
+            dal.SendQtoCharging(b.IDnumber, q.ID);//update the data at the dal
+
+            q.battery -= minBattery;//update the list of qudocopter in the BL
+            q.thisLocation.longitude = dalL.longitude;
+            q.thisLocation.latitude = dalL.latitude;
+            q.mode = statusOfQ.maintenance;
         }
         #endregion;
         #region releaseQfronCharge;
@@ -100,10 +112,46 @@ namespace IBL
         /// <summary>
         /// update package to be assigned to a qudocopter
         /// </summary>
-        public void assignPtoQ()
+        public void assignPtoQ(int qID)
         {
+            bool flag = false;
+            QuadocopterToList q = new QuadocopterToList();
+            foreach (QuadocopterToList qu in q_list)//check if the quadocopter is exist
+                if (q.ID == qID)
+                {
+                    flag = true;
+                    q = qu;
+                    break;
+                }
+            if (!flag) Console.WriteLine("error");
 
-
+            var packages = dal.availablePtoQ(q.ID, coverLtoG(q.thisLocation));//list of package that it can take according to this battery
+            if (packages.Count == 0) Console.WriteLine("error");
+            var package = packages.OrderBy(s => (int)s.priority).ThenBy(s => s.weight);
+            IDAL.DO.Priorities pr = new IDAL.DO.Priorities();
+            foreach (var a in package) { pr = a.priority; break; };
+            var packagesInHighPri = from IDAL.DO.Package p in package //list of the packages with the highest priority
+                                    where p.priority == pr
+                                    select p;
+            var packageInHighWeight = from IDAL.DO.Package p in package
+                                      where (int)p.weight <= (int)q.weight
+                                      select p;
+            int w = 0;
+            foreach (var a in packageInHighWeight) { w = (int)a.weight; break; }
+            packageInHighWeight = from IDAL.DO.Package p in package
+                                  where (int)p.weight == w
+                                  select p;
+            bool isfirst = true;
+            double distance = 0;
+            IDAL.DO.Package thePackage = new IDAL.DO.Package();
+            foreach (IDAL.DO.Package p in packageInHighWeight)
+            {
+                double d = coverLtoG(q.thisLocation).GetDistanceTo(dal.coverLtoG(dal.searchLocationOfclient(p.sender)));
+                if (isfirst) { distance = d; thePackage = p; }
+                else if (d < distance) { distance = d; thePackage = p; }
+            }
+            dal.AssignPtoQ(thePackage, q.ID);
+            q.mode = statusOfQ.delivery;
         }
         #endregion;
         #region collectPbyQ;
@@ -124,67 +172,5 @@ namespace IBL
 
         }
         #endregion;
-
-
-
-        /* public void AssignPtoQ(Packagh P, int id_q)
-         {
-             P.idQuadocopter = id_q;
-             //int i = 0;
-             //foreach(Packagh p in DataSource.packagh)// look for the index that the package in it
-             //{
-             //    if (p.id == id_p)
-             //    {
-             //        p.idQuadocopter = id_q;
-             //        foreach (Quadocopter q in DataSource.qpter)
-             //        {
-             //            if (q.mode == statusOfQ.available)
-             //                if (q.weight == p.weight)
-             //                {
-             //                    DataSource.packagh.Find(p.).idQuadocopter
-             //                    break;
-             //                }
-             //        }
-             //        break;
-
-             //    }
-             //}
-             ////DataSource.qpter[j].mode = statusOfQ.delivery; //change the mode of the qpter to delivery
-             ////DataSource.packagh[i].idQuadocopter = DataSource.qpter[j].id; //enter the id of the qptr to the package
-             ////DataSource.packagh[i].time_Belong_quadocopter = DateTime.Now; //update the appropriate time to be now 
-         }
-         /// <summary>
-         /// update package to be collected by quadocopter.
-         /// </summary>
-         public void CollectPbyQ(Packagh p)
-         {
-             p.time_ColctedFromSender = DateTime.Now; //update the time
-
-         }
-         public void DeliveringPtoClient(Packagh p)
-         {
-             p.time_ComeToColcter = DateTime.Now; //update the time
-                                                  //foreach (Quadocopter q in DataSource.qpter) //look for index of the quadocopter whice take this package
-                                                  //{
-                                                  //    if (q.id == p.idQuadocopter)
-                                                  //        DataSource.qpter[j].mode = statusOfQ.available; //update the qptr to be abailable
-                                                  //}
-         }
-         */
-
-        /*
-        /// <summary>
-        /// release te quadocopter frp charging.
-        /// </summary>
-        public void ReleaseQfromCharging(BaseStation b, Quadocopter q)
-        {
-            b.chargingPositions++;
-            //DataSource.qpter[iq].mode = statusOfQ.available;
-
-            Charging c = new Charging();
-            c.baseStationID = b.IDnumber;
-            c.quadocopterID = q.id;
-            DataSource.charge.Remove(c);
-        }*/
     }
 }

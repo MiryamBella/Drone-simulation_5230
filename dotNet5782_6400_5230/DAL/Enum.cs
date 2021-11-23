@@ -6,7 +6,7 @@ namespace IDAL
 {
     namespace DO
     {
-        public enum WeighCategories {easy, middle, hevy}
+        public enum WeighCategories {easy = 1, hevy, middle }
         public enum Priorities { reggular, fast, emergency }
         //public enum statusOfQ { available, maintenance, delivery }
     }

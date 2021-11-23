@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using IDAL;
 using IBL.BO;
+using System.Device.Location;
 
 namespace IBL
 {
@@ -196,48 +197,67 @@ namespace IBL
         {
             Random r = new Random();
             QuadocopterToList new_q = new QuadocopterToList();
-            new_q.ID = q.id;
-            new_q.moodle = q.moodle;
-            if (q.weight == IDAL.DO.WeighCategories.easy) new_q.weight = WeighCategories.easy;
+            new_q.ID = q.id; //id is as the id
+            new_q.moodle = q.moodle; // moodle is the same
+            if (q.weight == IDAL.DO.WeighCategories.easy) new_q.weight = WeighCategories.easy; //whiget converted to the categories of dal
             else if (q.weight == IDAL.DO.WeighCategories.middle) new_q.weight = WeighCategories.middle;
             else new_q.weight = WeighCategories.hevy;
-            IDAL.DO.Package? p = dal.searchPinQ(q.id);
-            if (p != null)
+            
+            IDAL.DO.Package? p = dal.searchPinQ(q.id);//p is the package that assign to the q or null if it have not package
+            if (p != null) //if the quadocopter have a package
             {
-                new_q.mode = statusOfQ.delivery;
-                new_q.packageNumber = p.Value.id;
-                if (p.Value.time_ColctedFromSender.Year != 0001)
+                new_q.mode = statusOfQ.delivery; //mode
+                new_q.packageNumber = p.Value.id;//packageNumber
+                IDAL.DO.Location lSender = dal.searchLocationOfclient(p.Value.sender); //the location of the sender
+                if (p.Value.time_ColctedFromSender.Year != 0001) //if the package was collected
                 {
-                    IDAL.DO.Location loc = dal.searchLocationOfsender(p.Value.sender);
+                    //the location of the q will be the location of the sender
                     location l = new location();
-                    l.latitude = loc.latitude;
-                    l.longitude = loc.longitude;
+                    l.latitude = lSender.latitude;
+                    l.longitude = lSender.longitude;
                     new_q.thisLocation = l;
-                    //battery
+                    //colclute the distance that the q will go in order to estimate the battery it need
+                    IDAL.DO.Location lReceiver = dal.searchLocationOfclient(p.Value.receiver);
+                    IDAL.DO.BaseStation closeB = dal.searchCloseStation(lReceiver);
+                    double distance = coverLtoG(l).GetDistanceTo(dal.coverLtoG(lReceiver)) + dal.coverLtoG(lReceiver).GetDistanceTo(new GeoCoordinate(closeB.longitude, closeB.latitude));
+                    int minBattery = (int)distance * (int)(dal.askForElectric()[(int)p.Value.weight]); //the minimum battery will be the distance*the amount of battery that the q need in km, according to the whigt of its package
+                    new_q.battery = r.Next(minBattery, 100);
                 }
-                else
+                else //if the package didn't collected
                 {
-                    //location = close base station
-                    //battery;
+                    IDAL.DO.BaseStation b= dal.searchCloseStation(lSender);//the location will be the location of the closest station to the sender
+                    new_q.thisLocation.latitude = b.latitude;
+                    new_q.thisLocation.longitude = b.longitude;
+                    //colclute the distance that the q will go in order to estimate the battery it need
+                    IDAL.DO.Location lReceiver = dal.searchLocationOfclient(p.Value.receiver);
+                    IDAL.DO.BaseStation closeToReceiver = dal.searchCloseStation(lReceiver);
+                    double distance = dal.coverLtoG(lSender).GetDistanceTo(dal.coverLtoG(lReceiver)) + dal.coverLtoG(lReceiver).GetDistanceTo(new GeoCoordinate(closeToReceiver.longitude, closeToReceiver.latitude));
+                    distance += coverLtoG(new_q.thisLocation).GetDistanceTo(dal.coverLtoG(lSender));
+                    int minBattery = (int)distance * (int)(dal.askForElectric()[(int)p.Value.weight]); //the minimum battery will be the distance*the amount of battery that the q need in km, according to the whigt of its package
+                    new_q.battery = r.Next(minBattery, 100);
                 }
             }
-            else
+            else // if the q have not package
             {
-                int x = r.Next(0, 1);
+                int x = r.Next(0, 1); //it will be available or in maintence randomaly
                 new_q.packageNumber = 0;
-                if (x == 0)
+                if (x == 0) //if it will be available
                 {
                     new_q.mode = statusOfQ.available;
-                    var l = dal.randomCwithPLocation();
+                    var l = dal.randomCwithPLocation(); //location will in one of the clients that accept a package.
                     new_q.thisLocation.latitude = l.latitude;
                     new_q.thisLocation.longitude = l.longitude;
-                    //battery;
+                    //colclute the distance that the q will go in order to estimate the battery it need
+                    IDAL.DO.BaseStation close = dal.searchCloseStation(l);
+                    double distance = new GeoCoordinate(close.longitude, close.latitude).GetDistanceTo(dal.coverLtoG(l));
+                    int minBattery = (int)distance * (int)(dal.askForElectric()[0]); //the minimum battery will be the distance*the amount of battery that the q need in km at available state
+                    new_q.battery = r.Next(minBattery, 100);
                 }
 
-                else
+                else //if it in a maintence
                 {
                     new_q.mode = statusOfQ.maintenance;
-                    new_q.battery = r.Next(0, 20);
+                    new_q.battery = r.Next(0, 20); 
                     var l = dal.randomStationLocation();
                     new_q.thisLocation.latitude = l.latitude;
                     new_q.thisLocation.longitude = l.longitude;
@@ -245,6 +265,10 @@ namespace IBL
             }
             return new_q;
 
+        }
+        GeoCoordinate coverLtoG(location l)
+        {
+            return new GeoCoordinate(l.longitude, l.latitude);
         }
         #endregion
     }

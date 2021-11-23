@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using IDAL.DO;
+using System.Device.Location;
 
 namespace IDAL
 {
@@ -60,7 +61,7 @@ namespace IDAL
         /// <summary>
         /// accept id of package and return the location of its sender
         /// </summary>
-        public Location searchLocationOfsender(int pID);
+        public Location searchLocationOfclient(int pID);
         /// <summary>
         /// return location of randomaly station
         /// </summary>
@@ -69,5 +70,19 @@ namespace IDAL
         /// return location of randomaly Client the get a package
         /// </summary>
         public Location randomCwithPLocation();
+        /// <summary>
+        /// accept a location and return the closest base station
+        /// </summary>
+        public BaseStation searchCloseStation(Location l);
+        /// <summary>
+        /// accept a location and return the closest base station with a free charge position
+        /// </summary>
+        public BaseStation searchCloseEmptyStation(Location l);
+        //get a location and return it as geocoordinate
+        public GeoCoordinate coverLtoG(Location l);
+        /// <summary>
+        /// accept a location of qudocopoter and its battery and return list of package that the q can take
+        /// </summary>
+        public List<Package> availablePtoQ(int battery, GeoCoordinate loc);
     }
 }

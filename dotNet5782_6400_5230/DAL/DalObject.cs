@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using IDAL.DO;
+using System.Device.Location;
 
 
 namespace DalObject 
@@ -147,29 +148,14 @@ namespace DalObject
         /// </summary>
         public void AssignPtoQ(Package P, int id_q) 
         {
-            P.idQuadocopter = id_q;
-            //int i = 0;
-            //foreach(Packagh p in DataSource.packagh)// look for the index that the package in it
-            //{
-            //    if (p.id == id_p)
-            //    {
-            //        p.idQuadocopter = id_q;
-            //        foreach (Quadocopter q in DataSource.qpter)
-            //        {
-            //            if (q.mode == statusOfQ.available)
-            //                if (q.weight == p.weight)
-            //                {
-            //                    DataSource.packagh.Find(p.).idQuadocopter
-            //                    break;
-            //                }
-            //        }
-            //        break;
-
-            //    }
-            //}
-            ////DataSource.qpter[j].mode = statusOfQ.delivery; //change the mode of the qpter to delivery
-            ////DataSource.packagh[i].idQuadocopter = DataSource.qpter[j].id; //enter the id of the qptr to the package
-            ////DataSource.packagh[i].time_Belong_quadocopter = DateTime.Now; //update the appropriate time to be now 
+            for (int i = 0; i < DataSource.packagh.Count; i++)
+                if (DataSource.packagh[i].id == P.id)
+                {
+                    P.idQuadocopter = id_q;
+                    P.time_Belong_quadocopter = DateTime.Now;
+                    DataSource.packagh[i] = P;
+                    break;
+                }
         }
         /// <summary>
         /// update package to be collected by quadocopter.
@@ -191,27 +177,45 @@ namespace DalObject
         /// <summary>
         /// Send the quadocopter to charging.
         /// </summary>
-        public void SendQtoCharging(BaseStation b, Quadocopter q)
+        public void SendQtoCharging(int bID, int qID)
         {
 
-            Charging c = new Charging();
-            c.baseStationID = b.IDnumber;
-            c.quadocopterID = q.id;
-            b.freechargingPositions--;
+            Charging c = new Charging(); // add a charging
+            c.baseStationID = bID;
+            c.quadocopterID = qID;
             DataSource.charge.Add(c);
+            for (int i = 0; i < DataSource.bstion.Count; i++)
+                if (DataSource.bstion[i].IDnumber == bID)
+                {
+                    BaseStation b = DataSource.bstion[i];
+                    b.freechargingPositions--;
+                    DataSource.bstion[i] = b;
+                    break;
+                }
         }
         /// <summary>
         /// release te quadocopter frp charging.
         /// </summary>
-        public void ReleaseQfromCharging(BaseStation b, Quadocopter q)
+        public void ReleaseQfromCharging(int qID)
         {
-            b.freechargingPositions++;
-            //DataSource.qpter[iq].mode = statusOfQ.available;
-
             Charging c = new Charging();
-            c.baseStationID = b.IDnumber; 
-            c.quadocopterID =q.id;
+            int bsID = 0;
+            foreach (Charging ch in DataSource.charge)
+                if (ch.quadocopterID == qID)
+                {
+                    c = ch;
+                    bsID = ch.baseStationID;
+                    break;
+                }
             DataSource.charge.Remove(c);
+            for (int i = 0; i < DataSource.bstion.Count; i++)
+                if (DataSource.bstion[i].IDnumber == bsID)
+                {
+                    BaseStation b = DataSource.bstion[i];
+                    b.freechargingPositions++;
+                    DataSource.bstion[i] = b;
+                    break;
+                }
         }
         /// <summary>
         /// print datails of statin
@@ -358,7 +362,7 @@ namespace DalObject
         /// <summary>
         /// accept id of package and return the location of its sender
         /// </summary>
-        public Location searchLocationOfsender(int pID)
+        public Location searchLocationOfclient(int pID)
         {
             foreach (Client c in DataSource.cli)
                 if (c.ID == pID)
@@ -398,8 +402,67 @@ namespace DalObject
             int x = r.Next(0, sendersL.Count - 1);
             return sendersL[x];
         }
-
-
+        /// <summary>
+        /// accept a location and return the closest base station
+        /// </summary>
+        public BaseStation searchCloseStation(Location l)
+        {
+            BaseStation bs = new BaseStation();
+            double minDistance = 100000000, help = 0;
+            foreach (BaseStation b in DataSource.bstion) 
+            {
+                help = new GeoCoordinate(b.latitude, b.longitude).GetDistanceTo(coverLtoG(l));
+                if (help < minDistance)
+                {
+                    minDistance = help;
+                    bs = b;
+                } 
+            }
+            return bs;
+        }
+        /// <summary>
+        /// accept a location and return the closest base station with a free charge position
+        /// </summary>
+        public BaseStation searchCloseEmptyStation(Location l)
+        {
+            BaseStation bs = new BaseStation();
+            double minDistance = 100000000, help = 0;
+            foreach (BaseStation b in DataSource.bstion)
+            {
+                help = new GeoCoordinate(b.latitude, b.longitude).GetDistanceTo(coverLtoG(l));
+                if (help < minDistance && b.freechargingPositions != 0)
+                {
+                    minDistance = help;
+                    bs = b;
+                }
+            }
+            return bs;
+        }
+        //get a location and return it as geocoordinate
+        public GeoCoordinate coverLtoG(Location l)
+        {
+            return new GeoCoordinate(l.longitude, l.latitude);
+        }
+        /// <summary>
+        /// accept a location of qudocopoter and its battery and return list of package that the q can take
+        /// </summary>
+        public List<Package> availablePtoQ(int battery, GeoCoordinate loc)
+        {
+            List<Package> packages = new List<Package>();
+            foreach (Package p in DataSource.packagh)
+            {
+                GeoCoordinate senderLocation = coverLtoG(searchLocationOfclient(p.sender));
+                Location receiverL = searchLocationOfclient(p.receiver);
+                GeoCoordinate receiverLocation = new GeoCoordinate(receiverL.longitude, receiverL.latitude);
+                BaseStation stationL = searchCloseStation(receiverL);
+                GeoCoordinate stationLocation = new GeoCoordinate(stationL.longitude, stationL.latitude);
+                double distance = loc.GetDistanceTo(senderLocation) + senderLocation.GetDistanceTo(receiverLocation) + receiverLocation.GetDistanceTo(stationLocation);
+                int minBattery = (int)(distance * askForElectric()[(int)p.weight]);
+                if (battery >= minBattery)
+                    packages.Add(p);
+            }
+            return packages;
+        }
         ///---------------------------------------------------------------------------------------------------------------
         /// func to help us.
         ///
