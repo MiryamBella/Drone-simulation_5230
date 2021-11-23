@@ -117,7 +117,7 @@ namespace DalObject
             for (int i =0; i < 10; i++)
             {
                 Client c = new Client();
-                c.ID = (int)(i*100);
+                c.ID = (int)(i*100000000);
                 c.name = getRandomName(i);
                 c.phoneNumber = r.Next();
                 c.latitude = r.Next();
