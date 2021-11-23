@@ -105,10 +105,9 @@ namespace IBL
         }
         public Package PackageDisplay(int id)
         {
-            
             //Package returnP = new Package();
             if (id <= 0)
-                new BLException("Invalid id.");
+                throw new BLException("Invalid id.");
             var pack = dal.PackageDisplay(id);
             if (pack.id <= 0)
                 throw new BLException("Id not found.");
@@ -277,7 +276,6 @@ namespace IBL
             }
 
             return bs_l;
-
         }
     }
 }

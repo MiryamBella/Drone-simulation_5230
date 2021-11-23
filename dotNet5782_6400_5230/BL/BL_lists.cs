@@ -47,7 +47,7 @@ namespace IBL
             }
             foreach (IDAL.DO.Charging chargeh in chrgh_list)
             {
-                ///find what q is gharge in our base station
+                ///find what q is charge in our base station
                 if (chargeh.baseStationID == new_bs.ID)
                 {
                     ///chek if the q is exsit in our data base.
@@ -66,7 +66,7 @@ namespace IBL
                         }
                     }
                     if (!exsit)
-                        Console.WriteLine("error");
+                        throw new BLException("There is q who charge but not count in the base station.");
                 }
             }
 
@@ -150,7 +150,7 @@ namespace IBL
                 }
             }
             if ((!exist_cr) || (!exist_cs))
-                Console.WriteLine("error");
+                throw new BLException("There is none person how recive or send this pachege");
 
             //get the q.
             bool exist = false;

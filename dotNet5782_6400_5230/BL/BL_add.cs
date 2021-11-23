@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using DalObject;
 using IBL.BO;
 
-/// any plase thwt ther is error  i frint this and i will chanch that after we study.
 namespace IBL
 {
     public partial class BL: IBL
@@ -18,30 +17,32 @@ namespace IBL
 
         public void AddBaseStation(int id, string name, double lon, double lat, int numCharge)
         {
-            if (id <= 0 || numCharge < 0)
-                Console.WriteLine("error");
+            if (id <= 0)
+                throw new BLException("Invalid id.");
+            if(numCharge < 0)
+                throw new BLException("Number of charging fosition must to be positive.");
             List<BaseStation> temp = cover_to_our_list(dal.ListOfStations());
             foreach (BaseStation b in temp)
             {
                 if (b.ID == id)
-                    Console.WriteLine("error");
-                if(b.thisLocation.latitude==lat && b.thisLocation.longitude==lon)
-                    Console.WriteLine("error");
+                    throw new BLException("The ID exis.");
+                if (b.thisLocation.latitude==lat && b.thisLocation.longitude==lon)
+                    throw new BLException("In this location there is already base station.");
             }
 
             dal.AddBaseStation(id, name, numCharge, lon, lat);
         }
         public void AddQuadocopter(int id, string moodle, int weight, int id_bs)
         {
-            if (id <= 0 || weight<=0)
-                Console.WriteLine("error");
+            if (id <= 0 || id_bs <=0)
+                throw new BLException("Invalid id.");
             if(weight != 1 && weight != 2 && weight!= 3)
-                Console.WriteLine("error");
+                throw new BLException("Weight must to be 1, 2, or 3.");
 
             List<BaseStation> temp = cover_to_our_list(dal.ListOfStations());
             bool chek = false;
             BaseStation bs_with_q = new BaseStation();
-                foreach (BaseStation b in temp)
+            foreach (BaseStation b in temp)
             {
                 if (b.ID == id_bs)
                 {
@@ -51,7 +52,7 @@ namespace IBL
                 }
             }
             if(!chek)
-                Console.WriteLine("error");
+                throw new BLException("The base station not exist.");
 
             dal.AddQuadocopter(id, moodle, weight);
             QuadocopterToList q = new QuadocopterToList();
@@ -66,15 +67,17 @@ namespace IBL
         }
         public void AddClient(int id, string name, int phoneNumber, double lon, double lat) ///adding new client
         {
-            if (id <= 0 || phoneNumber < 0)
-                Console.WriteLine("error");
+            if (id <= 99999999 || id>999999999)
+                throw new BLException("Invalid id.");
+            if (phoneNumber < 0)
+                throw new BLException("Number phone must to be positive.");
             List<Client> temp = cover_to_our_list(dal.ListOfClients());
             foreach (Client c in temp)
             {
                 if (c.ID == id)
-                    Console.WriteLine("error");
+                    throw new BLException("ID already exist.");
                 if (c.thisLocation.latitude == lat && c.thisLocation.longitude == lon)
-                    Console.WriteLine("error");
+                    throw new BLException("In this location there is already other client.");
             }
 
             dal.AddClient(id, name, phoneNumber, lon, lat);
@@ -86,11 +89,11 @@ namespace IBL
         public void AddPackage(int id_sender, int id_colecter, int weight, int priority)
         {
             if (id_sender <= 0 || id_colecter <= 0)
-                Console.WriteLine("error");
+                throw new BLException("Invalid id.");
             if (weight != 1 && weight != 2 && weight != 3)
-                Console.WriteLine("error");
-            if (priority != 1 && priority != 2 && priority != 3)
-                Console.WriteLine("error");
+                throw new BLException("Weight must to be 1, 2, or 3.");
+            if (priority != 1 && priority != 2 && priority != 0)
+                throw new BLException("Priority must to be 1, 2, or 0.");
 
             dal.AddPackage(id_sender, id_colecter, weight, priority);
         }

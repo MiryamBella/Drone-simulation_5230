@@ -164,7 +164,7 @@ namespace ConsoleUI_BL
             Console.WriteLine("Please enter the weight of the package (enter 1 to easy,2 to middle,3 to heavy)"); //accepting the weight of the package
             helpSTR = Console.ReadLine();
             int weigh = int.Parse(helpSTR);
-            Console.WriteLine("Please enter the priority of the package (enter 1 to reggular,2 to fast,3 to emergency)"); //accepting the priority of the package
+            Console.WriteLine("Please enter the priority of the package (enter 0 to reggular,2 to fast,3 to emergency)"); //accepting the priority of the package
             helpSTR = Console.ReadLine();
             int priority = int.Parse(helpSTR);
 
