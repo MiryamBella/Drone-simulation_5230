@@ -249,7 +249,7 @@ namespace IBL
                 else //if it in a maintence
                 {
                     new_q.mode = statusOfQ.maintenance;
-                    new_q.battery = r.Next(0, 20);
+                    new_q.battery = r.Next(0, 20); 
                     var l = dal.randomStationLocation();
                     new_q.thisLocation.latitude = l.latitude;
                     new_q.thisLocation.longitude = l.longitude;
