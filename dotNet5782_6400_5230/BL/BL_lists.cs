@@ -185,20 +185,21 @@ namespace IBL
 
             return new_l;
         }
-        QuadocopterToList cover_list(IDAL.DO.Quadocopter q)
-        {
-            QuadocopterToList new_q = new QuadocopterToList();
-            //new_q.ID = q.id;
-            //new_q.mode =;
-            //new_q.moodle = q.moodle;
-            //new_q.packageNumber;
-            //new_q.thisLocation;
-            //new_q.weight = q.weight;
-            //new_q.battery;
+        //QuadocopterToList cover_list(IDAL.DO.Quadocopter q)
+        //{
+        //    QuadocopterToList new_q = new QuadocopterToList();
 
-            return new_q;
-        }
-        QuadocopterToList cover(IDAL.DO.Quadocopter q)
+        //    new_q.ID = q.id;
+        //    new_q.mode =;
+        //    new_q.moodle = q.moodle;
+        //    new_q.packageNumber;
+        //    new_q.thisLocation;
+        //    new_q.weight = q.weight;
+        //    new_q.battery;
+
+        //    return new_q;
+        //}
+        QuadocopterToList cover_list(IDAL.DO.Quadocopter q)
         {
             Random r = new Random();
             QuadocopterToList new_q = new QuadocopterToList();

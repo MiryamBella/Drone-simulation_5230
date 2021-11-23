@@ -236,9 +236,9 @@ namespace ConsoleUI_BL
             string helpSTR =Console.ReadLine();
             int id = int.Parse(helpSTR);
             Console.WriteLine("Please enter the name of the moodle of the quadocopter you want to change.");
-            string moodle =Console.ReadLine();
+            string modle =Console.ReadLine();
 
-            //send(id, noodle)
+            program.bl.updateQdata(id, modle);
         }
         void up_baseStation()
         {
@@ -266,7 +266,7 @@ namespace ConsoleUI_BL
                 numCharge = int.Parse(helpSTR);
             }
 
-            //send(id, name, numCharge)
+            program.bl.updateSdata(id, name, numCharge);
         }
         void up_client()
         {
@@ -294,7 +294,7 @@ namespace ConsoleUI_BL
                 numPon = int.Parse(helpSTR);
             }
 
-            //send(id, name, numPon)
+            program.bl.updateCdata(id, name, numPon);
         }
 
 
@@ -330,7 +330,7 @@ namespace ConsoleUI_BL
             string help = Console.ReadLine();
             int id = int.Parse(help);
 
-            //send(id)
+            program.bl.assignPtoQ(id);
         }
         /// <summary>
         /// update package to be collected by quadocopter.
@@ -341,14 +341,14 @@ namespace ConsoleUI_BL
             string help = Console.ReadLine();
             int id = int.Parse(help);
 
-            //send(id)
+            program.bl.collectPbyQ(id);
         }
         void DeliveringPtoClient()
         {
             Console.WriteLine("Please enter the ID of the package"); //accepting the id of the package
             string help = Console.ReadLine();
             int id = int.Parse(help);
-            //send(id)
+            program.bl.collectPbyQ(id);
         }
 
         #endregion
