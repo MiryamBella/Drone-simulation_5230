@@ -8,6 +8,10 @@ namespace IBL
     {
         public class location
         {
+            public location()
+            {
+                longitude = 0; latitude = 0; toBaseSix = new BaseSixtin(); decSix = new DmsLocation();
+            }
             public double longitude { get; set; }
             public double latitude { get; set; }
             public BaseSixtin toBaseSix { get; set; }

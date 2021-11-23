@@ -8,6 +8,10 @@ namespace IBL
     {
         public class BaseStation
         {
+            public BaseStation()
+            {
+                ID = 0; name = null; freeChargingPositions = 0; thisLocation = new location(); 
+            }
             public int ID { get; set; }
             public string name { get; set; }
             public int freeChargingPositions { get; set; }
