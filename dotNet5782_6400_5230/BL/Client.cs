@@ -8,6 +8,13 @@ namespace IBL
     {
         public class Client
         {
+            public Client()
+            {
+                ID = 0;
+                name = null;
+                phoneNumber =0; 
+                thisLocation = new location();
+            }
             public int ID { get; set; }
             public string name { get; set; }
             public int phoneNumber { get; set; }
