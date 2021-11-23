@@ -35,9 +35,9 @@ namespace IBL
         public void updateSdata(int id, string name = null, int chargingPositions = -1)
         {
             if (name == null && chargingPositions == -1)//inetgrity checking
-                Console.WriteLine("ERROR");
+                throw new BLException("no update data was accepted");
             if (chargingPositions < -1)
-                Console.WriteLine("ERROR");
+                throw new BLException("number of charging position must be positive");
             dal.updateSdata(id, name, chargingPositions); //update the data by sending to the dalObject
         }
         #endregion;
@@ -48,11 +48,11 @@ namespace IBL
         public void updateCdata(int id, string name = null, int phone = -1)
         {
             if (id < 100000000 || id > 999999999)//integrity checking
-                Console.WriteLine("ERROR");
+                throw new BLException("invalid ID");
             if (name == null && phone == -1)
-                Console.WriteLine("ERROR");
+                throw new BLException("no update to do");
             if (phone != -1 && phone < 100000000)
-                Console.WriteLine("ERROR");
+                throw new BLException("invalid phone number");
             dal.updateCdata(id, name, phone);
         }
         #endregion;
@@ -70,19 +70,21 @@ namespace IBL
                 }
             //integrity checking
             if (!flag) throw new BLException("Id not found.");
-            if (q.mode != statusOfQ.available) throw new BLException("error");
+            if (q.mode != statusOfQ.available) throw new BLException("the quadocopter is not available");
             //check if it have enough battery to go to base station
             IDAL.DO.Location dalL = new IDAL.DO.Location() { longitude = q.thisLocation.longitude, latitude = q.thisLocation.latitude };
             IDAL.DO.BaseStation b = dal.searchCloseEmptyStation(dalL);
             double distance = dal.coverLtoG(dalL).GetDistanceTo(new GeoCoordinate(b.longitude, b.latitude));
             int minBattery = (int)(distance * dal.askForElectric()[0]);
-            if (q.battery < minBattery) Console.WriteLine("error");
+            if (q.battery < minBattery) Console.WriteLine("there is no enough battery to");
 
             dal.SendQtoCharging(b.IDnumber, q.ID);//update the data at the dal
 
             q.battery -= minBattery;//update the list of qudocopter in the BL
             q.thisLocation.longitude = dalL.longitude;
             q.thisLocation.latitude = dalL.latitude;
+            q.thisLocation.decSix = new DmsLocation();
+            q.thisLocation.toBaseSix = new BaseSixtin();
             q.mode = statusOfQ.maintenance;
         }
         #endregion;
@@ -124,10 +126,10 @@ namespace IBL
                     q = qu;
                     break;
                 }
-            if (!flag) Console.WriteLine("error");
+            if (!flag) throw new BLException("this ID dont exist");
 
             var packages = dal.availablePtoQ(q.ID, coverLtoG(q.thisLocation));//list of package that it can take according to this battery
-            if (packages.Count == 0) Console.WriteLine("error");
+            if (packages.Count == 0) throw new BLException("there is no package to assign");
             var package = packages.OrderBy(s => (int)s.priority).ThenBy(s => s.weight);
             IDAL.DO.Priorities pr = new IDAL.DO.Priorities();
             foreach (var a in package) { pr = a.priority; break; };
