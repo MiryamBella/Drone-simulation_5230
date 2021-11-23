@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using IDAL.DO;
 using System.Device.Location;
+using DAL.exceptions.DO;
 
 
 namespace DalObject 
@@ -193,6 +194,24 @@ namespace DalObject
                     break;
                 }
         }
+  /*          Charging c = new Charging();
+            foreach(BaseStation b in DataSource.bstion)
+            {
+                if (b.IDnumber == bID) ///find the base station
+                { 
+                    foreach(Quadocopter q in DataSource.qpter)
+                    {
+                        if (q.id == qID)///find the quadocopter.
+                        {
+                            SendQtoCharging_doingThat(b, q, c);
+                            return;
+                        }
+                    }
+                    throw new DALException("The ID of the quadocopter not exist.");
+                }
+            }
+            throw new DALException("The ID of the base station not exist.");
+        }*/
         /// <summary>
         /// release te quadocopter frp charging.
         /// </summary>
@@ -216,6 +235,33 @@ namespace DalObject
                     DataSource.bstion[i] = b;
                     break;
                 }
+        /*public void ReleaseQfromCharging(int qID)
+        {
+            foreach(Quadocopter q in DataSource.qpter)
+            {
+                if (q.id == qID)///find if there is that quadocopter
+                {
+                    foreach (Charging c in DataSource.charge)
+                    {
+                        ///find if the quadocopter are charging
+                        if (c.quadocopterID == q.id)
+                        {
+                            foreach (BaseStation b in DataSource.bstion)
+                            {
+                                ///find the base station he in charge
+                                if (b.IDnumber == c.baseStationID)
+                                {
+                                    ReleaseQfromCharging_doingThat(b, q);
+                                    return;
+                                }
+                            }
+                            throw new DALException("The base statation the quadocopter not exist.");
+                        }
+                    }
+                    throw new DALException("The quadocopter not charging.");
+                }
+            }
+            throw new DALException("The ID of the quadocopter not exist.");*/
         }
         /// <summary>
         /// print datails of statin
@@ -465,7 +511,23 @@ namespace DalObject
         }
         ///---------------------------------------------------------------------------------------------------------------
         /// func to help us.
-        ///
+        void SendQtoCharging_doingThat(BaseStation b, Quadocopter q, Charging c)
+        {
+            c.baseStationID = b.IDnumber;
+            c.quadocopterID = q.id;
+            b.freechargingPositions--;
+            DataSource.charge.Add(c);
+        }
+        public void ReleaseQfromCharging_doingThat(BaseStation b, Quadocopter q)
+        {
+
+            b.freechargingPositions++;
+            Charging c = new Charging();
+            c.baseStationID = b.IDnumber;
+            c.quadocopterID = q.id;
+            DataSource.charge.Remove(c);
+        }
+
         /// <summary>
         /// the func get quadocopter's id and base station's id from the user and chak if they in our data.
         /// </summary>
