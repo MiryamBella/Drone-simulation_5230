@@ -43,7 +43,9 @@ namespace DalObject
             BaseStation b=new BaseStation();//1
             b.IDnumber = 100;
             b.name = "Jerusalem";
-            b.chargingPositions = b.freechargingPositions = r.Next();
+            int x = r.Next(1000);
+            b.chargingPositions = x;
+            b.freechargingPositions = x;
             b.longitude = r.Next();
             b.latitude = r.Next();
             b.toBaseSix = new BaseSixtin();
@@ -55,7 +57,9 @@ namespace DalObject
             BaseStation baseStation = new BaseStation();//2
             baseStation.IDnumber = 101;
             baseStation.name = "Tel Aviv";
-            baseStation.chargingPositions = b.freechargingPositions = r.Next();
+            x = r.Next(1000);
+            baseStation.chargingPositions = x;
+            baseStation.freechargingPositions = x;
             baseStation.longitude = r.Next();
             baseStation.latitude = r.Next();
             baseStation.toBaseSix = new BaseSixtin();
