@@ -19,11 +19,12 @@ namespace IBL
             foreach (QuadocopterToList q in q_list)//update the q_list
                 if (q.ID == id)
                 {
+                    if (q.moodle == modle) throw new BLException("the modle is the same as it was");
                     q.moodle = modle;
                     flag = true;
                     break;
                 }
-            if (!flag) Console.WriteLine("error");
+            if (!flag) throw new BLException("there is no qudocopter with this ID");
             else dal.updateQd(id, modle); //update the data by the dalObject
         }
         #endregion;
@@ -156,20 +157,60 @@ namespace IBL
         #endregion;
         #region collectPbyQ;
         /// <summary>
-        /// updat package to be collected by qudocopter
+        /// update package to be collected by qudocopter
         /// </summary>
-        public void collectPbyQ()
+        public void collectPbyQ(int qID)
         {
-
+            bool flag = false;
+            QuadocopterToList q = new QuadocopterToList();
+            foreach (QuadocopterToList qu in q_list)
+                if (qu.ID == qID)
+                {
+                    flag = true;
+                    q = qu;
+                };
+            if (!flag) throw new BLException("this ID not exist");
+            if (q.mode != statusOfQ.delivery) throw new BLException("this qudocopter dont associated to a package");
+            IDAL.DO.Package? p = dal.searchPinQ(qID);
+            if (p.Value.time_ColctedFromSender.Year != 0001) throw new BLException("the package was collocted already");
+            //update the data of the qudocopter
+            IDAL.DO.Location senderL = dal.searchLocationOfclient(p.Value.sender);//update the battery
+            double distance = new GeoCoordinate(senderL.longitude, senderL.latitude).GetDistanceTo(coverLtoG(q.thisLocation));
+            q.battery -= (int)(distance * dal.askForElectric()[(int)p.Value.weight]);
+            q.thisLocation.longitude = senderL.longitude;//update the location 
+            q.thisLocation.latitude = senderL.latitude;
+            q.thisLocation.decSix = new DmsLocation(senderL.latitude, senderL.longitude);
+            q.thisLocation.toBaseSix = new BaseSixtin();
+            dal.CollectPbyQ(p.Value.id);
         }
         #endregion;
         #region supplyPbyQ;
         /// <summary>
         /// update package to be supplied to the client and the qudocopter to be free from package
         /// </summary>
-        public void supplyPbyQ()
+        public void supplyPbyQ(int qID)
         {
-
+            bool flag = false;
+            QuadocopterToList q = new QuadocopterToList();
+            foreach (QuadocopterToList qu in q_list)
+                if (qu.ID == qID)
+                {
+                    flag = true;
+                    q = qu;
+                };
+            if (!flag) throw new BLException("this ID not exist");
+            if (q.mode != statusOfQ.delivery) throw new BLException("this qudocopter dont associated to a package");
+            IDAL.DO.Package? p = dal.searchPinQ(qID);
+            if (p.Value.time_ComeToColcter.Year != 0001) throw new BLException("the package was collocted already");
+            //update the data of the qudocopter
+            IDAL.DO.Location receiverL = dal.searchLocationOfclient(p.Value.receiver);//update the battery
+            double distance = new GeoCoordinate(receiverL.longitude, receiverL.latitude).GetDistanceTo(coverLtoG(q.thisLocation));
+            q.battery -= (int)(distance * dal.askForElectric()[(int)p.Value.weight]);
+            q.thisLocation.longitude = receiverL.longitude;//update the location 
+            q.thisLocation.latitude = receiverL.latitude;
+            q.thisLocation.decSix = new DmsLocation(receiverL.latitude, receiverL.longitude);
+            q.thisLocation.toBaseSix = new BaseSixtin();
+            dal.DeliveringPtoClient(p.Value.id);
         }
         #endregion;
     }

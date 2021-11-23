@@ -25,8 +25,8 @@ namespace IDAL
         /// update package to be belong to a quadocopter.
         public void AssignPtoQ(Package P, int id_q);
         /// update package to be collected by quadocopter.
-        public void CollectPbyQ(Package p);
-        public void DeliveringPtoClient(Package p);
+        public void CollectPbyQ(int pID);
+        public void DeliveringPtoClient(int pID);
         /// Send the quadocopter to charging.
         public void SendQtoCharging(int bID, int qID);
         /// release te quadocopter frp charging.

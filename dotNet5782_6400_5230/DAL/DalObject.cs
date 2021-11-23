@@ -161,19 +161,27 @@ namespace DalObject
         /// <summary>
         /// update package to be collected by quadocopter.
         /// </summary>
-        public void CollectPbyQ(Package p) 
+        public void CollectPbyQ(int pID) 
         {
-            p.time_ColctedFromSender = DateTime.Now; //update the time
-
+            for (int i = 0; i < DataSource.packagh.Count; i++)
+                if (DataSource.packagh[i].id == pID)
+                {
+                    Package p = DataSource.packagh[i];
+                    p.time_ColctedFromSender = DateTime.Now;
+                    DataSource.packagh[i] = p;
+                    break;
+                }
         }
-        public void DeliveringPtoClient(Package p)
+        public void DeliveringPtoClient(int pID)
         {
-                    p.time_ComeToColcter = DateTime.Now; //update the time
-                    //foreach (Quadocopter q in DataSource.qpter) //look for index of the quadocopter whice take this package
-                    //{
-                    //    if (q.id == p.idQuadocopter)
-                    //        DataSource.qpter[j].mode = statusOfQ.available; //update the qptr to be abailable
-                    //}
+            for (int i = 0; i < DataSource.packagh.Count; i++)
+                if (DataSource.packagh[i].id == pID)
+                {
+                    Package p = DataSource.packagh[i];
+                    p.time_ComeToColcter = DateTime.Now;
+                    DataSource.packagh[i] = p;
+                    break;
+                }
         }
         /// <summary>
         /// Send the quadocopter to charging.
@@ -194,7 +202,7 @@ namespace DalObject
                     break;
                 }
         }
-            Charging c = new Charging();
+           /* Charging c = new Charging();
             foreach(BaseStation b in DataSource.bstion)
             {
                 if (b.IDnumber == bID) ///find the base station
@@ -211,7 +219,7 @@ namespace DalObject
                 }
             }
             throw new DALException("The ID of the base station not exist.");
-        }
+        }*/
         /// <summary>
         /// release te quadocopter frp charging.
         /// </summary>
@@ -235,7 +243,7 @@ namespace DalObject
                     DataSource.bstion[i] = b;
                     break;
                 }
-        public void ReleaseQfromCharging(int qID)
+        /*public void ReleaseQfromCharging(int qID)
         {
             foreach(Quadocopter q in DataSource.qpter)
             {
@@ -261,7 +269,7 @@ namespace DalObject
                     throw new DALException("The quadocopter not charging.");
                 }
             }
-            throw new DALException("The ID of the quadocopter not exist.");
+            throw new DALException("The ID of the quadocopter not exist.");*/
         }
         /// <summary>
         /// print datails of statin
