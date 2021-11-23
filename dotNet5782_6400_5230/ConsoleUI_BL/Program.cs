@@ -289,7 +289,7 @@ namespace ConsoleUI_BL
             anser = Console.ReadLine();
             if (anser == "ys")
             {
-                Console.WriteLine("Please enter the new number of charging positions..");
+                Console.WriteLine("Please enter the new number phone.");
                 helpSTR = Console.ReadLine();
                 numPon = int.Parse(helpSTR);
             }
