@@ -185,20 +185,6 @@ namespace IBL
 
             return new_l;
         }
-        //QuadocopterToList cover_list(IDAL.DO.Quadocopter q)
-        //{
-        //    QuadocopterToList new_q = new QuadocopterToList();
-
-        //    new_q.ID = q.id;
-        //    new_q.mode =;
-        //    new_q.moodle = q.moodle;
-        //    new_q.packageNumber;
-        //    new_q.thisLocation;
-        //    new_q.weight = q.weight;
-        //    new_q.battery;
-
-        //    return new_q;
-        //}
         QuadocopterToList cover_list(IDAL.DO.Quadocopter q)
         {
             Random r = new Random();
@@ -208,7 +194,7 @@ namespace IBL
             if (q.weight == IDAL.DO.WeighCategories.easy) new_q.weight = WeighCategories.easy; //whiget converted to the categories of dal
             else if (q.weight == IDAL.DO.WeighCategories.middle) new_q.weight = WeighCategories.middle;
             else new_q.weight = WeighCategories.hevy;
-            
+
             IDAL.DO.Package? p = dal.searchPinQ(q.id);//p is the package that assign to the q or null if it have not package
             if (p != null) //if the quadocopter have a package
             {
@@ -225,22 +211,22 @@ namespace IBL
                     //colclute the distance that the q will go in order to estimate the battery it need
                     IDAL.DO.Location lReceiver = dal.searchLocationOfclient(p.Value.receiver);
                     IDAL.DO.BaseStation closeB = dal.searchCloseStation(lReceiver);
-                    double distance = coverLtoG(l).GetDistanceTo(dal.coverLtoG(lReceiver)) + dal.coverLtoG(lReceiver).GetDistanceTo(new GeoCoordinate(closeB.longitude, closeB.latitude));
-                    int minBattery = (int)distance * (int)(dal.askForElectric()[(int)p.Value.weight]); //the minimum battery will be the distance*the amount of battery that the q need in km, according to the whigt of its package
-                    new_q.battery = r.Next(minBattery, 100);
+                    //double distance = coverLtoG(l).GetDistanceTo(dal.coverLtoG(lReceiver)) + dal.coverLtoG(lReceiver).GetDistanceTo(new GeoCoordinate(closeB.longitude, closeB.latitude));
+                    //int minBattery = (int)distance * (int)(dal.askForElectric()[(int)p.Value.weight]); //the minimum battery will be the distance*the amount of battery that the q need in km, according to the whigt of its package
+                    //new_q.battery = r.Next(minBattery, 100);
                 }
                 else //if the package didn't collected
                 {
-                    IDAL.DO.BaseStation b= dal.searchCloseStation(lSender);//the location will be the location of the closest station to the sender
+                    IDAL.DO.BaseStation b = dal.searchCloseStation(lSender);//the location will be the location of the closest station to the sender
                     new_q.thisLocation.latitude = b.latitude;
                     new_q.thisLocation.longitude = b.longitude;
                     //colclute the distance that the q will go in order to estimate the battery it need
                     IDAL.DO.Location lReceiver = dal.searchLocationOfclient(p.Value.receiver);
                     IDAL.DO.BaseStation closeToReceiver = dal.searchCloseStation(lReceiver);
-                    double distance = dal.coverLtoG(lSender).GetDistanceTo(dal.coverLtoG(lReceiver)) + dal.coverLtoG(lReceiver).GetDistanceTo(new GeoCoordinate(closeToReceiver.longitude, closeToReceiver.latitude));
-                    distance += coverLtoG(new_q.thisLocation).GetDistanceTo(dal.coverLtoG(lSender));
-                    int minBattery = (int)distance * (int)(dal.askForElectric()[(int)p.Value.weight]); //the minimum battery will be the distance*the amount of battery that the q need in km, according to the whigt of its package
-                    new_q.battery = r.Next(minBattery, 100);
+                    //double distance = dal.coverLtoG(lSender).GetDistanceTo(dal.coverLtoG(lReceiver)) + dal.coverLtoG(lReceiver).GetDistanceTo(new GeoCoordinate(closeToReceiver.longitude, closeToReceiver.latitude));
+                    //distance += coverLtoG(new_q.thisLocation).GetDistanceTo(dal.coverLtoG(lSender));
+                    //int minBattery = (int)distance * (int)(dal.askForElectric()[(int)p.Value.weight]); //the minimum battery will be the distance*the amount of battery that the q need in km, according to the whigt of its package
+                    //new_q.battery = r.Next(minBattery, 100);
                 }
             }
             else // if the q have not package
@@ -255,15 +241,15 @@ namespace IBL
                     new_q.thisLocation.longitude = l.longitude;
                     //colclute the distance that the q will go in order to estimate the battery it need
                     IDAL.DO.BaseStation close = dal.searchCloseStation(l);
-                    double distance = new GeoCoordinate(close.longitude, close.latitude).GetDistanceTo(dal.coverLtoG(l));
-                    int minBattery = (int)distance * (int)(dal.askForElectric()[0]); //the minimum battery will be the distance*the amount of battery that the q need in km at available state
-                    new_q.battery = r.Next(minBattery, 100);
+            //        double distance = new GeoCoordinate(close.longitude, close.latitude).GetDistanceTo(dal.coverLtoG(l));
+            //        int minBattery = (int)distance * (int)(dal.askForElectric()[0]); //the minimum battery will be the distance*the amount of battery that the q need in km at available state
+            //        new_q.battery = r.Next(minBattery, 100);
                 }
 
                 else //if it in a maintence
                 {
                     new_q.mode = statusOfQ.maintenance;
-                    new_q.battery = r.Next(0, 20); 
+                    new_q.battery = r.Next(0, 20);
                     var l = dal.randomStationLocation();
                     new_q.thisLocation.latitude = l.latitude;
                     new_q.thisLocation.longitude = l.longitude;
