@@ -94,6 +94,10 @@ namespace IBL
         /// </summary>
         public void releaseQfromChrge(int id, double hours)
         {
+            if (id <= 0)
+                throw new BLException("Invalid id.");
+            if (hours < 0)
+                throw new BLException("Number of hours must to be positive.");
             bool flag = false;
             QuadocopterToList q = new QuadocopterToList();//i search the qudocopter in the q_list
             foreach (QuadocopterToList i in q_list)

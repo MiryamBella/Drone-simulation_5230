@@ -304,7 +304,7 @@ namespace ConsoleUI_BL
             string temp_str = Console.ReadLine();
             int id = int.Parse(temp_str);
 
-            //send(id)
+            program.bl.sendQtoChrge(id);
         }
         /// <summary>
         /// release the quadocopter frp charging.
@@ -315,11 +315,11 @@ namespace ConsoleUI_BL
             string temp_str = Console.ReadLine();
             int id = int.Parse(temp_str);
 
-            Console.WriteLine("Please enter the time the quadocopter was charging."); //accepting the id of the quadocopter
+            Console.WriteLine("Please enter the number of hours the quadocopter was charging."); //accepting the id of the quadocopter
             temp_str = Console.ReadLine();
-            DateTime time = DateTime.Parse(temp_str);
+            double time = double.Parse(temp_str);
 
-            //send(id, time)
+            program.bl.releaseQfromChrge(id, time);
         }
         /// <summary>
         /// update package to be belong to a quadocopter.
