@@ -212,7 +212,7 @@ namespace IBL
                     //colclute the distance that the q will go in order to estimate the battery it need
                     IDAL.DO.Location lReceiver = dal.searchLocationOfclient(p.Value.receiver);
                     IDAL.DO.BaseStation closeB = dal.searchCloseStation(lReceiver);
-                    double distance = coverLtoG(l).GetDistanceTo(dal.coverLtoG(lReceiver)) + dal.coverLtoG(lReceiver).GetDistanceTo(new GeoCoordinate(closeB.longitude, closeB.latitude));
+                    //double distance = coverLtoG(l).GetDistanceTo(dal.coverLtoG(lReceiver)) + dal.coverLtoG(lReceiver).GetDistanceTo(new GeoCoordinate(closeB.longitude, closeB.latitude));
                     //int minBattery = (int)distance * (int)(dal.askForElectric()[(int)p.Value.weight]); //the minimum battery will be the distance*the amount of battery that the q need in km, according to the whigt of its package
                     //new_q.battery = r.Next(minBattery, 100);
                 }

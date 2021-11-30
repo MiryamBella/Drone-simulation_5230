@@ -10,8 +10,6 @@ namespace IBL
     {
         IDAL.IDAL dal;
         public BL() { 
-            GeoCoordinate GC = new GeoCoordinate(32.5,33.6);
-      
             dal = new DalObject.DalObject();
             help_list=dal.ListOfQ();
             q_list = cover_to_our_list(help_list);
