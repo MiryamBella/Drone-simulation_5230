@@ -4,7 +4,7 @@ using System.Text;
 
 namespace IBL
 {
-    interface IBL
+    public interface IBL
     {
         /*add functations*/
         public void AddBaseStation(int id, string name, double lon, double lat, int numCharge);
