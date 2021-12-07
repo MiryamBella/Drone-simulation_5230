@@ -446,7 +446,7 @@ namespace DalObject
             Random r = new Random();
             List<int> sendersID = new List<int>();
             foreach (Package p in DataSource.packagh)
-                if (p.time_ComeToColcter.Value.Year != 0001)
+                if ((p.time_ComeToColcter!=null) && (p.time_ComeToColcter.Value.Year != 0001))
                     if (sendersID.Contains(p.sender) == false)
                         sendersID.Add(p.sender);
             List<Location> sendersL = new List<Location>();

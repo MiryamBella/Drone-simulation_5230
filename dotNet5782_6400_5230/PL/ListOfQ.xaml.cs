@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using IBL;
 
 namespace PL
 {
@@ -19,9 +20,17 @@ namespace PL
     /// </summary>
     public partial class ListOfQ : Window
     {
+        IBL.IBL bL;
         public ListOfQ(IBL.IBL ibl)
         {
             InitializeComponent();
+            bL = new BL();
+            bL = ibl;
+        }
+
+        private void addNew_Q(object sender, RoutedEventArgs e)
+        {
+            new Quadocopter(bL).Show();
         }
     }
 }

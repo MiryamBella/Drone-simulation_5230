@@ -6,7 +6,18 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="ListOfQ" Height="450" Width="800">
-    <Grid>
-        
+
+    <Grid x:Name="MainGrid" 
+ShowGridLines ="True"><!--i did that so i can see the grids but after i done i will delete it.-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="400*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Button Content="Add new Quadocopter" Width="100" Height="40" Click="addNew_Q"/>
     </Grid>
 </Window>
