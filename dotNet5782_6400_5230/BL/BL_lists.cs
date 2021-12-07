@@ -202,7 +202,7 @@ namespace IBL
                 new_q.mode = statusOfQ.delivery; //mode
                 new_q.packageNumber = p.Value.id;//packageNumber
                 IDAL.DO.Location lSender = dal.searchLocationOfclient(p.Value.sender); //the location of the sender
-                if (p.Value.time_ColctedFromSender.Year != 0001) //if the package was collected
+                if (p.Value.time_ColctedFromSender.Value.Year != 0001) //if the package was collected
                 {
                     //the location of the q will be the location of the sender
                     location l = new location();

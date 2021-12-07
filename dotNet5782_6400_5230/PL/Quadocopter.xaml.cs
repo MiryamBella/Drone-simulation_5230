@@ -17,9 +17,9 @@ namespace PL
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class Quadocopter : Window
     {
-        public Window1(IBL.IBL ibl)
+        public Quadocopter(IBL.IBL ibl)
         {
             InitializeComponent();
         }

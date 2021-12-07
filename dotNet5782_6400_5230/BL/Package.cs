@@ -14,10 +14,10 @@ namespace IBL
             public WeighCategories weight { get; set; }
             public Priorities priority { get; set; }
             public QuadocopterInPackage q { get; set; }
-            public DateTime time_Create { get; set; }
-            public DateTime time_Belong_quadocopter { get; set; }
-            public DateTime time_ColctedFromSender { get; set; }
-            public DateTime time_ComeToColcter { get; set; }
+            public DateTime? time_Create { get; set; }
+            public DateTime? time_Belong_quadocopter { get; set; }
+            public DateTime? time_ColctedFromSender { get; set; }
+            public DateTime? time_ComeToColcter { get; set; }
             public override string ToString()
             {
                 return ("ID: " + ID + '\n' +

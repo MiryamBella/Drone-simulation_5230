@@ -17,9 +17,9 @@ namespace PL
     /// <summary>
     /// Interaction logic for Window2.xaml
     /// </summary>
-    public partial class Window2 : Window
+    public partial class ListOfQ : Window
     {
-        public Window2(IBL.IBL ibl)
+        public ListOfQ(IBL.IBL ibl)
         {
             InitializeComponent();
         }
