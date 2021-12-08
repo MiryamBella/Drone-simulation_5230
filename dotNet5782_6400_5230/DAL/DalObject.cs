@@ -383,7 +383,7 @@ namespace DalObject
 
         }
         /// <summary>
-        /// print all the stations that have empty changing positions.
+        /// get all the stations that have empty changing positions.
         /// </summary>
         public IEnumerable<BaseStation> ListOfStationsForCharging()//print all the stations that have empty changing positions
         {
@@ -456,8 +456,12 @@ namespace DalObject
                     Location l = new Location() { latitude = c.latitude, longitude = c.longitude };
                     sendersL.Add(l);
                 }
-            int x = r.Next(0, sendersL.Count - 1);
-            return sendersL[x];
+            if (sendersL.Count != 0)
+            {
+                int x = r.Next(0, sendersL.Count - 1);
+                return sendersL[x];
+            }
+            return null;
         }
         /// <summary>
         /// accept a location and return the closest base station

@@ -19,9 +19,28 @@ namespace PL
     /// </summary>
     public partial class Quadocopter : Window
     {
-        public Quadocopter(IBL.IBL ibl)
+        IBL.BO.Quadocopter newQ = new IBL.BO.Quadocopter();
+        public Quadocopter(IBL.IBL ibl) //for adding quadocopter
         {
             InitializeComponent();
+            
+            Title = "add a quadocopter";
+            showID.Visibility = Visibility.Hidden;
         }
+        public Quadocopter(IBL.IBL ibl, IBL.BO.Quadocopter q)//for view of quadocopter
+        {
+            InitializeComponent();
+            Title = "quadocopter";
+            enterID.Visibility = Visibility.Hidden;
+            showID.Text =  q.ID.ToString();
+        }
+
+        private void writedID(object sender, RoutedEventArgs e)
+        {
+            checkID.Visibility = Visibility.Visible;
+            if (enterID.Text.Length == 9) checkID.Visibility = Visibility.Hidden;
+            newQ.ID = int.Parse(enterID.Text);
+        }
+        //id, moodle, weight, battery, mode, package and location
     }
 }
