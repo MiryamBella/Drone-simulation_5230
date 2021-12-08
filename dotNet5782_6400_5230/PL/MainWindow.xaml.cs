@@ -26,5 +26,11 @@ namespace PL
             InitializeComponent();
             bl = new BL();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ListOfQ l = new ListOfQ(bl);
+            l.Show();
+        }
     }
 }

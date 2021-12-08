@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using IDAL;
 using IBL.BO;
-using System.Device;
+//using System.Device;
 using System.Device.Location;
 
 
