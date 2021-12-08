@@ -12,6 +12,8 @@ namespace DalObject
     {
         ///When this class is built it first initializes the lists with the initial values defined in Initialize
         public DalObject() { DataSource.Initialize(); }
+        #region add funcs
+
         public void AddBaseStation(int id, string name, int chargingPositions, double longitude, double latitude) ///adding new base station
         {
             BaseStation station = new BaseStation(); /// i did new BaseStation
@@ -77,6 +79,8 @@ namespace DalObject
             DataSource.packagh.Add(p);  // enter the new package into the list
             //return p.id;
         }
+        #endregion;
+
         //-----------------update functions----------
         #region updateQuadocopter;
         /// <summary>
