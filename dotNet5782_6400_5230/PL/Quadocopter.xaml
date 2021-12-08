@@ -36,7 +36,7 @@
                    Text="TextBlock" TextWrapping="Wrap" 
                    Height="25" Width="120"  />
         <TextBlock x:Name="checkID" HorizontalAlignment="Center" 
-                   Grid.Row="1" Grid.Column="2" Text="no much digits" TextWrapping="Wrap" 
+                   Grid.Row="1" Grid.Column="2" Text="invalid id" TextWrapping="Wrap" 
                    Height="25" Width="120"
                    Visibility="Hidden"/>
         <TextBlock x:Name="weight" HorizontalAlignment="Right" 
