@@ -54,9 +54,9 @@ namespace PL
         private void MouseDoubleClick_showQ(object sender, MouseButtonEventArgs e)
         {
             IBL.BO.QuadocopterToList ql = (IBL.BO.QuadocopterToList)q_list.SelectedItem;
-            IBL.BO.Quadocopter q = new IBL.BO.Quadocopter();
-            q = bl.cover(ql);
-            Quadocopter qw = new Quadocopter(bl, q);
+            //IBL.BO.Quadocopter q = new IBL.BO.Quadocopter();
+            //q = bl.cover(ql);
+            Quadocopter qw = new Quadocopter(bl, ql);
             qw.ShowDialog();
             
         }
