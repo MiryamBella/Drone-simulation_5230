@@ -71,6 +71,9 @@ namespace DalObject
             p.id = DataSource.Config.runNum++;   // the id of the package will be according the run number
             p.idQuadocopter = 0;  // the package have not quadocopter
             p.time_Create = DateTime.Now;  // the time of the create is now
+            p.time_Belong_quadocopter = null;
+            p.time_ColctedFromSender = null;
+            p.time_ComeToColcter = null;
             DataSource.packagh.Add(p);  // enter the new package into the list
             //return p.id;
         }
@@ -443,7 +446,7 @@ namespace DalObject
             Random r = new Random();
             List<int> sendersID = new List<int>();
             foreach (Package p in DataSource.packagh)
-                if (p.time_ComeToColcter.Year != 0001)
+                if ((p.time_ComeToColcter!=null) && (p.time_ComeToColcter.Value.Year != 0001))
                     if (sendersID.Contains(p.sender) == false)
                         sendersID.Add(p.sender);
             List<Location> sendersL = new List<Location>();

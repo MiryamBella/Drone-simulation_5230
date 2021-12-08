@@ -23,13 +23,13 @@ namespace IDAL
             /// </summary>
             public Priorities priority { get; set; }
             public int idQuadocopter { get; set; }
-            public DateTime time_Create { get; set; }
-            public DateTime time_Belong_quadocopter { get; set; }
+            public DateTime? time_Create { get; set; }
+            public DateTime? time_Belong_quadocopter { get; set; }
             /// <summary>
             /// The time the packagh have been colected from the person who send the packagh.
             /// </summary>
-            public DateTime time_ColctedFromSender { get; set; }
-            public DateTime time_ComeToColcter { get; set; }
+            public DateTime? time_ColctedFromSender { get; set; }
+            public DateTime? time_ComeToColcter { get; set; }
             public object Clone()
             {
                 return this.MemberwiseClone();

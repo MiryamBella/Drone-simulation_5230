@@ -133,11 +133,15 @@ namespace DalObject
                 Package p = new Package();
                 p.id = Config.runNum;
                 Config.runNum++;
-                p.sender = r.Next();
-                p.receiver = r.Next();
+                p.sender = r.Next(100000000, 999999999);
+                p.receiver = r.Next(100000000, 999999999);
                 p.weight = (WeighCategories)r.Next(0, 3);
                 p.priority = (Priorities)r.Next(0, 3);
                 p.idQuadocopter = r.Next(100,104);
+                p.time_Belong_quadocopter = null;
+                p.time_ColctedFromSender=null;
+                p.time_ComeToColcter =null;
+                p.time_Create = DateTime.Now;
                 
                 //the 3 package with difrent privorities and WeighCategories.
                 if(i==0)
@@ -168,7 +172,6 @@ namespace DalObject
 
         //-------------------funcs that exsit for us-----------------------------------------------
         
-        /*2 funcs for the reset func.*/
         static string getRandomName(int num)
         {
             num = num % 10;

@@ -178,7 +178,7 @@ namespace IBL
             if (!flag) throw new BLException("this ID not exist");
             if (q.mode != statusOfQ.delivery) throw new BLException("this qudocopter dont associated to a package");
             IDAL.DO.Package? p = dal.searchPinQ(qID);
-            if (p.Value.time_ColctedFromSender.Year != 0001) throw new BLException("the package was collocted already");
+            if (p.Value.time_ColctedFromSender.Value.Year != 0001) throw new BLException("the package was collocted already");
             //update the data of the qudocopter
             IDAL.DO.Location senderL = dal.searchLocationOfclient(p.Value.sender);//update the battery
             double distance = new GeoCoordinate(senderL.longitude, senderL.latitude).GetDistanceTo(coverLtoG(q.thisLocation));
@@ -207,7 +207,7 @@ namespace IBL
             if (!flag) throw new BLException("this ID not exist");
             if (q.mode != statusOfQ.delivery) throw new BLException("this qudocopter dont associated to a package");
             IDAL.DO.Package? p = dal.searchPinQ(qID);
-            if (p.Value.time_ComeToColcter.Year != 0001) throw new BLException("the package was collocted already");
+            if (p.Value.time_ComeToColcter.Value.Year != 0001) throw new BLException("the package was collocted already");
             //update the data of the qudocopter
             IDAL.DO.Location receiverL = dal.searchLocationOfclient(p.Value.receiver);//update the battery
             double distance = new GeoCoordinate(receiverL.longitude, receiverL.latitude).GetDistanceTo(coverLtoG(q.thisLocation));

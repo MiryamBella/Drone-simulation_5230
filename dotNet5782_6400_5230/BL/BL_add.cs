@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DalObject;
 using IBL.BO;
+using System.Device.Location;
 
 namespace IBL
 {
