@@ -8,6 +8,12 @@ namespace IBL
     {
         public class Quadocopter
         {
+            public Quadocopter()
+            {
+                ID = 0; moodle = null; weight = 0; battery = 0; mode = 0;
+                thisPackage = new PackageInTrans();
+                thisLocation = new location();
+            }
             public int ID { get; set; }
             public string moodle { get; set; }
             public WeighCategories weight { get; set; }

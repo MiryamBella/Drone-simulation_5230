@@ -8,6 +8,10 @@ namespace IBL
     {
         public class QuadocopterInPackage
         {
+            public QuadocopterInPackage()
+            {
+                ID = 0; battery = 0; thisLocation = new location();
+            }
             public int ID { get; set; }
             public int battery { get; set; }
             public location thisLocation { get; set; }

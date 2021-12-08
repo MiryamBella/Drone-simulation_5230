@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using IDAL;
 using IBL.BO;
+using System.Device;
 using System.Device.Location;
 
 namespace IBL
@@ -211,9 +212,9 @@ namespace IBL
                     //colclute the distance that the q will go in order to estimate the battery it need
                     IDAL.DO.Location lReceiver = dal.searchLocationOfclient(p.Value.receiver);
                     IDAL.DO.BaseStation closeB = dal.searchCloseStation(lReceiver);
-                    //double distance = coverLtoG(l).GetDistanceTo(dal.coverLtoG(lReceiver)) + dal.coverLtoG(lReceiver).GetDistanceTo(new GeoCoordinate(closeB.longitude, closeB.latitude));
-                    //int minBattery = (int)distance * (int)(dal.askForElectric()[(int)p.Value.weight]); //the minimum battery will be the distance*the amount of battery that the q need in km, according to the whigt of its package
-                    //new_q.battery = r.Next(minBattery, 100);
+                    double distance = coverLtoG(l).GetDistanceTo(dal.coverLtoG(lReceiver)) + dal.coverLtoG(lReceiver).GetDistanceTo(new GeoCoordinate(closeB.longitude, closeB.latitude));
+                    int minBattery = (int)distance * (int)(dal.askForElectric()[(int)p.Value.weight]); //the minimum battery will be the distance*the amount of battery that the q need in km, according to the whigt of its package
+                    new_q.battery = r.Next(minBattery, 100);
                 }
                 else //if the package didn't collected
                 {
@@ -223,10 +224,10 @@ namespace IBL
                     //colclute the distance that the q will go in order to estimate the battery it need
                     IDAL.DO.Location lReceiver = dal.searchLocationOfclient(p.Value.receiver);
                     IDAL.DO.BaseStation closeToReceiver = dal.searchCloseStation(lReceiver);
-                    //double distance = dal.coverLtoG(lSender).GetDistanceTo(dal.coverLtoG(lReceiver)) + dal.coverLtoG(lReceiver).GetDistanceTo(new GeoCoordinate(closeToReceiver.longitude, closeToReceiver.latitude));
-                    //distance += coverLtoG(new_q.thisLocation).GetDistanceTo(dal.coverLtoG(lSender));
-                    //int minBattery = (int)distance * (int)(dal.askForElectric()[(int)p.Value.weight]); //the minimum battery will be the distance*the amount of battery that the q need in km, according to the whigt of its package
-                    //new_q.battery = r.Next(minBattery, 100);
+                    double distance = dal.coverLtoG(lSender).GetDistanceTo(dal.coverLtoG(lReceiver)) + dal.coverLtoG(lReceiver).GetDistanceTo(new GeoCoordinate(closeToReceiver.longitude, closeToReceiver.latitude));
+                    distance += coverLtoG(new_q.thisLocation).GetDistanceTo(dal.coverLtoG(lSender));
+                    int minBattery = (int)distance * (int)(dal.askForElectric()[(int)p.Value.weight]); //the minimum battery will be the distance*the amount of battery that the q need in km, according to the whigt of its package
+                    new_q.battery = r.Next(minBattery, 100);
                 }
             }
             else // if the q have not package
@@ -241,9 +242,9 @@ namespace IBL
                     new_q.thisLocation.longitude = l.longitude;
                     //colclute the distance that the q will go in order to estimate the battery it need
                     IDAL.DO.BaseStation close = dal.searchCloseStation(l);
-            //        double distance = new GeoCoordinate(close.longitude, close.latitude).GetDistanceTo(dal.coverLtoG(l));
-            //        int minBattery = (int)distance * (int)(dal.askForElectric()[0]); //the minimum battery will be the distance*the amount of battery that the q need in km at available state
-            //        new_q.battery = r.Next(minBattery, 100);
+                    double distance = new GeoCoordinate(close.longitude, close.latitude).GetDistanceTo(dal.coverLtoG(l));
+                    int minBattery = (int)distance * (int)(dal.askForElectric()[0]); //the minimum battery will be the distance*the amount of battery that the q need in km at available state
+                    new_q.battery = r.Next(minBattery, 100);
                 }
 
                 else //if it in a maintence
