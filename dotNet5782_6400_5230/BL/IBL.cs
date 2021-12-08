@@ -38,5 +38,8 @@ namespace IBL
         public List<BO.PackageToList> ListOfPwithoutQ();
         /// return list of all the stations that have empty changing positions.
         public List<BO.BaseStationToList> ListOfStationsForCharging();
+
+        public BO.Quadocopter cover(BO.QuadocopterToList ql);
+
     }
 }

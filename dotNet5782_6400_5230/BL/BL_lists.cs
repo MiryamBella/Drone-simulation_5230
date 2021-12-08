@@ -277,6 +277,64 @@ namespace IBL
         {
             return new GeoCoordinate(l.longitude, l.latitude);
         }
+
+        //to help in project PL.
+        public Quadocopter cover(QuadocopterToList ql)
+        {
+            Quadocopter q = new Quadocopter();
+            q.ID = ql.ID;
+            q.mode = ql.mode;
+            q.moodle = ql.moodle;
+            q.thisLocation = ql.thisLocation;
+            
+            foreach(IDAL.DO.Package p in dal.ListOfPackages())
+            {
+                if(p.idQuadocopter==q.ID)
+                {
+                    q.thisPackage.ID = p.id;
+                    if (q.mode == statusOfQ.delivery)
+                        q.thisPackage.ifOnTheWay = true;
+                    else
+                        q.thisPackage.ifOnTheWay = false;
+                    q.thisPackage.priority = (Priorities)p.priority;
+
+                    //to get the sender and the reciver.
+                    bool a = false;
+                    bool b = false;
+                    foreach(IDAL.DO.Client  c in dal.ListOfClients())
+                    {
+                        if (c.ID == p.receiver)
+                        {
+                            q.thisPackage.receiver = cover(c);
+                            a = true;
+                        }
+                        if (c.ID == p.sender)
+                        {
+                            q.thisPackage.sender = cover(c);
+                            b = true;
+                        }
+                        if (a && b)
+                            break;
+                    }
+
+                    q.thisPackage.weight = (WeighCategories)p.weight;
+                    if (q.thisPackage.ifOnTheWay) {
+                        q.thisPackage.collection = q.thisPackage.sender.thisLocation;
+                        q.thisPackage.destination = q.thisPackage.receiver.thisLocation;
+                    }
+                    else
+                    {
+                        q.thisPackage.collection = null;
+                        q.thisPackage.destination = null;
+                    }
+                    break;
+                }
+            }
+            q.weight = ql.weight;
+            q.battery = ql.battery;
+
+            return q;
+        }
         #endregion
     }
 }

@@ -11,23 +11,25 @@
 
     <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
             VerticalAlignment="Stretch" Width="auto">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="10*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            
-            </Grid.ColumnDefinitions>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
+
+        <!--2 buttons: 1)close, 1) add new qua.-->
         <Canvas>
             <Button x:Name="CloseWindow" Content="X" Background="Red" Width="20" Height="20" Canvas.Left="2" Canvas.Top="2"                    Click="CloseWindow_Click"/>
             <Button Content="Add new Quadocopter" Width="100" Height="40"  Canvas.Bottom="11" Canvas.Right="85"
                     Click="Button_addNewQ"/>
         </Canvas>
+        
         <TextBlock Text="Quadocopter mode:" Grid.Row="0" Grid.Column="1"/>
         <ComboBox x:Name="Quadocopter_mode" Grid.Row="1" Grid.Column="1">
             <ComboBoxItem Content="available"/>

@@ -53,8 +53,12 @@ namespace PL
 
         private void MouseDoubleClick_showQ(object sender, MouseButtonEventArgs e)
         {
-            Quadocopter q = new Quadocopter(bl);
-            q.ShowDialog();
+            IBL.BO.QuadocopterToList ql = (IBL.BO.QuadocopterToList)q_list.SelectedItem;
+            IBL.BO.Quadocopter q = new IBL.BO.Quadocopter();
+            q = bl.cover(ql);
+            Quadocopter qw = new Quadocopter(bl, q);
+            qw.ShowDialog();
+            
         }
 
         private void Button_raanen(object sender, RoutedEventArgs e)
@@ -109,7 +113,7 @@ namespace PL
             }
 
             IBL.BO.statusOfQ mode = new IBL.BO.statusOfQ();
-            ComboBoxItem m = (ComboBoxItem)Quadocopter_whait.SelectedItem;
+            ComboBoxItem m = (ComboBoxItem)Quadocopter_mode.SelectedItem;
             selected = true;
             switch (m.Content.ToString())
             {
