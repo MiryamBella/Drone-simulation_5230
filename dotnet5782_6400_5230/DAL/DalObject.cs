@@ -461,7 +461,8 @@ namespace DalObject
                 int x = r.Next(0, sendersL.Count - 1);
                 return sendersL[x];
             }
-            return null;
+            Client dcli = DataSource.cli[0];
+            return new Location() {latitude = dcli.latitude, longitude = dcli.longitude };
         }
         /// <summary>
         /// accept a location and return the closest base station
@@ -472,7 +473,7 @@ namespace DalObject
             double minDistance = 100000000, help = 0;
             foreach (BaseStation b in DataSource.bstion) 
             {
-                help = new GeoCoordinate(b.latitude, b.longitude).GetDistanceTo(coverLtoG(l));
+                help = GetDistance(l, new Location() { latitude = b.latitude, longitude = b.longitude });
                 if (help < minDistance)
                 {
                     minDistance = help;
@@ -490,7 +491,7 @@ namespace DalObject
             double minDistance = 100000000, help = 0;
             foreach (BaseStation b in DataSource.bstion)
             {
-                help = new GeoCoordinate(b.latitude, b.longitude).GetDistanceTo(coverLtoG(l));
+                help = GetDistance(l, new Location() { latitude = b.latitude, longitude = b.longitude });
                 if (help < minDistance && b.freechargingPositions != 0)
                 {
                     minDistance = help;
@@ -507,17 +508,16 @@ namespace DalObject
         /// <summary>
         /// accept a location of qudocopoter and its battery and return list of package that the q can take
         /// </summary>
-        public List<Package> availablePtoQ(int battery, GeoCoordinate loc)
+        public List<Package> availablePtoQ(int battery, Location loc)
         {
             List<Package> packages = new List<Package>();
             foreach (Package p in DataSource.packagh)
             {
-                GeoCoordinate senderLocation = coverLtoG(searchLocationOfclient(p.sender));
+                Location senderLocation = searchLocationOfclient(p.sender);
                 Location receiverL = searchLocationOfclient(p.receiver);
-                GeoCoordinate receiverLocation = new GeoCoordinate(receiverL.longitude, receiverL.latitude);
                 BaseStation stationL = searchCloseStation(receiverL);
-                GeoCoordinate stationLocation = new GeoCoordinate(stationL.longitude, stationL.latitude);
-                double distance = loc.GetDistanceTo(senderLocation) + senderLocation.GetDistanceTo(receiverLocation) + receiverLocation.GetDistanceTo(stationLocation);
+                Location stationLocation = new Location() { longitude = stationL.longitude, latitude = stationL.latitude };
+                double distance = GetDistance(loc, senderLocation) +GetDistance(senderLocation, receiverL) + GetDistance(receiverL, stationLocation);
                 int minBattery = (int)(distance * askForElectric()[(int)p.weight]);
                 if (battery >= minBattery)
                     packages.Add(p);
@@ -541,6 +541,10 @@ namespace DalObject
             c.baseStationID = b.IDnumber;
             c.quadocopterID = q.id;
             DataSource.charge.Remove(c);
+        }
+        double GetDistance(Location l1, Location l2)
+        {
+            return Math.Sqrt(Math.Pow(l1.latitude - l2.latitude, 2) + Math.Pow(l1.longitude - l2.longitude, 2));
         }
 
         /// <summary>

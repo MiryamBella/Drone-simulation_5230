@@ -83,6 +83,6 @@ namespace IDAL
         /// <summary>
         /// accept a location of qudocopoter and its battery and return list of package that the q can take
         /// </summary>
-        public List<Package> availablePtoQ(int battery, GeoCoordinate loc);
+        public List<Package> availablePtoQ(int battery, Location loc);
     }
 }

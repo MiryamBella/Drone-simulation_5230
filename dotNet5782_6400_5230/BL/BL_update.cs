@@ -74,7 +74,7 @@ namespace IBL
             //check if it have enough battery to go to base station
             IDAL.DO.Location dalL = new IDAL.DO.Location() { longitude = q.thisLocation.longitude, latitude = q.thisLocation.latitude };
             IDAL.DO.BaseStation b = dal.searchCloseEmptyStation(dalL);
-            double distance = dal.coverLtoG(dalL).GetDistanceTo(new GeoCoordinate(b.longitude, b.latitude));
+            double distance =GetDistance(coverLtoL(dalL), new location() { longitude = b.longitude, latitude = b.latitude });
             int minBattery = (int)(distance * dal.askForElectric()[0]);
             if (q.battery < minBattery) Console.WriteLine("there is no enough battery to");
 
@@ -132,7 +132,7 @@ namespace IBL
                 }
             if (!flag) throw new BLException("this ID dont exist");
 
-            var packages = dal.availablePtoQ(q.ID, coverLtoG(q.thisLocation));//list of package that it can take according to this battery
+            var packages = dal.availablePtoQ(q.ID, new IDAL.DO.Location() {longitude =  q.thisLocation.longitude, latitude = q.thisLocation.latitude });//list of package that it can take according to this battery
             if (packages.Count == 0) throw new BLException("there is no package to assign");
             var package = packages.OrderBy(s => (int)s.priority).ThenBy(s => s.weight);
             IDAL.DO.Priorities pr = new IDAL.DO.Priorities();
@@ -153,7 +153,7 @@ namespace IBL
             IDAL.DO.Package thePackage = new IDAL.DO.Package();
             foreach (IDAL.DO.Package p in packageInHighWeight)
             {
-                double d = coverLtoG(q.thisLocation).GetDistanceTo(dal.coverLtoG(dal.searchLocationOfclient(p.sender)));
+                double d = GetDistance(q.thisLocation, coverLtoL(dal.searchLocationOfclient(p.sender)));
                 if (isfirst) { distance = d; thePackage = p; }
                 else if (d < distance) { distance = d; thePackage = p; }
             }
@@ -181,7 +181,7 @@ namespace IBL
             if (p.Value.time_ColctedFromSender.Value.Year != 0001) throw new BLException("the package was collocted already");
             //update the data of the qudocopter
             IDAL.DO.Location senderL = dal.searchLocationOfclient(p.Value.sender);//update the battery
-            double distance = new GeoCoordinate(senderL.longitude, senderL.latitude).GetDistanceTo(coverLtoG(q.thisLocation));
+            double distance = GetDistance(q.thisLocation, new location() { longitude = senderL.longitude, latitude = senderL.latitude, decSix = new DmsLocation(), toBaseSix = new BaseSixtin() } );
             q.battery -= (int)(distance * dal.askForElectric()[(int)p.Value.weight]);
             q.thisLocation.longitude = senderL.longitude;//update the location 
             q.thisLocation.latitude = senderL.latitude;
@@ -210,7 +210,7 @@ namespace IBL
             if (p.Value.time_ComeToColcter.Value.Year != 0001) throw new BLException("the package was collocted already");
             //update the data of the qudocopter
             IDAL.DO.Location receiverL = dal.searchLocationOfclient(p.Value.receiver);//update the battery
-            double distance = new GeoCoordinate(receiverL.longitude, receiverL.latitude).GetDistanceTo(coverLtoG(q.thisLocation));
+            double distance = GetDistance(q.thisLocation, new location() { longitude = receiverL.longitude, latitude = receiverL.latitude });
             q.battery -= (int)(distance * dal.askForElectric()[(int)p.Value.weight]);
             q.thisLocation.longitude = receiverL.longitude;//update the location 
             q.thisLocation.latitude = receiverL.latitude;

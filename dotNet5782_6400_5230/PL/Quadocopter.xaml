@@ -22,7 +22,17 @@
                    Visibility="Hidden"/>
         <TextBlock x:Name="weight" HorizontalAlignment="Left" 
                    Margin="14,148,0,0" Text="weight:" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="49"/>
-        <ListBox Margin="68,148,592,264"/>
+        <ComboBox x:Name="enterWeight" HorizontalAlignment="Left" 
+                  Margin="68,145,0,0" VerticalAlignment="Top" Width="140" SelectionChanged="enterWeight_SelectionChanged" >
+            <ComboBoxItem x:Name="heavy" Content="heavy"/>
+            <ComboBoxItem x:Name="middle" Content="middle"/>
+            <ComboBoxItem x:Name="easy" Content="easy"/>
+            <TextBlock Text="choose a weight" TextWrapping="Wrap"/>
+
+        </ComboBox>
+        
+        
+        
 
     </Grid>
 </Window>

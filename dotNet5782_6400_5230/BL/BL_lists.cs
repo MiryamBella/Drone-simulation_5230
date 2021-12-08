@@ -213,7 +213,7 @@ namespace IBL
                     //colclute the distance that the q will go in order to estimate the battery it need
                     IDAL.DO.Location lReceiver = dal.searchLocationOfclient(p.Value.receiver);
                     IDAL.DO.BaseStation closeB = dal.searchCloseStation(lReceiver);
-                    double distance = coverLtoG(l).GetDistanceTo(dal.coverLtoG(lReceiver)) + dal.coverLtoG(lReceiver).GetDistanceTo(new GeoCoordinate(closeB.longitude, closeB.latitude));
+                    double distance = GetDistance(l, coverLtoL(lReceiver)) + GetDistance(coverLtoL(lReceiver), new location() {longitude = closeB.longitude, latitude = closeB.latitude, decSix = new DmsLocation(), toBaseSix = new BaseSixtin() });
                     int minBattery = (int)distance * (int)(dal.askForElectric()[(int)p.Value.weight]); //the minimum battery will be the distance*the amount of battery that the q need in km, according to the whigt of its package
                     new_q.battery = r.Next(minBattery, 100);
                 }
@@ -225,8 +225,8 @@ namespace IBL
                     //colclute the distance that the q will go in order to estimate the battery it need
                     IDAL.DO.Location lReceiver = dal.searchLocationOfclient(p.Value.receiver);
                     IDAL.DO.BaseStation closeToReceiver = dal.searchCloseStation(lReceiver);
-                    double distance = dal.coverLtoG(lSender).GetDistanceTo(dal.coverLtoG(lReceiver)) + dal.coverLtoG(lReceiver).GetDistanceTo(new GeoCoordinate(closeToReceiver.longitude, closeToReceiver.latitude));
-                    distance += coverLtoG(new_q.thisLocation).GetDistanceTo(dal.coverLtoG(lSender));
+                    double distance = GetDistance(coverLtoL(lSender), coverLtoL(lReceiver)) + GetDistance(coverLtoL(lReceiver),new location() { longitude = closeToReceiver.longitude, latitude= closeToReceiver.latitude, decSix = new DmsLocation(), toBaseSix = new BaseSixtin() });
+                    distance += GetDistance(new_q.thisLocation, coverLtoL(lSender));
                     int minBattery = (int)distance * (int)(dal.askForElectric()[(int)p.Value.weight]); //the minimum battery will be the distance*the amount of battery that the q need in km, according to the whigt of its package
                     new_q.battery = r.Next(minBattery, 100);
                 }
@@ -238,14 +238,16 @@ namespace IBL
                 if (x == 0) //if it will be available
                 {
                     new_q.mode = statusOfQ.available;
-                    var l = dal.randomCwithPLocation(); //location will in one of the clients that accept a package.
+                    IDAL.DO.Location l = dal.randomCwithPLocation(); //location will in one of the clients that accept a package.
+                    if (l == null) throw new BLException("error");
                     new_q.thisLocation.latitude = l.latitude;
                     new_q.thisLocation.longitude = l.longitude;
                     //colclute the distance that the q will go in order to estimate the battery it need
                     IDAL.DO.BaseStation close = dal.searchCloseStation(l);
-                    double distance = new GeoCoordinate(close.longitude, close.latitude).GetDistanceTo(dal.coverLtoG(l));
+                    double distance = GetDistance( coverLtoL(l), new location() { longitude = close.longitude, latitude = close.latitude, decSix = new DmsLocation(), toBaseSix = new BaseSixtin() });
                     int minBattery = (int)distance * (int)(dal.askForElectric()[0]); //the minimum battery will be the distance*the amount of battery that the q need in km at available state
-                    new_q.battery = r.Next(minBattery, 100);
+                    if (minBattery < 100) new_q.battery = r.Next(minBattery, 100);
+                    else new_q.battery = 100;
                 }
 
                 else //if it in a maintence
@@ -258,6 +260,17 @@ namespace IBL
                 }
             }
             return new_q;
+
+        }
+        double GetDistance(location l1, location l2)
+        {
+            return Math.Sqrt(Math.Pow(l1.latitude - l2.latitude, 2) + Math.Pow(l1.longitude - l2.longitude, 2));
+        }
+        location coverLtoL(IDAL.DO.Location l)
+        {
+            location newL = new location() {longitude = l.longitude, latitude = l.latitude,
+                                            decSix = new DmsLocation(), toBaseSix = new BaseSixtin()};
+            return newL;
 
         }
         GeoCoordinate coverLtoG(location l)

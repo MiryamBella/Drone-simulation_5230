@@ -41,6 +41,13 @@ namespace PL
             if (enterID.Text.Length == 9) checkID.Visibility = Visibility.Hidden;
             newQ.ID = int.Parse(enterID.Text);
         }
+
+        private void enterWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (enterWeight.SelectedItem == heavy) newQ.weight = IBL.BO.WeighCategories.hevy;
+            if (enterWeight.SelectedItem == middle) newQ.weight = IBL.BO.WeighCategories.middle;
+            else newQ.weight = IBL.BO.WeighCategories.easy;
+        }
         //id, moodle, weight, battery, mode, package and location
     }
 }
