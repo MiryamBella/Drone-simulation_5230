@@ -34,7 +34,7 @@ namespace PL
             showLongitude.Visibility = Visibility.Hidden;
             showLatitude.Visibility = Visibility.Hidden;
         }
-        public Quadocopter(IBL.IBL ibl, IBL.BO.Quadocopter q)//for view of quadocopter
+        public Quadocopter(IBL.IBL ibl, IBL.BO.QuadocopterToList q)//for view of quadocopter
         {
             bl = ibl;
             InitializeComponent();
@@ -63,11 +63,10 @@ namespace PL
 
         private void writedID(object sender, RoutedEventArgs e)
         {
-            checkID.Visibility = Visibility.Visible;
-            if (enterID.Text.Length == 9) { 
-                checkID.Visibility = Visibility.Hidden;
-                newQ.ID = int.Parse(enterID.Text);
-            }
+            int id;
+            if (int.TryParse(enterID.Text, out id))
+                newQ.ID = id;
+            else checkID.Visibility = Visibility.Visible;
         }
 
         private void enterWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -134,7 +133,15 @@ namespace PL
 
         private void adding(object sender, RoutedEventArgs e)
         {
-            bl.AddQuadocopter(newQ.ID, newQ.moodle, (int)newQ.weight, int.Parse(enterDelivery.Text));
+            try 
+            {
+                bl.AddQuadocopter(newQ.ID, newQ.moodle, (int)newQ.weight, int.Parse(enterDelivery.Text));
+            }
+            catch (IBL.BO.BLException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
+
     }
 }

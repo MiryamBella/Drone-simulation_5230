@@ -53,7 +53,7 @@ namespace PL
 
         private void MouseDoubleClick_showQ(object sender, MouseButtonEventArgs e)
         {
-            Quadocopter q = new Quadocopter(bl);
+            Quadocopter q = new Quadocopter(bl, myCollection[1]);
             q.ShowDialog();
         }
 
