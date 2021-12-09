@@ -6,11 +6,17 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="ListOfQ" Height="450" Width="800">
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Heavy"/>
+        </Style>
+    </Window.Resources>
     <!--<Grid x:Name="MainGrid" ShowGridLines ="True">-->  
-    <!--i did that so i can see the grids but after i done i will delete it.-->
 
     <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-            VerticalAlignment="Stretch" Width="auto">
+            VerticalAlignment="Stretch" Width="auto" Background="AntiqueWhite">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
@@ -26,7 +32,7 @@
         <!--2 buttons: 1)close, 1) add new qua.-->
         <Canvas>
             <Button x:Name="CloseWindow" Content="X" Background="Red" Width="20" Height="20" Canvas.Left="2" Canvas.Top="2"                    Click="CloseWindow_Click"/>
-            <Button Content="Add new Quadocopter" Width="100" Height="40"  Canvas.Bottom="11" Canvas.Right="85"
+            <Button Content="Add new Quadocopter" Background="BlueViolet" Width="150" Height="50"  Canvas.Bottom="8" Canvas.Right="55"
                     Click="Button_addNewQ"/>
         </Canvas>
         
@@ -41,7 +47,7 @@
             <ComboBoxItem Content="hevy" />
         </ComboBox>
 
-        <Button Content="raanen" Grid.Row="2" Grid.Column="2" Width="100" Height="50" Background="Yellow" Click="Button_raanen"/>
+        <Button Content="refreshe" Grid.Row="2" Grid.Column="2" Width="100" Height="50" Background="Yellow" Click="Button_refreshe"/>
 
 
         <WrapPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">

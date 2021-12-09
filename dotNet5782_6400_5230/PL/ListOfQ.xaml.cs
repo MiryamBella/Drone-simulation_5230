@@ -61,7 +61,7 @@ namespace PL
             
         }
 
-        private void Button_raanen(object sender, RoutedEventArgs e)
+        private void Button_refreshe(object sender, RoutedEventArgs e)
         {
             /*  -----------------------the order of the program:---------------------------------------
             1)if the weigh select:
