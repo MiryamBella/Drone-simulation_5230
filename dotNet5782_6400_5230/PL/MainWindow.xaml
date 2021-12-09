@@ -6,8 +6,29 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button Content="quadocopters" HorizontalAlignment="Left" Margin="64,109,0,0" VerticalAlignment="Top" Height="45" Width="155" Click="Button_Click"/>
+
+    <Window.Resources>
+        <Style x:Name="big"  TargetType="TextBox">
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid ShowGridLines ="True" Background="Aqua">
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <TextBox Text="WLCOME USER!" Background ="Gold"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,325" Grid.RowSpan="2"/>
+        <TextBox x:Name="a" Text="press the button to see our qoudocopters :)" Grid.Row="1" Grid.Column="0" Background="Aqua" Grid.ColumnSpan="3" Margin="0,0,533,0"/>
+        <Button Content="quadocopters" Background="GreenYellow" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Margin="64,109,0,0" VerticalAlignment="Top" Height="45" Width="155" Click="Button_Click" Grid.ColumnSpan="2"/>
+
+        <Image Width="400" Height="280" Grid.Row="1" Grid.Column="2" Source="/Quadcopter_camera_drone_in_flight.jpg" Margin="66,22,67,23" />
 
     </Grid>
 </Window>
