@@ -204,6 +204,22 @@ namespace IBL
 
             return q_l;
         }
+        /// print all the quadocpters acording to the weigh.
+        public List<BO.QuadocopterToList> ListOfQ_of_weigh(string w)
+        {
+            List<QuadocopterToList> q_l = new List<QuadocopterToList>();
+
+            IEnumerable<IDAL.DO.Quadocopter> stractQ_list = dal.ListOfQ_of_weigh(w);
+            foreach (IDAL.DO.Quadocopter q in stractQ_list)
+            {
+                QuadocopterToList temp = new QuadocopterToList();
+                temp = cover_list(q);
+
+                q_l.Add(temp);
+            }
+
+            return q_l;
+        }
         /// return list of all the packages.
         public List<BO.PackageToList> ListOfPackages()
         {

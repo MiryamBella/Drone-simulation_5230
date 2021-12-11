@@ -43,6 +43,8 @@ namespace IDAL
         public IEnumerable<BaseStation> ListOfStations();
         /// print all the quadocpters.
         public IEnumerable<Quadocopter> ListOfQ();
+        /// print all the quadocpters acording to the weigh.
+        public IEnumerable<Quadocopter> ListOfQ_of_weigh(string w);
         /// print all the clients
         public IEnumerable<Client> ListOfClients();
         /// print all the packages.

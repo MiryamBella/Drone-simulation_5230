@@ -24,7 +24,8 @@
             <ColumnDefinition Width="*"/>
 
         </Grid.ColumnDefinitions>
-
+        
+        <!--any time you see the word delyvery, it is mean the id of the base station-->
         <TextBlock x:Name="ID" HorizontalAlignment="Right" 
                    Grid.Row="1"  Grid.Column="0" Text="ID:" TextWrapping="Wrap" 
                    VerticalAlignment="Center" Height="25" Width="70"/>
@@ -83,8 +84,8 @@
                    TextWrapping="Wrap" Height="25" Width="120"
                    Visibility="Hidden"/>
         <TextBlock x:Name="delivery" HorizontalAlignment="Right" 
-                   Grid.Row="1"  Grid.Column="3" Text="delivery:" TextWrapping="Wrap" 
-                   VerticalAlignment="Center" Height="25" Width="70"/>
+                   Grid.Row="1"  Grid.Column="3" Text="base station ID:" TextWrapping="Wrap" 
+                   VerticalAlignment="Center" Height="25" Width="90"/>
         <TextBox x:Name="enterDelivery" TextWrapping="Wrap" 
                  Grid.Row="1" Grid.Column="4" MaxLength="9"
                  TextChanged ="writedDelivery" HorizontalAlignment="Center"
@@ -143,7 +144,7 @@
                    Grid.Row="4" Grid.Column="5" Text="invalid input" 
                    TextWrapping="Wrap" Height="25" Width="120"
                    Visibility="Hidden"/>
-        <Button Grid.Column="2" 
+        <Button Grid.Column="2" Name="addQ"
                 HorizontalAlignment="Left" Margin="29,0,0,0" Grid.Row="5" 
                 VerticalAlignment="Center" Height="34" Width="171" Grid.ColumnSpan="2" 
                 Content="add the qudocopter" Click="adding"/>

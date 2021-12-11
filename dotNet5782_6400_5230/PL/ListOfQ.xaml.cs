@@ -29,9 +29,14 @@ namespace PL
             InitializeComponent();
             bl = ibl;
 
-            foreach(IBL.BO.QuadocopterToList ql in bl.ListOfQ())
+            foreach (IBL.BO.QuadocopterToList ql in bl.ListOfQ())
                 myCollection.Add(ql);
             q_list.ItemsSource = myCollection;
+            //ComboBoxItem w = new ComboBoxItem();
+            //Quadocopter_whait.SelectedItem = Quadocopter_whait.Items.n;
+            //w.ContentStringFormat ="none";
+            //ComboBoxItem m = (ComboBoxItem)Quadocopter_mode.SelectedItem;
+            //m.Content = "none";
         }
         private void CloseWindow_Click(object sender, RoutedEventArgs e)
         {
@@ -41,6 +46,7 @@ namespace PL
         private void Button_addNewQ(object sender, RoutedEventArgs e)
         {
             Quadocopter q = new Quadocopter(bl);
+            this.Close();
             q.ShowDialog();
         }
 
@@ -55,8 +61,6 @@ namespace PL
             try
             {
                 IBL.BO.QuadocopterToList ql = (IBL.BO.QuadocopterToList)q_list.SelectedItem;
-                //IBL.BO.Quadocopter q = new IBL.BO.Quadocopter();
-                //q = bl.cover(ql);
                 Quadocopter qw = new Quadocopter(bl, ql);
                 qw.ShowDialog();
             }
@@ -83,38 +87,25 @@ namespace PL
                     B)if the mode didnt select:
                             do nothing becose we all redy cleen the list to the original list.
              */
-            IBL.BO.WeighCategories weigh = new IBL.BO.WeighCategories();
+            //get the select of the weigh.
             ComboBoxItem w =  (ComboBoxItem)Quadocopter_whait.SelectedItem;
             bool selected = true;
-            switch (w.Content.ToString())
+            //if w=null this mean the user didnt select something.
+            if (w !=null &&(w.Content.ToString() == "easy" || w.Content.ToString() == "hevy" || w.Content.ToString() == "middle"))
+                selected = true;
+            else
             {
-                case "easy":
-                    weigh = IBL.BO.WeighCategories.easy;
-                    break;
-                case "hevy":
-                    weigh = IBL.BO.WeighCategories.hevy;
-                    break;
-                case "middle":
-                    weigh = IBL.BO.WeighCategories.middle;
-                    break;
-                default:
-                    selected = false;
-                    myCollection.Clear();
-                    foreach (IBL.BO.QuadocopterToList ql in bl.ListOfQ())
-                        myCollection.Add(ql);
-                    break;
+                selected = false;
+                myCollection.Clear();
+                foreach (IBL.BO.QuadocopterToList ql in bl.ListOfQ())
+                    myCollection.Add(ql);
             }
 
             if (selected)
             {
                 try
                 {
-                    List<IBL.BO.QuadocopterToList> l = new List<IBL.BO.QuadocopterToList>();
-                    foreach (IBL.BO.QuadocopterToList ql in bl.ListOfQ())
-                    {
-                        if ((int)ql.weight <= (int)weigh)
-                            l.Add(ql);
-                    }
+                    List<IBL.BO.QuadocopterToList> l = bl.ListOfQ_of_weigh(w.Content.ToString());
                     myCollection.Clear();
                     foreach (IBL.BO.QuadocopterToList ql in l)
                         myCollection.Add(ql);
@@ -125,9 +116,12 @@ namespace PL
                 }
             }
 
+            //get the select of the mode.
             IBL.BO.statusOfQ mode = new IBL.BO.statusOfQ();
             ComboBoxItem m = (ComboBoxItem)Quadocopter_mode.SelectedItem;
             selected = true;
+            if (m == null)
+                return;
             switch (m.Content.ToString())
             {
                 case "available":

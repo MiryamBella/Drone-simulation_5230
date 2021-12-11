@@ -19,6 +19,7 @@ namespace PL
     /// </summary>
     public partial class Quadocopter : Window
     {
+        //any time you see the word delyvery, it is mean the id of the base station
         IBL.IBL bl;
         IBL.BO.Quadocopter newQ = new IBL.BO.Quadocopter();
         public Quadocopter(IBL.IBL ibl) //for adding quadocopter
@@ -46,6 +47,7 @@ namespace PL
             enterState.Visibility = Visibility.Hidden;
             enterLatitude.Visibility = Visibility.Hidden;
             enterLongitude.Visibility = Visibility.Hidden;
+            addQ.IsEnabled = false;
 
             showID.Text = q.ID.ToString();//data adjusment to this qudocopters data
             if (q.weight == IBL.BO.WeighCategories.easy) showWeight.Text = "easy";
@@ -77,7 +79,7 @@ namespace PL
         }
         private void writedModel(object sender, RoutedEventArgs e)
         {
-                newQ.moodle = enterID.Text;
+            newQ.moodle = enterModel.Text;
         }
         private void writedBattery(object sender, RoutedEventArgs e)
         {
@@ -136,6 +138,9 @@ namespace PL
             try
             {
                 bl.AddQuadocopter(newQ.ID, newQ.moodle, (int)newQ.weight, int.Parse(enterDelivery.Text));
+                ListOfQ l = new ListOfQ(bl);
+                this.Close();
+                l.Show();
             }
             catch (IBL.BO.BLException ex)
             {

@@ -354,6 +354,35 @@ namespace DalObject
                 list.Add(q);
             return list;
         }
+        /// print all the quadocpters acording to the weigh.
+        public IEnumerable<Quadocopter> ListOfQ_of_weigh(string w)
+        {
+            WeighCategories weigh = new WeighCategories();
+            switch (w)
+            {
+                case "easy":
+                    weigh = WeighCategories.easy;
+                    break;
+                case "hevy":
+                    weigh = WeighCategories.hevy;
+                    break;
+                case "middle":
+                    weigh = WeighCategories.middle;
+                    break;
+                default:
+                    throw new DALException("invelebel weigh statos.");
+            }
+
+            List<Quadocopter> l = new List<Quadocopter>();
+            foreach (Quadocopter ql in DataSource.qpter)
+            {
+                if ((int)ql.weight <= (int)weigh)
+                    l.Add(ql);
+            }
+
+            return l;
+        }
+
         /// <summary>
         /// print all the clients
         /// </summary>
