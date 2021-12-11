@@ -24,13 +24,27 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
-            bl = new BL();
+            try
+            {
+                bl = new BL();
+            }
+            catch (IBL.BO.BLException ex)
+            {
+                MessageBox.Show("Error! " + ex.Message);
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ListOfQ l = new ListOfQ(bl);
-            l.Show();
+            try
+            {
+                ListOfQ l = new ListOfQ(bl);
+                l.Show();
+            }
+            catch (IBL.BO.BLException ex)
+            {
+                MessageBox.Show("Error! " + ex.Message);
+            }
         }
     }
 }

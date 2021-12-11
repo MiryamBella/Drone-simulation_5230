@@ -17,7 +17,7 @@ using System.Collections.ObjectModel;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for Window2.xaml
+    /// Interaction logic for ListOfQ.xaml
     /// </summary>
     public partial class ListOfQ : Window
     {
@@ -29,7 +29,6 @@ namespace PL
             InitializeComponent();
             bl = ibl;
 
-            //DataContext = myCollection;
             foreach(IBL.BO.QuadocopterToList ql in bl.ListOfQ())
                 myCollection.Add(ql);
             q_list.ItemsSource = myCollection;
@@ -53,12 +52,19 @@ namespace PL
 
         private void MouseDoubleClick_showQ(object sender, MouseButtonEventArgs e)
         {
-            IBL.BO.QuadocopterToList ql = (IBL.BO.QuadocopterToList)q_list.SelectedItem;
-            //IBL.BO.Quadocopter q = new IBL.BO.Quadocopter();
-            //q = bl.cover(ql);
-            Quadocopter qw = new Quadocopter(bl, ql);
-            qw.ShowDialog();
-            
+            try
+            {
+                IBL.BO.QuadocopterToList ql = (IBL.BO.QuadocopterToList)q_list.SelectedItem;
+                //IBL.BO.Quadocopter q = new IBL.BO.Quadocopter();
+                //q = bl.cover(ql);
+                Quadocopter qw = new Quadocopter(bl, ql);
+                qw.ShowDialog();
+            }
+            catch (IBL.BO.BLException ex)
+            {
+                MessageBox.Show("Error! " + ex.Message);
+            }
+
         }
 
         private void Button_refreshe(object sender, RoutedEventArgs e)
@@ -101,15 +107,22 @@ namespace PL
 
             if (selected)
             {
-                List<IBL.BO.QuadocopterToList> l = new List<IBL.BO.QuadocopterToList>();
-                foreach(IBL.BO.QuadocopterToList ql in bl.ListOfQ()){
-                    if((int)ql.weight <= (int)weigh)
-                        l.Add(ql);
+                try
+                {
+                    List<IBL.BO.QuadocopterToList> l = new List<IBL.BO.QuadocopterToList>();
+                    foreach (IBL.BO.QuadocopterToList ql in bl.ListOfQ())
+                    {
+                        if ((int)ql.weight <= (int)weigh)
+                            l.Add(ql);
+                    }
+                    myCollection.Clear();
+                    foreach (IBL.BO.QuadocopterToList ql in l)
+                        myCollection.Add(ql);
                 }
-                myCollection.Clear();
-                foreach (IBL.BO.QuadocopterToList ql in l)
-                    myCollection.Add(ql);
-
+                catch (IBL.BO.BLException ex)
+                {
+                    MessageBox.Show("Error! " + ex.Message);
+                }
             }
 
             IBL.BO.statusOfQ mode = new IBL.BO.statusOfQ();
@@ -146,13 +159,4 @@ namespace PL
 
         }
     }
-
-    //public class myData
-    //{
-    //    public int id;
-    //    public override string ToString()
-    //    {
-    //        return ("my Id: " + id.ToString());
-    //    }
-    //}
 }
