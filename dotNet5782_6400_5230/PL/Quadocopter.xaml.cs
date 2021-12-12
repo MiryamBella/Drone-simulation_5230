@@ -20,9 +20,9 @@ namespace PL
     public partial class Quadocopter : Window
     {
         //any time you see the word delyvery, it is mean the id of the base station
-        IBL.IBL bl;
-        IBL.BO.Quadocopter newQ = new IBL.BO.Quadocopter();
-        public Quadocopter(IBL.IBL ibl) //for adding quadocopter
+        BlApi.IBL bl;
+        BO.Quadocopter newQ = new BO.Quadocopter();
+        public Quadocopter(BlApi.IBL ibl) //for adding quadocopter
         {
             bl = ibl;
             InitializeComponent();
@@ -35,7 +35,7 @@ namespace PL
             showLongitude.Visibility = Visibility.Hidden;
             showLatitude.Visibility = Visibility.Hidden;
         }
-        public Quadocopter(IBL.IBL ibl, IBL.BO.QuadocopterToList q)//for view of quadocopter
+        public Quadocopter(BlApi.IBL ibl, BO.QuadocopterToList q)//for view of quadocopter
         {
             bl = ibl;
             InitializeComponent();
@@ -50,14 +50,14 @@ namespace PL
             addQ.IsEnabled = false;
 
             showID.Text = q.ID.ToString();//data adjusment to this qudocopters data
-            if (q.weight == IBL.BO.WeighCategories.easy) showWeight.Text = "easy";
-            else if (q.weight == IBL.BO.WeighCategories.middle) showWeight.Text = "middle";
+            if (q.weight == BO.WeighCategories.easy) showWeight.Text = "easy";
+            else if (q.weight == BO.WeighCategories.middle) showWeight.Text = "middle";
             else showWeight.Text = "heavy";
             enterModel.Text = q.moodle;
             showBattery.Text = q.battery.ToString();
             showDelivery.Text = "0";
-            if (q.mode == IBL.BO.statusOfQ.available) showState.Text = "available";
-            else if (q.mode == IBL.BO.statusOfQ.maintenance) showState.Text = "maintence";
+            if (q.mode == BO.statusOfQ.available) showState.Text = "available";
+            else if (q.mode == BO.statusOfQ.maintenance) showState.Text = "maintence";
             else showState.Text = "delivery";
             showLatitude.Text = q.thisLocation.latitude.ToString();
             showLongitude.Text = q.thisLocation.longitude.ToString();
@@ -73,9 +73,9 @@ namespace PL
 
         private void enterWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (enterWeight.SelectedItem == heavy) newQ.weight = IBL.BO.WeighCategories.hevy;
-            if (enterWeight.SelectedItem == middle) newQ.weight = IBL.BO.WeighCategories.middle;
-            else newQ.weight = IBL.BO.WeighCategories.easy;
+            if (enterWeight.SelectedItem == heavy) newQ.weight = BO.WeighCategories.hevy;
+            if (enterWeight.SelectedItem == middle) newQ.weight = BO.WeighCategories.middle;
+            else newQ.weight = BO.WeighCategories.easy;
         }
         private void writedModel(object sender, RoutedEventArgs e)
         {
@@ -108,9 +108,9 @@ namespace PL
         }
         private void enterState_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (enterWeight.SelectedItem == available) newQ.mode = IBL.BO.statusOfQ.available;
-            if (enterWeight.SelectedItem == maintenance) newQ.mode = IBL.BO.statusOfQ.maintenance;
-            else newQ.mode = IBL.BO.statusOfQ.delivery;
+            if (enterWeight.SelectedItem == available) newQ.mode = BO.statusOfQ.available;
+            if (enterWeight.SelectedItem == maintenance) newQ.mode = BO.statusOfQ.maintenance;
+            else newQ.mode = BO.statusOfQ.delivery;
         }
         private void writedLatitude(object sender, RoutedEventArgs e)
         {
@@ -142,7 +142,7 @@ namespace PL
                 this.Close();
                 l.Show();
             }
-            catch (IBL.BO.BLException ex)
+            catch (BO.BLException ex)
             {
                 MessageBox.Show(ex.Message);
             }

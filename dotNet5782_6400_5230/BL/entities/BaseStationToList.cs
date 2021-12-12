@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace IBL
-{
-    namespace BO
+namespace BO
     {
         public class BaseStationToList
         {
@@ -21,4 +19,4 @@ namespace IBL
             }
         }
     }
-}
+

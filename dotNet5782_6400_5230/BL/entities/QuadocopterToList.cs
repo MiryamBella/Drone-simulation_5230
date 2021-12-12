@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace IBL
-{
-    namespace BO
+namespace BO
     {
         public class QuadocopterToList
         {
@@ -32,4 +30,3 @@ namespace IBL
             }
         }
     }
-}

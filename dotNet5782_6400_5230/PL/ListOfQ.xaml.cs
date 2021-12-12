@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using IBL;
+using BlApi;
 using System.Collections.ObjectModel;
 
 namespace PL
@@ -21,15 +21,15 @@ namespace PL
     /// </summary>
     public partial class ListOfQ : Window
     {
-        IBL.IBL bl;
-        private ObservableCollection<IBL.BO.QuadocopterToList> myCollection 
-            = new ObservableCollection<IBL.BO.QuadocopterToList>();
-        public ListOfQ(IBL.IBL ibl)
+        BlApi.IBL bl;
+        private ObservableCollection<BO.QuadocopterToList> myCollection 
+            = new ObservableCollection<BO.QuadocopterToList>();
+        public ListOfQ(BlApi.IBL ibl)
         {
             InitializeComponent();
             bl = ibl;
 
-            foreach (IBL.BO.QuadocopterToList ql in bl.ListOfQ())
+            foreach (BO.QuadocopterToList ql in bl.ListOfQ())
                 myCollection.Add(ql);
             q_list.ItemsSource = myCollection;
             //ComboBoxItem w = new ComboBoxItem();
@@ -50,7 +50,7 @@ namespace PL
             q.ShowDialog();
         }
 
-        public void addQfromWindowQ(IBL.BO.QuadocopterToList qua)
+        public void addQfromWindowQ(BO.QuadocopterToList qua)
         {
             myCollection.Add(qua);
         }
@@ -60,11 +60,11 @@ namespace PL
         {
             try
             {
-                IBL.BO.QuadocopterToList ql = (IBL.BO.QuadocopterToList)q_list.SelectedItem;
+                BO.QuadocopterToList ql = (BO.QuadocopterToList)q_list.SelectedItem;
                 Quadocopter qw = new Quadocopter(bl, ql);
                 qw.ShowDialog();
             }
-            catch (IBL.BO.BLException ex)
+            catch (BO.BLException ex)
             {
                 MessageBox.Show("Error! " + ex.Message);
             }
@@ -97,7 +97,7 @@ namespace PL
             {
                 selected = false;
                 myCollection.Clear();
-                foreach (IBL.BO.QuadocopterToList ql in bl.ListOfQ())
+                foreach (BO.QuadocopterToList ql in bl.ListOfQ())
                     myCollection.Add(ql);
             }
 
@@ -105,19 +105,19 @@ namespace PL
             {
                 try
                 {
-                    List<IBL.BO.QuadocopterToList> l = bl.ListOfQ_of_weigh(w.Content.ToString());
+                    List<BO.QuadocopterToList> l = bl.ListOfQ_of_weigh(w.Content.ToString());
                     myCollection.Clear();
-                    foreach (IBL.BO.QuadocopterToList ql in l)
+                    foreach (BO.QuadocopterToList ql in l)
                         myCollection.Add(ql);
                 }
-                catch (IBL.BO.BLException ex)
+                catch (BO.BLException ex)
                 {
                     MessageBox.Show("Error! " + ex.Message);
                 }
             }
 
             //get the select of the mode.
-            IBL.BO.statusOfQ mode = new IBL.BO.statusOfQ();
+            BO.statusOfQ mode = new BO.statusOfQ();
             ComboBoxItem m = (ComboBoxItem)Quadocopter_mode.SelectedItem;
             selected = true;
             if (m == null)
@@ -125,13 +125,13 @@ namespace PL
             switch (m.Content.ToString())
             {
                 case "available":
-                    mode = IBL.BO.statusOfQ.available;
+                    mode = BO.statusOfQ.available;
                     break;
                 case "maintenance":
-                    mode = IBL.BO.statusOfQ.maintenance;
+                    mode = BO.statusOfQ.maintenance;
                     break;
                 case "delivery":
-                    mode = IBL.BO.statusOfQ.delivery;
+                    mode = BO.statusOfQ.delivery;
                     break;
                 default:
                     selected = false;
@@ -140,14 +140,14 @@ namespace PL
 
             if (selected)
             {
-                List<IBL.BO.QuadocopterToList> l = new List<IBL.BO.QuadocopterToList>();
-                foreach (IBL.BO.QuadocopterToList ql in myCollection)
+                List<BO.QuadocopterToList> l = new List<BO.QuadocopterToList>();
+                foreach (BO.QuadocopterToList ql in myCollection)
                 {
                     if (ql.mode == mode)
                         l.Add(ql);
                 }
                 myCollection.Clear();
-                foreach (IBL.BO.QuadocopterToList ql in l)
+                foreach (BO.QuadocopterToList ql in l)
                     myCollection.Add(ql);
             }
 

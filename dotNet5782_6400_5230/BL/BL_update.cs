@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using IBL.BO;
+using BO;
 using System.Device.Location;
 using System.Linq;
 
-namespace IBL
+namespace BlApi
 {
     public partial class BL
     {

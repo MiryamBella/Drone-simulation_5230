@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace IBL
+namespace BlApi
 {
     public interface IBL
     {

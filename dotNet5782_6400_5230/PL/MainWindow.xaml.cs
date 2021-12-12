@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using IBL;
+using BlApi;
 namespace PL
 {
     /// <summary>
@@ -20,7 +20,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        IBL.IBL bl;
+        BlApi.IBL bl;
         public MainWindow()
         {
             InitializeComponent();
@@ -28,7 +28,7 @@ namespace PL
             {
                 bl = new BL();
             }
-            catch (IBL.BO.BLException ex)
+            catch (BO.BLException ex)
             {
                 MessageBox.Show("Error! " + ex.Message);
             }
@@ -41,7 +41,7 @@ namespace PL
                 ListOfQ l = new ListOfQ(bl);
                 l.Show();
             }
-            catch (IBL.BO.BLException ex)
+            catch (BO.BLException ex)
             {
                 MessageBox.Show("Error! " + ex.Message);
             }

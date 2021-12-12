@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using DalObject;
-using IBL.BO;
+using BO;
 using System.Device.Location;
 
-namespace IBL
+namespace BlApi
 {
     public partial class BL: IBL
     {

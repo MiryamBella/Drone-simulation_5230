@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using IDAL;
-using IBL.BO;
+using BO;
 //using System.Device;
 using System.Device.Location;
 
 
-namespace IBL
+namespace BlApi
 {
     public partial class BL
     {
