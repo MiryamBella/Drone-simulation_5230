@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using IDAL.DO;
+using DO;
 using System.Device.Location;
 using DAL.exceptions.DO;
+using DalApi;
 
 
 namespace DalObject 
 {
-    public class DalObject : IDAL.IDAL
+    internal class DalObject : DalApi.IDAL
     {
         ///When this class is built it first initializes the lists with the initial values defined in Initialize
         public DalObject() { DataSource.Initialize(); }
@@ -250,33 +251,6 @@ namespace DalObject
                     DataSource.bstion[i] = b;
                     break;
                 }
-        /*public void ReleaseQfromCharging(int qID)
-        {
-            foreach(Quadocopter q in DataSource.qpter)
-            {
-                if (q.id == qID)///find if there is that quadocopter
-                {
-                    foreach (Charging c in DataSource.charge)
-                    {
-                        ///find if the quadocopter are charging
-                        if (c.quadocopterID == q.id)
-                        {
-                            foreach (BaseStation b in DataSource.bstion)
-                            {
-                                ///find the base station he in charge
-                                if (b.IDnumber == c.baseStationID)
-                                {
-                                    ReleaseQfromCharging_doingThat(b, q);
-                                    return;
-                                }
-                            }
-                            throw new DALException("The base statation the quadocopter not exist.");
-                        }
-                    }
-                    throw new DALException("The quadocopter not charging.");
-                }
-            }
-            throw new DALException("The ID of the quadocopter not exist.");*/
         }
         /// <summary>
         /// print datails of statin
@@ -347,9 +321,9 @@ namespace DalObject
         /// <summary>
         /// return list of all the quadocpters.
         /// </summary>
-        public IEnumerable<IDAL.DO.Quadocopter> ListOfQ()//return list of all the quadocpters
+        public IEnumerable<DO.Quadocopter> ListOfQ()//return list of all the quadocpters
         {
-            List<IDAL.DO.Quadocopter> list = new List<Quadocopter>();
+            List<DO.Quadocopter> list = new List<Quadocopter>();
             foreach (Quadocopter q in DataSource.qpter) // I run of all the stations and print them
                 list.Add(q);
             return list;
