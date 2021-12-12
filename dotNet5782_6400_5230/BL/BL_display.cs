@@ -55,8 +55,8 @@ namespace BlApi
             }
             if (!exist)
                 new BLException("The quadocopter not exist.");
-            IEnumerable<IDAL.DO.Package> p_list = dal.ListOfPackages();
-            foreach (IDAL.DO.Package p in p_list)
+            IEnumerable<DO.Package> p_list = dal.ListOfPackages();
+            foreach (DO.Package p in p_list)
             {
                 if (p.idQuadocopter == id)
                 {
@@ -132,8 +132,8 @@ namespace BlApi
         {
             List<BaseStationToList> bs_l = new List<BaseStationToList>();
 
-            IEnumerable<IDAL.DO.BaseStation> bs_list = dal.ListOfStations();
-            foreach (IDAL.DO.BaseStation bs in bs_list)
+            IEnumerable<DO.BaseStation> bs_list = dal.ListOfStations();
+            foreach (DO.BaseStation bs in bs_list)
             {
                 BaseStationToList temp = new BaseStationToList();
                 temp.ID = bs.IDnumber;
@@ -151,8 +151,8 @@ namespace BlApi
         {
             List<ClientToList> new_l = new List<ClientToList>();
 
-            IEnumerable<IDAL.DO.Client> old_list = dal.ListOfClients();
-            foreach (IDAL.DO.Client c in old_list)
+            IEnumerable<DO.Client> old_list = dal.ListOfClients();
+            foreach (DO.Client c in old_list)
             {
                 ClientToList temp = new ClientToList();
                 temp.ID = c.ID;

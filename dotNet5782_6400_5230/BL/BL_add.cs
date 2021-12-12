@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using DalObject;
 using BO;
 using System.Device.Location;
+using DAL;
 
 namespace BlApi
 {
     public partial class BL: IBL
     {
-        IDAL.IDAL dal;
-        public BL() { 
-            dal = new DalObject.DalObject();
+        static DalApi.IDAL dal;
+        public BL() {
+            var factory = new DAL.DalFactory();
+            dal = DalFactory;
             help_list=dal.ListOfQ();
             q_list = cover_to_our_list(help_list);
 
