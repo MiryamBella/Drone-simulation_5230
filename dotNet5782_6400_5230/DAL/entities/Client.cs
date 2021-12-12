@@ -1,9 +1,6 @@
 ﻿using System;
 
-namespace IDAL
-{
-
-    namespace DO
+namespace DO
     {
         public struct Client : ICloneable
         {
@@ -27,4 +24,4 @@ namespace IDAL
             }
         }
     }
-}
+

@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace IDAL
-{
-    namespace DO
+namespace DO
     {
         public class Location
         {
@@ -12,4 +10,4 @@ namespace IDAL
             public double longitude { get; set; }
         }
     }
-}
+
