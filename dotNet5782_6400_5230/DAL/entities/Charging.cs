@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace IDAL
-{
-    namespace DO
+namespace DO
     {
         public struct Charging
         {
@@ -17,4 +15,4 @@ namespace IDAL
             }
         }
     }
-}
+

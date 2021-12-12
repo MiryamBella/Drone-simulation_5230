@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using IDAL.DO;
+using DO;
 using System.Device.Location;
 
-namespace IDAL
+namespace DalApi
 {
     public interface IDAL
     {
