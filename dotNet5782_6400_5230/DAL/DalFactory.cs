@@ -5,7 +5,7 @@ using DalApi;
 
 namespace DAL
 {
-    public class DalFactory
+    public static class DalFactory
     {
         public static IDAL GetDal(string str)
         {
