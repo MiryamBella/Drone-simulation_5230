@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using DalObject;
 using BO;
 using System.Device.Location;
+using DAL;
 
 namespace BlApi
 {
     public partial class BL: IBL
     {
-        IDAL.IDAL dal;
-        public BL() { 
-            dal = new DalObject.DalObject();
-            help_list=dal.ListOfQ();
+        static DalApi.IDAL dal;
+        public BL() {
+            dal = DAL.DalFactory.GetDal("string");
+            //We need list of all thw quadopters so we get the list as stract and then we cover it to list of class
+            help_list = dal.ListOfQ();
             q_list = cover_to_our_list(help_list);
 
         }
