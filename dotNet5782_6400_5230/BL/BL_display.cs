@@ -163,8 +163,8 @@ namespace BlApi
                 temp.getAndNotDeliverP=0;
                 temp.getAndDeliverP = 0;
 
-                IEnumerable<IDAL.DO.Package> p_list = dal.ListOfPackages();
-                foreach(IDAL.DO.Package p in p_list)
+                IEnumerable<DO.Package> p_list = dal.ListOfPackages();
+                foreach(DO.Package p in p_list)
                 {
                     if (p.sender == c.ID)
                     {
@@ -193,8 +193,8 @@ namespace BlApi
         {
             List<QuadocopterToList> q_l = new List<QuadocopterToList>();
 
-            IEnumerable<IDAL.DO.Quadocopter> stractQ_list = dal.ListOfQ();
-            foreach (IDAL.DO.Quadocopter q in stractQ_list)
+            IEnumerable<DO.Quadocopter> stractQ_list = dal.ListOfQ();
+            foreach (DO.Quadocopter q in stractQ_list)
             {
                 QuadocopterToList temp = new QuadocopterToList();
                 temp = cover_list(q);
@@ -209,8 +209,8 @@ namespace BlApi
         {
             List<QuadocopterToList> q_l = new List<QuadocopterToList>();
 
-            IEnumerable<IDAL.DO.Quadocopter> stractQ_list = dal.ListOfQ_of_weigh(w);
-            foreach (IDAL.DO.Quadocopter q in stractQ_list)
+            IEnumerable<DO.Quadocopter> stractQ_list = dal.ListOfQ_of_weigh(w);
+            foreach (DO.Quadocopter q in stractQ_list)
             {
                 QuadocopterToList temp = new QuadocopterToList();
                 temp = cover_list(q);
@@ -225,8 +225,8 @@ namespace BlApi
         {
             List<PackageToList> p_l = new List<PackageToList>();
 
-            IEnumerable<IDAL.DO.Package> stractP_list = dal.ListOfPackages();
-            foreach (IDAL.DO.Package p in stractP_list)
+            IEnumerable<DO.Package> stractP_list = dal.ListOfPackages();
+            foreach (DO.Package p in stractP_list)
             {
                 Package temp = new Package();
                 temp = cover(p);
@@ -248,8 +248,8 @@ namespace BlApi
         {
             List<PackageToList> p_l = new List<PackageToList>();
 
-            IEnumerable<IDAL.DO.Package> stractP_list = dal.ListOfPackages();
-            foreach (IDAL.DO.Package p in stractP_list)
+            IEnumerable<DO.Package> stractP_list = dal.ListOfPackages();
+            foreach (DO.Package p in stractP_list)
             {
                 if (p.idQuadocopter == 0)
                 {
@@ -276,8 +276,8 @@ namespace BlApi
         {
             List<BaseStationToList> bs_l = new List<BaseStationToList>();
 
-            IEnumerable<IDAL.DO.BaseStation> bs_list = dal.ListOfStationsForCharging();
-            foreach (IDAL.DO.BaseStation bs in bs_list)
+            IEnumerable<DO.BaseStation> bs_list = dal.ListOfStationsForCharging();
+            foreach (DO.BaseStation bs in bs_list)
             {
                 if (bs.freechargingPositions != 0)
                 {

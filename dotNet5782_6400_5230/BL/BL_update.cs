@@ -72,8 +72,8 @@ namespace BlApi
             if (!flag) throw new BLException("Id not found.");
             if (q.mode != statusOfQ.available) throw new BLException("the quadocopter is not available");
             //check if it have enough battery to go to base station
-            IDAL.DO.Location dalL = new IDAL.DO.Location() { longitude = q.thisLocation.longitude, latitude = q.thisLocation.latitude };
-            IDAL.DO.BaseStation b = dal.searchCloseEmptyStation(dalL);
+            DO.Location dalL = new DO.Location() { longitude = q.thisLocation.longitude, latitude = q.thisLocation.latitude };
+            DO.BaseStation b = dal.searchCloseEmptyStation(dalL);
             double distance =GetDistance(coverLtoL(dalL), new location() { longitude = b.longitude, latitude = b.latitude });
             int minBattery = (int)(distance * dal.askForElectric()[0]);
             if (q.battery < minBattery) Console.WriteLine("there is no enough battery to");
@@ -132,26 +132,26 @@ namespace BlApi
                 }
             if (!flag) throw new BLException("this ID dont exist");
 
-            var packages = dal.availablePtoQ(q.ID, new IDAL.DO.Location() {longitude =  q.thisLocation.longitude, latitude = q.thisLocation.latitude });//list of package that it can take according to this battery
+            var packages = dal.availablePtoQ(q.ID, new DO.Location() {longitude =  q.thisLocation.longitude, latitude = q.thisLocation.latitude });//list of package that it can take according to this battery
             if (packages.Count == 0) throw new BLException("there is no package to assign");
             var package = packages.OrderBy(s => (int)s.priority).ThenBy(s => s.weight);
-            IDAL.DO.Priorities pr = new IDAL.DO.Priorities();
+            DO.Priorities pr = new DO.Priorities();
             foreach (var a in package) { pr = a.priority; break; };
-            var packagesInHighPri = from IDAL.DO.Package p in package //list of the packages with the highest priority
+            var packagesInHighPri = from DO.Package p in package //list of the packages with the highest priority
                                     where p.priority == pr
                                     select p;
-            var packageInHighWeight = from IDAL.DO.Package p in package
+            var packageInHighWeight = from DO.Package p in package
                                       where (int)p.weight <= (int)q.weight
                                       select p;
             int w = 0;
             foreach (var a in packageInHighWeight) { w = (int)a.weight; break; }
-            packageInHighWeight = from IDAL.DO.Package p in package
+            packageInHighWeight = from DO.Package p in package
                                   where (int)p.weight == w
                                   select p;
             bool isfirst = true;
             double distance = 0;
-            IDAL.DO.Package thePackage = new IDAL.DO.Package();
-            foreach (IDAL.DO.Package p in packageInHighWeight)
+            DO.Package thePackage = new DO.Package();
+            foreach (DO.Package p in packageInHighWeight)
             {
                 double d = GetDistance(q.thisLocation, coverLtoL(dal.searchLocationOfclient(p.sender)));
                 if (isfirst) { distance = d; thePackage = p; }
@@ -177,10 +177,10 @@ namespace BlApi
                 };
             if (!flag) throw new BLException("this ID not exist");
             if (q.mode != statusOfQ.delivery) throw new BLException("this qudocopter dont associated to a package");
-            IDAL.DO.Package? p = dal.searchPinQ(qID);
+            DO.Package? p = dal.searchPinQ(qID);
             if (p.Value.time_ColctedFromSender.Value.Year != 0001) throw new BLException("the package was collocted already");
             //update the data of the qudocopter
-            IDAL.DO.Location senderL = dal.searchLocationOfclient(p.Value.sender);//update the battery
+            DO.Location senderL = dal.searchLocationOfclient(p.Value.sender);//update the battery
             double distance = GetDistance(q.thisLocation, new location() { longitude = senderL.longitude, latitude = senderL.latitude, decSix = new DmsLocation(), toBaseSix = new BaseSixtin() } );
             q.battery -= (int)(distance * dal.askForElectric()[(int)p.Value.weight]);
             q.thisLocation.longitude = senderL.longitude;//update the location 
@@ -206,10 +206,10 @@ namespace BlApi
                 };
             if (!flag) throw new BLException("this ID not exist");
             if (q.mode != statusOfQ.delivery) throw new BLException("this qudocopter dont associated to a package");
-            IDAL.DO.Package? p = dal.searchPinQ(qID);
+            DO.Package? p = dal.searchPinQ(qID);
             if (p.Value.time_ComeToColcter.Value.Year != 0001) throw new BLException("the package was collocted already");
             //update the data of the qudocopter
-            IDAL.DO.Location receiverL = dal.searchLocationOfclient(p.Value.receiver);//update the battery
+            DO.Location receiverL = dal.searchLocationOfclient(p.Value.receiver);//update the battery
             double distance = GetDistance(q.thisLocation, new location() { longitude = receiverL.longitude, latitude = receiverL.latitude });
             q.battery -= (int)(distance * dal.askForElectric()[(int)p.Value.weight]);
             q.thisLocation.longitude = receiverL.longitude;//update the location 

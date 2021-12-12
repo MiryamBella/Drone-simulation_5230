@@ -11,9 +11,9 @@ namespace BlApi
     {
         static DalApi.IDAL dal;
         public BL() {
-            var factory = new DAL.DalFactory();
-            dal = DalFactory;
-            help_list=dal.ListOfQ();
+            dal = DAL.DalFactory.GetDal("string");
+            //We need list of all thw quadopters so we get the list as stract and then we cover it to list of class
+            help_list = dal.ListOfQ();
             q_list = cover_to_our_list(help_list);
 
         }

@@ -26,7 +26,7 @@ namespace PL
             InitializeComponent();
             try
             {
-                bl = new BL();
+                bl = BL.BlFactory.GetBL();
             }
             catch (BO.BLException ex)
             {
