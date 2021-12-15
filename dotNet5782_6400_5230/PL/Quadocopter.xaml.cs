@@ -137,6 +137,7 @@ namespace PL
         {
             try
             {
+                
                 bl.AddQuadocopter(newQ.ID, newQ.moodle, (int)newQ.weight, int.Parse(enterDelivery.Text));
                 ListOfQ l = new ListOfQ(bl);
                 this.Close();

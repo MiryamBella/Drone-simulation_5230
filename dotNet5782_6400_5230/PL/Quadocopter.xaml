@@ -76,8 +76,8 @@
                    Text="TextBlock" TextWrapping="Wrap" 
                    Height="25" Width="120"  />
         <TextBlock x:Name="checkBattery" HorizontalAlignment="Center" 
-                   Grid.Row="4" Grid.Column="2" Text="enter number between\n 0 and 100 (%)" 
-                   TextWrapping="Wrap" Height="25" Width="120"
+                   Grid.Row="4" Grid.Column="2" Text="enter number between 0 and 100 (%)" 
+                   TextWrapping="Wrap" Height="35" Width="120"
                    Visibility="Hidden"/>
         <TextBlock x:Name="checkBattery2" HorizontalAlignment="Center" 
                    Grid.Row="4" Grid.Column="2" Text="invalid input" 
