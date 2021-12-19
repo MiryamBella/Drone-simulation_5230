@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using DO;
 
-namespace DalObject
+namespace Dal
 {
     internal class DataSource // evrething is new in this class.
     {
@@ -40,7 +40,7 @@ namespace DalObject
             Random r = new Random();
 
             /*base station*/
-            BaseStation b=new BaseStation();//1
+            BaseStation b = new BaseStation();//1
             b.IDnumber = 100;
             b.name = "Jerusalem";
             int x = r.Next(1000);
@@ -114,17 +114,17 @@ namespace DalObject
 
 
             /*client*/
-            for (int i =0; i < 10; i++)
+            for (int i = 0; i < 10; i++)
             {
                 Client c = new Client();
-                c.ID = (int)(i*100000000);
+                c.ID = (int)(i * 100000000);
                 c.name = getRandomName(i);
                 c.phoneNumber = r.Next();
                 c.latitude = r.Next();
                 c.longitude = r.Next();
                 cli.Add(c);
             }
-            
+
 
             /*Packagh*/
             //loop for reset all 10 packaghs.
@@ -137,14 +137,14 @@ namespace DalObject
                 p.receiver = r.Next(100000000, 999999999);
                 p.weight = (WeighCategories)r.Next(0, 3);
                 p.priority = (Priorities)r.Next(0, 3);
-                p.idQuadocopter = r.Next(100,104);
+                p.idQuadocopter = r.Next(100, 104);
                 p.time_Belong_quadocopter = null;
-                p.time_ColctedFromSender=null;
-                p.time_ComeToColcter =null;
+                p.time_ColctedFromSender = null;
+                p.time_ComeToColcter = null;
                 p.time_Create = DateTime.Now;
-                
+
                 //the 3 package with difrent privorities and WeighCategories.
-                if(i==0)
+                if (i == 0)
                 {
                     p.weight = WeighCategories.hevy;
                     p.priority = Priorities.fast;
@@ -171,7 +171,7 @@ namespace DalObject
 
 
         //-------------------funcs that exsit for us-----------------------------------------------
-        
+
         static string getRandomName(int num)
         {
             num = num % 10;
@@ -179,7 +179,7 @@ namespace DalObject
             {
                 case 0:
                     return "Moshe";
-                case 1: 
+                case 1:
                     return "Miryam";
                 case 2:
                     return "Rachel";
@@ -187,7 +187,7 @@ namespace DalObject
                     return "David";
                 case 4:
                     return "Shara";
-                case 5: 
+                case 5:
                     return "Rebeka";
                 case 6:
                     return "Lea";

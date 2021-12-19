@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using System.Text;
 using DO;
-using System.Device.Location;
 using DAL.exceptions.DO;
 using DalApi;
 
 
-namespace DalObject 
+namespace Dal
 {
-    internal class DalObject : DalApi.IDAL
+    sealed class DalObject : DalApi.IDAL
+
     {
+        static readonly IDAL instance = new DalObject();
+        public static IDAL Instance { get => instance; }
         ///When this class is built it first initializes the lists with the initial values defined in Initialize
-        public DalObject() { DataSource.Initialize(); }
+        DalObject() { DataSource.Initialize(); }
+        
         #region add funcs
 
         public void AddBaseStation(int id, string name, int chargingPositions, double longitude, double latitude) ///adding new base station
@@ -23,7 +26,7 @@ namespace DalObject
             station.freechargingPositions = chargingPositions;
             station.longitude = longitude;
             station.latitude = latitude;
-            
+
             //make the location in base 60.
             station.toBaseSix = new BaseSixtin();
             station.decSix = new DmsLocation();
@@ -56,7 +59,7 @@ namespace DalObject
         /// adding new package.
         /// </summary>
         /// <returns>The pacjagh ID we add.</returns>
-        public void AddPackage(int sender, int colecter, int weight, int priority) 
+        public void AddPackage(int sender, int colecter, int weight, int priority)
         {
             Package p = new Package();
             p.sender = sender;
@@ -103,7 +106,7 @@ namespace DalObject
                 newQ.moodle = modle;
                 DataSource.qpter.Add(newQ);
             }
-            else throw new DALException("ID not exist");        
+            else throw new DALException("ID not exist");
         }
         #endregion;
         #region updateBaseStation;
@@ -155,7 +158,7 @@ namespace DalObject
         /// <summary>
         /// update package to be belong to a quadocopter.
         /// </summary>
-        public void AssignPtoQ(Package P, int id_q) 
+        public void AssignPtoQ(Package P, int id_q)
         {
             for (int i = 0; i < DataSource.packagh.Count; i++)
                 if (DataSource.packagh[i].id == P.id)
@@ -169,7 +172,7 @@ namespace DalObject
         /// <summary>
         /// update package to be collected by quadocopter.
         /// </summary>
-        public void CollectPbyQ(int pID) 
+        public void CollectPbyQ(int pID)
         {
             for (int i = 0; i < DataSource.packagh.Count; i++)
                 if (DataSource.packagh[i].id == pID)
@@ -210,24 +213,24 @@ namespace DalObject
                     break;
                 }
         }
-           /* Charging c = new Charging();
-            foreach(BaseStation b in DataSource.bstion)
-            {
-                if (b.IDnumber == bID) ///find the base station
-                { 
-                    foreach(Quadocopter q in DataSource.qpter)
-                    {
-                        if (q.id == qID)///find the quadocopter.
-                        {
-                            SendQtoCharging_doingThat(b, q, c);
-                            return;
-                        }
-                    }
-                    throw new DALException("The ID of the quadocopter not exist.");
-                }
-            }
-            throw new DALException("The ID of the base station not exist.");
-        }*/
+        /* Charging c = new Charging();
+         foreach(BaseStation b in DataSource.bstion)
+         {
+             if (b.IDnumber == bID) ///find the base station
+             { 
+                 foreach(Quadocopter q in DataSource.qpter)
+                 {
+                     if (q.id == qID)///find the quadocopter.
+                     {
+                         SendQtoCharging_doingThat(b, q, c);
+                         return;
+                     }
+                 }
+                 throw new DALException("The ID of the quadocopter not exist.");
+             }
+         }
+         throw new DALException("The ID of the base station not exist.");
+     }*/
         /// <summary>
         /// release te quadocopter frp charging.
         /// </summary>
@@ -314,7 +317,7 @@ namespace DalObject
         public IEnumerable<BaseStation> ListOfStations() //return list of all the stations
         {
             List<BaseStation> l = new List<BaseStation>();
-            foreach (BaseStation b in  DataSource.bstion) // I run of all the stations and print them
+            foreach (BaseStation b in DataSource.bstion) // I run of all the stations and print them
                 l.Add((BaseStation)b.Clone());
             return l;
         }
@@ -396,14 +399,14 @@ namespace DalObject
         {
             List<BaseStation> lbs = new List<BaseStation>();
             // I run of all the stations and print them if their changingPosition is not 0
-            foreach (BaseStation b in DataSource.bstion) 
+            foreach (BaseStation b in DataSource.bstion)
                 if (b.freechargingPositions != 0)
                     lbs.Add(b);
             return lbs;
         }
         public double[] askForElectric()//the quadocopter ask.
         {
-            double[] arry =new double[5];
+            double[] arry = new double[5];
             arry[0] = DataSource.Config.Available;
             arry[1] = DataSource.Config.easy;
             arry[2] = DataSource.Config.hevy;
@@ -453,7 +456,7 @@ namespace DalObject
             Random r = new Random();
             List<int> sendersID = new List<int>();
             foreach (Package p in DataSource.packagh)
-                if ((p.time_ComeToColcter!=null) && (p.time_ComeToColcter.Value.Year != 0001))
+                if ((p.time_ComeToColcter != null) && (p.time_ComeToColcter.Value.Year != 0001))
                     if (sendersID.Contains(p.sender) == false)
                         sendersID.Add(p.sender);
             List<Location> sendersL = new List<Location>();
@@ -469,7 +472,7 @@ namespace DalObject
                 return sendersL[x];
             }
             Client dcli = DataSource.cli[0];
-            return new Location() {latitude = dcli.latitude, longitude = dcli.longitude };
+            return new Location() { latitude = dcli.latitude, longitude = dcli.longitude };
         }
         /// <summary>
         /// accept a location and return the closest base station
@@ -478,14 +481,14 @@ namespace DalObject
         {
             BaseStation bs = new BaseStation();
             double minDistance = 100000000, help = 0;
-            foreach (BaseStation b in DataSource.bstion) 
+            foreach (BaseStation b in DataSource.bstion)
             {
                 help = GetDistance(l, new Location() { latitude = b.latitude, longitude = b.longitude });
                 if (help < minDistance)
                 {
                     minDistance = help;
                     bs = b;
-                } 
+                }
             }
             return bs;
         }
@@ -507,11 +510,7 @@ namespace DalObject
             }
             return bs;
         }
-        //get a location and return it as geocoordinate
-        public GeoCoordinate coverLtoG(Location l)
-        {
-            return new GeoCoordinate(l.longitude, l.latitude);
-        }
+       
         /// <summary>
         /// accept a location of qudocopoter and its battery and return list of package that the q can take
         /// </summary>
@@ -524,7 +523,7 @@ namespace DalObject
                 Location receiverL = searchLocationOfclient(p.receiver);
                 BaseStation stationL = searchCloseStation(receiverL);
                 Location stationLocation = new Location() { longitude = stationL.longitude, latitude = stationL.latitude };
-                double distance = GetDistance(loc, senderLocation) +GetDistance(senderLocation, receiverL) + GetDistance(receiverL, stationLocation);
+                double distance = GetDistance(loc, senderLocation) + GetDistance(senderLocation, receiverL) + GetDistance(receiverL, stationLocation);
                 int minBattery = (int)(distance * askForElectric()[(int)p.weight]);
                 if (battery >= minBattery)
                     packages.Add(p);

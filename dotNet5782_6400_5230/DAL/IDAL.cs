@@ -54,7 +54,7 @@ namespace DalApi
         /// return list of all the stations that have empty changing positions.
         public IEnumerable<BaseStation> ListOfStationsForCharging();
         ///the quadocopter ask.
-        public List<Charging> GetChargings() { return DalObject.DataSource.charge; }
+        public List<Charging> GetChargings() { return Dal.DataSource.charge; }
         public double[] askForElectric();
         /// <summary>
         ///accept id of qudocopter and return package that in it or null 
@@ -80,8 +80,8 @@ namespace DalApi
         /// accept a location and return the closest base station with a free charge position
         /// </summary>
         public BaseStation searchCloseEmptyStation(Location l);
-        //get a location and return it as geocoordinate
-        public GeoCoordinate coverLtoG(Location l);
+        ////get a location and return it as geocoordinate
+        //public GeoCoordinate coverLtoG(Location l);
         /// <summary>
         /// accept a location of qudocopoter and its battery and return list of package that the q can take
         /// </summary>

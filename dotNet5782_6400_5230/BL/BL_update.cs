@@ -72,10 +72,11 @@ namespace BlApi
             if (!flag) throw new BLException("Id not found.");
             if (q.mode != statusOfQ.available) throw new BLException("the quadocopter is not available");
             //check if it have enough battery to go to base station
+            //dalL= location in type dal
             DO.Location dalL = new DO.Location() { longitude = q.thisLocation.longitude, latitude = q.thisLocation.latitude };
-            DO.BaseStation b = dal.searchCloseEmptyStation(dalL);
+            DO.BaseStation b = dal.searchCloseEmptyStation(dalL);//b is the closest base station to out location
             double distance =GetDistance(coverLtoL(dalL), new location() { longitude = b.longitude, latitude = b.latitude });
-            int minBattery = (int)(distance * dal.askForElectric()[0]);
+            int minBattery = (int)(distance * dal.askForElectric()[0]);// we allredy chek that q is avilable so we put index 0
             if (q.battery < minBattery) Console.WriteLine("there is no enough battery to");
 
             dal.SendQtoCharging(b.IDnumber, q.ID);//update the data at the dal
