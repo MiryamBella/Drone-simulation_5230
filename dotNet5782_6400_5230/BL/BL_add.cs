@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Dal;
+//using Dal;
 using BO;
 using System.Device.Location;
 using DAL;

@@ -9,12 +9,11 @@ using DalApi;
 namespace Dal
 {
     sealed class DalObject : DalApi.IDAL
-
     {
         static readonly IDAL instance = new DalObject();
         public static IDAL Instance { get => instance; }
         ///When this class is built it first initializes the lists with the initial values defined in Initialize
-        DalObject() { DataSource.Initialize(); }
+        public DalObject() { DataSource.Initialize(); }
         
         #region add funcs
 

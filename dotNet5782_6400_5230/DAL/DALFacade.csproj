@@ -10,4 +10,10 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="dal-config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
