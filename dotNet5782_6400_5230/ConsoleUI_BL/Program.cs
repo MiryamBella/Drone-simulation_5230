@@ -1,18 +1,16 @@
 ﻿using System;
 
-using IBL;
-
 namespace ConsoleUI_BL
 {
     class Program
     {
         static Program program;
-        BL bl;
+        BlApi.BL bl;
 
         static void Main(string[] args)
         {
             program = new Program();//start the pogram, so i can use the methods.
-            program.bl = new BL();//start the BL.
+            program.bl = new BlApi.BL();//start the BL.
 
             Console.WriteLine("Hello user!");
             string welcoming;
@@ -53,7 +51,7 @@ namespace ConsoleUI_BL
                             break;
                     }
                 }
-                catch (IBL.BO.BLException ex)
+                catch (BO.BLException ex)
                 {
                     Console.WriteLine("Error! " + ex.Message);
                 }

@@ -54,7 +54,7 @@ namespace DalApi
         /// return list of all the stations that have empty changing positions.
         public IEnumerable<BaseStation> ListOfStationsForCharging();
         ///the quadocopter ask.
-        public List<Charging> GetChargings() { return DalObject.DataSource.charge; }
+        public List<Charging> GetChargings();
         public double[] askForElectric();
         /// <summary>
         ///accept id of qudocopter and return package that in it or null 

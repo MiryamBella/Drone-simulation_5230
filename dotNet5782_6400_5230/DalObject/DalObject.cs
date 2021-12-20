@@ -255,6 +255,10 @@ namespace Dal
                     break;
                 }
         }
+        public List<Charging> GetChargings()
+        {
+            return DataSource.charge;
+        }
         /// <summary>
         /// print datails of statin
         /// </summary>
