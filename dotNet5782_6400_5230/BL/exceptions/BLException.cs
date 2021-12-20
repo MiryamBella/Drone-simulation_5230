@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 
 
-    namespace BO
+namespace BO
+{
+    public class BLException : Exception
     {
-        public class BLException : Exception
+        public BLException(string message) : base(message)
         {
-            public BLException(string message) : base(message)
-            {
-            }
         }
     }
+}
 

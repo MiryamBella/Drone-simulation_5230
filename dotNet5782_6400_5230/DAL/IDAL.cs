@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using DO;
-using System.Device.Location;
+//using System.Device.Location;
 
 namespace DalApi
 {
@@ -54,7 +54,7 @@ namespace DalApi
         /// return list of all the stations that have empty changing positions.
         public IEnumerable<BaseStation> ListOfStationsForCharging();
         ///the quadocopter ask.
-        public List<Charging> GetChargings() { return Dal.DataSource.charge; }
+        public List<Charging> GetChargings() { return DalObject.DataSource.charge; }
         public double[] askForElectric();
         /// <summary>
         ///accept id of qudocopter and return package that in it or null 
