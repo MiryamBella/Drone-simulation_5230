@@ -24,7 +24,9 @@
             <ColumnDefinition Width="*"/>
 
         </Grid.ColumnDefinitions>
-        
+        <TextBlock Text="QUADOCOPTER" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
+                 FontSize="22" FontWeight="Bold" TextDecorations="Underline" TextAlignment="Center"
+                 />
         <!--any time you see the word delyvery, it is mean the id of the base station-->
         <TextBlock x:Name="ID" HorizontalAlignment="Right" 
                    Grid.Row="1"  Grid.Column="0" Text="ID:" TextWrapping="Wrap" 
@@ -83,21 +85,34 @@
                    Grid.Row="4" Grid.Column="2" Text="invalid input" 
                    TextWrapping="Wrap" Height="25" Width="120"
                    Visibility="Hidden"/>
-        <TextBlock x:Name="delivery" HorizontalAlignment="Right" 
+        <TextBlock x:Name="ID_bs_text" HorizontalAlignment="Right" 
                    Grid.Row="1"  Grid.Column="3" Text="base station ID:" TextWrapping="Wrap" 
-                   VerticalAlignment="Center" Height="25" Width="90"/>
-        <TextBox x:Name="enterDelivery" TextWrapping="Wrap" 
-                 Grid.Row="1" Grid.Column="4" MaxLength="9"
-                 TextChanged ="writedDelivery" HorizontalAlignment="Center"
-                 Height="25" Width="120"/>
-        <TextBlock x:Name="showDelivery" HorizontalAlignment="Center" 
+                   VerticalAlignment="Center" Height="25" Width="90"
+                  />
+        <ComboBox x:Name="ID_baseStation" 
+                 Grid.Row="1" Grid.Column="4"
+                 HorizontalAlignment="Center"
+                 Height="25" Width="120"
+                  />
+        <!--<TextBlock x:Name="ID_baseStation_show" 
+                 Grid.Row="1" Grid.Column="4"
+                 HorizontalAlignment="Center"
+                 Height="25" Width="120"
+                  />-->
+        <TextBlock x:Name="showID_baseStation" HorizontalAlignment="Center" 
                    Grid.Row="1" Grid.Column="4" 
                    Text="TextBlock" TextWrapping="Wrap" 
-                   Height="25" Width="120"  />
+                   Height="25" Width="120" Visibility="Hidden"  
+                   />
+        <!--
+        <TextBox x:Name="enterDelivery"
+                  TextWrapping="Wrap" 
+        TextChanged ="writedDelivery" 
+        />
         <TextBlock x:Name="checkDelivery" HorizontalAlignment="Center" 
                    Grid.Row="1" Grid.Column="5" Text="invalid input" 
                    TextWrapping="Wrap" Height="25" Width="120"
-                   Visibility="Hidden"/>
+                   Visibility="Hidden"/>-->
         <TextBlock x:Name="state" HorizontalAlignment="Right" 
                    Text="state:" TextWrapping="Wrap" VerticalAlignment="Center" 
                    Height="25" Width="70" Grid.Row="2" Grid.Column="3"/>
@@ -144,9 +159,14 @@
                    Grid.Row="4" Grid.Column="5" Text="invalid input" 
                    TextWrapping="Wrap" Height="25" Width="120"
                    Visibility="Hidden"/>
-        <Button Grid.Column="2" Name="addQ"
-                HorizontalAlignment="Left" Margin="29,0,0,0" Grid.Row="5" 
+        <Button x:Name="addQ" Click="adding"
+                HorizontalAlignment="Left" Margin="29,0,0,0" Grid.Row="5" Grid.Column="2" 
                 VerticalAlignment="Center" Height="34" Width="171" Grid.ColumnSpan="2" 
-                Content="add the qudocopter" Click="adding"/>
+                Content="add the qudocopter" />
+        <Button x:Name="showPackage" Click="showPackage_Click"
+                HorizontalAlignment="Left" Margin="29,0,0,0" Grid.Row="5" Grid.Column="2"
+                VerticalAlignment="Center" Height="34" Width="171" Grid.ColumnSpan="2" 
+                Content="show the package in q" Visibility="Hidden"
+                />
     </Grid>
 </Window>

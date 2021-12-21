@@ -30,10 +30,19 @@ namespace PL
             showID.Visibility = Visibility.Hidden;
             showWeight.Visibility = Visibility.Hidden;
             showBattery.Visibility = Visibility.Hidden;
-            showDelivery.Visibility = Visibility.Hidden;
+            showID_baseStation.Visibility = Visibility.Hidden;
             showState.Visibility = Visibility.Hidden;
             showLongitude.Visibility = Visibility.Hidden;
             showLatitude.Visibility = Visibility.Hidden;
+            showPackage.Visibility = Visibility.Hidden;//show the button
+
+            ///enter the ID of the base station in our data.
+            foreach(var q in bl.ListOfBaseStations())
+            {
+                ComboBoxItem newItem = new ComboBoxItem();
+                newItem.Content = q.ID;
+                ID_baseStation.Items.Add(newItem);
+            }
         }
         public Quadocopter(BlApi.IBL ibl, BO.QuadocopterToList q)//for view of quadocopter
         {
@@ -43,11 +52,13 @@ namespace PL
             enterID.Visibility = Visibility.Hidden;
             enterWeight.Visibility = Visibility.Hidden;
             enterBattery.Visibility = Visibility.Hidden;
-            enterDelivery.Visibility = Visibility.Hidden;
+            ID_baseStation.Visibility = Visibility.Hidden;
             enterState.Visibility = Visibility.Hidden;
             enterLatitude.Visibility = Visibility.Hidden;
             enterLongitude.Visibility = Visibility.Hidden;
-            addQ.IsEnabled = false;
+            addQ.Visibility=Visibility.Hidden;
+            if(q.packageNumber>0)
+                showPackage.Visibility = Visibility.Visible;
 
             showID.Text = q.ID.ToString();//data adjusment to this qudocopters data
             if (q.weight == BO.WeighCategories.easy) showWeight.Text = "easy";
@@ -55,7 +66,7 @@ namespace PL
             else showWeight.Text = "heavy";
             enterModel.Text = q.moodle;
             showBattery.Text = q.battery.ToString();
-            showDelivery.Text = "0";
+            showID_baseStation.Text = ID_baseStation.Text;
             if (q.mode == BO.statusOfQ.available) showState.Text = "available";
             else if (q.mode == BO.statusOfQ.maintenance) showState.Text = "maintence";
             else showState.Text = "delivery";
@@ -96,16 +107,16 @@ namespace PL
             }
             else checkBattery2.Visibility = Visibility.Visible;
         }
-        private void writedDelivery(object sender, RoutedEventArgs e)
-        {
-            int d;
-            if (int.TryParse(enterDelivery.Text, out d))
-            {
-                newQ.thisPackage.ID = d;
-                checkDelivery.Visibility = Visibility.Hidden;
-            }
-            else checkDelivery.Visibility = Visibility.Visible;
-        }
+        //private void writedDelivery(object sender, RoutedEventArgs e)
+        //{
+        //    int d;
+        //    if (int.TryParse(enterDelivery.Text, out d))
+        //    {
+        //        newQ.thisPackage.ID = d;
+        //        checkDelivery.Visibility = Visibility.Hidden;
+        //    }
+        //    else checkDelivery.Visibility = Visibility.Visible;
+        //}
         private void enterState_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (enterWeight.SelectedItem == available) newQ.mode = BO.statusOfQ.available;
@@ -137,8 +148,7 @@ namespace PL
         {
             try
             {
-                
-                bl.AddQuadocopter(newQ.ID, newQ.moodle, (int)newQ.weight, int.Parse(enterDelivery.Text));
+                bl.AddQuadocopter(newQ.ID, newQ.moodle, (int)newQ.weight, int.Parse(ID_baseStation.Text));
                 ListOfQ l = new ListOfQ(bl);
                 this.Close();
                 l.Show();
@@ -149,5 +159,15 @@ namespace PL
             }
         }
 
+        private void showPackage_Click(object sender, RoutedEventArgs e)
+        {
+            BO.Quadocopter q = bl.QuDisplay(int.Parse(showID.Text));
+            if(q.thisPackage==null)
+            {
+                MessageBox.Show("The quadocopter don't trans any package.");
+                return;
+            }
+            MessageBox.Show(q.thisPackage.ToString());
+        }
     }
 }
