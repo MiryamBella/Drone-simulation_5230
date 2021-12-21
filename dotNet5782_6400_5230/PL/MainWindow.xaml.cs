@@ -34,7 +34,7 @@ namespace PL
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void listQ_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -46,5 +46,18 @@ namespace PL
                 MessageBox.Show("Error! " + ex.Message);
             }
         }
+        private void listBS_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ListOfBaseStation l = new ListOfBaseStation(bl);
+                l.Show();
+            }
+            catch (BO.BLException ex)
+            {
+                MessageBox.Show("Error! " + ex.Message);
+            }
+        }
+
     }
 }

@@ -75,6 +75,18 @@ namespace BlApi
 
             return new_bs;
         }
+
+        BaseStationToList cover(BaseStation bs)
+        {
+            BaseStationToList bsl = new BaseStationToList();
+
+            bsl.ID = bs.ID;
+            bsl.name = bs.name;
+            bsl.busyChargingPositions = bs.qudocopters.Count;
+            bsl.freeChargingPositions = bs.freeChargingPositions;
+
+            return bsl;
+        }
         #endregion
 
         #region cover client

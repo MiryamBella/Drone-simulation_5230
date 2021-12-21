@@ -28,7 +28,8 @@
                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" 
                    Margin="0,0,0,325" Grid.RowSpan="2"/>
         <TextBlock x:Name="a" Text="press the button to see our qoudocopters :)" Grid.Row="1" Grid.Column="0" Background="Aqua" Grid.ColumnSpan="3" Margin="0,0,533,0"/>
-        <Button Content="quadocopters" Background="GreenYellow" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Margin="64,109,0,0" VerticalAlignment="Top" Height="45" Width="155" Click="Button_Click" Grid.ColumnSpan="2"/>
+        <Button Content="quadocopters" Background="GreenYellow" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Margin="64,109,0,0" VerticalAlignment="Top" Height="45" Width="155" Click="listQ_Click" Grid.ColumnSpan="2"/>
+        <Button Content="base station" Background="GreenYellow" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="64,109,0,0" VerticalAlignment="Top" Height="45" Width="155" Click="listBS_Click" Grid.ColumnSpan="2"/>
 
         <Image Width="400" Height="280" Grid.Row="1" Grid.Column="2" Source="/images/Quadcopter_camera_drone_in_flight.jpg" Margin="66,22,67,23" />
     </Grid>

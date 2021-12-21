@@ -1,12 +1,54 @@
-﻿<Window x:Class="PL.BaseStation.ListOfBaseStation"
+﻿<Window x:Class="PL.ListOfBaseStation"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.BaseStation"
+        xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="ListOfBaseStation" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
+            VerticalAlignment="Stretch" Width="auto" Background="AntiqueWhite">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
+
+        <!--2 buttons: 1)close, 1) add new qua.-->
+        <Canvas>
+            <Button x:Name="CloseWindow" Content="X" Background="Red" Width="20" Height="20" Canvas.Left="2" Canvas.Top="2"                    Click="CloseWindow_Click"                    />
+            <Button Content="Add new Quadocopter" Background="BlueViolet" Width="150" Height="50"  Canvas.Bottom="8" Canvas.Right="55"
+                    Click="Button_addNewBS"
+                    />
+        </Canvas>
+        <!--button refresh-->
+        <Canvas Grid.Row="0" Grid.Column="2">
+            <Button Content="refreshe" Click="Button_refreshe"
+                     Canvas.Right="10" Canvas.Top="5" Width="50" Height="30" Background="Yellow" />
+        </Canvas>
+
+        <TextBlock Text="Quadocopter mode: Please select one before you refres" Grid.Row="0" Grid.Column="1"/>
+        <ComboBox x:Name="maxCharghing" Grid.Row="1" Grid.Column="1">
+            <ComboBoxItem Content="available"/>
+            <ComboBoxItem Content="maintenance" />
+            <ComboBoxItem Content="delivery" />
+            <ComboBoxItem Name="defult" Content="none" />
+        </ComboBox>        <TextBlock Text="Quadocopter whait:" Grid.Row="0" Grid.Column="2"/>        <ComboBox x:Name="Quadocopter_whait" Grid.Row="1" Grid.Column="2">
+            <ComboBoxItem Content="easy" />
+            <ComboBoxItem Content="middle" />
+            <ComboBoxItem Content="hevy" />
+            <ComboBoxItem Content="none" />
+        </ComboBox>
+
+        <WrapPanel Grid.Row="2" Grid.Column="0" Grid.RowSpan="2">
+            <!--<ListBox x:Name="q_list" SelectionMode="Single"  ItemsSource="{Binding}"/>-->
+            <ListView x:Name="bs_list" MouseDoubleClick="MouseDoubleClick_showBS"/>
+        </WrapPanel>
     </Grid>
 </Window>

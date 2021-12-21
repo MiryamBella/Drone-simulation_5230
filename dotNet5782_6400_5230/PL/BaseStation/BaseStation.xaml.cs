@@ -12,16 +12,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL.BaseStation
+namespace PL
 {
     /// <summary>
     /// Interaction logic for BaseStation.xaml
     /// </summary>
     public partial class BaseStation : Window
     {
-        public BaseStation()
+        BlApi.IBL bl;
+        public BaseStation(BlApi.IBL ibl)
         {
             InitializeComponent();
+            bl = ibl;
+        }
+        public BaseStation(BlApi.IBL ibl, BO.BaseStationToList q)//for view of base station
+        {
+
         }
     }
 }
