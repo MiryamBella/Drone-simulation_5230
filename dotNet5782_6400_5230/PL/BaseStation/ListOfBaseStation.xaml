@@ -32,9 +32,11 @@
             <Button Content="refreshe" Click="Button_refreshe"
                      Canvas.Right="10" Canvas.Top="5" Width="50" Height="30" Background="Yellow" />
         </Canvas>
-
-        <TextBlock Text="Quadocopter mode: Please select one before you refres" Grid.Row="0" Grid.Column="1"/>
-        <ComboBox x:Name="maxCharghing" Grid.Row="1" Grid.Column="1">
+        <WrapPanel Grid.Row="1" Grid.Column="0">
+            <TextBlock Text="Minimum charghing position:" />
+            <TextBox x:Name="numCharghingPosition" HorizontalAlignment ="Center" Height="25" Width="120"/>
+        </WrapPanel>
+        <!--<ComboBox x:Name="maxCharghing" Grid.Row="1" Grid.Column="1">
             <ComboBoxItem Content="available"/>
             <ComboBoxItem Content="maintenance" />
             <ComboBoxItem Content="delivery" />
@@ -44,7 +46,7 @@
             <ComboBoxItem Content="middle" />
             <ComboBoxItem Content="hevy" />
             <ComboBoxItem Content="none" />
-        </ComboBox>
+        </ComboBox>-->
 
         <WrapPanel Grid.Row="2" Grid.Column="0" Grid.RowSpan="2">
             <!--<ListBox x:Name="q_list" SelectionMode="Single"  ItemsSource="{Binding}"/>-->
