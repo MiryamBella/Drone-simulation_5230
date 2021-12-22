@@ -20,37 +20,45 @@
 
         </Grid.ColumnDefinitions>
 
-        <!--2 buttons: 1)close, 1) add new qua.-->
+        <TextBlock Text="LIST OF BASE STATION" FontWeight="Bold" FontSize="20"
+                   Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <!--button close-->
         <Canvas>
-            <Button x:Name="CloseWindow" Content="X" Background="Red" Width="20" Height="20" Canvas.Left="2" Canvas.Top="2"                    Click="CloseWindow_Click"                    />
-            <Button Content="Add new Quadocopter" Background="BlueViolet" Width="150" Height="50"  Canvas.Bottom="8" Canvas.Right="55"
-                    Click="Button_addNewBS"
-                    />
-        </Canvas>
+            <Button x:Name="CloseWindow" Content="X" Background="Red" Width="20" Height="20" Canvas.Left="2" Canvas.Top="2"                    Click="CloseWindow_Click"/>        </Canvas>
+        <Button Content="Add new base station" Background="BlueViolet" Width="150" Height="50"
+                Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Click="Button_addNewBS" />
+        
         <!--button refresh-->
         <Canvas Grid.Row="0" Grid.Column="2">
             <Button Content="refreshe" Click="Button_refreshe"
                      Canvas.Right="10" Canvas.Top="5" Width="50" Height="30" Background="Yellow" />
         </Canvas>
+        
+        <!--Minimum charghing position: select-->
         <WrapPanel Grid.Row="1" Grid.Column="0">
             <TextBlock Text="Minimum charghing position:" />
-            <TextBox x:Name="numCharghingPosition" HorizontalAlignment ="Center" Height="25" Width="120"/>
+            <TextBox x:Name="numCharghingPosition" Text="0" HorizontalAlignment ="Center" Height="25" Width="120" TextChanged="numCharghingPosition_TextChanged"/>
+            <TextBlock x:Name="msgMaxCharghingExist"/>
+            <TextBlock x:Name="msgMinCharghingExist"/>
+            <TextBlock x:Name="messge_minNum"/>
         </WrapPanel>
-        <!--<ComboBox x:Name="maxCharghing" Grid.Row="1" Grid.Column="1">
-            <ComboBoxItem Content="available"/>
-            <ComboBoxItem Content="maintenance" />
-            <ComboBoxItem Content="delivery" />
-            <ComboBoxItem Name="defult" Content="none" />
-        </ComboBox>        <TextBlock Text="Quadocopter whait:" Grid.Row="0" Grid.Column="2"/>        <ComboBox x:Name="Quadocopter_whait" Grid.Row="1" Grid.Column="2">
-            <ComboBoxItem Content="easy" />
-            <ComboBoxItem Content="middle" />
-            <ComboBoxItem Content="hevy" />
-            <ComboBoxItem Content="none" />
-        </ComboBox>-->
+        
+        <WrapPanel Grid.Row="1" Grid.Column="1">
+            <TextBlock Text="Only with free charghing position:" />
+            <CheckBox x:Name="freeCharghingPosition" Content="Free charghing position" HorizontalAlignment ="Center" />
+            <TextBlock x:Name="messge_free"/>
+        </WrapPanel>
 
         <WrapPanel Grid.Row="2" Grid.Column="0" Grid.RowSpan="2">
             <!--<ListBox x:Name="q_list" SelectionMode="Single"  ItemsSource="{Binding}"/>-->
             <ListView x:Name="bs_list" MouseDoubleClick="MouseDoubleClick_showBS"/>
-        </WrapPanel>
+        </WrapPanel>        <Image Source="/images/3d-house-icon-vectorjunky_web.jpg" 
+               Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+               Width="300" />
+        <Image Source="/images/drone-icon-isolated-whiteiconQuadocopter.jpg" 
+               Grid.Row="2" Grid.Column="1"  HorizontalAlignment="Right" VerticalAlignment="Center" 
+               Width="100" />
     </Grid>
 </Window>
