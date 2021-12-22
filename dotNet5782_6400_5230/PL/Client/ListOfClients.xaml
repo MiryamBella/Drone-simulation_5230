@@ -1,0 +1,57 @@
+﻿<Window x:Class="PL.Client.ListOfClients"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Client"
+        mc:Ignorable="d"
+        Title="ListOfClients" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Heavy"/>
+        </Style>
+    </Window.Resources>
+    <!--<Grid x:Name="MainGrid" ShowGridLines ="True">-->
+
+    <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
+            VerticalAlignment="Stretch" Width="auto" Background="AntiqueWhite">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
+
+        <!--2 buttons: 1)close, 1) add new qua.-->
+        <Canvas>
+            <Button x:Name="CloseWindow" Content="X" Background="Red" Width="20" Height="20" Canvas.Left="2" Canvas.Top="2"                    Click="CloseWindow_Click"/>
+            <Button Content="Add new Client" Background="BlueViolet" Width="150" Height="50"  Canvas.Bottom="8" Canvas.Right="55"
+                    Click="Button_addNewC"/>
+        </Canvas>
+
+        <TextBlock Text="Client mode: Please select one before you refresh" Grid.Row="0" Grid.Column="1"/>
+        <ComboBox x:Name="Client_mode" Grid.Row="1" Grid.Column="1">
+            <ComboBoxItem Name="defult" Content="none" />
+            <ComboBoxItem Name="have" Content="package in the way to" />
+            <ComboBoxItem Name="notHave" Content="havn't package in the way to" />
+        </ComboBox>        <TextBlock Text="Client whait:" Grid.Row="0" Grid.Column="2"/>        <ComboBox x:Name="Client_whait" Grid.Row="1" Grid.Column="2">
+            <ComboBoxItem Name ="defult2" Content="none" />
+            <ComboBoxItem Name="have2" Content="package in the way from" />
+            <ComboBoxItem Name="notHave2" Content="havn't package in the way from" />
+        </ComboBox>
+
+        <Button Content="refresh" Grid.Row="2" Grid.Column="2" Width="100" Height="50" Background="Yellow" Click="Button_refreshe"/>
+
+
+        <WrapPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <!--<ListBox x:Name="q_list" SelectionMode="Single"  ItemsSource="{Binding}"/>-->
+            <ListView x:Name="c_list" MouseDoubleClick="MouseDoubleClick_showC"/>
+        </WrapPanel>
+    </Grid>
+</Window>
