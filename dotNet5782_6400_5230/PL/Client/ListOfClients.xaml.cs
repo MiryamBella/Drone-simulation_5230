@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using BlApi;
 using System.Collections.ObjectModel;
 
-namespace PL.Client
+namespace PL
 {
     /// <summary>
     /// Interaction logic for ListOfClients.xaml
@@ -28,6 +28,7 @@ namespace PL.Client
         {
             InitializeComponent();
             bl = ibl;
+
             foreach (BO.ClientToList c in bl.ListOfClients())
                 myCollection.Add(c);
             c_list.ItemsSource = myCollection;
@@ -87,10 +88,10 @@ namespace PL.Client
                             do nothing becose we all redy cleen the list to the original list.
              */
             //get the select of the having a package that need to come to this client.
-            ComboBoxItem w = (ComboBoxItem)Client_whait.SelectedItem;
+            ComboBoxItem w = (ComboBoxItem)Client_to.SelectedItem;
             bool selected = true;
             //if w=null this mean the user didnt select something.
-            if (w != null && w.Content.ToString() != "none" )
+            if (w != null && w.Name != "none" )
                 selected = true;
             else
             {
@@ -103,7 +104,7 @@ namespace PL.Client
             if (selected)
             {
                 List<BO.ClientToList> l = new List<BO.ClientToList>();
-                if (w == have)
+                if (w.Name == "have")
                 {
                     l = (from c in myCollection
                                                where c.getAndNotDeliverP != 0
@@ -117,6 +118,38 @@ namespace PL.Client
                 }
                 myCollection.Clear();
                 foreach (BO.ClientToList i in l) 
+                    myCollection.Add(i);
+            }
+            ComboBoxItem f = (ComboBoxItem)Client_from.SelectedItem;
+            selected = true;
+            //if w=null this mean the user didnt select something.
+            if (f != null && f.Name != "none")
+                selected = true;
+            else
+            {
+                selected = false;
+                myCollection.Clear();
+                foreach (BO.ClientToList c in bl.ListOfClients())
+                    myCollection.Add(c);
+            }
+
+            if (selected)
+            {
+                List<BO.ClientToList> l = new List<BO.ClientToList>();
+                if (f.Name == "have")
+                {
+                    l = (from c in myCollection
+                         where c.getAndNotDeliverP != 0
+                         select c).ToList();
+                }
+                else
+                {
+                    l = (from c in myCollection
+                         where c.getAndNotDeliverP == 0
+                         select c).ToList();
+                }
+                myCollection.Clear();
+                foreach (BO.ClientToList i in l)
                     myCollection.Add(i);
             }
         }

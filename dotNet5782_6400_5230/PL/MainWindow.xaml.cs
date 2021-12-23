@@ -58,6 +58,19 @@ namespace PL
                 MessageBox.Show("Error! " + ex.Message);
             }
         }
+        private void listClient_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ListOfClients l = new ListOfClients(bl);
+                l.Show();
+            }
+            catch (BO.BLException ex)
+            {
+                MessageBox.Show("Error! " + ex.Message);
+            }
+        }
+        
 
     }
 }

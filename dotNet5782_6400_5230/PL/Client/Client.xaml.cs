@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL.Client
+namespace PL
 {
     /// <summary>
     /// Interaction logic for Client.xaml
