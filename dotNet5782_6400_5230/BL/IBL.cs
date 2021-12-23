@@ -39,7 +39,7 @@ namespace BlApi
         /// return list of all the stations that have empty changing positions.
         public List<BO.BaseStationToList> ListOfStationsForCharging();
         public List<BO.QuadocopterToList> ListOfQ_of_weigh(string w);
-        public List<BO.ClientToList> ListOfC_of_weigh(string w);
+        //public List<BO.ClientToList> ListOfC_of_weigh(string w);
 
         public List<BO.Charging> GetChargings();
         public BO.Quadocopter cover(BO.QuadocopterToList ql);
