@@ -19,7 +19,6 @@ namespace PL
     /// </summary>
     public partial class Quadocopter : Window
     {
-        //any time you see the word delyvery, it is mean the id of the base station
         BlApi.IBL bl;
         BO.Quadocopter newQ = new BO.Quadocopter();
         public Quadocopter(BlApi.IBL ibl) //for adding quadocopter

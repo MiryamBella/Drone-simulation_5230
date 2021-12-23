@@ -51,10 +51,10 @@
 
         <Button Content="refreshe" Grid.Row="2" Grid.Column="2" Width="100" Height="50" Background="Yellow" Click="Button_refreshe"/>
 
-
+            
         <WrapPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <!--<ListBox x:Name="q_list" SelectionMode="Single"  ItemsSource="{Binding}"/>-->
             <ListView x:Name="q_list" MouseDoubleClick="MouseDoubleClick_showQ"/>
-        </WrapPanel>
+        </WrapPanel>        
     </Grid>
 </Window>

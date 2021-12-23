@@ -52,7 +52,8 @@ namespace PL
             try
             {
                 BO.BaseStationToList bs = (BO.BaseStationToList)bs_list.SelectedItem;
-                BaseStation bs_w = new BaseStation(bl, bs);
+                ViewBaseStation bs_w = new ViewBaseStation(bl, bs);
+                Close();
                 bs_w.ShowDialog();
             }
             catch (BO.BLException ex)

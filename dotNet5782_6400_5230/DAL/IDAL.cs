@@ -8,6 +8,7 @@ namespace DalApi
 {
     public interface IDAL
     {
+        #region add
         ///adding new base station    
         public void AddBaseStation(int id, string name, int chargingPositions, double longitude, double latitude);
         ///adding new Quadocopter
@@ -16,6 +17,8 @@ namespace DalApi
         public void AddClient(int id, string name, int phoneNumber, double lon, double lat);
         /// adding new package.
         public void AddPackage(int sender, int colecter, int weigh, int priority);
+        #endregion
+        #region updare
         /// update name of quadocopter
         public void updateQd(int id, string modle);
         ///update name and number of charging positions of a base station
@@ -31,6 +34,8 @@ namespace DalApi
         public void SendQtoCharging(int bID, int qID);
         /// release te quadocopter frp charging.
         public void ReleaseQfromCharging(int qID);
+        #endregion
+        #region print
         /// print datails of statin
         public BaseStation StationDisplay(int id);
         /// print datails of quadocopter.
@@ -39,6 +44,8 @@ namespace DalApi
         public Client ClientDisplay(int id);
         /// print datails of package.
         public Package PackageDisplay( int id);
+        #endregion
+        #region lists
         /// print all the stations.
         public IEnumerable<BaseStation> ListOfStations();
         /// print all the quadocpters.
@@ -55,6 +62,7 @@ namespace DalApi
         public IEnumerable<BaseStation> ListOfStationsForCharging();
         ///the quadocopter ask.
         public List<Charging> GetChargings();
+        #endregion
         public double[] askForElectric();
         /// <summary>
         ///accept id of qudocopter and return package that in it or null 
@@ -80,8 +88,6 @@ namespace DalApi
         /// accept a location and return the closest base station with a free charge position
         /// </summary>
         public BaseStation searchCloseEmptyStation(Location l);
-        ////get a location and return it as geocoordinate
-        //public GeoCoordinate coverLtoG(Location l);
         /// <summary>
         /// accept a location of qudocopoter and its battery and return list of package that the q can take
         /// </summary>

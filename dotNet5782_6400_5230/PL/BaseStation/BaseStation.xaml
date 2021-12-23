@@ -6,7 +6,96 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="BaseStation" Height="450" Width="800">
-    <Grid>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
+        <!--The title-->
+        <TextBlock Text="BASE STATION" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
+                 FontSize="22" FontWeight="Bold" TextDecorations="Underline" TextAlignment="Center"
+                 />
         
+        
+        <TextBlock x:Name="ID" HorizontalAlignment="Right" 
+                   Grid.Row="1"  Grid.Column="0" Text="ID:" TextWrapping="Wrap" 
+                   VerticalAlignment="Center" Height="25" Width="70"/>
+        <TextBox x:Name="enterID" TextWrapping="Wrap" 
+                 Grid.Row="1" Grid.Column="1" MaxLength="9"
+                 TextChanged ="writedID" HorizontalAlignment="Center"
+                 Height="25" Width="120"/>
+        <TextBlock x:Name="checkID" HorizontalAlignment="Center"  Text="Invalid id"
+                   Grid.Row="1" Grid.Column="2" TextWrapping="Wrap" 
+                   Height="25" Width="120"
+                   Visibility="Hidden"/>
+
+        <TextBlock x:Name="name" HorizontalAlignment="Right" 
+                   Text="The name:" TextWrapping="Wrap" VerticalAlignment="Center" 
+                   Height="25" Width="70" Grid.Row="2" Grid.Column="0"/>
+        <TextBox x:Name="enterName" HorizontalAlignment="Center" 
+                  VerticalAlignment="center" Grid.Row="2" Grid.Column="1" 
+                  Height="25" Width="120" >
+        </TextBox>
+        <!--<TextBlock x:Name="checkName" HorizontalAlignment="Center" 
+                   Grid.Row="2" Grid.Column="2" Text="Invalid name" TextWrapping="Wrap" 
+                   Height="25" Width="120"
+                   Visibility="Hidden"/>-->
+        <TextBlock x:Name="lon" HorizontalAlignment="Right" 
+                   Text="Longitude:" TextWrapping="Wrap" VerticalAlignment="Center" 
+                   Height="25" Width="70" Grid.Row="3" Grid.Column="0"/>
+        <TextBox x:Name="enterLon" HorizontalAlignment="center" 
+                   Text="" TextWrapping="Wrap" VerticalAlignment="Center" 
+                   Height="25" Width="120" Grid.Row="3" Grid.Column="1"
+                   TextChanged="writedLongitude"/>
+        <TextBlock x:Name="checkLon" HorizontalAlignment="Center" 
+                   Grid.Row="3" Grid.Column="2" Text="Invalid longitude" TextWrapping="Wrap" 
+                   Height="25" Width="120"
+                   Visibility="Hidden"/>
+
+        <TextBlock x:Name="lat" HorizontalAlignment="Right" 
+                   Grid.Row="4"  Grid.Column="0" Text="Llatitude:" TextWrapping="Wrap" 
+                   VerticalAlignment="Center" Height="15" Width="70"/>
+        <TextBox x:Name="enterLat" TextWrapping="Wrap" 
+                 Grid.Row="4" Grid.Column="1"
+                 HorizontalAlignment="Center"  
+                 Height="25" Width="120"
+                 TextChanged ="writedLatitude"/>
+        <TextBlock x:Name="checkLat" HorizontalAlignment="Center" 
+                   Grid.Row="4" Grid.Column="2" Text="Invalid latitude" TextWrapping="Wrap" 
+                   Height="25" Width="120"
+                   Visibility="Hidden"/>
+
+        <TextBlock x:Name="numCharging" HorizontalAlignment="Right" 
+                   Grid.Row="5"  Grid.Column="0" Text="number of charghing position:"
+                   TextWrapping="Wrap" VerticalAlignment="Center"
+                  />
+        <TextBox x:Name="enterNumCharge" Grid.Row="5" Grid.Column="1"
+                  TextWrapping="Wrap" Height="25" Width="120"
+            TextChanged ="writedNumCharge" />
+        <TextBlock x:Name="checkNumCharging" HorizontalAlignment="Center" 
+                   Grid.Row="5" Grid.Column="2" Text="invalid number" TextWrapping="Wrap" 
+                   Height="25" Width="120"
+                   Visibility="Hidden"/>
+
+
+        <Button x:Name="add" Click="adding" Background="LawnGreen"
+                HorizontalAlignment="Left" Margin="29,0,0,0" Grid.Row="6" Grid.Column="2" 
+                VerticalAlignment="Center" Height="34" Width="171" Grid.ColumnSpan="2" 
+                Content="Add the base station" />
     </Grid>
 </Window>

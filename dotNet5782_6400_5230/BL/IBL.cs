@@ -41,6 +41,7 @@ namespace BlApi
         public List<BO.QuadocopterToList> ListOfQ_of_weigh(string w);
         public List<BO.ClientToList> ListOfC_of_weigh(string w);
 
+        public List<BO.Charging> GetChargings();
         public BO.Quadocopter cover(BO.QuadocopterToList ql);
 
     }

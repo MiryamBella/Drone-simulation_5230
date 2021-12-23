@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using BO;
 
@@ -7,6 +8,7 @@ namespace BlApi
 {
     public partial class BL
     {
+        #region display objects
         public BaseStation baseStationDisplay(int id)
         {
             //BaseStation bs = new BaseStation();
@@ -128,6 +130,9 @@ namespace BlApi
             //return returnP;
         }
 
+        #endregion
+
+        #region normal lists
         public List<BO.BaseStationToList> ListOfBaseStations()
         {
             List<BaseStationToList> bs_l = new List<BaseStationToList>();
@@ -204,22 +209,6 @@ namespace BlApi
 
             return q_l;
         }
-        /// print all the quadocpters acording to the weigh.
-        public List<BO.QuadocopterToList> ListOfQ_of_weigh(string w)
-        {
-            List<QuadocopterToList> q_l = new List<QuadocopterToList>();
-
-            IEnumerable<DO.Quadocopter> stractQ_list = dal.ListOfQ_of_weigh(w);
-            foreach (DO.Quadocopter q in stractQ_list)
-            {
-                QuadocopterToList temp = new QuadocopterToList();
-                temp = cover_list(q);
-
-                q_l.Add(temp);
-            }
-
-            return q_l;
-        }
         /// return list of all the packages.
         public List<BO.PackageToList> ListOfPackages()
         {
@@ -242,6 +231,25 @@ namespace BlApi
             }
 
             return p_l;
+        }
+
+        #endregion
+
+        /// print all the quadocpters acording to the weigh.
+        public List<BO.QuadocopterToList> ListOfQ_of_weigh(string w)
+        {
+            List<QuadocopterToList> q_l = new List<QuadocopterToList>();
+
+            IEnumerable<DO.Quadocopter> stractQ_list = dal.ListOfQ_of_weigh(w);
+            foreach (DO.Quadocopter q in stractQ_list)
+            {
+                QuadocopterToList temp = new QuadocopterToList();
+                temp = cover_list(q);
+
+                q_l.Add(temp);
+            }
+
+            return q_l;
         }
         /// return list of all the packages that dont assigned to quadocopter.
         public List<BO.PackageToList> ListOfPwithoutQ()
@@ -293,5 +301,18 @@ namespace BlApi
 
             return bs_l;
         }
+
+        public List<BO.Charging> GetChargings()
+        {
+            List<BO.Charging> l = new List<Charging>();
+            IEnumerable<DO.Charging>? oldL = from DO.Charging c in dal.GetChargings()
+                        select c;
+            if (oldL == null)
+                throw new BLException("There is no quadocopter who is charge.");
+            foreach (var c in oldL)
+                l.Add(new Charging { baseStationID = c.baseStationID, quadocopterID = c.quadocopterID });
+            return l;
+        }
+
     }
 }

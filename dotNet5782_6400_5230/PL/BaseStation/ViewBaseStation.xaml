@@ -1,0 +1,94 @@
+﻿<Window x:Class="PL.ViewBaseStation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="ViewBaseStation" Height="450" Width="800">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
+        <!--The title-->
+        <TextBlock Text="BASE STATION" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
+                 FontSize="22" FontWeight="Bold" TextDecorations="Underline" TextAlignment="Center"
+                 />
+
+
+        <TextBlock x:Name="ID" HorizontalAlignment="Right" FontWeight="Bold" FontSize="10"
+                   Grid.Row="1"  Grid.Column="0" Text="ID:" TextWrapping="Wrap" 
+                   VerticalAlignment="Center" Height="25" Width="70"/>
+        <TextBlock x:Name="showID" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" 
+                   Text="TextBlock" TextWrapping="Wrap" Background="LightBlue"
+                   Height="25" Width="120" />
+
+        <TextBlock x:Name="name" HorizontalAlignment="Right" FontWeight="Bold" FontSize="10"
+                   Text="The name:" TextWrapping="Wrap" VerticalAlignment="Center" 
+                   Height="25" Width="70" Grid.Row="2" Grid.Column="0"/>
+        <TextBlock x:Name="showName" HorizontalAlignment="Center" Background="LightBlue"
+                  VerticalAlignment="center" Grid.Row="2" Grid.Column="1" 
+                  Height="25" Width="120" Text="TextBlock" TextWrapping="Wrap" />
+
+        <TextBlock x:Name="lon" HorizontalAlignment="Right" FontWeight="Bold" FontSize="10" 
+                   Text="Longitude:" TextWrapping="Wrap" VerticalAlignment="Center" 
+                   Height="25" Width="70" Grid.Row="3" Grid.Column="0"/>
+        <TextBlock x:Name="showLon" HorizontalAlignment="Center" 
+                   Grid.Row="3" Grid.Column="1" Background="LightBlue"
+                   TextWrapping="Wrap" 
+                   Height="25" Width="120"  />
+
+        <TextBlock x:Name="lat" HorizontalAlignment="Right" FontWeight="Bold" FontSize="10" 
+                   Grid.Row="4"  Grid.Column="0" Text="Latitude:" TextWrapping="Wrap" 
+                   VerticalAlignment="Center" Height="15" Width="70"/>
+        <TextBlock x:Name="showLat" HorizontalAlignment="Center" 
+                   Grid.Row="4" Grid.Column="1" Background="LightBlue"
+                   TextWrapping="Wrap" 
+                   Height="25" Width="120"  />
+
+        <TextBlock x:Name="location_six" HorizontalAlignment="Center" FontWeight="Bold" FontSize="10"
+                   Grid.Row="5"  Grid.Column="0" Text="The location in base 60:" TextWrapping="Wrap" 
+                   VerticalAlignment="Center" />
+        <TextBlock x:Name="show_location_six" HorizontalAlignment="Center" 
+                   Grid.Row="5" Grid.Column="1" Background="LightBlue"
+                   TextWrapping="Wrap" 
+                   Height="25" Width="120"  />
+
+        <TextBlock x:Name="numCharging" HorizontalAlignment="Center"  FontWeight="Bold" FontSize="10"
+                   Grid.Row="6"  Grid.Column="0" Text="Number of free charghing position:"
+                   TextWrapping="Wrap" VerticalAlignment="Center" Visibility="Visible"
+                  />
+        <TextBlock x:Name="showNumCharging" HorizontalAlignment="Center" 
+                   Grid.Row="6" Grid.Column="1" Background="LightBlue"
+                   Text="TextBlock" TextWrapping="Wrap" 
+                   Height="25" Width="120" Visibility="Visible"  
+                   />
+
+
+        <Button x:Name="listQ" Click="listQ_Click" Content="Show list of quadocopter who is in charge" Background="Orange"
+                Grid.Column="4" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Height="34" Width="250"/>
+
+
+        <Image Source="/images/169875.png"  Grid.Row="2" Grid.Column="3" Grid.RowSpan="6" Grid.ColumnSpan="3"
+               Width="400" Height="300" Visibility="Visible"/>
+
+    </Grid>
+
+</Window>

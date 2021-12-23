@@ -32,12 +32,19 @@ namespace PL
             foreach (BO.QuadocopterToList ql in bl.ListOfQ())
                 myCollection.Add(ql);
             q_list.ItemsSource = myCollection;
-            //ComboBoxItem w = new ComboBoxItem();
-            //Quadocopter_whait.SelectedItem = Quadocopter_whait.Items.n;
-            //w.ContentStringFormat ="none";
-            //ComboBoxItem m = (ComboBoxItem)Quadocopter_mode.SelectedItem;
-            //m.Content = "none";
         }
+
+        public ListOfQ(IBL ibl, List<BO.QuadocopterToList> l)
+        {
+            InitializeComponent();
+            bl = ibl;
+
+            foreach (BO.QuadocopterToList bs in l)
+                myCollection.Add(bs);
+            q_list.ItemsSource = myCollection;
+
+        }
+
         private void CloseWindow_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -46,14 +53,14 @@ namespace PL
         private void Button_addNewQ(object sender, RoutedEventArgs e)
         {
             Quadocopter q = new Quadocopter(bl);
-            this.Close();
+            //this.Close();
             q.ShowDialog();
         }
 
-        public void addQfromWindowQ(BO.QuadocopterToList qua)
-        {
-            myCollection.Add(qua);
-        }
+        //public void addQfromWindowQ(BO.QuadocopterToList qua)
+        //{
+        //    myCollection.Add(qua);
+        //}
 
 
         private void MouseDoubleClick_showQ(object sender, MouseButtonEventArgs e)

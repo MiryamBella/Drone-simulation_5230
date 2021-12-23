@@ -85,7 +85,7 @@ public enum PointType { Lat, Lon }
 public class BaseSixtin
 {
     //----------------------------------
-    //this part will cover from base 60.********************************************************************************
+    #region cover from base 60
     DecimalLocation Convert_fromSix(DmsLocation dmsLocation)
     {
         if (dmsLocation == null)
@@ -109,9 +109,9 @@ public class BaseSixtin
         return point.Degrees + (decimal)point.Minutes / 60 + (decimal)point.Seconds / 3600;
     }
 
-    //-------------------------------
+    #endregion
 
-    //this part will cover to base 60.********************************************************************************
+    #region cover to base 60.********************************************************************************
     /// <summary>
     /// the main func to cover to base 60 and she will call the others and do all the hard work. we dont use her!
     /// </summary>
@@ -209,8 +209,7 @@ public class BaseSixtin
         //    38 53 55 N, 77 2 16 W -> 38.89861, -76.96222
     }
 
-
+    #endregion
 }
 
 
-      
