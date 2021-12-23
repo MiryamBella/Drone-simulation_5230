@@ -81,9 +81,11 @@
                    Height="25" Width="120" Visibility="Visible"  
                    />
 
-
-        <Button x:Name="listQ" Click="listQ_Click" Content="Show list of quadocopter who is in charge" Background="Orange"
-                Grid.Column="4" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Height="34" Width="250"/>
+        <TextBlock Grid.Row="0" Grid.Column="3" Text="Select the quadocopter you want to see."/>
+        <ComboBox x:Name="list_q" Grid.Row="1" Grid.Column="3" VerticalAlignment="Bottom">
+        </ComboBox>
+        <Button x:Name="chargeQ" Click="chergeQ_Click" Content="Show the quadocopter who is in charge" Background="Orange"
+                Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Height="34" Width="250"/>
 
 
         <Image Source="/images/169875.png"  Grid.Row="2" Grid.Column="3" Grid.RowSpan="6" Grid.ColumnSpan="3"

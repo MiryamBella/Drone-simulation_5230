@@ -298,8 +298,11 @@ namespace BlApi
             q.mode = ql.mode;
             q.moodle = ql.moodle;
             q.thisLocation = ql.thisLocation;
+            //q.thisPackageneed to find
+            q.weight = ql.weight;
+            q.battery = ql.battery;
             
-            foreach(DO.Package p in dal.ListOfPackages())
+            foreach (DO.Package p in dal.ListOfPackages())
             {
                 if(p.idQuadocopter==q.ID)
                 {
@@ -342,10 +345,22 @@ namespace BlApi
                     break;
                 }
             }
-            q.weight = ql.weight;
-            q.battery = ql.battery;
 
             return q;
+        }
+
+        public QuadocopterToList cover(Quadocopter q)
+        {
+            QuadocopterToList ql = new QuadocopterToList();
+            //ql.ID = q.ID;
+            //ql.mode = q.mode;
+            //ql.moodle = q.moodle;
+            //ql.packageNumber=q
+            //    ql.thisLocation = q.thisLocation;
+            //ql.weight = q.weight;
+            //ql.battery = q.battery;
+
+            return ql;
         }
         #endregion
     }

@@ -43,6 +43,6 @@ namespace BlApi
 
         public List<BO.Charging> GetChargings();
         public BO.Quadocopter cover(BO.QuadocopterToList ql);
-
+        public BO.QuadocopterToList cover(BO.Quadocopter q);
     }
 }

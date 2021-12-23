@@ -31,10 +31,7 @@ namespace PL
             showLon.Text = b.thisLocation.longitude.ToString();
             showNumCharging.Text = b.freeChargingPositions.ToString();
             show_location_six.Text = b.thisLocation.toBaseSix.LocationSix(b.thisLocation.latitude, b.thisLocation.longitude).ToString();
-        }
 
-        private void listQ_Click(object sender, RoutedEventArgs e)
-        {
             try
             {
                 int ourID = int.Parse(showID.Text);
@@ -44,15 +41,33 @@ namespace PL
                          select q).ToList();
                 if (l.Count > 0)
                 {
-                    ListOfQ lq = new ListOfQ(bl, l);
-                    lq.Show();
+                    foreach (var q in l)
+                    {
+                        ComboBoxItem newItem = new ComboBoxItem();
+                        newItem.Content = q.ID;
+                        list_q.Items.Add(newItem);
+                    }
+
                 }
                 else MessageBox.Show("There is no quadocopters in charge in this base station.");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+
+        private void chergeQ_Click(object sender, RoutedEventArgs e)
+        {
+            if(list_q.SelectedItem==null)
+            {
+                MessageBox.Show("There is no select of a quadocopters.");
+                return;
+            }    
+            BO.Quadocopter q = new BO.Quadocopter();
+            q = bl.QuDisplay(int.Parse(list_q.SelectedItem.ToString()));
+            Quadocopter qpl = new Quadocopter(bl, bl.cover(q));
         }
 
     }

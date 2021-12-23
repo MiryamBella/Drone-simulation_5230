@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL.package
+namespace PL
 {
     /// <summary>
-    /// Interaction logic for listOfPackage.xaml
+    /// Interaction logic for ListOfPackage.xaml
     /// </summary>
-    public partial class listOfPackage : Window
+    public partial class ListOfPackage : Window
     {
-        public listOfPackage()
+        public ListOfPackage()
         {
             InitializeComponent();
         }

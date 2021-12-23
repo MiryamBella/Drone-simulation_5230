@@ -304,12 +304,13 @@ namespace BlApi
 
         public List<BO.Charging> GetChargings()
         {
-            List<BO.Charging> l = new List<Charging>();
-            IEnumerable<DO.Charging>? oldL = from DO.Charging c in dal.GetChargings()
-                        select c;
-            if (oldL == null)
+            List<BO.Charging> l = new List<Charging>();//the list i will return.
+            var dalCharge = dal.GetChargings();//the list of the dal.
+            if (dalCharge == null)//chek if there is some q in charge.
                 throw new BLException("There is no quadocopter who is charge.");
-            foreach (var c in oldL)
+            IEnumerable<DO.Charging>? oldL = from DO.Charging c in dalCharge
+                        select c;
+            foreach (var c in oldL)//put all the q in 'l'.
                 l.Add(new Charging { baseStationID = c.baseStationID, quadocopterID = c.quadocopterID });
             return l;
         }

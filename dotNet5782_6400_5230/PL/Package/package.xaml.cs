@@ -12,16 +12,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL.package
+namespace PL
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for Package.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class Package : Window
     {
-        public Window1()
+        BlApi.IBL bl;
+        public Package(BlApi.IBL ibl)
         {
             InitializeComponent();
+            bl = ibl;
         }
     }
 }
