@@ -71,7 +71,7 @@ namespace PL
 
         }
 
-        private void Button_refreshe(object sender, RoutedEventArgs e)
+        private void Button_refresh(object sender, RoutedEventArgs e)
         {
             /*  -----------------------the order of the program:---------------------------------------
             1)if the weigh select:
@@ -87,71 +87,64 @@ namespace PL
                     B)if the mode didnt select:
                             do nothing becose we all redy cleen the list to the original list.
              */
-            //get the select of the having a package that need to come to this client.
-            ComboBoxItem w = (ComboBoxItem)Client_to.SelectedItem;
-            bool selected = true;
-            //if w=null this mean the user didnt select something.
-            if (w != null && w.Name != "none" )
-                selected = true;
+            //get the select of the weigh.
+            ComboBoxItem t = (ComboBoxItem)Client_to.SelectedItem;
+            bool tSelected = true;
+            //if t=null this mean the user didnt select something.
+            if (t != null && t.Name != "none")
+                tSelected = true;
             else
             {
-                selected = false;
+                tSelected = false;
                 myCollection.Clear();
                 foreach (BO.ClientToList c in bl.ListOfClients())
                     myCollection.Add(c);
             }
 
-            if (selected)
+            if (tSelected)
             {
-                List<BO.ClientToList> l = new List<BO.ClientToList>();
-                if (w.Name == "have")
+                try
                 {
-                    l = (from c in myCollection
-                                               where c.getAndNotDeliverP != 0
-                                               select c).ToList();
+                    List<BO.ClientToList> l = bl.ListOfc_of_to(t.Content.ToString());
+                    myCollection.Clear();
+                    foreach (BO.ClientToList c in l)
+                        myCollection.Add(c);
                 }
-                else
+                catch (BO.BLException ex)
                 {
-                    l = (from c in myCollection
-                                               where c.getAndNotDeliverP == 0
-                                               select c).ToList();
+                    MessageBox.Show("Error! " + ex.Message);
                 }
-                myCollection.Clear();
-                foreach (BO.ClientToList i in l) 
-                    myCollection.Add(i);
             }
+
+            //get the select of the mode.
             ComboBoxItem f = (ComboBoxItem)Client_from.SelectedItem;
-            selected = true;
-            //if w=null this mean the user didnt select something.
+            bool fSelected;
+            //if f=null this mean the user didnt select something.
             if (f != null && f.Name != "none")
-                selected = true;
+                fSelected = true;
             else
             {
-                selected = false;
+                fSelected = false;
                 myCollection.Clear();
                 foreach (BO.ClientToList c in bl.ListOfClients())
                     myCollection.Add(c);
             }
 
-            if (selected)
+            if (fSelected)
             {
-                List<BO.ClientToList> l = new List<BO.ClientToList>();
-                if (f.Name == "have")
+                try
                 {
-                    l = (from c in myCollection
-                         where c.getAndNotDeliverP != 0
-                         select c).ToList();
+                    List<BO.ClientToList> l = bl.ListOfc_of_from(f.Content.ToString());
+                    myCollection.Clear();
+                    foreach (BO.ClientToList c in l)
+                        myCollection.Add(c);
                 }
-                else
+                catch (BO.BLException ex)
                 {
-                    l = (from c in myCollection
-                         where c.getAndNotDeliverP == 0
-                         select c).ToList();
+                    MessageBox.Show("Error! " + ex.Message);
                 }
-                myCollection.Clear();
-                foreach (BO.ClientToList i in l)
-                    myCollection.Add(i);
             }
+
         }
     }
 }
