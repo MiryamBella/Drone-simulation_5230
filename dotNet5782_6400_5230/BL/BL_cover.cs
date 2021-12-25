@@ -5,6 +5,7 @@ using DalApi;
 using BO;
 //using System.Device;
 using System.Device.Location;
+using System.Linq;
 
 
 namespace BlApi
@@ -352,13 +353,18 @@ namespace BlApi
         public QuadocopterToList cover(Quadocopter q)
         {
             QuadocopterToList ql = new QuadocopterToList();
-            //ql.ID = q.ID;
-            //ql.mode = q.mode;
-            //ql.moodle = q.moodle;
-            //ql.packageNumber=q
-            //    ql.thisLocation = q.thisLocation;
-            //ql.weight = q.weight;
-            //ql.battery = q.battery;
+            ql.ID = q.ID;
+            ql.mode = q.mode;
+            ql.moodle = q.moodle;
+            //ql.packageNumber =   i find him in line 363
+            ql.thisLocation = q.thisLocation;
+            ql.weight = q.weight;
+            ql.battery = q.battery;
+
+            var list = (from DO.Package p in dal.ListOfPackages()
+                        where p.idQuadocopter == ql.ID
+                        select p).ToList();
+            ql.packageNumber = list.Count;
 
             return ql;
         }

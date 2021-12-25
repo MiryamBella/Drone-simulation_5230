@@ -7,12 +7,15 @@ namespace BlApi
     public interface IBL
     {
         /*add functations*/
+        #region add
         public void AddBaseStation(int id, string name, double lon, double lat, int numCharge);
         public void AddQuadocopter(int id, string moodle, int weight, int id_bs);
         public void AddClient(int id, string name, int phoneNumber, double lon, double lat);
         public void AddPackage(int id_sender, int id_colecter, int weight, int priority);
+        #endregion
 
         /*update functations*/
+        #region update
         public void updateQdata(int id, string modle);
         public void updateSdata(int id, string name = null, int chargingPositions = -1);
         public void updateCdata(int id, string name = null, int phone = -1);
@@ -21,6 +24,7 @@ namespace BlApi
         public void assignPtoQ(int qID);
         public void collectPbyQ(int qID);
         public void supplyPbyQ(int qID);
+        #endregion
 
         /*print functations*/
         public BO.BaseStation baseStationDisplay(int id);
@@ -28,6 +32,7 @@ namespace BlApi
         public BO.Client ClientDisplay(int id);
         public BO.Package PackageDisplay(int id);
 
+        #region lists
         public List<BO.BaseStationToList> ListOfBaseStations();
         /// print all the clients
         public List<BO.ClientToList> ListOfClients();
@@ -40,8 +45,9 @@ namespace BlApi
         public List<BO.BaseStationToList> ListOfStationsForCharging();
         public List<BO.QuadocopterToList> ListOfQ_of_weigh(string w);
         //public List<BO.ClientToList> ListOfC_of_weigh(string w);
-
         public List<BO.Charging> GetChargings();
+        #endregion
+
         public BO.Quadocopter cover(BO.QuadocopterToList ql);
         public BO.QuadocopterToList cover(BO.Quadocopter q);
     }
