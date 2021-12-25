@@ -46,7 +46,7 @@
             <ComboBoxItem Name="notHave2" Content="havn't package in the way from" />
         </ComboBox>
 
-        <Button Content="refresh" Grid.Row="2" Grid.Column="2" Width="100" Height="50" Background="Yellow" Click="Button_refreshe"/>
+        <Button Content="refresh" Grid.Row="2" Grid.Column="2" Width="100" Height="50" Background="Yellow" Click="Button_refresh"/>
 
 
         <WrapPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
