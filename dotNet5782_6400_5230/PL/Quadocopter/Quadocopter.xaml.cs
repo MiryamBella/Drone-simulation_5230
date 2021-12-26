@@ -77,6 +77,7 @@ namespace PL
             #endregion;
         }
 
+        #region check data
         private void writedID(object sender, RoutedEventArgs e)
         {
             int id;
@@ -84,7 +85,6 @@ namespace PL
                 newQ.ID = id;
             else checkID.Visibility = Visibility.Visible;
         }
-
         private void enterWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (enterWeight.SelectedItem == heavy) newQ.weight = BO.WeighCategories.hevy;
@@ -110,20 +110,10 @@ namespace PL
             }
             else checkBattery2.Visibility = Visibility.Visible;
         }
-        //private void writedDelivery(object sender, RoutedEventArgs e)
-        //{
-        //    int d;
-        //    if (int.TryParse(enterDelivery.Text, out d))
-        //    {
-        //        newQ.thisPackage.ID = d;
-        //        checkDelivery.Visibility = Visibility.Hidden;
-        //    }
-        //    else checkDelivery.Visibility = Visibility.Visible;
-        //}
         private void enterState_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (enterWeight.SelectedItem == available) newQ.mode = BO.statusOfQ.available;
-            if (enterWeight.SelectedItem == maintenance) newQ.mode = BO.statusOfQ.maintenance;
+            if (enterState.SelectedItem == available) newQ.mode = BO.statusOfQ.available;
+            if (enterState.SelectedItem == maintenance) newQ.mode = BO.statusOfQ.maintenance;
             else newQ.mode = BO.statusOfQ.delivery;
         }
         private void writedLatitude(object sender, RoutedEventArgs e)
@@ -146,17 +136,30 @@ namespace PL
             }
             else checkLongitude.Visibility = Visibility.Visible;
         }
+        #endregion
 
         private void adding(object sender, RoutedEventArgs e)
         {
             try
             {
-                bl.AddQuadocopter(newQ.ID, newQ.moodle, (int)newQ.weight, int.Parse(ID_baseStation.Text));
+                /*checking if evrything is ok with the input.*/
+                ///if the user put wrong data.
+                if (checkID.Visibility == Visibility.Visible || checkLongitude.Visibility == Visibility.Visible
+                    || checkLongitude.Visibility == Visibility.Visible || checkBattery.Visibility == Visibility.Visible ||
+                    checkBattery2.Visibility == Visibility.Visible || enterWeight.SelectedItem==null || 
+                    enterState.SelectedItem == null || ID_baseStation.SelectedItem == null)
+                    throw new Exception("ERROR! chek if all the data are corect.");
+                ///if the user didnt put all the nessery data.
+                if (ID_bs_text.Text == null || enterModel.Text == null || enterBattery.Text == null ||
+                    enterLatitude.Text == null || enterLongitude.Text == null)
+                    throw new Exception("ERROR: you miss some data to enter.");
+
+                bl.AddQuadocopter(newQ.ID, newQ.moodle, (int)newQ.weight, int.Parse(ID_baseStation.SelectedItem.ToString()));
                 ListOfQ l = new ListOfQ(bl);
                 this.Close();
                 l.Show();
             }
-            catch (BO.BLException ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -172,5 +175,6 @@ namespace PL
             }
             MessageBox.Show(q.thisPackage.ToString());
         }
+
     }
 }

@@ -150,7 +150,7 @@ namespace ConsoleUI_BL
             helpSTR = Console.ReadLine();
             double lat = double.Parse(helpSTR);
 
-            program.bl.AddClient(id, name, phoneNumber, lon, lat);
+            program.bl.AddClient(id, name, lon, lat, phoneNumber);
         }
         void AddPackage()
         {

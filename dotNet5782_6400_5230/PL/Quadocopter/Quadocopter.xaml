@@ -89,11 +89,8 @@
                    Grid.Row="1"  Grid.Column="3" Text="base station ID:" TextWrapping="Wrap" 
                    VerticalAlignment="Center" Height="25" Width="90"
                   />
-        <ComboBox x:Name="ID_baseStation" 
-                 Grid.Row="1" Grid.Column="4"
-                 HorizontalAlignment="Center"
-                 Height="25" Width="120"
-                  />
+        <ComboBox x:Name="ID_baseStation" Grid.Row="1" Grid.Column="4" 
+                 Height="25" Width="120" HorizontalAlignment="Center"/>
         <!--<TextBlock x:Name="ID_baseStation_show" 
                  Grid.Row="1" Grid.Column="4"
                  HorizontalAlignment="Center"
@@ -118,8 +115,7 @@
                    Height="25" Width="70" Grid.Row="2" Grid.Column="3"/>
         <ComboBox x:Name="enterState" HorizontalAlignment="Center" 
                   VerticalAlignment="center" Grid.Row="2" Grid.Column="4" 
-                  Height="25" Width="120" 
-                  SelectionChanged="enterState_SelectionChanged" >
+                  Height="25" Width="120" SelectionChanged="enterState_SelectionChanged" >
             <ComboBoxItem x:Name="available" Content="available"/>
             <ComboBoxItem x:Name="maintenance" Content="maintenance"/>
             <ComboBoxItem x:Name="deliver" Content="deliver"/>

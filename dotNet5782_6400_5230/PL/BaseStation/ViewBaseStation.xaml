@@ -46,7 +46,10 @@
         <TextBlock x:Name="showName" HorizontalAlignment="Center" Background="LightBlue"
                   VerticalAlignment="center" Grid.Row="2" Grid.Column="1" 
                   Height="25" Width="120" Text="TextBlock" TextWrapping="Wrap" />
-
+        <TextBox x:Name="update_name"  HorizontalAlignment="Center" Background="Yellow"
+                  VerticalAlignment="center" Grid.Row="2" Grid.Column="1" 
+                  Height="25" Width="120" TextWrapping="Wrap" Visibility="Hidden" />
+        
         <TextBlock x:Name="lon" HorizontalAlignment="Right" FontWeight="Bold" FontSize="10" 
                    Text="Longitude:" TextWrapping="Wrap" VerticalAlignment="Center" 
                    Height="25" Width="70" Grid.Row="3" Grid.Column="0"/>
@@ -80,13 +83,28 @@
                    Text="TextBlock" TextWrapping="Wrap" 
                    Height="25" Width="120" Visibility="Visible"  
                    />
+        <TextBox x:Name="uppdate_numCharge" HorizontalAlignment="Center" 
+                   Grid.Row="6" Grid.Column="1" Background="Yellow"
+                   TextWrapping="Wrap"  TextChanged ="writedNumCharge"
+                   Height="25" Width="120" Visibility="Hidden"/>
+        <TextBlock x:Name="checkNumCharging" HorizontalAlignment="Center" 
+                   Grid.Row="6" Grid.Column="2" Text="invalid number" TextWrapping="Wrap" 
+                   Height="25" Width="120"  Visibility="Hidden"/>
+
 
         <TextBlock Grid.Row="0" Grid.Column="3" Text="Select the quadocopter you want to see."/>
         <ComboBox x:Name="list_q" Grid.Row="1" Grid.Column="3" VerticalAlignment="Bottom">
         </ComboBox>
         <Button x:Name="chargeQ" Click="chergeQ_Click" Content="Show the quadocopter who is in charge" Background="Orange"
                 Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Height="34" Width="250"/>
-
+         
+        <!--uppdate-->
+        <Button x:Name="updateBS" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Click="updateBS_Click"
+                HorizontalAlignment="Center" VerticalAlignment="Center" Content="Uppdate this base station"/>
+        <Button x:Name="updateBS_change" Grid.Row="7" Grid.Column="1"  Click="updateBS_change_Click"
+                HorizontalAlignment="Center" VerticalAlignment="Center" Content="Uppdate" Visibility="Hidden"/>
+        <Button x:Name="updateBS_notchange" Grid.Row="7" Grid.Column="0"  Click="updateBS_notchange_Click"
+                HorizontalAlignment="Center" VerticalAlignment="Center" Content="return" Visibility="Hidden"/>
 
         <Image Source="/images/169875.png"  Grid.Row="2" Grid.Column="3" Grid.RowSpan="6" Grid.ColumnSpan="3"
                Width="400" Height="300" Visibility="Visible"/>

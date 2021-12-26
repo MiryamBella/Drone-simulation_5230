@@ -114,18 +114,31 @@ namespace Dal
         public void SendQtoCharging(int bID, int qID)
         {
 
-            Charging c = new Charging(); // add a charging
-            c.baseStationID = bID;
-            c.quadocopterID = qID;
-            DataSource.charge.Add(c);
             for (int i = 0; i < DataSource.bstion.Count; i++)
                 if (DataSource.bstion[i].IDnumber == bID)
                 {
+                    if (DataSource.bstion[i].freechargingPositions <= 0)
+                        throw new Exception("There is no place to charge in this base station.");
                     BaseStation b = DataSource.bstion[i];
                     b.freechargingPositions--;
                     DataSource.bstion[i] = b;
                     break;
                 }
+            //bool exist = false;
+            ////i did normal for and not forheach becose i need the object himself and not iteretor of the object.
+            //for (int i = 0; i < DataSource.qpter.Count; i++)
+            //        if (DataSource.qpter[i].id == bID)
+            //        {
+            //            DataSource.qpter[i].startCharge = DateTime.Now;
+            //            exist = true;
+            //        }
+            //if (!exist)
+            //    throw new Exception("the drone not exist.");
+
+            Charging c = new Charging(); // add a charging
+            c.baseStationID = bID;
+            c.quadocopterID = qID;
+            DataSource.charge.Add(c);                
         }
         /* Charging c = new Charging();
          foreach(BaseStation b in DataSource.bstion)

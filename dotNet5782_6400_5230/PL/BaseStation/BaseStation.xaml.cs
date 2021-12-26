@@ -31,7 +31,7 @@ namespace PL
         private void writedID(object sender, RoutedEventArgs e)
         {
             int id;
-            if (int.TryParse(enterID.Text, out id))
+            if (int.TryParse(enterID.Text, out id) && int.Parse(enterID.Text) >= 0)
                 checkID.Visibility = Visibility.Hidden;
             else checkID.Visibility = Visibility.Visible;
 
@@ -52,12 +52,6 @@ namespace PL
                 checkLon.Visibility = Visibility.Hidden;
             else checkLon.Visibility = Visibility.Visible;
         }
-        //private void writeName(object sender, RoutedEventArgs e)
-        //{
-
-        //    if()
-
-        //}
         private void writedNumCharge(object sender, TextChangedEventArgs e)
         {
             int id;
@@ -70,8 +64,8 @@ namespace PL
         {
             try
             {
-                if (!checkID.IsEnabled && !checkLat.IsEnabled
-                    && !checkLon.IsEnabled && !checkNumCharging.IsEnabled)
+                if (checkID.Visibility==Visibility.Visible || checkLat.Visibility == Visibility.Visible
+                    || checkLon.Visibility == Visibility.Visible || checkNumCharging.Visibility == Visibility.Visible)
                     throw new Exception("ERROR! chek if all the data are corect.");
                 int id = int.Parse(enterID.Text);
                 string name = enterName.Text;

@@ -9,8 +9,7 @@ namespace DO
         public int id { get; set; }
         public string moodle { get; set; }
         public WeighCategories weight { get; set; }
-        //public int battery { get; set; }           /*in targil 2, we need to delate this methods.*/
-        //public statusOfQ  mode { get; set; }
+        public DateTime startCharge { get; set; }
         public object Clone()
         {
             return this.MemberwiseClone();
@@ -20,8 +19,6 @@ namespace DO
             return ("ID: " + id + '\n' +
                 "Moodle: " + moodle + '\n' +
                 "Weight: " + weight + '\n');
-            //"Battery: " + battery + '\n' +
-            //"Mode: " + mode + '\n');
         }
     }
 }
