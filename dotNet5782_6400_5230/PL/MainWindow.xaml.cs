@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BlApi;
+using System.Linq;
+
+
 namespace PL
 {
     /// <summary>
@@ -34,43 +37,58 @@ namespace PL
             }
         }
 
-        private void listQ_Click(object sender, RoutedEventArgs e)
+        private void manager_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                ListOfQ l = new ListOfQ(bl);
-                l.Show();
+                Manager m = new Manager(bl);
+                m.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error! " + ex.Message);
+            }
+        }
+        private void client_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (enterID.Text == null)
+                    throw new Exception("you didnt enter any ID:");
+                int id;
+                if (!(int.TryParse(enterID.Text, out id)))
+                    throw new Exception("invalid ID:");
+                id = int.Parse(enterID.Text);
+                Client c=new Client(bl);
+                bool exist = false;
+                foreach (BO.ClientToList cl in bl.ListOfClients())
+                    if (cl.ID == id)
+                    {
+                        c = new Client(bl, bl.cover(cl));
+                        exist = true;
+                        break;
+                    }
+                if (exist)
+                    c.Show();
+                else 
+                    throw new Exception("ERROR: the ID not exist in our data.");
             }
             catch (BO.BLException ex)
             {
                 MessageBox.Show("Error! " + ex.Message);
             }
         }
-        private void listBS_Click(object sender, RoutedEventArgs e)
+        private void clientNEW_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                ListOfBaseStation l = new ListOfBaseStation(bl);
-                l.Show();
+                Client new_c = new Client(bl);
+                new_c.Show();
             }
             catch (BO.BLException ex)
             {
                 MessageBox.Show("Error! " + ex.Message);
             }
         }
-        private void listClient_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                ListOfClients l = new ListOfClients(bl);
-                l.Show();
-            }
-            catch (BO.BLException ex)
-            {
-                MessageBox.Show("Error! " + ex.Message);
-            }
-        }
-        
-
     }
 }

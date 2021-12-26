@@ -1,12 +1,11 @@
-﻿<Window x:Class="PL.MainWindow"
+﻿<Window x:Class="PL.Manager"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-
+        Title="Manager" Height="450" Width="800">
 
     <Grid ShowGridLines ="True" Background="Aqua">
         <Grid.ColumnDefinitions >
@@ -22,21 +21,19 @@
         </Grid.RowDefinitions>
         <!--backgruond-->
         <TextBlock Grid.Row="0" Grid.Column="0" Background ="Gold" Grid.ColumnSpan="2"/>
-
-        <TextBlock Text="WLCOME USER!" HorizontalAlignment="Center" VerticalAlignment="Center"
+        
+        <TextBlock Text="WLCOME MANAGER!" HorizontalAlignment="Center" VerticalAlignment="Center"
                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="50" FontWeight="Bold"
                    />
-
+        
         <TextBlock x:Name="a" Text="press the button to manage our data:" Grid.Row="1" Grid.Column="0"/>
-        <Button Content="Manager enter:" Background="GreenYellow" Grid.Column="0" Grid.Row="1" 
+        <Button Content="quadocopters" Background="GreenYellow" Grid.Column="0" Grid.Row="1" 
                 HorizontalAlignment="Center" VerticalAlignment="Center" Height="45"
-                Width="155" Click="manager_Click" />
-        <Button Content="client enter" Click="client_Click" Background="GreenYellow" 
-                Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center"
+                Width="155" Click="listQ_Click" />
+        <Button Content="base station" Click="listBS_Click" Background="GreenYellow" 
+                Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
                 Height="45" Width="155" />
-        <TextBlock Text="enter ID:" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,23,28,0"/>
-        <TextBox x:Name="enterID"  Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="20"/>
-        <Button Content="new client" Click="clientNEW_Click" Background="GreenYellow"
+        <Button Content="client" Click="listClient_Click" Background="GreenYellow"
                 Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" 
                 Height="45" Width="155" />
 
