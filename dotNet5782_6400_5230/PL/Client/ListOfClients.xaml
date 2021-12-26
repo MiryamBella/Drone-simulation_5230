@@ -30,28 +30,16 @@
 
         <!--2 buttons: 1)close, 1) add new qua.-->
         <Canvas>
-            <Button x:Name="CloseWindow" Content="X" Background="Red" Width="20" Height="20" Canvas.Left="2" Canvas.Top="2"                    Click="CloseWindow_Click"/>
+            <Button x:Name="CloseWindow" Content="X" Background="Red" Width="20" Height="20" Canvas.Left="2" Canvas.Top="2"
+                    Click="CloseWindow_Click"/>
+            
             <Button Content="Add new Client" Background="BlueViolet" Width="150" Height="50"  Canvas.Bottom="8" Canvas.Right="55"
                     Click="Button_addNewC"/>
         </Canvas>
-
-        <TextBlock Text="Client mode: Please select one before you refresh" Grid.Row="0" Grid.Column="1"/>
-        <ComboBox x:Name="Client_to" Grid.Row="1" Grid.Column="1">
-            <ComboBoxItem Name="defult" Content="none" />
-            <ComboBoxItem Name="have" Content="package in the way to" />
-            <ComboBoxItem Name="notHave" Content="havn't package in the way to" />
-        </ComboBox>        <TextBlock Text="Client whait:" Grid.Row="0" Grid.Column="2"/>        <ComboBox x:Name="Client_from" Grid.Row="1" Grid.Column="2">
-            <ComboBoxItem Name ="defult2" Content="none" />
-            <ComboBoxItem Name="have2" Content="package in the way from" />
-            <ComboBoxItem Name="notHave2" Content="havn't package in the way from" />
-        </ComboBox>
-
-        <Button Content="refresh" Grid.Row="2" Grid.Column="2" Width="100" Height="50" Background="Yellow" Click="Button_refresh"/>
-
-
         <WrapPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <!--<ListBox x:Name="q_list" SelectionMode="Single"  ItemsSource="{Binding}"/>-->
             <ListView x:Name="c_list" MouseDoubleClick="MouseDoubleClick_showC"/>
-        </WrapPanel>
+        </WrapPanel>
+
     </Grid>
 </Window>

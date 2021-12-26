@@ -62,6 +62,10 @@ namespace DalApi
         public IEnumerable<BaseStation> ListOfStationsForCharging();
         ///the quadocopter ask.
         public List<Charging> GetChargings();
+        /// return list of all the package that the accepte id is of its sender.
+        public IEnumerable<Package> ListOfPackageFrom(int id);
+        /// return list of all the package that the accepte id is of its receiver.
+        public IEnumerable<Package> ListOfPackageTo(int id);
         #endregion
         public double[] askForElectric();
         /// <summary>
@@ -92,5 +96,10 @@ namespace DalApi
         /// accept a location of qudocopoter and its battery and return list of package that the q can take
         /// </summary>
         public List<Package> availablePtoQ(int battery, Location loc);
+        /// <summary>
+        /// accept id of package of id of its sender/receiver and return the another client of this package(receiver/sender)
+        /// </summary>
+        public Client searchAnotherClient(int pID, int clientID);
+
     }
 }

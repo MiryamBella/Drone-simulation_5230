@@ -99,7 +99,7 @@ namespace BlApi
                 new_l.Add(cover(q));
             return new_l;
         }
-        Client cover(DO.Client c)
+        public Client cover(DO.Client c)
         {
             
             Client new_c = new Client();
@@ -117,12 +117,31 @@ namespace BlApi
             {
                 //id=the ID of our client.
                 if (p.sender == new_c.ID)
-                    new_c.packageFrom.Add(cover(p));
+                    new_c.packageFrom.Add(cover(cover(p), c.ID));
                 if (p.receiver == new_c.ID)
-                    new_c.packageTo.Add(cover(p));
+                    new_c.packageTo.Add((cover(cover(p), c.ID)));
             }
 
             return new_c;
+        }
+        public Client cover(ClientToList cli)
+        {
+            Client c = new Client();
+            c.ID = cli.ID; //id
+            c.name = cli.name; //name
+            c.phoneNumber = cli.phoneNumber; //phone
+
+            DO.Client doCli = dal.ClientDisplay(c.ID); //location
+            c.thisLocation.latitude = doCli.latitude;
+            c.thisLocation.longitude = doCli.longitude;
+            c.thisLocation.decSix = new DmsLocation();
+            c.thisLocation.toBaseSix = new BaseSixtin();
+
+            c.packageFrom = (from p in dal.ListOfPackageFrom(c.ID)
+                            select cover(cover(p), c.ID)).ToList();
+            c.packageTo = (from p in dal.ListOfPackageTo(c.ID)
+                           select cover(cover(p), c.ID)).ToList();
+            return c;
         }
         #endregion
 
@@ -135,7 +154,7 @@ namespace BlApi
                 new_l.Add(cover(p));
             return new_l;
         }
-        Package cover(DO.Package p)
+        public Package cover(DO.Package p)
         {
             Package new_p = new Package();
             new_p.ID = p.id;
@@ -181,6 +200,30 @@ namespace BlApi
             }
             if (!exist)
                 new_p.q=null;
+
+            return new_p;
+        }
+        public PackageInClient cover(Package p, int clientID)
+        {
+            PackageInClient new_p = new PackageInClient();
+            new_p.ID = p.ID;
+            new_p.priority = (Priorities)p.priority;
+            new_p.weight = (WeighCategories)p.weight;
+            if (p.time_ComeToColcter != null) new_p.state = stateOfP.provided;
+            else if (p.time_ColctedFromSender != null) new_p.state = stateOfP.collected;
+            else if (p.time_Belong_quadocopter != null) new_p.state = stateOfP.associated;
+            else new_p.state = stateOfP.Defined;
+            DO.Client c = new DO.Client();
+            try
+            {
+                c = dal.searchAnotherClient(p.ID, clientID);
+            }
+            catch(DAL.exceptions.DO.DALException ex)
+            {
+                throw new BLException(ex.Message);
+            }
+            clientInPackage cINp = new clientInPackage() { ID = c.ID, name = c.name };
+            new_p.theOtherClient = cINp;
 
             return new_p;
         }

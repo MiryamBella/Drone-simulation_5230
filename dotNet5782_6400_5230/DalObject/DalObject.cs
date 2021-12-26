@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using DO;
 using DAL.exceptions.DO;
 using DalApi;
@@ -105,93 +106,7 @@ namespace Dal
                 newQ.moodle = modle;
                 DataSource.qpter.Add(newQ);
             }
-            else throw new DALException("ID not exist");
-        }
-        #endregion;
-        #region updateBaseStation;
-        ///update name and number of charging positions of a base station
-        public void updateSdata(int id, string name, int chargingPositions)
-        {
-            BaseStation newBS = new BaseStation();
-            bool finded = false;
-            foreach (BaseStation bs in DataSource.bstion)
-                if (bs.IDnumber == id)
-                {
-                    finded = true;
-                    newBS = bs;
-                    DataSource.bstion.Remove(bs);
-                }
-            if (finded)
-            {
-                if (name != null) newBS.name = name;
-                if (chargingPositions != -1) newBS.chargingPositions = chargingPositions;
-                DataSource.bstion.Add(newBS);
-            }
-            else throw new DALException("ID not exist");
-        }
-        #endregion;
-        #region updateClient;
-        /// <summary>
-        /// update name and phone of client
-        /// </summary>
-        public void updateCdata(int id, string name = null, int phone = 0)
-        {
-            Client newC = new Client();
-            bool finded = false;
-            foreach (Client c in DataSource.cli)
-                if (c.ID == id)
-                {
-                    finded = true;
-                    newC = c;
-                    DataSource.cli.Remove(c);
-                }
-            if (finded)
-            {
-                if (name != null) newC.name = name;
-                if (phone != 0) newC.phoneNumber = phone;
-                DataSource.cli.Add(newC);
-            }
-            else throw new DALException("ID not exist");
-        }
-        #endregion;
-        /// <summary>
-        /// update package to be belong to a quadocopter.
-        /// </summary>
-        public void AssignPtoQ(Package P, int id_q)
-        {
-            for (int i = 0; i < DataSource.packagh.Count; i++)
-                if (DataSource.packagh[i].id == P.id)
-                {
-                    P.idQuadocopter = id_q;
-                    P.time_Belong_quadocopter = DateTime.Now;
-                    DataSource.packagh[i] = P;
-                    break;
-                }
-        }
-        /// <summary>
-        /// update package to be collected by quadocopter.
-        /// </summary>
-        public void CollectPbyQ(int pID)
-        {
-            for (int i = 0; i < DataSource.packagh.Count; i++)
-                if (DataSource.packagh[i].id == pID)
-                {
-                    Package p = DataSource.packagh[i];
-                    p.time_ColctedFromSender = DateTime.Now;
-                    DataSource.packagh[i] = p;
-                    break;
-                }
-        }
-        public void DeliveringPtoClient(int pID)
-        {
-            for (int i = 0; i < DataSource.packagh.Count; i++)
-                if (DataSource.packagh[i].id == pID)
-                {
-                    Package p = DataSource.packagh[i];
-                    p.time_ComeToColcter = DateTime.Now;
-                    DataSource.packagh[i] = p;
-                    break;
-                }
+            else throw new DAL.exceptions.DO.DALException("ID not exist");
         }
         /// <summary>
         /// Send the quadocopter to charging.
@@ -254,10 +169,101 @@ namespace Dal
                     break;
                 }
         }
+        #endregion;
+        #region updateBaseStation;
+        ///update name and number of charging positions of a base station
+        public void updateSdata(int id, string name, int chargingPositions)
+        {
+            BaseStation newBS = new BaseStation();
+            bool finded = false;
+            foreach (BaseStation bs in DataSource.bstion)
+                if (bs.IDnumber == id)
+                {
+                    finded = true;
+                    newBS = bs;
+                    DataSource.bstion.Remove(bs);
+                }
+            if (finded)
+            {
+                if (name != null) newBS.name = name;
+                if (chargingPositions != -1) newBS.chargingPositions = chargingPositions;
+                DataSource.bstion.Add(newBS);
+            }
+            else throw new DAL.exceptions.DO.DALException("ID not exist");
+        }
+        #endregion;
+        #region updateClient;
+        /// <summary>
+        /// update name and phone of client
+        /// </summary>
+        public void updateCdata(int id, string name = null, int phone = 0)
+        {
+            Client newC = new Client();
+            bool finded = false;
+            foreach (Client c in DataSource.cli)
+                if (c.ID == id)
+                {
+                    finded = true;
+                    newC = c;
+                    DataSource.cli.Remove(c);
+                }
+            if (finded)
+            {
+                if (name != null) newC.name = name;
+                if (phone != 0) newC.phoneNumber = phone;
+                DataSource.cli.Add(newC);
+            }
+            else throw new DAL.exceptions.DO.DALException("ID not exist");
+        }
+        #endregion;
+        #region updatePckage;
+        /// <summary>
+        /// update package to be belong to a quadocopter.
+        /// </summary>
+        public void AssignPtoQ(Package P, int id_q)
+        {
+            for (int i = 0; i < DataSource.packagh.Count; i++)
+                if (DataSource.packagh[i].id == P.id)
+                {
+                    P.idQuadocopter = id_q;
+                    P.time_Belong_quadocopter = DateTime.Now;
+                    DataSource.packagh[i] = P;
+                    break;
+                }
+        }
+        /// <summary>
+        /// update package to be collected by quadocopter.
+        /// </summary>
+        public void CollectPbyQ(int pID)
+        {
+            for (int i = 0; i < DataSource.packagh.Count; i++)
+                if (DataSource.packagh[i].id == pID)
+                {
+                    Package p = DataSource.packagh[i];
+                    p.time_ColctedFromSender = DateTime.Now;
+                    DataSource.packagh[i] = p;
+                    break;
+                }
+        }
+        public void DeliveringPtoClient(int pID)
+        {
+            for (int i = 0; i < DataSource.packagh.Count; i++)
+                if (DataSource.packagh[i].id == pID)
+                {
+                    Package p = DataSource.packagh[i];
+                    p.time_ComeToColcter = DateTime.Now;
+                    DataSource.packagh[i] = p;
+                    break;
+                }
+        }
+        #endregion;
+
+       
         public List<Charging> GetChargings()
         {
             return DataSource.charge;
         }
+        #region display - accept id and return object with it;
         /// <summary>
         /// print datails of statin
         /// </summary>
@@ -313,26 +319,29 @@ namespace Dal
 
             return p;
         }
-
+        #endregion;
         /// <summary>
         /// print all the stations.
         /// </summary>
         public IEnumerable<BaseStation> ListOfStations() //return list of all the stations
         {
-            List<BaseStation> l = new List<BaseStation>();
-            foreach (BaseStation b in DataSource.bstion) // I run of all the stations and print them
-                l.Add((BaseStation)b.Clone());
-            return l;
+            return from b in DataSource.bstion select b;
+
+            //List<BaseStation> l = new List<BaseStation>();
+            //foreach (BaseStation b in DataSource.bstion) 
+            //    l.Add((BaseStation)b.Clone());
+            //return l;
         }
         /// <summary>
         /// return list of all the quadocpters.
         /// </summary>
         public IEnumerable<DO.Quadocopter> ListOfQ()//return list of all the quadocpters
         {
-            List<DO.Quadocopter> list = new List<Quadocopter>();
-            foreach (Quadocopter q in DataSource.qpter) // I run of all the stations and print them
-                list.Add(q);
-            return list;
+            return from q in DataSource.qpter select q;
+            //List<DO.Quadocopter> list = new List<Quadocopter>();
+            //foreach (Quadocopter q in DataSource.qpter) // I run of all the stations and print them
+            //    list.Add(q);
+            //return list;
         }
         /// print all the quadocpters acording to the weigh.
         public IEnumerable<Quadocopter> ListOfQ_of_weigh(string w)
@@ -350,17 +359,19 @@ namespace Dal
                     weigh = WeighCategories.middle;
                     break;
                 default:
-                    throw new DALException("invelebel weigh statos.");
+                    throw new DAL.exceptions.DO.DALException("invelebel weigh statos.");
             }
 
-            List<Quadocopter> l = new List<Quadocopter>();
-            foreach (Quadocopter ql in DataSource.qpter)
-            {
-                if ((int)ql.weight <= (int)weigh)
-                    l.Add(ql);
-            }
+            //List<Quadocopter> l = new List<Quadocopter>();
+            //foreach (Quadocopter ql in DataSource.qpter)
+            //{
+            //    if ((int)ql.weight <= (int)weigh)
+            //        l.Add(ql);
+            //}
 
-            return l;
+            return from q in DataSource.qpter
+                   where (int)q.weight <= (int)weigh
+                   select q;
         }
 
         /// <summary>
@@ -368,31 +379,36 @@ namespace Dal
         /// </summary>
         public IEnumerable<Client> ListOfClients()//print all the clients
         {
-            List<Client> l = new List<Client>();
-            foreach (Client c in DataSource.cli) // I run of all the stations and print them
-                l.Add(c);
-            return l;
+            return from c in DataSource.cli select c;
+            //List<Client> l = new List<Client>();
+            //foreach (Client c in DataSource.cli) // I run of all the stations and print them
+            //    l.Add(c);
+            //return l;
         }
         /// <summary>
         /// print all the packages.
         /// </summary>
         public IEnumerable<Package> ListOfPackages()//print all the packages
         {
-            List<Package> l = new List<Package>();
-            foreach (Package p in DataSource.packagh) // I run of all the stations and print them
-                l.Add(p);
-            return l;
+            return from p in DataSource.packagh select p;
+            //List<Package> l = new List<Package>();
+            //foreach (Package p in DataSource.packagh) // I run of all the stations and print them
+            //    l.Add(p);
+            //return l;
         }
         /// <summary>
         /// print all the packages that dont assigned to quadocopter.
         /// </summary>
         public IEnumerable<Package> ListOfPwithoutQ()//return list of all the packages that dont assigned to quadocopter
         {
-            List<Package> l = new List<Package>();
-            foreach (Package p in DataSource.packagh) // I run of all the packages and print them if their idQuadocopter is 0
-                if (p.idQuadocopter == 0)
-                    l.Add(p);
-            return l;
+            return from p in DataSource.packagh
+                   where p.idQuadocopter == 0
+                   select p;
+            //List<Package> l = new List<Package>();
+            //foreach (Package p in DataSource.packagh) // I run of all the packages and print them if their idQuadocopter is 0
+            //    if (p.idQuadocopter == 0)
+            //        l.Add(p);
+            //return l;
 
         }
         /// <summary>
@@ -400,12 +416,30 @@ namespace Dal
         /// </summary>
         public IEnumerable<BaseStation> ListOfStationsForCharging()//print all the stations that have empty changing positions
         {
-            List<BaseStation> lbs = new List<BaseStation>();
-            // I run of all the stations and print them if their changingPosition is not 0
-            foreach (BaseStation b in DataSource.bstion)
-                if (b.freechargingPositions != 0)
-                    lbs.Add(b);
-            return lbs;
+            return from b in DataSource.bstion
+                   where b.freechargingPositions != 0
+                   select b;
+            //List<BaseStation> lbs = new List<BaseStation>();
+            //// I run of all the stations and print them if their changingPosition is not 0
+            //foreach (BaseStation b in DataSource.bstion)
+            //    if (b.freechargingPositions != 0)
+            //        lbs.Add(b);
+            //return lbs;
+        }
+        
+        /// return list of all the package that the accepte id is of its sender.
+        public IEnumerable<Package> ListOfPackageFrom(int id)
+        {
+            return from p in DataSource.packagh
+                   where p.sender == id
+                   select p;
+        }
+        /// return list of all the package that the accepte id is of its receiver.
+        public IEnumerable<Package> ListOfPackageTo( int id)
+        {
+            return from p in DataSource.packagh
+                   where p.receiver == id
+                   select p;
         }
         public double[] askForElectric()//the quadocopter ask.
         {
@@ -438,6 +472,30 @@ namespace Dal
                 if (c.ID == pID)
                     return new Location { latitude = c.latitude, longitude = c.longitude };
             return null;
+        }
+        /// </summary>
+        /// accept id of package of id of its sender/receiver and return the another client of this package(receiver/sender)
+        /// </summary>
+        public Client searchAnotherClient(int pID, int clientID)
+        {
+            foreach (Package p in DataSource.packagh)
+                if (p.id == pID)
+                    if (p.sender == clientID)
+                    {
+                        foreach (Client c in DataSource.cli)
+                            if (c.ID == p.receiver)
+                                return c;
+                    }
+                    else if (p.receiver == clientID)
+                    {
+                        foreach (Client c in DataSource.cli)
+                            if (c.ID == p.sender)
+                                return c;
+                    }
+                    else throw new DAL.exceptions.DO.DALException("there is no package in this client");
+            throw new DAL.exceptions.DO.DALException("there is no package in this client");
+
+
         }
         /// <summary>
         /// return location of ranomaly station
@@ -551,7 +609,7 @@ namespace Dal
             c.quadocopterID = q.id;
             DataSource.charge.Remove(c);
         }
-        double GetDistance(Location l1, Location l2)
+        public double GetDistance(Location l1, Location l2)
         {
             return Math.Sqrt(Math.Pow(l1.latitude - l2.latitude, 2) + Math.Pow(l1.longitude - l2.longitude, 2));
         }

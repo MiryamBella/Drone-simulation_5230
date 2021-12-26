@@ -25,5 +25,10 @@ namespace PL
             InitializeComponent();
             bl = ibl;
         }
+        public Package(BlApi.IBL ibl, BO.Package p)
+        {
+            InitializeComponent();
+            bl = ibl;
+        }
     }
 }

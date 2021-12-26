@@ -31,7 +31,9 @@
 
         <!--2 buttons: 1)close, 1) add new qua.-->
         <Canvas>
-            <Button x:Name="CloseWindow" Content="X" Background="Red" Width="20" Height="20" Canvas.Left="2" Canvas.Top="2"                    Click="CloseWindow_Click"/>
+            <Button x:Name="CloseWindow" Content="X" Background="Red" Width="20" Height="20" Canvas.Left="2" Canvas.Top="2"
+                    Click="CloseWindow_Click"/>
+
             <Button Content="Add new Quadocopter" Background="BlueViolet" Width="150" Height="50"  Canvas.Bottom="8" Canvas.Right="55"
                     Click="Button_addNewQ"/>
         </Canvas>
@@ -42,7 +44,10 @@
             <ComboBoxItem Content="maintenance" />
             <ComboBoxItem Content="delivery" />
             <ComboBoxItem Name="defult" Content="none" />
-        </ComboBox>        <TextBlock Text="Quadocopter whait:" Grid.Row="0" Grid.Column="2"/>        <ComboBox x:Name="Quadocopter_whait" Grid.Row="1" Grid.Column="2">
+        </ComboBox>
+
+        <TextBlock Text="Quadocopter whait:" Grid.Row="0" Grid.Column="2"/>
+        <ComboBox x:Name="Quadocopter_whait" Grid.Row="1" Grid.Column="2">
             <ComboBoxItem Content="easy" />
             <ComboBoxItem Content="middle" />
             <ComboBoxItem Content="hevy" />
@@ -55,6 +60,8 @@
         <WrapPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <!--<ListBox x:Name="q_list" SelectionMode="Single"  ItemsSource="{Binding}"/>-->
             <ListView x:Name="q_list" MouseDoubleClick="MouseDoubleClick_showQ"/>
-        </WrapPanel>        
+        </WrapPanel>
+        
+
     </Grid>
 </Window>

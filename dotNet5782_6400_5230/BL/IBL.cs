@@ -10,7 +10,7 @@ namespace BlApi
         #region add
         public void AddBaseStation(int id, string name, double lon, double lat, int numCharge);
         public void AddQuadocopter(int id, string moodle, int weight, int id_bs);
-        public void AddClient(int id, string name, int phoneNumber, double lon, double lat);
+        public void AddClient(int id, string name, double lon, double lat, int phoneNumber);
         public void AddPackage(int id_sender, int id_colecter, int weight, int priority);
         #endregion
 
@@ -50,5 +50,6 @@ namespace BlApi
 
         public BO.Quadocopter cover(BO.QuadocopterToList ql);
         public BO.QuadocopterToList cover(BO.Quadocopter q);
+        public BO.Client cover(BO.ClientToList c);
     }
 }

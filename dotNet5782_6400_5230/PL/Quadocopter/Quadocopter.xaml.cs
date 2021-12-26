@@ -25,6 +25,7 @@ namespace PL
         {
             bl = ibl;
             InitializeComponent();
+            #region initialize;
             Title = "add a quadocopter";//Data adjustment to this constructor(hidden the shows of the second constuctor)
             showID.Visibility = Visibility.Hidden;
             showWeight.Visibility = Visibility.Hidden;
@@ -42,11 +43,13 @@ namespace PL
                 newItem.Content = q.ID;
                 ID_baseStation.Items.Add(newItem);
             }
+            #endregion;
         }
         public Quadocopter(BlApi.IBL ibl, BO.QuadocopterToList q)//for view of quadocopter
         {
             bl = ibl;
             InitializeComponent();
+            #region initialize;
             Title = "quadocopter" + q.ID; //Data adjustment to this constructor(hidden the shows of the second constuctor)
             enterID.Visibility = Visibility.Hidden;
             enterWeight.Visibility = Visibility.Hidden;
@@ -71,6 +74,7 @@ namespace PL
             else showState.Text = "delivery";
             showLatitude.Text = q.thisLocation.latitude.ToString();
             showLongitude.Text = q.thisLocation.longitude.ToString();
+            #endregion;
         }
 
         private void writedID(object sender, RoutedEventArgs e)

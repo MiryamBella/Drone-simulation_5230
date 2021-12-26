@@ -17,7 +17,7 @@ namespace BlApi
             q_list = cover_to_our_list(help_list);
 
         }
-
+        #region add base station
         public void AddBaseStation(int id, string name, double lon, double lat, int numCharge)
         {
             if (id <= 0)
@@ -35,6 +35,8 @@ namespace BlApi
 
             dal.AddBaseStation(id, name, numCharge, lon, lat);
         }
+        #endregion;
+        #region add qudocopter;
         public void AddQuadocopter(int id, string moodle, int weight, int id_bs)
         {
             if (id <= 0 || id_bs <=0)
@@ -68,7 +70,9 @@ namespace BlApi
 
             q_list.Add(q);
         }
-        public void AddClient(int id, string name, int phoneNumber, double lon, double lat) ///adding new client
+        #endregion;
+        #region add client;
+        public void AddClient(int id, string name, double lon, double lat, int phoneNumber) ///adding new client
         {
             if (id <= 99999999 || id>999999999)
                 throw new BLException("Invalid id.");
@@ -85,6 +89,8 @@ namespace BlApi
 
             dal.AddClient(id, name, phoneNumber, lon, lat);
         }
+        #endregion;
+        #region add package;
         /// <summary>
         /// adding new package.
         /// </summary>
@@ -102,6 +108,7 @@ namespace BlApi
 
             dal.AddPackage(id_sender, id_colecter, weight, priority);
         }
+        #endregion;
 
     }
 }

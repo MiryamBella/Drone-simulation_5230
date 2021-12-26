@@ -18,8 +18,8 @@ namespace BO
             public int phoneNumber { get; set; }
             public location thisLocation { get; set; }
             
-            public List<Package> packageFrom = new List<Package>();
-            public List<Package> packageTo = new List<Package>();
+            public List<PackageInClient> packageFrom = new List<PackageInClient>();
+            public List<PackageInClient> packageTo = new List<PackageInClient>();
             public override string ToString()
             {
                 return ("ID: " + ID + '\n' +
