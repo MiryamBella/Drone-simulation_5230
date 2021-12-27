@@ -70,6 +70,18 @@ namespace PL
                 MessageBox.Show("Error! " + ex.Message);
             }
         }
+        private void listPackage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ListOfPackage l = new ListOfPackage(bl);
+                l.Show();
+            }
+            catch (BO.BLException ex)
+            {
+                MessageBox.Show("Error! " + ex.Message);
+            }
+        }
         
 
     }

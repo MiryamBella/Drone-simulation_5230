@@ -7,6 +7,113 @@
         mc:Ignorable="d"
         Title="Package" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
+        <!--The title-->
+        <TextBlock Text="PACKAGE:" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
+                 FontSize="22" FontWeight="Bold" TextDecorations="Underline" TextAlignment="Center"
+                 />
+        <TextBlock x:Name="ID" HorizontalAlignment="Right" 
+                   Grid.Row="1"  Grid.Column="0" Text="ID:" TextWrapping="Wrap" 
+                   VerticalAlignment="Center" Height="25" Width="70"/>
+        <TextBox x:Name="enterID" TextWrapping="Wrap" 
+                 Grid.Row="1" Grid.Column="1" MaxLength="9"
+                 TextChanged ="writedID" HorizontalAlignment="Center"
+                 Height="25" Width="120"/>
+        <TextBlock x:Name="showID" TextWrapping="Wrap" 
+                 Grid.Row="1" Grid.Column="1"
+                 HorizontalAlignment="Center"
+                 Height="25" Width="120" Visibility="Hidden"/>
+        <TextBlock x:Name="checkID" HorizontalAlignment="Center"  Text="Invalid id"
+                   Grid.Row="1" Grid.Column="2" TextWrapping="Wrap" 
+                   Height="25" Width="120"
+                   Visibility="Hidden"/>
+
+        <TextBlock x:Name="sender" HorizontalAlignment="Right" 
+                   Text="ID of sender:" TextWrapping="Wrap" VerticalAlignment="Center" 
+                   Height="25" Width="70" Grid.Row="2" Grid.Column="0"/>
+        <TextBox x:Name="enterSender" HorizontalAlignment="Center" 
+                  VerticalAlignment="center" Grid.Row="2" Grid.Column="1" 
+                  Height="25" Width="120" TextChanged="writedSender"/>
+        <TextBlock x:Name="showSender" HorizontalAlignment="Center" 
+                   Grid.Row="2" Grid.Column="1" Text="" TextWrapping="Wrap" 
+                   Height="25" Width="120"
+                   Visibility="Hidden"/>
+        <TextBlock x:Name="checkSender" HorizontalAlignment="Center" 
+                   Grid.Row="2" Grid.Column="2" Text="invalid ID" TextWrapping="Wrap" 
+                   Height="25" Width="120"
+                   Visibility="Hidden"/>
+        <TextBlock x:Name="receiver" HorizontalAlignment="Right" 
+                   Grid.Row="3"  Grid.Column="0" Text="ID of receiver:"
+                   TextWrapping="Wrap" VerticalAlignment="Center" />
+        <TextBox x:Name="enterReceiver" Grid.Row="3" Grid.Column="1"
+                  TextWrapping="Wrap" Height="25" Width="120"
+                  TextChanged ="writedReceiver" />
+        <TextBlock x:Name="showReceiver" HorizontalAlignment="Center" 
+                   Grid.Row="3" Grid.Column="1" Text="" TextWrapping="Wrap" 
+                   Height="25" Width="120"
+                   Visibility="Hidden"/>
+        <TextBlock x:Name="checkReceiver" HorizontalAlignment="Center" 
+                   Grid.Row="3" Grid.Column="2" Text="invalid ID" TextWrapping="Wrap" 
+                   Height="25" Width="120"
+                   Visibility="Hidden"/>
+        <TextBlock x:Name="weight" HorizontalAlignment="Right" 
+                   Text="weight:" TextWrapping="Wrap" VerticalAlignment="Center" 
+                   Height="25" Width="70" Grid.Row="4" Grid.Column="0"/>
+        <ComboBox x:Name="enterWeight" HorizontalAlignment="Center" 
+                  VerticalAlignment="center" Grid.Row="4" Grid.Column="1" 
+                  Height="25" Width="120" 
+                  SelectionChanged="enterWeight_SelectionChanged" >
+            <ComboBoxItem x:Name="heavy" Content="heavy"/>
+            <ComboBoxItem x:Name="middle" Content="middle"/>
+            <ComboBoxItem x:Name="easy" Content="easy"/>
+        </ComboBox>
+        <TextBlock x:Name="showWeight" HorizontalAlignment="Center" 
+                  VerticalAlignment="center" Grid.Row="4" Grid.Column="1" 
+                  Height="25" Width="120" Text="TextBlock" TextWrapping="Wrap" 
+                  Visibility="Hidden" />
         
+        <TextBlock x:Name="priority" HorizontalAlignment="Right" 
+                   Grid.Row="5"  Grid.Column="0" Text="priority:" TextWrapping="Wrap" 
+                   VerticalAlignment="Center" Height="15" Width="70"/>
+        <ComboBox x:Name="enterPriority" HorizontalAlignment="Center" 
+                  VerticalAlignment="center" Grid.Row="5" Grid.Column="1" 
+                  Height="25" Width="120" 
+                  SelectionChanged="enterPriority_SelectionChanged" >
+            <ComboBoxItem x:Name="reggular" Content="reggular"/>
+            <ComboBoxItem x:Name="fast" Content="fast"/>
+            <ComboBoxItem x:Name="emergency" Content="emergency"/>
+        </ComboBox>
+        <TextBlock x:Name="showPriority" HorizontalAlignment="Center" 
+                  VerticalAlignment="center" Grid.Row="5" Grid.Column="1" 
+                  Height="25" Width="120" Text="TextBlock" TextWrapping="Wrap"
+                  Visibility="Hidden"/>
+
+        <Button x:Name="add" Click="adding" Background="LawnGreen"
+                HorizontalAlignment="Left" Margin="47,0,0,0" Grid.Row="6" Grid.Column="2" 
+                VerticalAlignment="Center" Height="34" Width="171" Grid.ColumnSpan="2" 
+                Content="Add the client" />
+        <!--<Button x:Name="update" Click="updating" Background="LawnGreen"
+                HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="6" Grid.Column="2" 
+                VerticalAlignment="Top" Height="34" Width="172" Grid.ColumnSpan="2" 
+                Content="update the client" Visibility="Hidden" />-->
+
     </Grid>
 </Window>

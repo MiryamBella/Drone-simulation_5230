@@ -95,18 +95,14 @@ namespace BlApi
         /// adding new package.
         /// </summary>
         /// <returns>The pacjagh ID we add.</returns>
-        public void AddPackage(int id_sender, int id_colecter, int weight, int priority)
+        public void AddPackage(int id, int id_sender, int id_colecter, WeighCategories weight, Priorities priority)
         {
             if (id_sender <= 99999999 || id_sender > 999999999)
                 throw new BLException("Invalid id.");
-            if(id_colecter <= 99999999 || id_colecter > 999999999)
+            if (id_colecter <= 99999999 || id_colecter > 999999999)
                 throw new BLException("Invalid id.");
-            if (weight != 1 && weight != 2 && weight != 3)
-                throw new BLException("Weight must to be 1, 2, or 3.");
-            if (priority != 1 && priority != 2 && priority != 0)
-                throw new BLException("Priority must to be 1, 2, or 0.");
 
-            dal.AddPackage(id_sender, id_colecter, weight, priority);
+            dal.AddPackage(id, id_sender, id_colecter, (int)weight, (int)priority);
         }
         #endregion;
 

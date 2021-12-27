@@ -227,6 +227,10 @@ namespace BlApi
 
             return new_p;
         }
+        public Package cover(PackageToList p)
+        {
+            return new Package() { ID = p.ID };
+        }
         #endregion
 
         #region cover qudocopter
