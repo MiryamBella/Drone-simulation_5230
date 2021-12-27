@@ -81,7 +81,7 @@ namespace PL
         }
         #endregion
 
-        #region add client;
+        #region add package;
         private void adding(object sender, RoutedEventArgs e)
         {
             try
