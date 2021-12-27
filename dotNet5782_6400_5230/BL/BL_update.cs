@@ -9,7 +9,7 @@ namespace BlApi
 {
     public partial class BL
     {
-        #region updateQdata;
+        #region update Q data;
         /// <updataQdata>
         /// update the modle of a qudocopter
         /// <int, string>
@@ -24,11 +24,18 @@ namespace BlApi
                     flag = true;
                     break;
                 }
-            if (!flag) throw new BLException("there is no qudocopter with this ID");
-            else dal.updateQd(id, modle); //update the data by the dalObject
+            try
+            {
+                if (!flag) throw new BLException("there is no qudocopter with this ID");
+                else dal.updateQd(id, modle); //update the data by the dalObject
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
         #endregion;
-        #region updataBSdata;
+        #region updata BS data;
         /// <summary>
         /// update the name of the station or the number of its charging positions
         /// </summary>
@@ -41,7 +48,7 @@ namespace BlApi
             dal.updateSdata(id, name, chargingPositions); //update the data by sending to the dalObject
         }
         #endregion;
-        #region updateCdata;
+        #region update Client data;
         /// <summary>
         /// update the name or the phone number of the client
         /// </summary>
@@ -56,7 +63,7 @@ namespace BlApi
             dal.updateCdata(id, name, phone);
         }
         #endregion;
-        #region sendQtoCharge;
+        #region send Q to Charge;
         /// update qudocopter to be send to a charging position
         public void sendQtoChrge(int id)
         {

@@ -103,6 +103,7 @@ namespace Dal
                     finded = true;
                     newQ = q;
                     DataSource.qpter.Remove(q);
+                    break;
                 }
             if (finded)
             {
@@ -222,6 +223,7 @@ namespace Dal
                     finded = true;
                     newC = c;
                     DataSource.cli.Remove(c);
+                    break;
                 }
             if (finded)
             {

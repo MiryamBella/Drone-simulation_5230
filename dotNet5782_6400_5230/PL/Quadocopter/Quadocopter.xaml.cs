@@ -176,5 +176,25 @@ namespace PL
             MessageBox.Show(q.thisPackage.ToString());
         }
 
+        private void CloseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void uppdate_Click(object sender, RoutedEventArgs e)
+        {
+            int id = int.Parse(showID.Text);
+            try
+            {
+                if (enterModel.Text == null)
+                    throw new Exception("ERROR: invalid modle.");
+                bl.updateQdata(id, enterModel.Text);
+                MessageBox.Show("update complete.");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

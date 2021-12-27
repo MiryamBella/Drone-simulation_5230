@@ -42,8 +42,13 @@ namespace PL
         private void Button_addNewC(object sender, RoutedEventArgs e)
         {
             Client c = new Client(bl);
-            this.Close();
             c.ShowDialog();
+
+            //reset the list.
+            myCollection.Clear();
+            foreach (BO.ClientToList cl in bl.ListOfClients())
+                myCollection.Add(cl);
+
         }
 
         public void addQfromWindowQ(BO.ClientToList c)
