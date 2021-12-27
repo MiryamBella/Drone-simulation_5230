@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Manager" Height="450" Width="800">
 
-    <Grid ShowGridLines ="True" Background="Aqua">
+    <Grid ShowGridLines ="False" Background="Aqua">
         <Grid.ColumnDefinitions >
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="2*"/>
@@ -21,11 +21,11 @@
         </Grid.RowDefinitions>
         <!--backgruond-->
         <TextBlock Grid.Row="0" Grid.Column="0" Background ="Gold" Grid.ColumnSpan="2"/>
-        
+
         <TextBlock Text="WLCOME MANAGER!" HorizontalAlignment="Center" VerticalAlignment="Center"
                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="50" FontWeight="Bold"
                    />
-        
+
         <TextBlock x:Name="a" Text="press the button to manage our data:" Grid.Row="1" Grid.Column="0"/>
         <Button Content="quadocopters" Background="GreenYellow" Grid.Column="0" Grid.Row="1" 
                 HorizontalAlignment="Center" VerticalAlignment="Center" Height="45"
@@ -37,6 +37,6 @@
                 Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" 
                 Height="45" Width="155" />
 
-        <Image Width="450" Height="350" Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" Source="/images/Quadcopter_camera_drone_in_flight.jpg" Margin="66,22,67,23" />
+        <Image Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" Source="/images/manage2r.png" Margin="65,27,-10,-20" />
     </Grid>
 </Window>

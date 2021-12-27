@@ -100,6 +100,7 @@ namespace Dal
                     finded = true;
                     newQ = q;
                     DataSource.qpter.Remove(q);
+                    break;
                 }
             if (finded)
             {

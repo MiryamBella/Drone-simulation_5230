@@ -8,7 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
 
 
-    <Grid ShowGridLines ="True" Background="Aqua">
+    <Grid ShowGridLines ="False" Background="Aqua">
         <Grid.ColumnDefinitions >
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="2*"/>
@@ -40,6 +40,6 @@
                 Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" 
                 Height="45" Width="155" />
 
-        <Image Width="450" Height="350" Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" Source="/images/Quadcopter_camera_drone_in_flight.jpg" Margin="66,22,67,23" />
+        <Image Grid.Column="1" Grid.RowSpan="4" Source="/images/Quadcopter_camera_drone_in_flight.jpg" Margin="38,58,17,0" />
     </Grid>
 </Window>

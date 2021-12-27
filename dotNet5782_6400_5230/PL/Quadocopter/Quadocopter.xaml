@@ -24,6 +24,15 @@
             <ColumnDefinition Width="*"/>
 
         </Grid.ColumnDefinitions>
+
+
+        <Canvas>
+            <Button x:Name="CloseWindow" Content="X" Background="Red" Width="20" Height="20" Canvas.Left="2" Canvas.Top="2"
+                    Click="CloseWindow_Click"/>
+
+        </Canvas>
+
+
         <TextBlock Text="QUADOCOPTER" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
                  FontSize="22" FontWeight="Bold" TextDecorations="Underline" TextAlignment="Center"
                  />
@@ -155,14 +164,18 @@
                    Grid.Row="4" Grid.Column="5" Text="invalid input" 
                    TextWrapping="Wrap" Height="25" Width="120"
                    Visibility="Hidden"/>
-        <Button x:Name="addQ" Click="adding"
+        <Button x:Name="addQ" Click="adding" Background="LawnGreen"
                 HorizontalAlignment="Left" Margin="29,0,0,0" Grid.Row="5" Grid.Column="2" 
                 VerticalAlignment="Center" Height="34" Width="171" Grid.ColumnSpan="2" 
                 Content="add the qudocopter" />
-        <Button x:Name="showPackage" Click="showPackage_Click"
+        <Button x:Name="showPackage" Click="showPackage_Click" Background="Coral"
                 HorizontalAlignment="Left" Margin="29,0,0,0" Grid.Row="5" Grid.Column="2"
                 VerticalAlignment="Center" Height="34" Width="171" Grid.ColumnSpan="2" 
-                Content="show the package in q" Visibility="Hidden"
-                />
+                Content="show the package in q" Visibility="Hidden"/>
+        <Button x:Name="uppdate" Click="uppdate_Click" Background="Yellow"
+                Grid.Row="5" Grid.Column="0" 
+                Height="34" Width="171" Grid.ColumnSpan="2" 
+                Content="update the qudocopter" />
+
     </Grid>
 </Window>
