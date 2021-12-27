@@ -44,10 +44,6 @@ namespace PL
                 messge_minNum.Text = "Enter only numbers.";
         }
 
-        private void CloseWindow_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
 
         private void Button_addNewBS(object sender, RoutedEventArgs e)
         {
@@ -109,6 +105,11 @@ namespace PL
                 ViewBaseStation bs_w = new ViewBaseStation(bl, bs);
                 //Close();
                 bs_w.ShowDialog();
+
+                //reset the data if the user update.
+                myCollection.Clear();
+                foreach (BO.BaseStationToList b in bl.ListOfBaseStations())
+                    myCollection.Add(b);
             }
             catch (BO.BLException ex)
             {
@@ -116,5 +117,10 @@ namespace PL
             }
 
         }
+        private void CloseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }

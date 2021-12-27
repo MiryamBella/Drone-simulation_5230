@@ -31,7 +31,11 @@
                  FontSize="22" FontWeight="Bold" TextDecorations="Underline" TextAlignment="Center"
                  />
         
-        
+        <!--button close-->
+        <Canvas>
+            <Button x:Name="CloseWindow" Content="X" Background="Red" Width="20" Height="20" Canvas.Left="2" Canvas.Top="2"                    Click="CloseWindow_Click"/>        </Canvas>
+
+
         <TextBlock x:Name="ID" HorizontalAlignment="Right" 
                    Grid.Row="1"  Grid.Column="0" Text="ID:" TextWrapping="Wrap" 
                    VerticalAlignment="Center" Height="25" Width="70"/>

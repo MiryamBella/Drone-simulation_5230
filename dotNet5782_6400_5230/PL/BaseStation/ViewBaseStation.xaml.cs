@@ -28,10 +28,14 @@ namespace PL
             var b = bl.baseStationDisplay(bs.ID);
             showID.Text = b.ID.ToString();//data adjusment to this qudocopters data
             showName.Text = b.name;
+            update_name.Text = b.name;
+
             showLat.Text = b.thisLocation.latitude.ToString();
             showLon.Text = b.thisLocation.longitude.ToString();
-            showNumCharging.Text = b.freeChargingPositions.ToString();
             show_location_six.Text = b.thisLocation.toBaseSix.LocationSix(b.thisLocation.latitude, b.thisLocation.longitude).ToString();
+
+            showNumCharging.Text = b.freeChargingPositions.ToString();
+            uppdate_numCharge.Text = b.freeChargingPositions.ToString();
 
             try
             {
@@ -105,11 +109,15 @@ namespace PL
         {
             try
             {
-                if (checkNumCharging.IsEnabled || update_name.Text==null)
+                if (checkNumCharging.Visibility==Visibility.Visible || update_name.Text==null)
                     throw new Exception("ERROR! chek if all the data are corect.");
                 string name = update_name.Text;
                 int numCh = int.Parse(uppdate_numCharge.Text);
                 bl.updateSdata(int.Parse(showID.Text), name, numCh);
+
+                //reset the data.
+                showName.Text = update_name.Text;
+                showNumCharging.Text = uppdate_numCharge.Text;
 
                 updateBS_notchange_Click(null, null);
             }
@@ -131,7 +139,16 @@ namespace PL
             updateBS_change.Visibility = Visibility.Hidden;
             updateBS_notchange.Visibility = Visibility.Hidden;
 
+            //reset the data.
+            update_name.Text = showName.Text;
+            uppdate_numCharge.Text = showNumCharging.Text;
         }
         #endregion
+
+        private void CloseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }

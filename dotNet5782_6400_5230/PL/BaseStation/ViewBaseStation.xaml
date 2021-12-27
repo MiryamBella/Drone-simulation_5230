@@ -32,6 +32,10 @@
                  FontSize="22" FontWeight="Bold" TextDecorations="Underline" TextAlignment="Center"
                  />
 
+        <!--button close-->
+        <Canvas>
+            <Button x:Name="CloseWindow" Content="X" Background="Red" Width="20" Height="20" Canvas.Left="2" Canvas.Top="2"                    Click="CloseWindow_Click"/>        </Canvas>
+
 
         <TextBlock x:Name="ID" HorizontalAlignment="Right" FontWeight="Bold" FontSize="10"
                    Grid.Row="1"  Grid.Column="0" Text="ID:" TextWrapping="Wrap" 
@@ -49,7 +53,7 @@
         <TextBox x:Name="update_name"  HorizontalAlignment="Center" Background="Yellow"
                   VerticalAlignment="center" Grid.Row="2" Grid.Column="1" 
                   Height="25" Width="120" TextWrapping="Wrap" Visibility="Hidden" />
-        
+
         <TextBlock x:Name="lon" HorizontalAlignment="Right" FontWeight="Bold" FontSize="10" 
                    Text="Longitude:" TextWrapping="Wrap" VerticalAlignment="Center" 
                    Height="25" Width="70" Grid.Row="3" Grid.Column="0"/>
@@ -92,12 +96,12 @@
                    Height="25" Width="120"  Visibility="Hidden"/>
 
 
-        <TextBlock Grid.Row="0" Grid.Column="3" Text="Select the quadocopter you want to see."/>
+        <TextBlock Grid.Column="2" Text="Select the drone you want to see." Grid.ColumnSpan="3" Margin="107,44,107,10" Grid.RowSpan="2"/>
         <ComboBox x:Name="list_q" Grid.Row="1" Grid.Column="3" VerticalAlignment="Bottom">
         </ComboBox>
         <Button x:Name="chargeQ" Click="chergeQ_Click" Content="Show the quadocopter who is in charge" Background="Orange"
                 Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Height="34" Width="250"/>
-         
+
         <!--uppdate-->
         <Button x:Name="updateBS" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Click="updateBS_Click"
                 HorizontalAlignment="Center" VerticalAlignment="Center" Content="Uppdate this base station"/>

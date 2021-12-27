@@ -200,6 +200,7 @@ namespace Dal
                     finded = true;
                     newBS = bs;
                     DataSource.bstion.Remove(bs);
+                    break;
                 }
             if (finded)
             {
