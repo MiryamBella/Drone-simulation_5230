@@ -62,6 +62,7 @@ namespace Dal
         public void AddPackage(int id, int sender, int colecter, int weight, int priority)
         {
             Package p = new Package();
+
             p.sender = sender;
             p.receiver = colecter;
             if (weight == 1)

@@ -167,7 +167,7 @@ namespace BlApi
             new_p.weight = (WeighCategories)p.weight;
 
             //get the client receiver end the client sender.
-            List<DO.Client> c_l = new List<DO.Client>();
+            IEnumerable<DO.Client> c_l = dal.ListOfClients();
             bool exist_cs = false;
             bool exist_cr = false;
             foreach (DO.Client c in c_l)
@@ -175,12 +175,12 @@ namespace BlApi
                 if (c.ID == p.receiver)
                 {
                     new_p.receiver = cover(c);
-                    exist_cr = false;
+                    exist_cr = true;
                 }
                 if (c.ID == p.receiver)
                 {
                     new_p.sender = cover(c);
-                    exist_cs = false;
+                    exist_cs = true;
                 }
             }
             if ((!exist_cr) || (!exist_cs))
@@ -188,18 +188,22 @@ namespace BlApi
 
             //get the q.
             bool exist = false;
-            foreach (QuadocopterToList q in q_list)
+            if (p.time_Belong_quadocopter != null)
             {
-                if (q.packageNumber == new_p.ID)
+                foreach (QuadocopterToList q in q_list)
                 {
-                    exist = true;
-                    new_p.q.ID = q.ID;
-                    new_p.q.thisLocation = q.thisLocation;
-                    new_p.q.battery = q.battery;
+                    if (q.ID == p.idQuadocopter)
+                    {
+                        exist = true;
+                        new_p.q = new QuadocopterInPackage() { ID = q.ID, thisLocation = q.thisLocation, battery = q.battery };
+                        break;
+                    }
                 }
+                if (!exist)
+                    throw new BLException("this q isnt exist");
             }
-            if (!exist)
-                new_p.q=null;
+            else new_p.q = null;
+            
 
             return new_p;
         }
