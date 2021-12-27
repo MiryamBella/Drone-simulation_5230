@@ -173,6 +173,8 @@
                 Grid.Row="5" Grid.Column="0" 
                 Height="34" Width="171" Grid.ColumnSpan="2" 
                 Content="update the qudocopter" />
+        <Button x:Name="charge"  Click="charge_Click" Content="send to charge"
+                Width="100" Height="50" Grid.Column="5" Grid.Row="1"/>
 
     </Grid>
 </Window>

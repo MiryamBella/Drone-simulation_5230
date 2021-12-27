@@ -16,9 +16,10 @@ namespace Dal
         internal static List<Package> packagh = new List<Package>();
 
         /// <summary>
-        /// list of all the quadocopter that are charging.
+        /// List of all the quadocopter that are charging.
+        /// This for the funcs "SendQtoCharging" and "ReleaseQfromCharging".
         /// </summary>
-        internal static List<Charging> charge;//the for the funcs "SendQtoCharging" and "ReleaseQfromCharging".
+        internal static List<Charging> charge=new List<Charging>();
         internal class Config
         {
             internal static int runNum = 0;//for the id packagh.
@@ -45,8 +46,8 @@ namespace Dal
             int x = r.Next(1000);
             b.chargingPositions = x;
             b.freechargingPositions = x;
-            b.longitude = r.Next();
-            b.latitude = r.Next();
+            b.longitude = r.Next(10);
+            b.latitude = r.Next(10);
             b.toBaseSix = new BaseSixtin();
             b.decSix = new DmsLocation();
             b.decSix = b.toBaseSix.LocationSix(b.latitude, b.longitude);
@@ -59,14 +60,14 @@ namespace Dal
             x = r.Next(1000);
             baseStation.chargingPositions = x;
             baseStation.freechargingPositions = x;
-            baseStation.longitude = r.Next();
-            baseStation.latitude = r.Next();
+            baseStation.longitude = r.Next(10);
+            baseStation.latitude = r.Next(10);
             baseStation.toBaseSix = new BaseSixtin();
             baseStation.decSix = new DmsLocation();
             baseStation.decSix = baseStation.toBaseSix.LocationSix(baseStation.latitude, baseStation.longitude);
             bstion.Add(baseStation);
             #endregion
-            #region *Quadocopter
+            #region Quadocopter
             Quadocopter qa = new Quadocopter();//1
             qa.id = 100;
             qa.moodle = "a";
@@ -98,8 +99,6 @@ namespace Dal
             qd.id = 103;
             qd.moodle = "d";
             qd.weight = (WeighCategories)r.Next(0, 3);
-            ///qd.battery = r.Next(0, 101);
-            ///qd.mode = (statusOfQ)r.Next(0, 3);
             qpter.Add(qd);
 
             Quadocopter qe = new Quadocopter();//5
@@ -119,8 +118,8 @@ namespace Dal
                 c.ID = (int)(i * 100000000);
                 c.name = getRandomName(i);
                 c.phoneNumber = r.Next(100000000, 999999999);
-                c.latitude = r.Next();
-                c.longitude = r.Next();
+                c.latitude = r.Next(10);
+                c.longitude = r.Next(10);
                 cli.Add(c);
             }
 

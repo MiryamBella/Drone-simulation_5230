@@ -123,46 +123,30 @@ namespace Dal
                 if (DataSource.bstion[i].IDnumber == bID)
                 {
                     if (DataSource.bstion[i].freechargingPositions <= 0)
-                        throw new Exception("There is no place to charge in this base station.");
+                        throw new DALException("There is no place to charge in this base station.");
                     BaseStation b = DataSource.bstion[i];
                     b.freechargingPositions--;
                     DataSource.bstion[i] = b;
                     break;
                 }
-            //bool exist = false;
-            ////i did normal for and not forheach becose i need the object himself and not iteretor of the object.
-            //for (int i = 0; i < DataSource.qpter.Count; i++)
-            //        if (DataSource.qpter[i].id == bID)
-            //        {
-            //            DataSource.qpter[i].startCharge = DateTime.Now;
-            //            exist = true;
-            //        }
-            //if (!exist)
-            //    throw new Exception("the drone not exist.");
+            bool exist = false;
+            //i did normal for and not forheach becose i need the object himself and not iteretor of the object.
+            for (int i = 0; i < DataSource.qpter.Count; i++)
+                if (DataSource.qpter[i].id == bID)
+                {
+                    Quadocopter q = DataSource.qpter[i];
+                    q.startCharge = DateTime.Now;
+                    DataSource.qpter[i] = q;
+                    exist = true;
+                }
+            if (!exist)
+                throw new DALException("the drone not exist.");
 
             Charging c = new Charging(); // add a charging
             c.baseStationID = bID;
             c.quadocopterID = qID;
             DataSource.charge.Add(c);                
         }
-        /* Charging c = new Charging();
-         foreach(BaseStation b in DataSource.bstion)
-         {
-             if (b.IDnumber == bID) ///find the base station
-             { 
-                 foreach(Quadocopter q in DataSource.qpter)
-                 {
-                     if (q.id == qID)///find the quadocopter.
-                     {
-                         SendQtoCharging_doingThat(b, q, c);
-                         return;
-                     }
-                 }
-                 throw new DALException("The ID of the quadocopter not exist.");
-             }
-         }
-         throw new DALException("The ID of the base station not exist.");
-     }*/
         /// <summary>
         /// release te quadocopter frp charging.
         /// </summary>
@@ -278,7 +262,7 @@ namespace Dal
         }
         #endregion;
 
-       
+        #region lists
         public List<Charging> GetChargings()
         {
             return DataSource.charge;
@@ -465,6 +449,7 @@ namespace Dal
                    where p.receiver == id
                    select p;
         }
+        #endregion
         public double[] askForElectric()//the quadocopter ask.
         {
             double[] arry = new double[5];

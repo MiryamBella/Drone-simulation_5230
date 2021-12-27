@@ -20,7 +20,7 @@ namespace PL
     public partial class Quadocopter : Window
     {
         BlApi.IBL bl;
-        BO.Quadocopter newQ = new BO.Quadocopter();
+        BO.Quadocopter localQ = new BO.Quadocopter();
         public Quadocopter(BlApi.IBL ibl) //for adding quadocopter
         {
             bl = ibl;
@@ -38,7 +38,7 @@ namespace PL
             showLatitude.Visibility = Visibility.Hidden;
             showPackage.Visibility = Visibility.Hidden;//hidde the button
             uppdate.Visibility = Visibility.Hidden;
-
+            charge.Visibility = Visibility.Hidden;
 
             ///enter the ID of the base station in our data.
             foreach (var q in bl.ListOfBaseStations())
@@ -64,6 +64,7 @@ namespace PL
             enterLongitude.Visibility = Visibility.Hidden;
             addQ.Visibility=Visibility.Hidden;
             uppdate.Visibility = Visibility.Visible;
+            charge.Visibility = Visibility.Visible;
 
             //if the drone dont have packes so hiide the butun of the packes.
             if (q.packageNumber>0)
@@ -84,6 +85,15 @@ namespace PL
             else showState.Text = "delivery";
             showLatitude.Text = q.thisLocation.latitude.ToString();
             showLongitude.Text = q.thisLocation.longitude.ToString();
+
+            ///set the data to the local drone.
+            localQ = bl.cover(q);
+            if (q.mode == BO.statusOfQ.maintenance)
+                charge.Content = "relese from charge";
+            else if (q.mode == BO.statusOfQ.available)
+                charge.Content = "send to charge";
+            else
+                charge.Visibility = Visibility.Hidden;
             #endregion;
         }
 
@@ -92,18 +102,18 @@ namespace PL
         {
             int id;
             if (int.TryParse(enterID.Text, out id))
-                newQ.ID = id;
+                localQ.ID = id;
             else checkID.Visibility = Visibility.Visible;
         }
         private void enterWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (enterWeight.SelectedItem == heavy) newQ.weight = BO.WeighCategories.hevy;
-            if (enterWeight.SelectedItem == middle) newQ.weight = BO.WeighCategories.middle;
-            else newQ.weight = BO.WeighCategories.easy;
+            if (enterWeight.SelectedItem == heavy) localQ.weight = BO.WeighCategories.hevy;
+            if (enterWeight.SelectedItem == middle) localQ.weight = BO.WeighCategories.middle;
+            else localQ.weight = BO.WeighCategories.easy;
         }
         private void writedModel(object sender, RoutedEventArgs e)
         {
-            newQ.moodle = enterModel.Text;
+            localQ.moodle = enterModel.Text;
         }
         //private void writedBattery(object sender, RoutedEventArgs e)
         //{
@@ -113,7 +123,7 @@ namespace PL
         //        checkBattery2.Visibility = Visibility.Hidden;
         //        if (b <= 100 && b >= 0) 
         //        { 
-        //            newQ.battery = b;
+        //            localQ.battery = b;
         //            checkBattery.Visibility = Visibility.Hidden;
         //        }
         //        else checkBattery.Visibility = Visibility.Visible;
@@ -122,16 +132,16 @@ namespace PL
         //}
         //private void enterState_SelectionChanged(object sender, SelectionChangedEventArgs e)
         //{
-        //    if (enterState.SelectedItem == available) newQ.mode = BO.statusOfQ.available;
-        //    if (enterState.SelectedItem == maintenance) newQ.mode = BO.statusOfQ.maintenance;
-        //    else newQ.mode = BO.statusOfQ.delivery;
+        //    if (enterState.SelectedItem == available) localQ.mode = BO.statusOfQ.available;
+        //    if (enterState.SelectedItem == maintenance) localQ.mode = BO.statusOfQ.maintenance;
+        //    else localQ.mode = BO.statusOfQ.delivery;
         //}
         private void writedLatitude(object sender, RoutedEventArgs e)
         {
             double l;
             if (double.TryParse(enterLatitude.Text, out l))
             {
-                newQ.thisLocation.latitude = l;
+                localQ.thisLocation.latitude = l;
                 checkLatitude.Visibility = Visibility.Hidden;
             }
             else checkLatitude.Visibility = Visibility.Visible;
@@ -141,7 +151,7 @@ namespace PL
             double l;
             if (double.TryParse(enterLongitude.Text, out l))
             {
-                newQ.thisLocation.longitude = l;
+                localQ.thisLocation.longitude = l;
                 checkLongitude.Visibility = Visibility.Hidden;
             }
             else checkLongitude.Visibility = Visibility.Visible;
@@ -162,8 +172,8 @@ namespace PL
                 if (ID_bs_text.Text == null || enterModel.Text == null ||
                     enterLatitude.Text == null || enterLongitude.Text == null)
                     throw new Exception("ERROR: you miss some data to enter.");
-                newQ.battery = 100;
-                bl.AddQuadocopter(newQ.ID, newQ.moodle, (int)newQ.weight, int.Parse(ID_baseStation.Text.ToString()));
+                localQ.battery = 100;
+                bl.AddQuadocopter(localQ.ID, localQ.moodle, (int)localQ.weight, int.Parse(ID_baseStation.Text.ToString()));
                 ListOfQ l = new ListOfQ(bl);
                 this.Close();
                 l.Show();
@@ -199,6 +209,33 @@ namespace PL
                     throw new Exception("ERROR: invalid modle.");
                 bl.updateQdata(id, enterModel.Text);
                 MessageBox.Show("update complete.");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void charge_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                switch (localQ.mode)
+                {
+                    case BO.statusOfQ.available:
+                        bl.sendQtoChrge(localQ.ID);
+                        charge.Content = "relese from charge";
+                        localQ.mode = BO.statusOfQ.maintenance;
+                        break;
+                    case BO.statusOfQ.maintenance:
+                        bl.releaseQfromChrge(localQ.ID);
+                        charge.Content = "send to charge";
+                        localQ.mode = BO.statusOfQ.available;
+                        break;
+                    default:
+                        throw new Exception("The drone cant go to send or to relese.");
+                        break;
+                }
             }
             catch(Exception ex)
             {

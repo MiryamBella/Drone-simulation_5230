@@ -77,32 +77,33 @@ namespace BlApi
             }
         }
         #endregion;
-        #region send Q to Charge;
+        #region send/release Q to Charge;
         /// update qudocopter to be send to a charging position
         public void sendQtoChrge(int id)
         {
             bool flag = false;
-            QuadocopterToList q = new QuadocopterToList();//i search the qudocopter in the q_list
+            //i search the qudocopter in the q_list
+            QuadocopterToList q = new QuadocopterToList(); 
             foreach (QuadocopterToList i in q_list)
                 if (i.ID == id)
                 {
                     flag = true;
                     q = i;
+                    break;
                 }
             //integrity checking
             if (!flag) throw new BLException("Id not found.");
             if (q.mode != statusOfQ.available) throw new BLException("the quadocopter is not available");
-            //check if it have enough battery to go to base station
-            //dalL= location in type dal
+            //'dalL'= location in type dal
 
             try
             {
-
+                //check if it have enough battery to go to base station
                 DO.Location dalL = new DO.Location() { longitude = q.thisLocation.longitude, latitude = q.thisLocation.latitude };
                 DO.BaseStation b = dal.searchCloseEmptyStation(dalL);//b is the closest base station to out location
                 double distance = GetDistance(coverLtoL(dalL), new location() { longitude = b.longitude, latitude = b.latitude });
                 int minBattery = (int)(distance * dal.askForElectric()[0]);// we allredy chek that q is avilable so we put index 0
-                if (q.battery < minBattery) Console.WriteLine("there is no enough battery to");
+                if (q.battery < minBattery) throw new BLException("there is no enough battery to");
 
                 dal.SendQtoCharging(b.IDnumber, q.ID);//update the data at the dal
 
@@ -118,17 +119,15 @@ namespace BlApi
                 throw new BLException(ex.Message);
             }
         }
-        #endregion;
-        #region release Q fron Charge;
         /// <summary>
         /// update qudocopter to be released from a charging positions
         /// </summary>
-        public void releaseQfromChrge(int id, double hours)
+        public void releaseQfromChrge(int id)
         {
             if (id <= 0)
                 throw new BLException("Invalid id.");
-            if (hours < 0)
-                throw new BLException("Number of hours must to be positive.");
+            //if (hours < 0)
+            //    throw new BLException("Number of hours must to be positive.");
             bool flag = false;
             QuadocopterToList q = new QuadocopterToList();//i search the qudocopter in the q_list
             foreach (QuadocopterToList i in q_list)
@@ -142,6 +141,9 @@ namespace BlApi
 
             try
             {
+                double hours = 0;
+                DateTime t= dal.QuDisplay(id).startCharge;
+                hours = (t - DateTime.Now).TotalHours;
                 if (q.mode != statusOfQ.maintenance) throw new BLException("this q not in maintenance.");
                 q.mode = statusOfQ.available;
                 q.battery += (int)(dal.askForElectric()[4] * hours);
