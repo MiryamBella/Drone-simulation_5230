@@ -219,6 +219,7 @@ namespace Dal
                     finded = true;
                     newC = c;
                     DataSource.cli.Remove(c);
+                    break;
                 }
             if (finded)
             {

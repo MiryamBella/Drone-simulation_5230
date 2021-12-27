@@ -38,8 +38,7 @@ namespace Dal
         {
             //i reset the arrys.
             Random r = new Random();
-
-            /*base station*/
+            #region base station
             BaseStation b = new BaseStation();//1
             b.IDnumber = 100;
             b.name = "Jerusalem";
@@ -66,8 +65,8 @@ namespace Dal
             baseStation.decSix = new DmsLocation();
             baseStation.decSix = baseStation.toBaseSix.LocationSix(baseStation.latitude, baseStation.longitude);
             bstion.Add(baseStation);
-
-            /*Quadocopter*/
+            #endregion
+            #region *Quadocopter
             Quadocopter qa = new Quadocopter();//1
             qa.id = 100;
             qa.moodle = "a";
@@ -111,15 +110,15 @@ namespace Dal
             ///qe.battery = r.Next(0, 101);
             ///qe.mode = (statusOfQ)r.Next(0, 3);
             qpter.Add(qe);
-
+            #endregion
 
             /*client*/
-            for (int i = 0; i < 10; i++)
+            for (int i = 1; i <= 10; i++)
             {
                 Client c = new Client();
                 c.ID = (int)(i * 100000000);
                 c.name = getRandomName(i);
-                c.phoneNumber = r.Next();
+                c.phoneNumber = r.Next(100000000, 999999999);
                 c.latitude = r.Next();
                 c.longitude = r.Next();
                 cli.Add(c);

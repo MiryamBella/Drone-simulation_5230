@@ -101,9 +101,9 @@ namespace PL
                 double lat = double.Parse(enterLon.Text);
                 int phone = int.Parse(enterPhoneNumber.Text);
                 bl.AddClient(id, name, lon, lat, phone);
-                ListOfClients l = new ListOfClients(bl);
+                //ListOfClients l = new ListOfClients(bl);
                 this.Close();
-                l.Show();
+                //l.Show();
             }
             catch (Exception ex)
             {
@@ -123,9 +123,10 @@ namespace PL
                 string name = enterName.Text;
                 int phone = int.Parse(enterPhoneNumber.Text);
                 bl.updateCdata(id, name, phone);
-                ListOfClients l = new ListOfClients(bl);
-                this.Close();
-                l.Show();
+                MessageBox.Show("uppdate complete.");
+                //ListOfClients l = new ListOfClients(bl);
+                //this.Close();
+                //l.Show();
             }
             catch (Exception ex)
             {
