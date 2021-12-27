@@ -318,7 +318,7 @@ namespace ConsoleUI_BL
             temp_str = Console.ReadLine();
             double time = double.Parse(temp_str);
 
-            program.bl.releaseQfromChrge(id, time);
+            program.bl.releaseQfromChrge(id);
         }
         /// <summary>
         /// update package to be belong to a quadocopter.
