@@ -13,7 +13,8 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
@@ -35,6 +36,9 @@
                 Height="45" Width="155" />
         <Button Content="client" Click="listClient_Click" Background="GreenYellow"
                 Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                Height="45" Width="155" />
+        <Button Content="package" Click="listPackage_Click" Background="GreenYellow"
+                Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" 
                 Height="45" Width="155" />
 
         <Image Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" Source="/images/manage2r.png" Margin="65,27,-10,-20" />
