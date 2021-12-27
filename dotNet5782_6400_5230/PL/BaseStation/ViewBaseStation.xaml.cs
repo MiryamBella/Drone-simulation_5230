@@ -74,11 +74,22 @@ namespace PL
         }
 
         #region uppdate
+        private void writedNumCharge(object sender, TextChangedEventArgs e)
+        {
+            int num;
+            if (int.TryParse(uppdate_numCharge.Text, out num) && int.Parse(uppdate_numCharge.Text) >= 0)
+                checkNumCharging.Visibility = Visibility.Hidden;
+            else checkNumCharging.Visibility = Visibility.Visible;
+        }
+
+
         private void updateBS_Click(object sender, RoutedEventArgs e)
         {
             ///show the boxs to write the new data.
             update_name.Visibility = Visibility.Visible;
+            update_name.Text = showName.Text;
             uppdate_numCharge.Visibility = Visibility.Visible;
+            uppdate_numCharge.Text = showNumCharging.Text;
             //hide the box of the old data.
             showName.Visibility = Visibility.Hidden;
             showNumCharging.Visibility = Visibility.Hidden;
@@ -88,13 +99,6 @@ namespace PL
             updateBS_notchange.Visibility = Visibility.Visible;
         }
 
-        private void writedNumCharge(object sender, TextChangedEventArgs e)
-        {
-            int num;
-            if (int.TryParse(uppdate_numCharge.Text, out num) && int.Parse(uppdate_numCharge.Text) >= 0)
-                checkNumCharging.Visibility = Visibility.Hidden;
-            else checkNumCharging.Visibility = Visibility.Visible;
-        }
 
 
         private void updateBS_change_Click(object sender, RoutedEventArgs e)

@@ -162,7 +162,7 @@ namespace PL
                 if (ID_bs_text.Text == null || enterModel.Text == null ||
                     enterLatitude.Text == null || enterLongitude.Text == null)
                     throw new Exception("ERROR: you miss some data to enter.");
-
+                newQ.battery = 100;
                 bl.AddQuadocopter(newQ.ID, newQ.moodle, (int)newQ.weight, int.Parse(ID_baseStation.Text.ToString()));
                 ListOfQ l = new ListOfQ(bl);
                 this.Close();

@@ -35,6 +35,15 @@ namespace PL
                 myCollection.Add(bs);
             bs_list.ItemsSource = myCollection;
         }
+
+        private void numCharghingPosition_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int x;
+            bool h = int.TryParse(numCharghingPosition.Text, out x);
+            if (!h)
+                messge_minNum.Text = "Enter only numbers.";
+        }
+
         private void CloseWindow_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -45,22 +54,6 @@ namespace PL
             BaseStation bs = new BaseStation(bl);
             this.Close();
             bs.ShowDialog();
-        }
-
-        private void MouseDoubleClick_showBS(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                BO.BaseStationToList bs = (BO.BaseStationToList)bs_list.SelectedItem;
-                ViewBaseStation bs_w = new ViewBaseStation(bl, bs);
-                //Close();
-                bs_w.ShowDialog();
-            }
-            catch (BO.BLException ex)
-            {
-                MessageBox.Show("Error! " + ex.Message);
-            }
-
         }
 
         private void Button_refreshe(object sender, RoutedEventArgs e)
@@ -79,11 +72,11 @@ namespace PL
             //            B)if the mode didnt select:
             //                    do nothing becose we all redy cleen the list to the original list.
             #endregion
-            //get the select of the weigh.
-            if (numCharghingPosition.SelectionLength > 0)
+            //get the select of the number of charging posotions.
+            if (numCharghingPosition.Text != null && int.Parse(numCharghingPosition.Text) > 0)
             {
-                int minNum = int.Parse(numCharghingPosition.Text);
-                myCollection.Clear();
+                    int minNum = int.Parse(numCharghingPosition.Text);
+                    myCollection.Clear();
                 IEnumerable<BO.BaseStationToList> list = from BO.BaseStationToList bs in bl.ListOfBaseStations()
                                                          where bs.busyChargingPositions + bs.freeChargingPositions >= minNum
                                                          select bs;
@@ -96,6 +89,7 @@ namespace PL
                 foreach (BO.BaseStationToList bs in bl.ListOfBaseStations())
                     myCollection.Add(bs);
             }
+
             if (freeCharghingPosition.IsChecked.Value)
             {
                 IEnumerable<BO.BaseStationToList> list = (from BO.BaseStationToList bs in myCollection
@@ -107,12 +101,20 @@ namespace PL
             }
         }
 
-        private void numCharghingPosition_TextChanged(object sender, TextChangedEventArgs e)
+        private void MouseDoubleClick_showBS(object sender, MouseButtonEventArgs e)
         {
-            int x;
-            bool h = int.TryParse(numCharghingPosition.Text, out x);
-            if (!h)
-                messge_minNum.Text="Enter only numbers.";
+            try
+            {
+                BO.BaseStationToList bs = (BO.BaseStationToList)bs_list.SelectedItem;
+                ViewBaseStation bs_w = new ViewBaseStation(bl, bs);
+                //Close();
+                bs_w.ShowDialog();
+            }
+            catch (BO.BLException ex)
+            {
+                MessageBox.Show("Error! " + ex.Message);
+            }
+
         }
     }
 }

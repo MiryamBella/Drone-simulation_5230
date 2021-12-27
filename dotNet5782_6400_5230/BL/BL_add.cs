@@ -69,6 +69,7 @@ namespace BlApi
             if (weight == 1) q.weight = WeighCategories.easy;
             else if (weight == 2) q.weight = WeighCategories.middle;
             else q.weight = WeighCategories.hevy;
+            q.battery = 100;
             q.ID= id;
 
             q_list.Add(q);
