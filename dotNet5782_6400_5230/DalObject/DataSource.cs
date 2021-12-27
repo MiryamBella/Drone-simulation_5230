@@ -132,11 +132,11 @@ namespace Dal
                 Package p = new Package();
                 p.id = Config.runNum;
                 Config.runNum++;
-                p.sender = r.Next(100000000, 999999999);
-                p.receiver = r.Next(100000000, 999999999);
+                p.sender = cli[r.Next(0, cli.Count)].ID;
+                p.receiver = cli[r.Next(0, cli.Count)].ID;
                 p.weight = (WeighCategories)r.Next(0, 3);
                 p.priority = (Priorities)r.Next(0, 3);
-                p.idQuadocopter = r.Next(100, 104);
+                p.idQuadocopter = 0;
                 p.time_Belong_quadocopter = null;
                 p.time_ColctedFromSender = null;
                 p.time_ComeToColcter = null;

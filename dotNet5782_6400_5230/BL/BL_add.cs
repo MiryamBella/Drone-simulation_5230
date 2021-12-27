@@ -101,11 +101,19 @@ namespace BlApi
         public void AddPackage(int id, int id_sender, int id_colecter, WeighCategories weight, Priorities priority)
         {
             if (id_sender <= 99999999 || id_sender > 999999999)
-                throw new BLException("Invalid id.");
+                throw new BLException("Invalid sender id.");
             if (id_colecter <= 99999999 || id_colecter > 999999999)
-                throw new BLException("Invalid id.");
-
-            dal.AddPackage(id, id_sender, id_colecter, (int)weight, (int)priority);
+                throw new BLException("Invalid receiver id.");
+            bool isSender = false, isReceiver = false;
+            foreach (DO.Client c in dal.ListOfClients())
+            {
+                if (c.ID == id_sender) isSender = true;
+                if (c.ID == id_colecter) isReceiver = true;
+                if (isSender && isReceiver) break;
+            }
+            if (!isSender || !isReceiver)
+                throw new BLException("this sender or receiver not exist");
+                dal.AddPackage(id, id_sender, id_colecter, (int)weight, (int)priority);
         }
         #endregion;
 
