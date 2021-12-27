@@ -386,10 +386,14 @@ namespace Dal
             //    if ((int)ql.weight <= (int)weigh)
             //        l.Add(ql);
             //}
-
-            return from q in DataSource.qpter
-                   where (int)q.weight <= (int)weigh
-                   select q;
+            List<Quadocopter> list = new List<Quadocopter>();
+            var temp = (from q in DataSource.qpter
+                        where (int)q.weight <= (int)weigh
+                        select q).ToList();
+            foreach (var q in DataSource.qpter)
+                if(q.weight >=weigh)
+                    list.Add(q);
+            return list;
         }
 
         /// <summary>

@@ -44,29 +44,32 @@ namespace BlApi
             if(weight != 1 && weight != 2 && weight!= 3)
                 throw new BLException("Weight must to be 1, 2, or 3.");
 
-            List<BaseStation> temp = cover_to_our_list(dal.ListOfStations());
+            ///chek if the id of the base station exist.
             bool chek = false;
-            BaseStation bs_with_q = new BaseStation();
-            foreach (BaseStation b in temp)
+            QuadocopterToList q = new QuadocopterToList();//the new q i will add.
+            foreach (DO.BaseStation b in dal.ListOfStations())
             {
-                if (b.ID == id_bs)
+                if (b.IDnumber == id_bs)
                 {
                     chek = true;
-                    bs_with_q = b;
+                    q.thisLocation.latitude = b.latitude;
+                    q.thisLocation.longitude = b.longitude;
                     break;
                 }
             }
             if(!chek)
                 throw new BLException("The base station not exist.");
+            ///chek if the id of the quadocopter exist.
+            foreach (DO.Quadocopter qu in dal.ListOfQ())
+                if (qu.id == id)
+                    throw new BLException("The ID ollredy exist.");
 
             dal.AddQuadocopter(id, moodle, weight);
-            QuadocopterToList q = new QuadocopterToList();
             q.moodle = moodle;
             if (weight == 1) q.weight = WeighCategories.easy;
             else if (weight == 2) q.weight = WeighCategories.middle;
             else q.weight = WeighCategories.hevy;
             q.ID= id;
-            q.thisLocation = bs_with_q.thisLocation;
 
             q_list.Add(q);
         }

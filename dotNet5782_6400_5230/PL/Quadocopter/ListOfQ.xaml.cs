@@ -53,7 +53,7 @@ namespace PL
         private void Button_addNewQ(object sender, RoutedEventArgs e)
         {
             Quadocopter q = new Quadocopter(bl);
-            //this.Close();
+            this.Close();
             q.ShowDialog();
         }
 

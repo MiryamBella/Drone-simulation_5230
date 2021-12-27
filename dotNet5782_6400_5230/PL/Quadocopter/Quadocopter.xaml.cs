@@ -29,15 +29,19 @@ namespace PL
             Title = "add a quadocopter";//Data adjustment to this constructor(hidden the shows of the second constuctor)
             showID.Visibility = Visibility.Hidden;
             showWeight.Visibility = Visibility.Hidden;
+            battery.Visibility = Visibility.Hidden;
             showBattery.Visibility = Visibility.Hidden;
             showID_baseStation.Visibility = Visibility.Hidden;
+            state.Visibility = Visibility.Hidden;
             showState.Visibility = Visibility.Hidden;
             showLongitude.Visibility = Visibility.Hidden;
             showLatitude.Visibility = Visibility.Hidden;
-            showPackage.Visibility = Visibility.Hidden;//show the button
+            showPackage.Visibility = Visibility.Hidden;//hidde the button
+            uppdate.Visibility = Visibility.Hidden;
+
 
             ///enter the ID of the base station in our data.
-            foreach(var q in bl.ListOfBaseStations())
+            foreach (var q in bl.ListOfBaseStations())
             {
                 ComboBoxItem newItem = new ComboBoxItem();
                 newItem.Content = q.ID;
@@ -53,22 +57,28 @@ namespace PL
             Title = "quadocopter" + q.ID; //Data adjustment to this constructor(hidden the shows of the second constuctor)
             enterID.Visibility = Visibility.Hidden;
             enterWeight.Visibility = Visibility.Hidden;
-            enterBattery.Visibility = Visibility.Hidden;
+            //enterBattery.Visibility = Visibility.Hidden;
             ID_baseStation.Visibility = Visibility.Hidden;
-            enterState.Visibility = Visibility.Hidden;
+            //enterState.Visibility = Visibility.Hidden;
             enterLatitude.Visibility = Visibility.Hidden;
             enterLongitude.Visibility = Visibility.Hidden;
             addQ.Visibility=Visibility.Hidden;
-            if(q.packageNumber>0)
+            uppdate.Visibility = Visibility.Visible;
+
+            //if the drone dont have packes so hiide the butun of the packes.
+            if (q.packageNumber>0)
                 showPackage.Visibility = Visibility.Visible;
 
             showID.Text = q.ID.ToString();//data adjusment to this qudocopters data
+
             if (q.weight == BO.WeighCategories.easy) showWeight.Text = "easy";
             else if (q.weight == BO.WeighCategories.middle) showWeight.Text = "middle";
             else showWeight.Text = "heavy";
+
             enterModel.Text = q.moodle;
             showBattery.Text = q.battery.ToString();
             showID_baseStation.Text = ID_baseStation.Text;
+
             if (q.mode == BO.statusOfQ.available) showState.Text = "available";
             else if (q.mode == BO.statusOfQ.maintenance) showState.Text = "maintence";
             else showState.Text = "delivery";
@@ -95,27 +105,27 @@ namespace PL
         {
             newQ.moodle = enterModel.Text;
         }
-        private void writedBattery(object sender, RoutedEventArgs e)
-        {
-            int b;
-            if (int.TryParse(enterBattery.Text, out b))
-            {
-                checkBattery2.Visibility = Visibility.Hidden;
-                if (b <= 100 && b >= 0) 
-                { 
-                    newQ.battery = b;
-                    checkBattery.Visibility = Visibility.Hidden;
-                }
-                else checkBattery.Visibility = Visibility.Visible;
-            }
-            else checkBattery2.Visibility = Visibility.Visible;
-        }
-        private void enterState_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (enterState.SelectedItem == available) newQ.mode = BO.statusOfQ.available;
-            if (enterState.SelectedItem == maintenance) newQ.mode = BO.statusOfQ.maintenance;
-            else newQ.mode = BO.statusOfQ.delivery;
-        }
+        //private void writedBattery(object sender, RoutedEventArgs e)
+        //{
+        //    int b;
+        //    if (int.TryParse(enterBattery.Text, out b))
+        //    {
+        //        checkBattery2.Visibility = Visibility.Hidden;
+        //        if (b <= 100 && b >= 0) 
+        //        { 
+        //            newQ.battery = b;
+        //            checkBattery.Visibility = Visibility.Hidden;
+        //        }
+        //        else checkBattery.Visibility = Visibility.Visible;
+        //    }
+        //    else checkBattery2.Visibility = Visibility.Visible;
+        //}
+        //private void enterState_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (enterState.SelectedItem == available) newQ.mode = BO.statusOfQ.available;
+        //    if (enterState.SelectedItem == maintenance) newQ.mode = BO.statusOfQ.maintenance;
+        //    else newQ.mode = BO.statusOfQ.delivery;
+        //}
         private void writedLatitude(object sender, RoutedEventArgs e)
         {
             double l;
@@ -145,16 +155,15 @@ namespace PL
                 /*checking if evrything is ok with the input.*/
                 ///if the user put wrong data.
                 if (checkID.Visibility == Visibility.Visible || checkLongitude.Visibility == Visibility.Visible
-                    || checkLongitude.Visibility == Visibility.Visible || checkBattery.Visibility == Visibility.Visible ||
-                    checkBattery2.Visibility == Visibility.Visible || enterWeight.SelectedItem==null || 
-                    enterState.SelectedItem == null || ID_baseStation.SelectedItem == null)
+                    || checkLongitude.Visibility == Visibility.Visible || enterWeight.SelectedItem==null || 
+                    ID_baseStation.SelectedItem == null)
                     throw new Exception("ERROR! chek if all the data are corect.");
                 ///if the user didnt put all the nessery data.
-                if (ID_bs_text.Text == null || enterModel.Text == null || enterBattery.Text == null ||
+                if (ID_bs_text.Text == null || enterModel.Text == null ||
                     enterLatitude.Text == null || enterLongitude.Text == null)
                     throw new Exception("ERROR: you miss some data to enter.");
 
-                bl.AddQuadocopter(newQ.ID, newQ.moodle, (int)newQ.weight, int.Parse(ID_baseStation.SelectedItem.ToString()));
+                bl.AddQuadocopter(newQ.ID, newQ.moodle, (int)newQ.weight, int.Parse(ID_baseStation.Text.ToString()));
                 ListOfQ l = new ListOfQ(bl);
                 this.Close();
                 l.Show();

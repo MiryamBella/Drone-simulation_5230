@@ -7,12 +7,12 @@
         mc:Ignorable="d"
         Title="ListOfQ" Height="450" Width="800">
 
-    <Window.Resources>
+    <!--<Window.Resources>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="FontWeight" Value="Heavy"/>
         </Style>
-    </Window.Resources>
+    </Window.Resources>-->
     <!--<Grid x:Name="MainGrid" ShowGridLines ="True">-->  
 
     <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
@@ -54,7 +54,8 @@
             <ComboBoxItem Content="none" />
         </ComboBox>
 
-        <Button Content="refreshe" Grid.Row="2" Grid.Column="2" Width="100" Height="50" Background="Yellow" Click="Button_refreshe"/>
+        <Button Content="refreshe" Click="Button_refreshe"
+                Grid.Row="2" Grid.Column="2" Width="100" Height="50" Background="Yellow" />
 
             
         <WrapPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">

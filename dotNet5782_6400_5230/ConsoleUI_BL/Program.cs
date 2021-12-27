@@ -167,7 +167,7 @@ namespace ConsoleUI_BL
             helpSTR = Console.ReadLine();
             int priority = int.Parse(helpSTR);
 
-            program.bl.AddPackage(id_send, id_colect, weigh, priority);
+            //program.bl.AddPackage(id_send, id_colect, weigh, priority);
         }
 
         #endregion

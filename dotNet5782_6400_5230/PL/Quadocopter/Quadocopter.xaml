@@ -29,7 +29,6 @@
         <Canvas>
             <Button x:Name="CloseWindow" Content="X" Background="Red" Width="20" Height="20" Canvas.Left="2" Canvas.Top="2"
                     Click="CloseWindow_Click"/>
-
         </Canvas>
 
 
@@ -65,6 +64,7 @@
         <TextBlock x:Name="showWeight" HorizontalAlignment="Center" 
                   VerticalAlignment="center" Grid.Row="2" Grid.Column="1" 
                   Height="25" Width="120" Text="TextBlock" TextWrapping="Wrap" />
+        
         <TextBlock x:Name="model" HorizontalAlignment="Right" 
                    Text="model:" TextWrapping="Wrap" VerticalAlignment="Center" 
                    Height="25" Width="70" Grid.Row="3" Grid.Column="0"/>
@@ -76,35 +76,29 @@
         <TextBlock x:Name="battery" HorizontalAlignment="Right" 
                    Grid.Row="4"  Grid.Column="0" Text="battery:" TextWrapping="Wrap" 
                    VerticalAlignment="Center" Height="15" Width="70"/>
-
-        <TextBox x:Name="enterBattery" TextWrapping="Wrap" 
+        <!--<TextBox x:Name="enterBattery" TextWrapping="Wrap" 
                  Grid.Row="4" Grid.Column="1"
                  HorizontalAlignment="Center"  
                  Height="25" Width="120"
-                 TextChanged ="writedBattery"/>
+                 TextChanged ="writedBattery"/>-->
         <TextBlock x:Name="showBattery" HorizontalAlignment="Center" 
                    Grid.Row="4" Grid.Column="1" 
                    Text="TextBlock" TextWrapping="Wrap" 
                    Height="25" Width="120"  />
-        <TextBlock x:Name="checkBattery" HorizontalAlignment="Center" 
+        <!--<TextBlock x:Name="checkBattery" HorizontalAlignment="Center" 
                    Grid.Row="4" Grid.Column="2" Text="enter number between 0 and 100 (%)" 
                    TextWrapping="Wrap" Height="35" Width="120"
                    Visibility="Hidden"/>
         <TextBlock x:Name="checkBattery2" HorizontalAlignment="Center" 
                    Grid.Row="4" Grid.Column="2" Text="invalid input" 
                    TextWrapping="Wrap" Height="25" Width="120"
-                   Visibility="Hidden"/>
+                   Visibility="Hidden"/>-->
+        
         <TextBlock x:Name="ID_bs_text" HorizontalAlignment="Right" 
                    Grid.Row="1"  Grid.Column="3" Text="base station ID:" TextWrapping="Wrap" 
-                   VerticalAlignment="Center" Height="25" Width="90"
-                  />
+                   VerticalAlignment="Center" Height="25" Width="90"/>
         <ComboBox x:Name="ID_baseStation" Grid.Row="1" Grid.Column="4" 
                  Height="25" Width="120" HorizontalAlignment="Center"/>
-        <!--<TextBlock x:Name="ID_baseStation_show" 
-                 Grid.Row="1" Grid.Column="4"
-                 HorizontalAlignment="Center"
-                 Height="25" Width="120"
-                  />-->
         <TextBlock x:Name="showID_baseStation" HorizontalAlignment="Center" 
                    Grid.Row="1" Grid.Column="4" 
                    Text="TextBlock" TextWrapping="Wrap" 
@@ -119,51 +113,54 @@
                    Grid.Row="1" Grid.Column="5" Text="invalid input" 
                    TextWrapping="Wrap" Height="25" Width="120"
                    Visibility="Hidden"/>-->
+        <TextBlock x:Name="latitude" HorizontalAlignment="Right" 
+                   Text="latitude:" TextWrapping="Wrap" VerticalAlignment="Center" 
+                   Height="25" Width="70" Grid.Row="2" Grid.Column="3"/>
+        <TextBox x:Name="enterLatitude" HorizontalAlignment="center" 
+                   Text="" TextWrapping="Wrap" VerticalAlignment="Center" 
+                   Height="25" Width="120" Grid.Row="2" Grid.Column="4"
+                   TextChanged="writedLatitude"/>
+        <TextBlock x:Name="showLatitude" HorizontalAlignment="Center" 
+                  VerticalAlignment="center" Grid.Row="2" Grid.Column="4" 
+                  Height="25" Width="120" Text="TextBlock" TextWrapping="Wrap" />
+        <TextBlock x:Name="checkLatitude" HorizontalAlignment="Center" 
+                   Grid.Row="2" Grid.Column="5" Text="invalid input" 
+                   TextWrapping="Wrap" Height="25" Width="120"
+                   Visibility="Hidden"/>
+
+        <TextBlock x:Name="longitude" HorizontalAlignment="Right" 
+                   Grid.Row="3"  Grid.Column="3" Text="longitude:" TextWrapping="Wrap" 
+                   VerticalAlignment="Center" Height="15" Width="70"/>
+        <TextBox x:Name="enterLongitude" TextWrapping="Wrap" 
+                 Grid.Row="3" Grid.Column="4"
+                 HorizontalAlignment="Center"
+                 Height="25" Width="120"
+                 TextChanged ="writedLongitude"/>
+        <TextBlock x:Name="showLongitude" HorizontalAlignment="Center" 
+                   Grid.Row="3" Grid.Column="4" 
+                   Text="TextBlock" TextWrapping="Wrap" 
+                   Height="25" Width="120"  />
+        <TextBlock x:Name="checkLongitude" HorizontalAlignment="Center" 
+                   Grid.Row="3" Grid.Column="5" Text="invalid input" 
+                   TextWrapping="Wrap" Height="25" Width="120"
+                   Visibility="Hidden"/>
+        
         <TextBlock x:Name="state" HorizontalAlignment="Right" 
                    Text="state:" TextWrapping="Wrap" VerticalAlignment="Center" 
-                   Height="25" Width="70" Grid.Row="2" Grid.Column="3"/>
-        <ComboBox x:Name="enterState" HorizontalAlignment="Center" 
+                   Height="25" Width="70" Grid.Row="4" Grid.Column="3"/>
+        <!--<ComboBox x:Name="enterState" HorizontalAlignment="Center" 
                   VerticalAlignment="center" Grid.Row="2" Grid.Column="4" 
                   Height="25" Width="120" SelectionChanged="enterState_SelectionChanged" >
             <ComboBoxItem x:Name="available" Content="available"/>
             <ComboBoxItem x:Name="maintenance" Content="maintenance"/>
             <ComboBoxItem x:Name="deliver" Content="deliver"/>
-        </ComboBox>
+        </ComboBox>-->
         <TextBlock x:Name="showState" HorizontalAlignment="Center" 
-                  VerticalAlignment="center" Grid.Row="2" Grid.Column="4" 
+                  VerticalAlignment="center" Grid.Row="4" Grid.Column="4" 
                   Height="25" Width="120" Text="TextBlock" TextWrapping="Wrap" />
-        <TextBlock x:Name="latitude" HorizontalAlignment="Right" 
-                   Text="latitude:" TextWrapping="Wrap" VerticalAlignment="Center" 
-                   Height="25" Width="70" Grid.Row="3" Grid.Column="3"/>
-        <TextBox x:Name="enterLatitude" HorizontalAlignment="center" 
-                   Text="" TextWrapping="Wrap" VerticalAlignment="Center" 
-                   Height="25" Width="120" Grid.Row="3" Grid.Column="4"
-                   TextChanged="writedLatitude"/>
-        <TextBlock x:Name="showLatitude" HorizontalAlignment="Center" 
-                  VerticalAlignment="center" Grid.Row="3" Grid.Column="4" 
-                  Height="25" Width="120" Text="TextBlock" TextWrapping="Wrap" />
-        <TextBlock x:Name="checkLatitude" HorizontalAlignment="Center" 
-                   Grid.Row="3" Grid.Column="5" Text="invalid input" 
-                   TextWrapping="Wrap" Height="25" Width="120"
-                   Visibility="Hidden"/>
 
-        <TextBlock x:Name="longitude" HorizontalAlignment="Right" 
-                   Grid.Row="4"  Grid.Column="3" Text="longitude:" TextWrapping="Wrap" 
-                   VerticalAlignment="Center" Height="15" Width="70"/>
 
-        <TextBox x:Name="enterLongitude" TextWrapping="Wrap" 
-                 Grid.Row="4" Grid.Column="4"
-                 HorizontalAlignment="Center"
-                 Height="25" Width="120"
-                 TextChanged ="writedLongitude"/>
-        <TextBlock x:Name="showLongitude" HorizontalAlignment="Center" 
-                   Grid.Row="4" Grid.Column="4" 
-                   Text="TextBlock" TextWrapping="Wrap" 
-                   Height="25" Width="120"  />
-        <TextBlock x:Name="checkLongitude" HorizontalAlignment="Center" 
-                   Grid.Row="4" Grid.Column="5" Text="invalid input" 
-                   TextWrapping="Wrap" Height="25" Width="120"
-                   Visibility="Hidden"/>
+
         <Button x:Name="addQ" Click="adding" Background="LawnGreen"
                 HorizontalAlignment="Left" Margin="29,0,0,0" Grid.Row="5" Grid.Column="2" 
                 VerticalAlignment="Center" Height="34" Width="171" Grid.ColumnSpan="2" 
