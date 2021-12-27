@@ -54,10 +54,16 @@ namespace PL
             try
             {
                 if (enterID.Text == null)
-                    throw new Exception("you didnt enter any ID:");
-                int id;
+                {
+                    MessageBox.Show("you didnt enter any ID:");
+                    return;
+                }
+                    int id;
                 if (!(int.TryParse(enterID.Text, out id)))
-                    throw new Exception("invalid ID:");
+                {
+                    MessageBox.Show("invalid ID:"); 
+                    return;
+                }
                 id = int.Parse(enterID.Text);
                 Client c=new Client(bl);
                 bool exist = false;
@@ -70,8 +76,8 @@ namespace PL
                     }
                 if (exist)
                     c.Show();
-                else 
-                    throw new Exception("ERROR: the ID not exist in our data.");
+                else
+                    MessageBox.Show("ERROR: the ID not exist in our data.");
             }
             catch (BO.BLException ex)
             {
