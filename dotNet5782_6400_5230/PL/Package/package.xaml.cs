@@ -31,6 +31,39 @@ namespace PL
         {
             InitializeComponent();
             bl = ibl;
+
+            #region initialize;
+            
+            enterID.Visibility = Visibility.Hidden;
+            enterSender.Visibility = Visibility.Hidden;
+            enterReceiver.Visibility = Visibility.Hidden;
+            enterPriority.Visibility = Visibility.Hidden;
+            enterWeight.Visibility = Visibility.Hidden;
+
+            showID.Text = p.ID.ToString();
+            showSender.Text = p.sender.ID.ToString();
+            showReceiver.Text = p.receiver.ID.ToString();
+            showPriority.Text = p.priority.ToString();
+            showWeight.Text = p.weight.ToString();
+
+            showID.Visibility = Visibility.Visible;
+            showSender.Visibility = Visibility.Visible;
+            showReceiver.Visibility = Visibility.Visible;
+            showPriority.Visibility = Visibility.Visible;
+            showWeight.Visibility = Visibility.Visible;
+
+            if (p.q != null)
+            {
+                showQudocopter.Text = p.q.ID.ToString();
+                qudocopter.Visibility = Visibility.Visible;
+                showQudocopter.Visibility = Visibility.Visible;
+                collect.Visibility = Visibility.Visible;
+                provide.Visibility = Visibility.Visible;
+            }
+
+            add.Visibility = Visibility.Hidden;
+            
+            #endregion;
         }
         #region check input and enter into the new p
 
@@ -92,7 +125,7 @@ namespace PL
                     throw new Exception("ERROR! check if all the data are correct.");
                 
                 bl.AddPackage(p.ID, p.sender.ID, p.receiver.ID, p.weight, p.priority);
-                ListOfClients l = new ListOfClients(bl);
+                ListOfPackage l = new ListOfPackage(bl);
                 this.Close();
                 l.Show();
             }
@@ -102,29 +135,31 @@ namespace PL
             }
         }
         #endregion;
-
-        #region update client;
-        //private void updating(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (checkPhoneNumber.Visibility == Visibility.Visible)
-        //            throw new Exception("ERROR! check if all the data are corect.");
-        //        int id = int.Parse(showID.Text);
-        //        string name = enterName.Text;
-        //        int phone = int.Parse(enterPhoneNumber.Text);
-        //        bl.updateCdata(id, name, phone);
-        //        ListOfClients l = new ListOfClients(bl);
-        //        this.Close();
-        //        l.Show();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //    }
-        //}
+        #region collected;
+        private void colected(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.collectPbyQ(p.ID);
+            }
+            catch (BO.BLException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         #endregion;
-
-        
+        #region provided;
+        private void provided(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.supplyPbyQ(p.ID);
+            }
+            catch (BO.BLException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        #endregion;
     }
 }
