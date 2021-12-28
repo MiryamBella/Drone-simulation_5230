@@ -148,13 +148,6 @@
         <TextBlock x:Name="state" HorizontalAlignment="Right" 
                    Text="state:" TextWrapping="Wrap" VerticalAlignment="Center" 
                    Height="25" Width="70" Grid.Row="4" Grid.Column="3"/>
-        <!--<ComboBox x:Name="enterState" HorizontalAlignment="Center" 
-                  VerticalAlignment="center" Grid.Row="2" Grid.Column="4" 
-                  Height="25" Width="120" SelectionChanged="enterState_SelectionChanged" >
-            <ComboBoxItem x:Name="available" Content="available"/>
-            <ComboBoxItem x:Name="maintenance" Content="maintenance"/>
-            <ComboBoxItem x:Name="deliver" Content="deliver"/>
-        </ComboBox>-->
         <TextBlock x:Name="showState" HorizontalAlignment="Center" 
                   VerticalAlignment="center" Grid.Row="4" Grid.Column="4" 
                   Height="25" Width="120" Text="TextBlock" TextWrapping="Wrap" />
@@ -172,7 +165,7 @@
         <Button x:Name="uppdate" Click="uppdate_Click" Background="Yellow"
                 Grid.Row="5" Grid.Column="0" 
                 Height="34" Width="171" Grid.ColumnSpan="2" 
-                Content="update the qudocopter" />
+                Content="update the model" />
         <Button x:Name="charge"  Click="charge_Click" Content="send to charge"
                 Width="100" Height="50" Grid.Column="5" Grid.Row="1"/>
 

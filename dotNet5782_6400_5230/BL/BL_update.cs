@@ -79,7 +79,7 @@ namespace BlApi
         #endregion;
         #region send/release Q to Charge;
         /// update qudocopter to be send to a charging position
-        public void sendQtoChrge(int id)
+        public int sendQtoChrge(int id)
         {
             bool flag = false;
             //i search the qudocopter in the q_list
@@ -113,6 +113,8 @@ namespace BlApi
                 q.thisLocation.decSix = new DmsLocation();
                 q.thisLocation.toBaseSix = new BaseSixtin();
                 q.mode = statusOfQ.maintenance;
+
+                return q.battery;
             }
             catch(Exception ex)
             {
@@ -122,7 +124,7 @@ namespace BlApi
         /// <summary>
         /// update qudocopter to be released from a charging positions
         /// </summary>
-        public void releaseQfromChrge(int id)
+        public int releaseQfromChrge(int id)
         {
             if (id <= 0)
                 throw new BLException("Invalid id.");
@@ -149,6 +151,7 @@ namespace BlApi
                 q.battery += (int)(dal.askForElectric()[4] * hours);
                 if (q.battery > 100) q.battery = 100;
                 dal.ReleaseQfromCharging(id);
+                return q.battery;
             }
             catch(Exception ex)
             {

@@ -24,7 +24,7 @@ namespace PL
         {
             InitializeComponent();
             bl = ibl;
-            Title = "quadocopter" + bs.ID; //Data adjustment to this constructor(hidden the shows of the second constuctor)
+            Title = "base station: " + bs.ID; //Data adjustment to this constructor(hidden the shows of the second constuctor)
             var b = bl.baseStationDisplay(bs.ID);
             showID.Text = b.ID.ToString();//data adjusment to this qudocopters data
             showName.Text = b.name;
@@ -54,7 +54,7 @@ namespace PL
                     }
 
                 }
-                else MessageBox.Show("There is no quadocopters in charge in this base station.");
+                //else MessageBox.Show("There is no quadocopters in charge in this base station.");
             }
             catch (Exception ex)
             {
@@ -67,14 +67,19 @@ namespace PL
 
         private void chergeQ_Click(object sender, RoutedEventArgs e)
         {
-            if(list_q.SelectedItem==null)
+            try
             {
-                MessageBox.Show("There is no select of a quadocopters, or the base station not charhe any drone.");
-                return;
-            }    
-            BO.Quadocopter q = new BO.Quadocopter();
-            q = bl.QuDisplay(int.Parse(list_q.SelectedItem.ToString()));
-            Quadocopter qpl = new Quadocopter(bl, bl.cover(q));
+                if (list_q.SelectedItem == null)
+                    throw new Exception("There is no select of a quadocopters, or the base station not charhe any drone.");
+                BO.Quadocopter q = new BO.Quadocopter();
+                q = bl.QuDisplay( int.Parse(list_q.Text) );
+                Quadocopter qpl = new Quadocopter(bl, bl.cover(q));
+                qpl.ShowDialog();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         #region uppdate

@@ -19,8 +19,8 @@ namespace BlApi
         public void updateQdata(int id, string modle);
         public void updateSdata(int id, string name = null, int chargingPositions = -1);
         public void updateCdata(int id, string name = null, int phone = -1);
-        public void sendQtoChrge(int id);
-        public void releaseQfromChrge(int id);
+        public int sendQtoChrge(int id);
+        public int releaseQfromChrge(int id);
         public void assignPtoQ(int qID);
         public void collectPbyQ(int qID);
         public void supplyPbyQ(int qID);

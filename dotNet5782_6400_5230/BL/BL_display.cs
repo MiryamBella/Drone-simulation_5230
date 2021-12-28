@@ -196,17 +196,9 @@ namespace BlApi
         }
         public List<BO.QuadocopterToList> ListOfQ()
         {
-            List<QuadocopterToList> q_l = new List<QuadocopterToList>();
 
-            IEnumerable<DO.Quadocopter> stractQ_list = dal.ListOfQ();
-            foreach (DO.Quadocopter q in stractQ_list)
-            {
-                QuadocopterToList temp = new QuadocopterToList();
-                temp = cover_list(q);
-
-                q_l.Add(temp);
-            }
-
+            List<QuadocopterToList> q_l = (from QuadocopterToList q in q_list
+                                           select q).ToList();
             return q_l;
         }
         /// return list of all the packages.
@@ -308,12 +300,11 @@ namespace BlApi
             var dalCharge = dal.GetChargings();//the list of the dal.
             if (dalCharge == null)//chek if there is some q in charge.
                 throw new BLException("There is no quadocopter who is charge.");
-            IEnumerable<DO.Charging>? oldL = from DO.Charging c in dalCharge
+            IEnumerable<DO.Charging> oldL = from DO.Charging c in dalCharge
                         select c;
             foreach (var c in oldL)//put all the q in 'l'.
                 l.Add(new Charging { baseStationID = c.baseStationID, quadocopterID = c.quadocopterID });
             return l;
         }
-
     }
 }

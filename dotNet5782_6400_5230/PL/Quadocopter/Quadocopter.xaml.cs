@@ -78,7 +78,12 @@ namespace PL
 
             enterModel.Text = q.moodle;
             showBattery.Text = q.battery.ToString();
-            showID_baseStation.Text = ID_baseStation.Text;
+            foreach(BO.BaseStationToList b in bl.ListOfBaseStations())
+                if (bl.baseStationDisplay(b.ID).thisLocation == q.thisLocation)
+                {
+                    showID_baseStation.Text = b.ID.ToString();
+                    break;
+                }
 
             if (q.mode == BO.statusOfQ.available) showState.Text = "available";
             else if (q.mode == BO.statusOfQ.maintenance) showState.Text = "maintence";
@@ -223,18 +228,20 @@ namespace PL
                 switch (localQ.mode)
                 {
                     case BO.statusOfQ.available:
-                        bl.sendQtoChrge(localQ.ID);
+                        localQ.battery=bl.sendQtoChrge(localQ.ID);
                         charge.Content = "relese from charge";
                         localQ.mode = BO.statusOfQ.maintenance;
+                        showBattery.Text = localQ.battery.ToString();
                         break;
+
                     case BO.statusOfQ.maintenance:
-                        bl.releaseQfromChrge(localQ.ID);
+                        localQ.battery=bl.releaseQfromChrge(localQ.ID);
                         charge.Content = "send to charge";
                         localQ.mode = BO.statusOfQ.available;
+                        showBattery.Text = localQ.battery.ToString();
                         break;
                     default:
                         throw new Exception("The drone cant go to send or to relese.");
-                        break;
                 }
             }
             catch(Exception ex)

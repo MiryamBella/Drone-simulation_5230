@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BlApi;
-using System.Linq;
+//using System.Linq;
 
 
 namespace PL
