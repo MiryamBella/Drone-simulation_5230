@@ -30,7 +30,7 @@
         <TextBlock Text="PACKAGE:" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
                  FontSize="22" FontWeight="Bold" TextDecorations="Underline" TextAlignment="Center"
                  />
-        <TextBlock x:Name="ID" HorizontalAlignment="Right" 
+        <TextBlock x:Name="ID" HorizontalAlignment="Center" 
                    Grid.Row="1"  Grid.Column="0" Text="ID:" TextWrapping="Wrap" 
                    VerticalAlignment="Center" Height="25" Width="70"/>
         <TextBox x:Name="enterID" TextWrapping="Wrap" 
@@ -46,7 +46,7 @@
                    Height="25" Width="120"
                    Visibility="Hidden"/>
 
-        <TextBlock x:Name="sender" HorizontalAlignment="Right" 
+        <TextBlock x:Name="sender" HorizontalAlignment="Center" 
                    Text="ID of sender:" TextWrapping="Wrap" VerticalAlignment="Center" 
                    Height="25" Width="70" Grid.Row="2" Grid.Column="0"/>
         <TextBox x:Name="enterSender" HorizontalAlignment="Center" 
@@ -60,7 +60,7 @@
                    Grid.Row="2" Grid.Column="2" Text="invalid ID" TextWrapping="Wrap" 
                    Height="25" Width="120"
                    Visibility="Hidden"/>
-        <TextBlock x:Name="receiver" HorizontalAlignment="Right" 
+        <TextBlock x:Name="receiver" HorizontalAlignment="Center" 
                    Grid.Row="3"  Grid.Column="0" Text="ID of receiver:"
                    TextWrapping="Wrap" VerticalAlignment="Center" />
         <TextBox x:Name="enterReceiver" Grid.Row="3" Grid.Column="1"
@@ -74,7 +74,7 @@
                    Grid.Row="3" Grid.Column="2" Text="invalid ID" TextWrapping="Wrap" 
                    Height="25" Width="120"
                    Visibility="Hidden"/>
-        <TextBlock x:Name="weight" HorizontalAlignment="Right" 
+        <TextBlock x:Name="weight" HorizontalAlignment="Center" 
                    Text="weight:" TextWrapping="Wrap" VerticalAlignment="Center" 
                    Height="25" Width="70" Grid.Row="4" Grid.Column="0"/>
         <ComboBox x:Name="enterWeight" HorizontalAlignment="Center" 
@@ -89,8 +89,8 @@
                   VerticalAlignment="center" Grid.Row="4" Grid.Column="1" 
                   Height="25" Width="120" Text="TextBlock" TextWrapping="Wrap" 
                   Visibility="Hidden" />
-        
-        <TextBlock x:Name="priority" HorizontalAlignment="Right" 
+
+        <TextBlock x:Name="priority" HorizontalAlignment="Center" 
                    Grid.Row="5"  Grid.Column="0" Text="priority:" TextWrapping="Wrap" 
                    VerticalAlignment="Center" Height="15" Width="70"/>
         <ComboBox x:Name="enterPriority" HorizontalAlignment="Center" 
@@ -101,19 +101,40 @@
             <ComboBoxItem x:Name="fast" Content="fast"/>
             <ComboBoxItem x:Name="emergency" Content="emergency"/>
         </ComboBox>
-        <TextBlock x:Name="showPriority" HorizontalAlignment="Center" 
-                  VerticalAlignment="center" Grid.Row="5" Grid.Column="1" 
+        <TextBlock x:Name="showPriority" HorizontalAlignment="Right" 
+                  VerticalAlignment="Center" Grid.Row="5" Grid.Column="1" 
                   Height="25" Width="120" Text="TextBlock" TextWrapping="Wrap"
                   Visibility="Hidden"/>
 
         <Button x:Name="add" Click="adding" Background="LawnGreen"
                 HorizontalAlignment="Left" Margin="47,0,0,0" Grid.Row="6" Grid.Column="2" 
                 VerticalAlignment="Center" Height="34" Width="171" Grid.ColumnSpan="2" 
-                Content="Add the client" />
-        <!--<Button x:Name="update" Click="updating" Background="LawnGreen"
-                HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="6" Grid.Column="2" 
-                VerticalAlignment="Top" Height="34" Width="172" Grid.ColumnSpan="2" 
-                Content="update the client" Visibility="Hidden" />-->
+                Content="Add the package" />
+        <TextBlock x:Name="qudocopter" HorizontalAlignment="Right" 
+                   Grid.Row="1" Grid.Column="3" Text="qudocopter ID:" TextWrapping="Wrap" 
+                   Height="25" Width="86" Margin="0,19,0,18"
+                   Visibility="Hidden"/>
+        <TextBlock x:Name="showQudocopter" HorizontalAlignment="Left" 
+                   Grid.Row="1" Grid.Column="4" Text="none" TextWrapping="Wrap" 
+                   Height="25" Width="107" Margin="27,19,0,18" Grid.ColumnSpan="2"
+                   Visibility="Hidden">
+            <TextBlock.OpacityMask>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="#FFBF3434" Offset="1"/>
+                </LinearGradientBrush>
+            </TextBlock.OpacityMask>
+        </TextBlock>
+        <Button x:Name="collect" Click="colected" Background="DeepSkyBlue"
+                HorizontalAlignment="Left"  Grid.Row="3" Grid.Column="3" 
+                VerticalAlignment="Center" Height="34" Width="168" Grid.ColumnSpan="2" 
+                Content="the package was colected" Margin="46,0,0,0" 
+                Visibility="Hidden"/>
+        <Button x:Name="provide" Click="provided" Background="DeepSkyBlue"
+                HorizontalAlignment="Left" Grid.Row="4" Grid.Column="3" 
+                VerticalAlignment="Top" Height="34" Width="168" Grid.ColumnSpan="2" 
+                Content="the package was provided" Margin="46,13,0,0"
+                Visibility="Hidden"/>
 
     </Grid>
 </Window>

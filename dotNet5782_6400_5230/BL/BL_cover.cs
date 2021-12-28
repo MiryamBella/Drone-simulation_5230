@@ -23,10 +23,8 @@ namespace BlApi
 
         List<BaseStation> cover_to_our_list(IEnumerable<DO.BaseStation> old_l)
         {
-            List<BaseStation> new_l = new List<BaseStation>();
-            foreach (DO.BaseStation q in old_l)
-                new_l.Add(cover(q));
-            return new_l;
+            return (from x in old_l
+                   select cover(x)).ToList();
         }
         BaseStation cover(DO.BaseStation b)
         {
@@ -126,22 +124,7 @@ namespace BlApi
         }
         public Client cover(ClientToList cli)
         {
-            Client c = new Client();
-            c.ID = cli.ID; //id
-            c.name = cli.name; //name
-            c.phoneNumber = cli.phoneNumber; //phone
-
-            DO.Client doCli = dal.ClientDisplay(c.ID); //location
-            c.thisLocation.latitude = doCli.latitude;
-            c.thisLocation.longitude = doCli.longitude;
-            c.thisLocation.decSix = new DmsLocation();
-            c.thisLocation.toBaseSix = new BaseSixtin();
-
-            c.packageFrom = (from p in dal.ListOfPackageFrom(c.ID)
-                            select cover(cover(p), c.ID)).ToList();
-            c.packageTo = (from p in dal.ListOfPackageTo(c.ID)
-                           select cover(cover(p), c.ID)).ToList();
-            return c;
+            return cover(dal.ClientDisplay(cli.ID));
         }
         #endregion
 
@@ -149,10 +132,8 @@ namespace BlApi
         //--------cover package---------------------------------------------------
         List<Package> cover_to_our_list(List<DO.Package> old_l)
         {
-            List<Package> new_l = new List<Package>();
-            foreach (DO.Package p in old_l)
-                new_l.Add(cover(p));
-            return new_l;
+            return (from x in old_l
+                    select cover(x)).ToList();
         }
         public Package cover(DO.Package p)
         {
@@ -177,7 +158,7 @@ namespace BlApi
                     new_p.receiver = cover(c);
                     exist_cr = true;
                 }
-                if (c.ID == p.receiver)
+                if (c.ID == p.sender)
                 {
                     new_p.sender = cover(c);
                     exist_cs = true;
@@ -202,9 +183,8 @@ namespace BlApi
                 if (!exist)
                     throw new BLException("this q isnt exist");
             }
-            else new_p.q = null;
-            
-
+            else 
+                new_p.q = null;
             return new_p;
         }
         public PackageInClient cover(Package p, int clientID)
@@ -233,7 +213,7 @@ namespace BlApi
         }
         public Package cover(PackageToList p)
         {
-            return new Package() { ID = p.ID };
+            return cover(dal.PackageDisplay(p.ID));
         }
         #endregion
 

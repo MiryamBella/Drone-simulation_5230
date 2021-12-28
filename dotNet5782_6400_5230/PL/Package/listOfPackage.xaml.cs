@@ -25,6 +25,7 @@ namespace PL
         BlApi.IBL bl;
         private ObservableCollection<BO.PackageToList> myCollection
             = new ObservableCollection<BO.PackageToList>();
+        
         public ListOfPackage(BlApi.IBL ibl)
         {
             InitializeComponent();
@@ -66,6 +67,42 @@ namespace PL
                 MessageBox.Show("Error! " + ex.Message);
             }
 
+        }
+        private void Button_refresh(object sender, RoutedEventArgs e)
+        {
+            stateOfP s = 0;
+            WeighCategories w = 0;
+            Priorities u = 0;
+            //get the select of the state.
+            if (package_state.SelectedItem != null)
+            {
+                string state = ((ComboBoxItem)package_state.SelectedItem).Content.ToString();
+                
+                if (state == "created") s = stateOfP.Defined;
+                else if (state == "associated") s = stateOfP.associated;
+                else if (state == "collected") s = stateOfP.collected;
+                else if (state == "provided") s = stateOfP.provided;
+            }
+            if (package_weight.SelectedItem != null)
+            {
+                string state = ((ComboBoxItem)package_weight.SelectedItem).Content.ToString();
+                if (state == "easy") w = WeighCategories.easy;
+                else if (state == "middle") w = WeighCategories.middle;
+                else if (state == "heavy") w = WeighCategories.hevy; 
+            }
+            if (package_urgency.SelectedItem != null)
+            {
+                string state = ((ComboBoxItem)package_urgency.SelectedItem).Content.ToString();
+                if (state == "reggular") u = Priorities.reggular;
+                else if (state == "fast") u = Priorities.fast;
+                else if (state == "emergency") u = Priorities.emergency;
+            }
+            IEnumerable<PackageToList> list = from p in bl.ListOfPackages()
+                                                     where (s == 0 || p.state == s) && (w==0 ||p.weight == w) && (u == 0 || p.priority == u) 
+                                                     select p;
+            myCollection.Clear();
+            foreach (var p in list)
+                myCollection.Add(p);
         }
     }
 }
