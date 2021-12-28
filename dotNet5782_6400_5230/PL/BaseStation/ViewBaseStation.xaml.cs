@@ -73,8 +73,10 @@ namespace PL
                     throw new Exception("There is no select of a quadocopters, or the base station not charhe any drone.");
                 BO.Quadocopter q = new BO.Quadocopter();
                 q = bl.QuDisplay( int.Parse(list_q.Text) );
-                Quadocopter qpl = new Quadocopter(bl, bl.cover(q));
-                qpl.ShowDialog();
+                BO.QuadocopterToList ql= new BO.QuadocopterToList();
+                ql = bl.cover(q);
+                Quadocopter qPL = new Quadocopter(bl, ql);
+                qPL.Show();
             }
             catch(Exception ex)
             {
@@ -154,6 +156,5 @@ namespace PL
         {
             this.Close();
         }
-
     }
 }
