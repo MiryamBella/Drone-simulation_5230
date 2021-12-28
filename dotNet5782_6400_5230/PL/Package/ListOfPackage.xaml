@@ -17,9 +17,13 @@
     <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
             VerticalAlignment="Stretch" Width="auto" Background="AntiqueWhite">
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -33,10 +37,32 @@
             <Button x:Name="CloseWindow" Content="X" Background="Red" Width="20" Height="20" Canvas.Left="2" Canvas.Top="2"
                     Click="CloseWindow_Click"/>
 
-            <Button Content="Add new package" Background="BlueViolet" Width="150" Height="50"  Canvas.Bottom="8" Canvas.Right="55"
-                    Click="Button_addNewP"/>
+            <Button Content="Add new package" Background="BlueViolet" Width="150" Height="50"
+                    Click="Button_addNewP" Canvas.Left="322" Canvas.Top="153"/>
         </Canvas>
-        <WrapPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
+        <Button Content="refresh" Click="Button_refresh" Background="Yellow" Grid.Column="1" Margin="79,20,79,0" Grid.Row="4"  />
+        <ComboBox x:Name="package_weight" Grid.Row="5" Grid.Column="2" >
+            <ComboBoxItem Content="easy"/>
+            <ComboBoxItem Content="middle" />
+            <ComboBoxItem Content="heavy" />
+            <ComboBoxItem Name="defult" Content="none" />
+        </ComboBox>
+        <ComboBox x:Name="package_urgency" Grid.Row="3" Grid.Column="2" >
+            <ComboBoxItem Content="reggular"/>
+            <ComboBoxItem Content="fast" />
+            <ComboBoxItem Content="emergency" />
+            <ComboBoxItem  Content="none" />
+        </ComboBox>
+
+        <ComboBox x:Name="package_state" Grid.Row="1" Grid.Column="2">
+            <ComboBoxItem Content="created"  />
+            <ComboBoxItem Content="associated" />
+            <ComboBoxItem Content="collected" />
+            <ComboBoxItem Content="provided" />
+            <ComboBoxItem Content="none" />
+        </ComboBox>
+
+        <WrapPanel Grid.Column="0" Grid.Row="1" Grid.RowSpan="6" >
             <!--<ListBox x:Name="q_list" SelectionMode="Single"  ItemsSource="{Binding}"/>-->
             <ListView x:Name="p_list" MouseDoubleClick="MouseDoubleClick_showP"/>
         </WrapPanel>
