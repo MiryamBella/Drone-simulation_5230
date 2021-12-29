@@ -177,6 +177,11 @@ namespace PL
                 if (ID_bs_text.Text == null || enterModel.Text == null ||
                     enterLatitude.Text == null || enterLongitude.Text == null)
                     throw new Exception("ERROR: you miss some data to enter.");
+                if (int.Parse(enterLatitude.Text) > 10 || int.Parse(enterLatitude.Text) < 0)
+                    throw new Exception("The location is too far. Pleas enter latiude betwhin 0-10.");
+                if (int.Parse(enterLongitude.Text) > 10 || int.Parse(enterLongitude.Text) < 0)
+                    throw new Exception("The location is too far. Pleas enter longitude betwhin 0-10.");
+
                 localQ.battery = 100;
                 bl.AddQuadocopter(localQ.ID, localQ.moodle, (int)localQ.weight, int.Parse(ID_baseStation.Text.ToString()));
                 ListOfQ l = new ListOfQ(bl);
