@@ -39,6 +39,8 @@ namespace PL
             showPackage.Visibility = Visibility.Hidden;//hidde the button
             uppdate.Visibility = Visibility.Hidden;
             charge.Visibility = Visibility.Hidden;
+            latitude.Visibility = Visibility.Hidden;
+            longitude.Visibility = Visibility.Hidden;
 
             ///enter the ID of the base station in our data.
             foreach (var q in bl.ListOfBaseStations())
@@ -60,8 +62,8 @@ namespace PL
             //enterBattery.Visibility = Visibility.Hidden;
             ID_baseStation.Visibility = Visibility.Hidden;
             //enterState.Visibility = Visibility.Hidden;
-            enterLatitude.Visibility = Visibility.Hidden;
-            enterLongitude.Visibility = Visibility.Hidden;
+            //enterLatitude.Visibility = Visibility.Hidden;
+            //enterLongitude.Visibility = Visibility.Hidden;
             addQ.Visibility=Visibility.Hidden;
             uppdate.Visibility = Visibility.Visible;
             charge.Visibility = Visibility.Visible;
@@ -141,26 +143,26 @@ namespace PL
         //    if (enterState.SelectedItem == maintenance) localQ.mode = BO.statusOfQ.maintenance;
         //    else localQ.mode = BO.statusOfQ.delivery;
         //}
-        private void writedLatitude(object sender, RoutedEventArgs e)
-        {
-            double l;
-            if (double.TryParse(enterLatitude.Text, out l))
-            {
-                localQ.thisLocation.latitude = l;
-                checkLatitude.Visibility = Visibility.Hidden;
-            }
-            else checkLatitude.Visibility = Visibility.Visible;
-        }
-        private void writedLongitude(object sender, RoutedEventArgs e)
-        {
-            double l;
-            if (double.TryParse(enterLongitude.Text, out l))
-            {
-                localQ.thisLocation.longitude = l;
-                checkLongitude.Visibility = Visibility.Hidden;
-            }
-            else checkLongitude.Visibility = Visibility.Visible;
-        }
+        //private void writedLatitude(object sender, RoutedEventArgs e)
+        //{
+        //    double l;
+        //    if (double.TryParse(enterLatitude.Text, out l))
+        //    {
+        //        localQ.thisLocation.latitude = l;
+        //        checkLatitude.Visibility = Visibility.Hidden;
+        //    }
+        //    else checkLatitude.Visibility = Visibility.Visible;
+        //}
+        //private void writedLongitude(object sender, RoutedEventArgs e)
+        //{
+        //    double l;
+        //    if (double.TryParse(enterLongitude.Text, out l))
+        //    {
+        //        localQ.thisLocation.longitude = l;
+        //        checkLongitude.Visibility = Visibility.Hidden;
+        //    }
+        //    else checkLongitude.Visibility = Visibility.Visible;
+        //}
         #endregion
 
         private void adding(object sender, RoutedEventArgs e)
@@ -169,18 +171,21 @@ namespace PL
             {
                 /*checking if evrything is ok with the input.*/
                 ///if the user put wrong data.
-                if (checkID.Visibility == Visibility.Visible || checkLongitude.Visibility == Visibility.Visible
-                    || checkLongitude.Visibility == Visibility.Visible || enterWeight.SelectedItem==null || 
+                if (checkID.Visibility == Visibility.Visible ||
+                    enterWeight.SelectedItem==null || 
                     ID_baseStation.SelectedItem == null)
                     throw new Exception("ERROR! chek if all the data are corect.");
                 ///if the user didnt put all the nessery data.
-                if (ID_bs_text.Text == null || enterModel.Text == null ||
-                    enterLatitude.Text == null || enterLongitude.Text == null)
+                if (ID_bs_text.Text == null || enterModel.Text == null)
                     throw new Exception("ERROR: you miss some data to enter.");
-                if (int.Parse(enterLatitude.Text) > 10 || int.Parse(enterLatitude.Text) < 0)
-                    throw new Exception("The location is too far. Pleas enter latiude betwhin 0-10.");
-                if (int.Parse(enterLongitude.Text) > 10 || int.Parse(enterLongitude.Text) < 0)
-                    throw new Exception("The location is too far. Pleas enter longitude betwhin 0-10.");
+                //if (int.Parse(enterLatitude.Text) > 10 || int.Parse(enterLatitude.Text) < 0)
+                //    throw new Exception("The location is too far. Pleas enter latiude betwhin 0-10.");
+                //if (int.Parse(enterLongitude.Text) > 10 || int.Parse(enterLongitude.Text) < 0)
+                //    throw new Exception("The location is too far. Pleas enter longitude betwhin 0-10.");
+
+                //get the location.
+                int id_bs = int.Parse(ID_baseStation.Text.ToString());
+                localQ.thisLocation = bl.baseStationDisplay(id_bs).thisLocation;
 
                 localQ.battery = 100;
                 bl.AddQuadocopter(localQ.ID, localQ.moodle, (int)localQ.weight, int.Parse(ID_baseStation.Text.ToString()));
