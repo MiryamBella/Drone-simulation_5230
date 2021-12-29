@@ -262,14 +262,9 @@ namespace Dal
         }
         #endregion;
 
-        #region lists
-        public List<Charging> GetChargings()
-        {
-            return DataSource.charge;
-        }
-        #region display - accept id and return object with it;
+        #region display
         /// <summary>
-        /// print datails of statin
+        /// Print datails of base statin and get ID.
         /// </summary>
         public BaseStation StationDisplay(int id)//print datails of station 
         {
@@ -278,8 +273,7 @@ namespace Dal
                 if (temp.IDnumber == id)
                     return temp;
             }
-            BaseStation b = new BaseStation { IDnumber = (int)0 };
-            return b;
+            throw new DALException("ID not exsit.");
         }
         /// <summary>
         /// print datails of quadocopter.
@@ -291,9 +285,7 @@ namespace Dal
                 if (temp.id == id)
                     return temp;
             }
-            Quadocopter q = new Quadocopter { id = 0 };
-
-            return q;
+            throw new DALException("ID not exist.");
         }
         /// <summary>
         /// print datails of client.
@@ -305,9 +297,7 @@ namespace Dal
                 if (temp.ID == id)
                     return temp;
             }
-            Client c = new Client { ID = 0 };
-
-            return c;
+            throw new DALException("ID not exist.");
         }
         /// <summary>
         /// print datails of package.
@@ -323,7 +313,13 @@ namespace Dal
 
             return p;
         }
-        #endregion;
+
+        #region lists
+        public List<Charging> GetChargings()
+        {
+            return DataSource.charge;
+        }
+
         /// <summary>
         /// print all the stations.
         /// </summary>
@@ -450,6 +446,8 @@ namespace Dal
                    select p;
         }
         #endregion
+        #endregion;
+
         public double[] askForElectric()//the quadocopter ask.
         {
             double[] arry = new double[5];
