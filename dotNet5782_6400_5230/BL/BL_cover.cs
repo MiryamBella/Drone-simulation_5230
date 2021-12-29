@@ -110,7 +110,7 @@ namespace BlApi
             new_c.thisLocation.longitude = c.longitude;
             new_c.thisLocation.decSix = new_c.thisLocation.toBaseSix.LocationSix(c.latitude, c.longitude);
 
-            List<DO.Package> p_l = new List<DO.Package>();
+            IEnumerable<DO.Package> p_l = dal.ListOfPackages();
             foreach (DO.Package p in p_l)
             {
                 //id=the ID of our client.
