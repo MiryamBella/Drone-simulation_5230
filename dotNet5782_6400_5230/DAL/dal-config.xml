@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <config>
-	<dal>list</dal>
+	<dal>xml</dal>
 	<dal-packages>
-		<list class ="DalObject" namespace ="Dal">DalObject</list>
-		<!--<xml>DalXml</xml>-->
+		<xml class ="DalXML" namespace ="Dal">DalXML</xml>
+		<xml>DalXml</xml>
 	</dal-packages>
 </config>

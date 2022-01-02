@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DAL.exceptions
-{
-    namespace DO
+namespace DO
     {
         public class DALException : Exception
         {
@@ -21,4 +19,4 @@ namespace DAL.exceptions
         }
 
     }
-}
+
