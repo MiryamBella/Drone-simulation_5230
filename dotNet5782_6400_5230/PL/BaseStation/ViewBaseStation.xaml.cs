@@ -108,6 +108,8 @@ namespace PL
             updateBS.Visibility = Visibility.Hidden;
             updateBS_change.Visibility = Visibility.Visible;
             updateBS_notchange.Visibility = Visibility.Visible;
+
+            numCharging.Text = "Number of charge position:";
         }
 
 
@@ -149,6 +151,7 @@ namespace PL
             //reset the data.
             update_name.Text = showName.Text;
             uppdate_numCharge.Text = showNumCharging.Text;
+            numCharging.Text = "Number of free charghing position:";
         }
         #endregion
 

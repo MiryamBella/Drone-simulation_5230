@@ -183,13 +183,22 @@ namespace Dal
                 {
                     finded = true;
                     newBS = bs;
+
+                    if (chargingPositions != bs.chargingPositions && chargingPositions < (bs.chargingPositions - bs.freechargingPositions))
+                        throw new DALException("Thre is drones who in charge in those charging position.");
+
                     DataSource.bstion.Remove(bs);
                     break;
                 }
             if (finded)
             {
                 if (name != null) newBS.name = name;
-                if (chargingPositions != -1) newBS.chargingPositions = chargingPositions;
+                if (chargingPositions >= 0)
+                {
+                    int withQ = newBS.chargingPositions - newBS.freechargingPositions;
+                    newBS.chargingPositions = chargingPositions;
+                    newBS.freechargingPositions = chargingPositions - withQ;
+                }
                 DataSource.bstion.Add(newBS);
             }
             else throw new DAL.exceptions.DO.DALException("ID not exist");
