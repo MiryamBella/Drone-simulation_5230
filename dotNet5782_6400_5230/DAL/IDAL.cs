@@ -18,6 +18,7 @@ namespace DalApi
         /// adding new package.
         public void AddPackage(int id, int sender, int colecter, int weigh, int priority);
         #endregion
+
         #region updare
         /// update name of quadocopter
         public void updateQd(int id, string modle);
@@ -35,6 +36,7 @@ namespace DalApi
         /// release te quadocopter frp charging.
         public void ReleaseQfromCharging(int qID);
         #endregion
+
         #region print
         /// print datails of statin
         public BaseStation StationDisplay(int id);
@@ -45,6 +47,7 @@ namespace DalApi
         /// print datails of package.
         public Package PackageDisplay( int id);
         #endregion
+
         #region lists
         /// print all the stations.
         public IEnumerable<BaseStation> ListOfStations();
@@ -67,6 +70,7 @@ namespace DalApi
         /// return list of all the package that the accepte id is of its receiver.
         public IEnumerable<Package> ListOfPackageTo(int id);
         #endregion
+
         public double[] askForElectric();
         /// <summary>
         ///accept id of qudocopter and return package that in it or null 
@@ -100,6 +104,5 @@ namespace DalApi
         /// accept id of package of id of its sender/receiver and return the another client of this package(receiver/sender)
         /// </summary>
         public Client searchAnotherClient(int pID, int clientID);
-
     }
 }

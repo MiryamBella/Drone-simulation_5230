@@ -183,13 +183,22 @@ namespace Dal
                 {
                     finded = true;
                     newBS = bs;
+
+                    if (chargingPositions != bs.chargingPositions && chargingPositions < (bs.chargingPositions - bs.freechargingPositions))
+                        throw new DALException("Thre is drones who in charge in those charging position.");
+
                     DataSource.bstion.Remove(bs);
                     break;
                 }
             if (finded)
             {
                 if (name != null) newBS.name = name;
-                if (chargingPositions != -1) newBS.chargingPositions = chargingPositions;
+                if (chargingPositions >= 0)
+                {
+                    int withQ = newBS.chargingPositions - newBS.freechargingPositions;
+                    newBS.chargingPositions = chargingPositions;
+                    newBS.freechargingPositions = chargingPositions - withQ;
+                }
                 DataSource.bstion.Add(newBS);
             }
             else throw new DAL.exceptions.DO.DALException("ID not exist");
@@ -262,14 +271,9 @@ namespace Dal
         }
         #endregion;
 
-        #region lists
-        public List<Charging> GetChargings()
-        {
-            return DataSource.charge;
-        }
-        #region display - accept id and return object with it;
+        #region display
         /// <summary>
-        /// print datails of statin
+        /// Print datails of base statin and get ID.
         /// </summary>
         public BaseStation StationDisplay(int id)//print datails of station 
         {
@@ -278,8 +282,7 @@ namespace Dal
                 if (temp.IDnumber == id)
                     return temp;
             }
-            BaseStation b = new BaseStation { IDnumber = (int)0 };
-            return b;
+            throw new DALException("ID not exsit.");
         }
         /// <summary>
         /// print datails of quadocopter.
@@ -291,9 +294,7 @@ namespace Dal
                 if (temp.id == id)
                     return temp;
             }
-            Quadocopter q = new Quadocopter { id = 0 };
-
-            return q;
+            throw new DALException("ID not exist.");
         }
         /// <summary>
         /// print datails of client.
@@ -305,9 +306,7 @@ namespace Dal
                 if (temp.ID == id)
                     return temp;
             }
-            Client c = new Client { ID = 0 };
-
-            return c;
+            throw new DALException("ID not exist.");
         }
         /// <summary>
         /// print datails of package.
@@ -323,7 +322,13 @@ namespace Dal
 
             return p;
         }
-        #endregion;
+
+        #region lists
+        public List<Charging> GetChargings()
+        {
+            return DataSource.charge;
+        }
+
         /// <summary>
         /// print all the stations.
         /// </summary>
@@ -450,6 +455,8 @@ namespace Dal
                    select p;
         }
         #endregion
+        #endregion;
+
         public double[] askForElectric()//the quadocopter ask.
         {
             double[] arry = new double[5];

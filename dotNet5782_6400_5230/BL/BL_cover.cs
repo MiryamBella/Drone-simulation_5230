@@ -307,20 +307,23 @@ namespace BlApi
             return new_q;
 
         }
-        double GetDistance(location l1, location l2)
+        public QuadocopterToList cover(Quadocopter q)
         {
-            return Math.Sqrt(Math.Pow(l1.latitude - l2.latitude, 2) + Math.Pow(l1.longitude - l2.longitude, 2));
-        }
-        location coverLtoL(DO.Location l)
-        {
-            location newL = new location() {longitude = l.longitude, latitude = l.latitude,
-                                            decSix = new DmsLocation(), toBaseSix = new BaseSixtin()};
-            return newL;
+            QuadocopterToList ql = new QuadocopterToList();
+            ql.ID = q.ID;
+            ql.mode = q.mode;
+            ql.moodle = q.moodle;
+            //ql.packageNumber =   i find him in line 363
+            ql.thisLocation = q.thisLocation;
+            ql.weight = q.weight;
+            ql.battery = q.battery;
 
-        }
-        GeoCoordinate coverLtoG(location l)
-        {
-            return new GeoCoordinate(l.longitude, l.latitude);
+            var list = (from DO.Package p in dal.ListOfPackages()
+                        where p.idQuadocopter == ql.ID
+                        select p).ToList();
+            ql.packageNumber = list.Count;
+
+            return ql;
         }
 
         //to help in project PL.
@@ -381,25 +384,88 @@ namespace BlApi
 
             return q;
         }
-
-        public QuadocopterToList cover(Quadocopter q)
+        public Quadocopter cover(DO.Quadocopter dalq)
         {
-            QuadocopterToList ql = new QuadocopterToList();
-            ql.ID = q.ID;
-            ql.mode = q.mode;
-            ql.moodle = q.moodle;
-            //ql.packageNumber =   i find him in line 363
-            ql.thisLocation = q.thisLocation;
-            ql.weight = q.weight;
-            ql.battery = q.battery;
+            Quadocopter blq = new Quadocopter();
 
-            var list = (from DO.Package p in dal.ListOfPackages()
-                        where p.idQuadocopter == ql.ID
-                        select p).ToList();
-            ql.packageNumber = list.Count;
+            blq.ID = dalq.id;
+            blq.moodle = dalq.moodle;
+            blq.weight = (WeighCategories)dalq.weight;
 
-            return ql;
+            /*need to find*/
+            ///blq.mode=dalq.
+            ///blq.thisLocation
+            ///blq.battery
+            ///blq.thisPackage
+                
+            bool exist = false;
+            foreach (QuadocopterToList q in q_list)
+            {
+
+                if (q.ID == dalq.id)
+                {
+                    exist = true;
+                    blq.mode = q.mode;
+                    blq.thisLocation = q.thisLocation;
+                    blq.battery = q.battery;
+                    break;
+                }
+            }
+            if (!exist)
+                new BLException("The quadocopter not exist.");
+
+            //to get 'thisPackage'.
+            IEnumerable<DO.Package> p_list = dal.ListOfPackages();
+            exist = false;
+            foreach (DO.Package p in p_list)
+            {
+                if (p.idQuadocopter == blq.ID)
+                {
+                    exist = true;
+                    PackageInTrans transP = new PackageInTrans();
+                    transP.ID = p.id;
+                    transP.priority = (Priorities)p.priority;
+                    if (blq.mode == statusOfQ.delivery)
+                        transP.ifOnTheWay = true;
+                    else
+                        transP.ifOnTheWay = false;
+                    transP.receiver = ClientDisplay(p.receiver);
+                    transP.sender = ClientDisplay(p.sender);
+                    transP.weight = (WeighCategories)p.weight;
+                    transP.collection = transP.sender.thisLocation;
+                    transP.destination = transP.receiver.thisLocation;
+
+                    blq.thisPackage = transP;
+                }
+            }
+            if (!exist)
+                blq.thisPackage = null;
+
+            return blq;
         }
+
         #endregion
+
+        double GetDistance(location l1, location l2)
+        {
+            return Math.Sqrt(Math.Pow(l1.latitude - l2.latitude, 2) + Math.Pow(l1.longitude - l2.longitude, 2));
+        }
+        location coverLtoL(DO.Location l)
+        {
+            location newL = new location()
+            {
+                longitude = l.longitude,
+                latitude = l.latitude,
+                decSix = new DmsLocation(),
+                toBaseSix = new BaseSixtin()
+            };
+            return newL;
+
+        }
+        GeoCoordinate coverLtoG(location l)
+        {
+            return new GeoCoordinate(l.longitude, l.latitude);
+        }
+
     }
 }

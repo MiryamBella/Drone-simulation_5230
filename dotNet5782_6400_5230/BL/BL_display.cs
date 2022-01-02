@@ -11,99 +11,42 @@ namespace BlApi
         #region display objects
         public BaseStation baseStationDisplay(int id)
         {
-            //BaseStation bs = new BaseStation();
             if (id <= 0)
                 throw new BLException("Invalid id.");
-            var bs = dal.StationDisplay(id);
-            if (bs.IDnumber <= 0)
-                throw new BLException("Id not found");
-            return cover(bs);
-            ///find if the base station in the data base.
-            //IEnumerable<IDAL.DO.BaseStation> bs_list = dal.ListOfStations();
-            //bool exsit = false;
-            //foreach (IDAL.DO.BaseStation bs_toList in bs_list)
-            //{
-            //    if (bs_toList.IDnumber ==id)
-            //    {
-            //        exsit = true;
-            //        bs = cover(bs_toList);
-            //        break;
-            //    }
-            //}
-            //if (!exsit)
-            //    Console.WriteLine("error");
-
-            //return bs;
+            DO.BaseStation bs=new DO.BaseStation();
+            try
+            {
+                bs = dal.StationDisplay(id);
+                return cover(bs);
+            }
+            catch(Exception ex)
+            {
+                throw new BLException(ex.Message);
+            }
         }
         public Quadocopter QuDisplay(int id)
         {
             Quadocopter returnQ = new Quadocopter();
             if (id <= 0)
-                new BLException("Invalid id.");
-            bool exist = false;
-            foreach (QuadocopterToList q in q_list)
-            {
-                if (q.ID == id)
-                {
-                    exist = true;
-                    returnQ.ID = q.ID;
-                    returnQ.mode = q.mode;
-                    returnQ.moodle = q.moodle;
-                    returnQ.thisLocation = q.thisLocation;
-                    returnQ.weight = q.weight;
-                    returnQ.battery = q.battery;
-                    break;
-                }
-            }
-            if (!exist)
-                new BLException("The quadocopter not exist.");
-            IEnumerable<DO.Package> p_list = dal.ListOfPackages();
-            foreach (DO.Package p in p_list)
-            {
-                if (p.idQuadocopter == id)
-                {
-                    PackageInTrans transP = new PackageInTrans();
-                    transP.ID = p.id;
-                    transP.priority = (Priorities)p.priority;
-                    if (returnQ.mode == statusOfQ.delivery)
-                        transP.ifOnTheWay = true;
-                    else
-                        transP.ifOnTheWay = false;
-                    transP.receiver = ClientDisplay(p.receiver);
-                    transP.sender = ClientDisplay(p.sender);
-                    transP.weight = (WeighCategories)p.weight;
-                    transP.collection = transP.sender.thisLocation;
-                    transP.destination = transP.receiver.thisLocation;
-
-                    returnQ.thisPackage = transP;
-                }
-            }
+                new BLException("Invalid ID.");
+            returnQ = cover(dal.QuDisplay(id));
             return returnQ;
         }
         public Client ClientDisplay(int id)
         {
-            //Client returnC = new Client();
             if(id<=0)
                 new BLException("Invalid id.");
             var client = dal.ClientDisplay(id);
             if (client.ID <= 0)
                 throw new BLException("Id not found.");
-            return cover(client);
-            //List<IDAL.DO.Client> c_l = new List<IDAL.DO.Client>();
-            //c_l = dal.ListOfClients();
-            //bool exist = false;
-            //foreach(IDAL.DO.Client c in c_l)
-            //{
-            //    if (c.ID == id)
-            //    {
-            //        exist = true;
-            //        returnC = cover(c);
-            //    }
-            //}
-            //if(!exist)
-            //    new BLException("The client not exist.");
-
-            //return returnC;
+            try
+            {
+                return cover(client);
+            }
+            catch(Exception ex)
+            {
+                throw new BLException(ex.Message);
+            }
         }
         public Package PackageDisplay(int id)
         {
