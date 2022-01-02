@@ -84,7 +84,7 @@ namespace PL
             if (int.TryParse(enterSender.Text, out id))
             {
                 checkSender.Visibility = Visibility.Hidden;
-                p.sender = new BO.Client() { ID = id };
+                p.sender = new BO.clientInPackage() { ID = id };
             }
             else checkSender.Visibility = Visibility.Visible;
         }
@@ -94,7 +94,7 @@ namespace PL
             if (int.TryParse(enterReceiver.Text, out id))
             {
                 checkReceiver.Visibility = Visibility.Hidden;
-                p.receiver = new BO.Client() { ID = id };
+                p.receiver = new BO.clientInPackage() { ID = id };
             }
             else checkReceiver.Visibility = Visibility.Visible;
         }

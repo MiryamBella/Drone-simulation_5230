@@ -147,7 +147,7 @@ public class BaseSixtin
     {
         return (int)value;
     }
-
+    
     int ExtractMinutes(decimal value)
     {
         value = Math.Abs(value);

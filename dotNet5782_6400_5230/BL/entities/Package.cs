@@ -7,8 +7,8 @@ namespace BO
         public class Package
         {
             public int ID { get; set; }
-            public Client sender { get; set; }
-            public Client receiver { get; set; }
+            public clientInPackage sender { get; set; }
+            public clientInPackage receiver { get; set; }
             public WeighCategories weight { get; set; }
             public Priorities priority { get; set; }
             public QuadocopterInPackage q { get; set; }

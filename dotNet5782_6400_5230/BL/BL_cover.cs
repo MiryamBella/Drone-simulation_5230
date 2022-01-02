@@ -108,7 +108,8 @@ namespace BlApi
             new_c.phoneNumber = c.phoneNumber;
             new_c.thisLocation.latitude = c.latitude;
             new_c.thisLocation.longitude = c.longitude;
-            new_c.thisLocation.decSix = new_c.thisLocation.toBaseSix.LocationSix(c.latitude, c.longitude);
+            new_c.thisLocation.decSix = new DmsLocation();
+            new_c.thisLocation.toBaseSix = new BaseSixtin();
 
             IEnumerable<DO.Package> p_l = dal.ListOfPackages();
             foreach (DO.Package p in p_l)
@@ -155,12 +156,12 @@ namespace BlApi
             {
                 if (c.ID == p.receiver)
                 {
-                    new_p.receiver = cover(c);
+                    new_p.receiver = new clientInPackage() { ID = c.ID, name = c.name };
                     exist_cr = true;
                 }
                 if (c.ID == p.sender)
                 {
-                    new_p.sender = cover(c);
+                    new_p.sender = new clientInPackage() { ID = c.ID, name = c.name };
                     exist_cs = true;
                 }
             }
