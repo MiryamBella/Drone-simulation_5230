@@ -11,15 +11,21 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace PL
 {
     /// <summary>
     /// Interaction logic for Client.xaml
     /// </summary>
+    
     public partial class Client : Window
     {
         BlApi.IBL bl;
+        private ObservableCollection<BO.PackageToList> packageToList
+            = new ObservableCollection<BO.PackageToList>();
+        private ObservableCollection<BO.PackageToList> packageFromList
+            = new ObservableCollection<BO.PackageToList>();
         public Client(BlApi.IBL ibl)
         {
             InitializeComponent();
@@ -43,13 +49,24 @@ namespace PL
             enterName.Text = c.name;
             enterPhoneNumber.Text = c.phoneNumber.ToString();
 
-            packageTo.ItemsSource = c.packageTo;
-            packageFrom.ItemsSource = c.packageFrom;
-            packageTo.Visibility = Visibility.Visible;
-            packageFrom.Visibility = Visibility.Visible;
 
             add.Visibility = Visibility.Hidden;
             update.Visibility = Visibility.Visible;
+
+            var a = from p in bl.ListOfPackages()
+                    where p.senderName == c.name
+                    select p;
+            foreach (BO.PackageToList pa in a)
+                packageToList.Add(pa);
+            var b = from p in bl.ListOfPackages()
+                    where p.receiverName == c.name
+                    select p;
+            foreach (BO.PackageToList pa in a)
+                packageFromList.Add(pa);
+
+            packageTo.Visibility = Visibility.Visible;
+            packageFrom.Visibility = Visibility.Visible;
+
             #endregion;
         }
 
