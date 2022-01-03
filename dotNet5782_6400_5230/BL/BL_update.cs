@@ -47,7 +47,7 @@ namespace BlApi
                 throw new BLException("number of charging position must be positive");
             try
             {
-                dal.updateSdata(id, name, chargingPositions); //update the data by sending to the dalObject
+                dal.updateBSdata(id, name, chargingPositions); //update the data by sending to the dalObject
             }
             catch(Exception ex)
             {

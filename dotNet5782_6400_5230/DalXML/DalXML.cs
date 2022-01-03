@@ -11,9 +11,63 @@ namespace Dal
         XElement clientRoot;
         string clientPath = @"ClientXml.xml";
 
+        XElement baseStationRoot;
+        string baseStationPath = @"BaseStationXml.xml";
+
+        XElement packageRoot;
+        string packagePath = @"PackageXml.xml";
+
+        internal static int runNum = 0;
+
+        #region load data
+        private void LoadData_bs()
+        {
+            try
+            {
+                baseStationRoot = XElement.Load(baseStationPath);
+            }
+            catch
+            {
+                Console.WriteLine("File upload problem");
+            }
+        }
+        private void LoadData_p()
+        {
+            try
+            {
+                packageRoot = XElement.Load(packagePath);
+            }
+            catch
+            {
+                Console.WriteLine("File upload problem");
+            }
+        }
+
+        #endregion
+
         #region add
         ///adding new base station    
-        public void AddBaseStation(int id, string name, int chargingPositions, double longitude, double latitude);
+        public void AddBaseStation(int id, string name, int chargingPositions, double lon, double lat)
+        {
+            LoadData_bs();
+
+            XElement ID = new XElement("ID", id);
+            XElement Name = new XElement("Name", name);
+            XElement ChargingPositions = new XElement("ChargingPositions", chargingPositions);
+            XElement FreechargingPositions = new XElement("FreechargingPositions", chargingPositions);
+            XElement Longitude = new XElement("Longitude", lon);
+            XElement Latitude = new XElement("Latitude", lat);
+
+            //make the location in base 60.
+            BaseSixtin six = new BaseSixtin();
+            XElement Location_baseSix = new XElement("BaseSix", six.LocationSix(lat, lon).ToString());
+
+
+            XElement BaseStation = new XElement("Client", ID, Name, ChargingPositions, FreechargingPositions, Longitude, Latitude, Location_baseSix);
+
+            baseStationRoot.Add(BaseStation);
+            baseStationRoot.Save(baseStationPath);
+        }
         ///adding new Quadocopter
         public void AddQuadocopter(int id, string moodle, int weight);
         ///adding new client
@@ -30,15 +84,64 @@ namespace Dal
             clientRoot.Save(clientPath);
         }
         /// adding new package.
-        public void AddPackage(int id, int sender, int colecter, int weigh, int priority);
+        public void AddPackage(int sender, int colecter, int weight, int priority)
+        {
+            LoadData_p();
+
+            XElement ID = new XElement("ID", runNum++);// the id of the package will be according the run number
+            XElement ID_Sender = new XElement("ID_Sender", sender);
+            XElement ID_Reciver = new XElement("ID_Reciver", colecter);
+            XElement ID_Quadocopter = new XElement("IDQ_Quadocopter", 0);// the package have not quadocopter
+            XElement Weight;
+            XElement Priority;
+            XElement Time_Create = new XElement("Time_Create", DateTime.Now);// the time of the create is now
+            XElement Time_Belong_quadocopter = new XElement("Time_Belong_quadocopter", null);
+            XElement Time_ColctedFromSender = new XElement("Time_ColctedFromSender", null);
+            XElement Time_ComeToColcter = new XElement("Time_ComeToColcter", null);
+
+            XElement Times = new XElement("TimeOfPackage", Time_Create, Time_Belong_quadocopter, Time_ColctedFromSender, Time_ComeToColcter);// the time of the create is now
+
+
+            if (weight == 1)
+                Weight = new XElement("Weight", WeighCategories.easy);
+            else if (weight == 2)
+                Weight = new XElement("Weight", WeighCategories.middle);
+            else
+                Weight = new XElement("Weight", WeighCategories.hevy);
+
+            if (priority == 1)
+                Priority = new XElement("Priority", Priorities.reggular);
+            else if (priority == 2)
+                Priority = new XElement("Priority", Priorities.fast);
+            else
+                Priority = new XElement("Priority", Priorities.emergency);
+
+            XElement Package = new XElement("Package", ID, ID_Sender, ID_Reciver, ID_Quadocopter, Weight, Priority, Times);
+
+            packageRoot.Add(Package);// enter the new package into the list
+            packageRoot.Save(baseStationPath);
+        }
         #endregion
 
         #region update
         /// update name of quadocopter
         public void updateQd(int id, string modle);
         ///update name and number of charging positions of a base station
-        public void updateSdata(int id, string name = null, int chargingPositions = -1);
-        
+        public void updateBSdata(int id, string name = null, int chargingPositions = -1)
+        {
+            LoadData_bs();
+
+            XElement bsElement = (from bs in baseStationRoot.Elements()
+                                      where Convert.ToInt32(bs.Element("ID").Value) == id
+                                      select bs).FirstOrDefault();
+            if (bsElement == null)
+                throw new XMLException("ID not exist");
+            if (name != null) bsElement.Element("Name").Value = name;
+            if (chargingPositions != -1) bsElement.Element("ChargingPositions").Value = chargingPositions.ToString();
+
+            baseStationRoot.Save(baseStationPath);
+        }
+
         /// update name and phone of client
         public void updateCdata(int id, string name = null, int phone = 0)
         {
@@ -49,7 +152,6 @@ namespace Dal
             if (phone != 0) clientElement.Element("PhoneNumber").Value = phone.ToString();
 
             clientRoot.Save(clientPath);
-
         }
 
 
@@ -68,13 +170,56 @@ namespace Dal
 
         #region print
         /// print datails of statin
-        public BaseStation StationDisplay(int id);
+        public BaseStation StationDisplay(int id)
+        {
+            LoadData_bs();
+
+            DmsLocation dms = new DmsLocation();
+            BaseStation station = new BaseStation();
+            station = (from bs in baseStationRoot.Elements()
+                       where Convert.ToInt32(bs.Element("id").Value) == id
+                       select new BaseStation()
+                       {
+                           IDnumber = Convert.ToInt32(bs.Element("id").Value),
+                           name = bs.Element("Name").Value,
+                           chargingPositions=int.Parse(bs.Element("ChargingPositions").Value),
+                           freechargingPositions=Convert.ToInt32(bs.Element("FreechargingPositions").Value),
+                           longitude=int.Parse(bs.Element("Longitude").Value),
+                           latitude=int.Parse(bs.Element("Latitude").Value),
+                           toBaseSix = new BaseSixtin(),
+                           //decSix = new DmsLocation(toBaseSix.LocationSix(int.Parse(bs.Element("Latitude").Value), int.Parse(bs.Element("Longitude").Value)))
+                       }).FirstOrDefault();
+
+            return station;
+        }
         /// print datails of quadocopter.
         public Quadocopter QuDisplay(int id);
         /// print datails of client.
         public Client ClientDisplay(int id);
         /// print datails of package.
-        public Package PackageDisplay(int id);
+        public Package PackageDisplay(int id)
+        {
+            LoadData_p();
+
+            Package pack=new Package();
+                //pack = (from p in packageRoot.Elements()
+                //           where Convert.ToInt32(p.Element("id").Value) == id
+                //           select new Package()
+                //           {
+                //               id = Convert.ToInt32(p.Element("ID").Value),
+                //               sender=int.Parse(p.Element("ID_Sender").Value),
+                //               receiver=int.Parse(p.Element("ID_Reciver").Value),
+                //               idQuadocopter=int.Parse(p.Element("IDQ_Quadocopter").Value),
+                //               priority= (Priorities)(p.Element("Priority").Value),
+                //               time_Belong_quadocopter=DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Belong_quadocopter").Value),
+                //               time_ColctedFromSender=DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ColctedFromSender").Value),
+                //               time_ComeToColcter= DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ComeToColcter").Value),
+                //               time_Create= DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Create").Value),
+                //               weight= (WeighCategories)(p.Element("Weight").Value)
+                //           });.FirstOrDefault();
+
+            return pack;
+        }
         #endregion
 
         #region lists

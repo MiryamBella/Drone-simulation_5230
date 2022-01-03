@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using DO;
-using DAL.exceptions.DO;
+//using DAL.exceptions.DO;
 using DalApi;
 
 
@@ -59,7 +59,7 @@ namespace Dal
         /// adding new package.
         /// </summary>
         /// <returns>The pacjagh ID we add.</returns>
-        public void AddPackage(int id, int sender, int colecter, int weight, int priority)
+        public void AddPackage(int sender, int colecter, int weight, int priority)
         {
             Package p = new Package();
 
@@ -75,17 +75,13 @@ namespace Dal
             else if (priority == 2)
                 p.priority = Priorities.fast;
             else p.priority = Priorities.emergency;
-            foreach (Package pac in DataSource.packagh)
-                if (pac.id == id)
-                    throw new DALException("there was package with this ID already");
-            p.id = id;   // the id of the package will be according the run number
+            p.id = DataSource.Config.runNum++;   // the id of the package will be according the run number
             p.idQuadocopter = 0;  // the package have not quadocopter
             p.time_Create = DateTime.Now;  // the time of the create is now
             p.time_Belong_quadocopter = null;
             p.time_ColctedFromSender = null;
             p.time_ComeToColcter = null;
             DataSource.packagh.Add(p);  // enter the new package into the list
-            //return p.id;
         }
         #endregion;
 
@@ -111,7 +107,7 @@ namespace Dal
                 newQ.moodle = modle;
                 DataSource.qpter.Add(newQ);
             }
-            else throw new DAL.exceptions.DO.DALException("ID not exist");
+            else throw new DALException("ID not exist");
         }
         /// <summary>
         /// Send the quadocopter to charging.
@@ -174,7 +170,7 @@ namespace Dal
         #endregion;
         #region updateBaseStation;
         ///update name and number of charging positions of a base station
-        public void updateSdata(int id, string name, int chargingPositions)
+        public void updateBSdata(int id, string name, int chargingPositions)
         {
             BaseStation newBS = new BaseStation();
             bool finded = false;
@@ -201,7 +197,7 @@ namespace Dal
                 }
                 DataSource.bstion.Add(newBS);
             }
-            else throw new DAL.exceptions.DO.DALException("ID not exist");
+            else throw new DALException("ID not exist");
         }
         #endregion;
         #region updateClient;
@@ -226,7 +222,7 @@ namespace Dal
                 if (phone != 0) newC.phoneNumber = phone;
                 DataSource.cli.Add(newC);
             }
-            else throw new DAL.exceptions.DO.DALException("ID not exist");
+            else throw new DALException("ID not exist");
         }
         #endregion;
         #region updatePckage;
@@ -368,7 +364,7 @@ namespace Dal
                     weigh = WeighCategories.middle;
                     break;
                 default:
-                    throw new DAL.exceptions.DO.DALException("invelebel weigh statos.");
+                    throw new DALException("invelebel weigh statos.");
             }
 
             //List<Quadocopter> l = new List<Quadocopter>();
@@ -392,7 +388,7 @@ namespace Dal
         /// </summary>
         public IEnumerable<Client> ListOfClients()//print all the clients
         {
-            return from c in DataSource.cli select c;
+            return (from c in DataSource.cli select c);
             //List<Client> l = new List<Client>();
             //foreach (Client c in DataSource.cli) // I run of all the stations and print them
             //    l.Add(c);
@@ -508,8 +504,8 @@ namespace Dal
                             if (c.ID == p.sender)
                                 return c;
                     }
-                    else throw new DAL.exceptions.DO.DALException("there is no package in this client");
-            throw new DAL.exceptions.DO.DALException("there is no package in this client");
+                    else throw new DALException("there is no package in this client");
+            throw new DALException("there is no package in this client");
 
 
         }

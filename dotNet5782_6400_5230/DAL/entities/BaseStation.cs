@@ -56,6 +56,17 @@ namespace DO
 
     public class DmsLocation
     {
+        public DmsLocation()
+        {
+            Latitude = null; Longitude = null;
+        }
+
+        public DmsLocation(DmsLocation dms)
+        {
+            Longitude = dms.Longitude;
+            Latitude = dms.Latitude;
+        }
+
         public DmsPoint Latitude { get; set; }
         public DmsPoint Longitude { get; set; }
 
@@ -91,7 +102,7 @@ namespace DO
 
     //***********************************************************
     /// <summary>
-    /// this class will cofer from normal to base 60 and from base 60.
+    /// this class will cover from normal to base 60 and from base 60.
     /// </summary>
     public class BaseSixtin
     {

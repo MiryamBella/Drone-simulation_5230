@@ -114,7 +114,7 @@ namespace BlApi
             }
             if (!isSender || !isReceiver)
                 throw new BLException("this sender or receiver not exist");
-                dal.AddPackage(id, id_sender, id_colecter, (int)weight, (int)priority);
+                dal.AddPackage(id_sender, id_colecter, (int)weight, (int)priority);
         }
         #endregion;
 

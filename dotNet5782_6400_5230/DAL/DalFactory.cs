@@ -17,7 +17,7 @@ namespace DAL
             string dalPkg = DalConfig.DalPackages[dalType];
             // if package name is not found in the list - there is a problem in config.xml
             if (dalPkg == null)
-                throw new exceptions.DalConfid.DalConfigException($"Wrong DL type: {dalType}");
+                throw new DalConfid.DalConfigException($"Wrong DL type: {dalType}");
 
             try // Load into CLR the dal implementation assembly according to dll file name (taken above)
             {
@@ -25,7 +25,7 @@ namespace DAL
             }
             catch (Exception ex)//פה נתפסת החריגה שנזרקה
             {
-                throw new exceptions.DalConfid.DalConfigException($"Failed loading {dalPkg}.dll", ex);
+                throw new DalConfid.DalConfigException($"Failed loading {dalPkg}.dll", ex);
             }
 
             // Get concrete Dal implementation's class metadata object
@@ -39,7 +39,7 @@ namespace DAL
             Type type = Type.GetType($"Dal.{dalPkg}, {dalPkg}");
             // If the type is not found - the implementation is not correct - it looks like the class name is wrong...
             if (type == null)
-                throw new exceptions.DalConfid.DalConfigException($"Class name is not the same as Assembly Name: {dalPkg}");
+                throw new DalConfid.DalConfigException($"Class name is not the same as Assembly Name: {dalPkg}");
 
             // *** Get concrete Dal implementation's Instance
             // Get property info for public static property named "Instance" (in the dal implementation class- taken above)
@@ -51,7 +51,7 @@ namespace DAL
             IDAL dal = type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static).GetValue(null) as IDAL;
             // If the instance property is not initialized (i.e. it does not hold a real instance reference)...
             if (dal == null)
-                throw new exceptions.DalConfid.DalConfigException($"Class {dalPkg} instance is not initialized");
+                throw new DalConfid.DalConfigException($"Class {dalPkg} instance is not initialized");
             // now it looks like we have appropriate dal implementation instance :-)
             return dal;
 

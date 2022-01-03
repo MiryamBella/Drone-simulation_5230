@@ -203,7 +203,7 @@ namespace BlApi
             {
                 c = dal.searchAnotherClient(p.ID, clientID);
             }
-            catch(DAL.exceptions.DO.DALException ex)
+            catch(DALException ex)
             {
                 throw new BLException(ex.Message);
             }

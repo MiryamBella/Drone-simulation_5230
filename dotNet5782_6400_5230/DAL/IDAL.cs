@@ -16,14 +16,14 @@ namespace DalApi
         ///adding new client
         public void AddClient(int id, string name, int phoneNumber, double lon, double lat);
         /// adding new package.
-        public void AddPackage(int id, int sender, int colecter, int weigh, int priority);
+        public void AddPackage(int sender, int colecter, int weigh, int priority);
         #endregion
 
         #region updare
         /// update name of quadocopter
         public void updateQd(int id, string modle);
         ///update name and number of charging positions of a base station
-        public void updateSdata(int id, string name = null, int chargingPositions = -1);
+        public void updateBSdata(int id, string name = null, int chargingPositions = -1);
         /// update name and phone of client
         public void updateCdata(int id, string name = null, int phone = 0);
         /// update package to be belong to a quadocopter.
