@@ -659,11 +659,24 @@ namespace Dal
         /// <summary>
         ///accept id of qudocopter and return package that in it or null 
         /// </summary>
-        public Package? searchPinQ(int qID);
+        public Package? searchPinQ(int qID)
+        {
+            IEnumerable<Package> pList = ListOfPackages();
+            Package? p = (from i in pList
+                          where i.id == qID
+                          select i).FirstOrDefault();
+            return p;
+        }
         /// <summary>
         /// accept id of package and return the location of its sender
         /// </summary>
-        public Location searchLocationOfclient(int pID);
+        public Location searchLocationOfclient(int pID)
+        {
+            IEnumerable<Client> cList = ListOfClients();
+            return (from c in cList
+                    where c.ID == pID
+                    select new Location() { latitude = c.latitude, longitude = c.longitude }).FirstOrDefault();
+        }
         /// <summary>
         /// return location of randomaly station
         /// </summary>
