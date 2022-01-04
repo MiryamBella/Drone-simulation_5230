@@ -11,10 +11,17 @@ namespace BlApi
     {
         static DalApi.IDAL dal;
         public BL() {
-            dal = DAL.DalFactory.GetDal("string");
-            //We need list of all thw quadopters so we get the list as stract and then we cover it to list of class
-            help_list = dal.ListOfQ();
-            q_list = cover_to_our_list(help_list);
+            try
+            {
+                dal = DAL.DalFactory.GetDal("string");
+                //We need list of all thw quadopters so we get the list as stract and then we cover it to list of class
+                help_list = dal.ListOfQ();
+                q_list = cover_to_our_list(help_list);
+            }
+            catch(Exception ex)
+            {
+                throw new BLException(ex.Message);
+            }
 
         }
         #region add base station

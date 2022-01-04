@@ -2,7 +2,7 @@
 <config>
 	<dal>xml</dal>
 	<dal-packages>
-		<xml class ="DalXML" namespace ="Dal">DalXML</xml>
-		<xml>DalXml</xml>
+		<!--<list class ="DalXml" namespace ="Dal">DalXml</list>-->
+		<xml>DalXML</xml>
 	</dal-packages>
 </config>
