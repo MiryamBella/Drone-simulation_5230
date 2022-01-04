@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DalApi;
 using System.Xml.Linq;
 using System.Linq;
@@ -16,6 +17,12 @@ namespace Dal
 
         XElement packageRoot;
         string packagePath = @"PackageXml.xml";
+
+        XElement chargeRoot;
+        string chargePath = @"ChargeXml.xml";
+
+        XElement configRoot;
+        string configPath = @"ConfigXml.xml";
 
         internal static int runNum = 0;
 
@@ -36,6 +43,28 @@ namespace Dal
             try
             {
                 packageRoot = XElement.Load(packagePath);
+            }
+            catch
+            {
+                Console.WriteLine("File upload problem");
+            }
+        }
+        private void LoadData_charge()
+        {
+            try
+            {
+                chargeRoot = XElement.Load(chargePath);
+            }
+            catch
+            {
+                Console.WriteLine("File upload problem");
+            }
+        }
+        private void LoadData_config()
+        {
+            try
+            {
+                configRoot = XElement.Load(configPath);
             }
             catch
             {
@@ -87,8 +116,13 @@ namespace Dal
         public void AddPackage(int sender, int colecter, int weight, int priority)
         {
             LoadData_p();
+            LoadData_config();
 
-            XElement ID = new XElement("ID", runNum++);// the id of the package will be according the run number
+            int id = int.Parse(configRoot.Element("runNum").Value);
+            configRoot.Element("runName").Value = (id + 1).ToString();
+            configRoot.Save(configPath);
+
+            XElement ID = new XElement("ID", id);// the id of the package will be according the run number
             XElement ID_Sender = new XElement("ID_Sender", sender);
             XElement ID_Reciver = new XElement("ID_Reciver", colecter);
             XElement ID_Quadocopter = new XElement("IDQ_Quadocopter", 0);// the package have not quadocopter
@@ -201,22 +235,25 @@ namespace Dal
         {
             LoadData_p();
 
+            WeighCategories weigh = new WeighCategories();
+            Priorities pri = new Priorities();
+
             Package pack=new Package();
-                //pack = (from p in packageRoot.Elements()
-                //           where Convert.ToInt32(p.Element("id").Value) == id
-                //           select new Package()
-                //           {
-                //               id = Convert.ToInt32(p.Element("ID").Value),
-                //               sender=int.Parse(p.Element("ID_Sender").Value),
-                //               receiver=int.Parse(p.Element("ID_Reciver").Value),
-                //               idQuadocopter=int.Parse(p.Element("IDQ_Quadocopter").Value),
-                //               priority= (Priorities)(p.Element("Priority").Value),
-                //               time_Belong_quadocopter=DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Belong_quadocopter").Value),
-                //               time_ColctedFromSender=DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ColctedFromSender").Value),
-                //               time_ComeToColcter= DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ComeToColcter").Value),
-                //               time_Create= DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Create").Value),
-                //               weight= (WeighCategories)(p.Element("Weight").Value)
-                //           });.FirstOrDefault();
+            //pack = (from p in packageRoot.Elements()
+            //        where Convert.ToInt32(p.Element("id").Value) == id
+            //        select new Package()
+            //        {
+            //            id = Convert.ToInt32(p.Element("ID").Value),
+            //            sender = int.Parse(p.Element("ID_Sender").Value),
+            //            receiver = int.Parse(p.Element("ID_Reciver").Value),
+            //            idQuadocopter = int.Parse(p.Element("IDQ_Quadocopter").Value),
+            //            priority = (Priorities)(p.Element("Priority").Value),
+            //            time_Belong_quadocopter = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Belong_quadocopter").Value),
+            //            time_ColctedFromSender = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ColctedFromSender").Value),
+            //            time_ComeToColcter = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ComeToColcter").Value),
+            //            time_Create = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Create").Value),
+            //            weight = (WeighCategories)(p.Element("Weight").Value)
+            //        });.FirstOrDefault();
 
             return pack;
         }
@@ -224,7 +261,24 @@ namespace Dal
 
         #region lists
         /// print all the stations.
-        public IEnumerable<BaseStation> ListOfStations();
+        public IEnumerable<BaseStation> ListOfStations()
+        {
+            LoadData_bs();
+
+            IEnumerable<BaseStation> l = from bs in baseStationRoot.Elements()
+                    select new BaseStation()
+                    {
+                        IDnumber = Convert.ToInt32(bs.Element("id").Value),
+                        name = bs.Element("Name").Value,
+                        chargingPositions = int.Parse(bs.Element("ChargingPositions").Value),
+                        freechargingPositions = Convert.ToInt32(bs.Element("FreechargingPositions").Value),
+                        longitude = int.Parse(bs.Element("Longitude").Value),
+                        latitude = int.Parse(bs.Element("Latitude").Value),
+                        toBaseSix = new BaseSixtin(),
+                        //decSix = new DmsLocation(toBaseSix.LocationSix(int.Parse(bs.Element("Latitude").Value), int.Parse(bs.Element("Longitude").Value)))
+                    };
+            return l;
+        }
         /// print all the quadocpters.
         public IEnumerable<Quadocopter> ListOfQ();
         /// print all the quadocpters acording to the weigh.
@@ -232,7 +286,28 @@ namespace Dal
         /// print all the clients
         public IEnumerable<Client> ListOfClients();
         /// print all the packages.
-        public IEnumerable<Package> ListOfPackages();
+        public IEnumerable<Package> ListOfPackages()
+        {
+            LoadData_p();
+
+
+            var l = from p in baseStationRoot.Elements()
+                    select new Package()
+                    {
+                        id = Convert.ToInt32(p.Element("ID").Value),
+                        sender = int.Parse(p.Element("ID_Sender").Value),
+                        receiver = int.Parse(p.Element("ID_Reciver").Value),
+                        idQuadocopter = int.Parse(p.Element("IDQ_Quadocopter").Value),
+                        priority = (Priorities)(p.Element("Priority").Value),
+                        time_Belong_quadocopter = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Belong_quadocopter").Value),
+                        time_ColctedFromSender = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ColctedFromSender").Value),
+                        time_ComeToColcter = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ComeToColcter").Value),
+                        time_Create = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Create").Value),
+                        weight = (WeighCategories)(p.Element("Weight").Value)
+                    };
+
+            return l;
+        }
         /// print all the packages that dont assigned to quadocopter.
         public IEnumerable<Package> ListOfPwithoutQ();
         /// return list of all the stations that have empty changing positions.
@@ -245,7 +320,18 @@ namespace Dal
         public IEnumerable<Package> ListOfPackageTo(int id);
         #endregion
 
-        public double[] askForElectric();
+        public double[] askForElectric()
+        {
+            LoadData_config();
+
+            double[] arry = new double[5];
+            arry[0] = double.Parse(configRoot.Element("available").Value);
+            arry[1] = double.Parse(configRoot.Element("easy").Value);
+            arry[2] = double.Parse(configRoot.Element("hevy").Value);
+            arry[3] = double.Parse(configRoot.Element("middle_toCare").Value);
+            arry[4] = double.Parse(configRoot.Element("charghingRate").Value);
+            return arry;
+        }
         /// <summary>
         ///accept id of qudocopter and return package that in it or null 
         /// </summary>
@@ -278,5 +364,25 @@ namespace Dal
         /// accept id of package of id of its sender/receiver and return the another client of this package(receiver/sender)
         /// </summary>
         public Client searchAnotherClient(int pID, int clientID);
+
+        /// <summary>
+        /// active only once to start the data.
+        /// </summary>
+        void startConfig()
+        {
+            LoadData_config();
+
+            XElement runNum = new XElement("runName", 0);
+
+            XElement Available = new XElement("available", 1);
+            XElement easy = new XElement("easy", 2);
+            XElement hevy = new XElement("hevy", 3);
+            XElement middle_toCare = new XElement("middle_toCare", 4);
+            XElement charghingRate = new XElement("charghingRate", 5);
+
+            XElement Electric = new XElement("Electric", Available, easy, hevy, middle_toCare, charghingRate);
+            configRoot.Add(runNum, Electric);
+            configRoot.Save(configPath);
+        }
     }
 }
