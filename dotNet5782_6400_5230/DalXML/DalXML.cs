@@ -12,6 +12,7 @@ namespace Dal
 {
     public class DalXML : IDAL
     {
+        #region roots
         XElement clientRoot;
         string clientPath = @"ClientXml.xml";
 
@@ -21,7 +22,6 @@ namespace Dal
         XElement packageRoot;
         string packagePath = @"PackageXml.xml";
 
-
         XElement quadocopterRoot;
         string quadocopterPath = @"QuadocopterXml.xml";
 
@@ -30,19 +30,74 @@ namespace Dal
 
         XElement configRoot;
         string configPath = @"ConfigXml.xml";
+        #endregion
 
-        internal static int runNum = 0;
         public DalXML()
         {
             if (!File.Exists(clientPath))
-                CreateFiles();
+                CreateFiles(xmlRoots.clientR);
             else
                 LoadData_c();
+
+            if (!File.Exists(baseStationPath))
+                CreateFiles(xmlRoots.baseStationR);
+            else
+                LoadData_bs();
+
+            if (!File.Exists(packagePath))
+                CreateFiles(xmlRoots.packageR);
+            else
+                LoadData_p();
+
+            if (!File.Exists(quadocopterPath))
+                CreateFiles(xmlRoots.quadocopterR);
+            else
+                LoadData_q();
+
+            if (!File.Exists(chargePath))
+                CreateFiles(xmlRoots.chargeR);
+            else
+                LoadData_charge();
+
+            if (!File.Exists(configPath))
+                CreateFiles(xmlRoots.configR);
+            else
+                LoadData_config();
+
         }
-        private void CreateFiles()
+        private void CreateFiles(xmlRoots root)
         {
-            clientRoot = new XElement("students");
-            clientRoot.Save(clientPath);
+            switch (root)
+            {
+                case xmlRoots.clientR:
+                    clientRoot = new XElement("clients");
+                    clientRoot.Save(clientPath);
+                    break;
+                case xmlRoots.baseStationR:
+                    baseStationRoot = new XElement("baseStations");
+                    baseStationRoot.Save(baseStationPath);
+                    break;
+                case xmlRoots.packageR:
+                    packageRoot = new XElement("packages");
+                    packageRoot.Save(packagePath);
+                    break;
+                case xmlRoots.quadocopterR:
+                    quadocopterRoot = new XElement("quadocopters");
+                    quadocopterRoot.Save(quadocopterPath);
+                    break;
+                case xmlRoots.chargeR:
+                    chargeRoot = new XElement("chargeing");
+                    chargeRoot.Save(chargePath);
+                    break;
+                case xmlRoots.configR:
+                    configRoot = new XElement("config");
+                    startConfig();
+                    configRoot.Save(configPath);
+                    break;
+                default:
+                    Console.WriteLine("error criet files");
+                    break;
+            }
         }
 
         #region load data
@@ -68,7 +123,6 @@ namespace Dal
                 Console.WriteLine("File upload problem");
             }
         }
-
         private void LoadData_q()
         {
             try
@@ -91,7 +145,6 @@ namespace Dal
                 throw new Exception("File upload problem");
             }
         }
-
         private void LoadData_charge()
         {
             try
@@ -290,8 +343,30 @@ namespace Dal
             packageRoot.Save(packagePath);
         }
         /// update package to be collected by quadocopter.
-        public void CollectPbyQ(int pID);
-        public void DeliveringPtoClient(int pID);
+        public void CollectPbyQ(int pID)
+        {
+            LoadData_p();
+
+
+            var pack = (from XElement localP in packageRoot.Elements()
+                        where int.Parse(localP.Element("ID").Value) == pID
+                        select localP).FirstOrDefault();
+            pack.Element("TimeOfPackage").Element("Time_ColctedFromSender").Value = DateTime.Now.ToString();
+
+            packageRoot.Save(packagePath);
+        }
+        public void DeliveringPtoClient(int pID)
+        {
+            LoadData_p();
+
+
+            var pack = (from XElement localP in packageRoot.Elements()
+                        where int.Parse(localP.Element("ID").Value) == pID
+                        select localP).FirstOrDefault();
+            pack.Element("TimeOfPackage").Element("Time_ComeToColcter").Value = DateTime.Now.ToString();
+
+            packageRoot.Save(packagePath);
+        }
         /// Send the quadocopter to charging.
         public void SendQtoCharging(int bID, int qID)
         {
@@ -470,7 +545,6 @@ namespace Dal
             return qList;
             
         }
-    
         /// print all the quadocpters acording to the weigh.
         public IEnumerable<Quadocopter> ListOfQ_of_weigh(string w)
     {
@@ -517,15 +591,57 @@ namespace Dal
             return l;
         }
         /// print all the packages that dont assigned to quadocopter.
-        public IEnumerable<Package> ListOfPwithoutQ();
+        public IEnumerable<Package> ListOfPwithoutQ()
+        {
+            List<Package> l = XMLTools.LoadListFromXMLSerializer<Package>(packagePath);
+            return from p in l
+                   where p.idQuadocopter == 0
+                   select p;
+        }
         /// return list of all the stations that have empty changing positions.
-        public IEnumerable<BaseStation> ListOfStationsForCharging();
+        public IEnumerable<BaseStation> ListOfStationsForCharging()
+        {
+            List<BaseStation> l = new List<BaseStation>();
+            l = XMLTools.LoadListFromXMLSerializer<BaseStation>(baseStationPath);
+            return from bs in l
+                   where bs.freechargingPositions != 0
+                   select bs;
+        }
         ///the quadocopter ask.
-        public List<Charging> GetChargings();
-        /// return list of all the package that the accepte id is of its sender.
-        public IEnumerable<Package> ListOfPackageFrom(int id);
-        /// return list of all the package that the accepte id is of its receiver.
-        public IEnumerable<Package> ListOfPackageTo(int id);
+        public List<Charging> GetChargings()
+        {
+            LoadData_charge();
+
+
+            var l = (from c in chargeRoot.Elements()
+                     select new Charging()
+                     {
+                         baseStationID = int.Parse(c.Element("baseStationID").Value),
+                         quadocopterID = int.Parse(c.Element("quadocopterID").Value)
+                     }).ToList();
+
+            return l;
+        }
+        /// return list of all the package from the same sender (with the ID we get).
+        public IEnumerable<Package> ListOfPackageFrom(int id)
+        {
+            LoadData_p();
+
+            List<Package> l = XMLTools.LoadListFromXMLSerializer<Package>(packagePath);
+            return from p in l
+                   where p.sender == id
+                   select p;
+        }
+        /// return list of all the package from the same receiver (with the ID we get).
+        public IEnumerable<Package> ListOfPackageTo(int id)
+        {
+            LoadData_p();
+
+            List<Package> l = XMLTools.LoadListFromXMLSerializer<Package>(packagePath);
+            return from p in l
+                   where p.receiver == id
+                   select p;
+        }
         #endregion
 
         public double[] askForElectric()
@@ -551,11 +667,53 @@ namespace Dal
         /// <summary>
         /// return location of randomaly station
         /// </summary>
-        public Location randomStationLocation();
+        public Location randomStationLocation()
+        {
+            LoadData_bs();
+
+            List<BaseStation> bs = XMLTools.LoadListFromXMLSerializer<BaseStation>(baseStationPath);
+            Random r = new Random();
+            int x = r.Next(0, bs.Count - 1);
+            Location l = new Location();
+            l.latitude = bs[x].latitude;
+            l.longitude = bs[x].longitude;
+            return l;
+        }
         /// <summary>
         /// return location of randomaly Client the get a package
         /// </summary>
-        public Location randomCwithPLocation();
+        public Location randomCwithPLocation()
+        {
+            LoadData_c();
+            LoadData_p();
+
+            List<Package> pList = XMLTools.LoadListFromXMLSerializer<Package>(packagePath);
+            List<Client> cList = XMLTools.LoadListFromXMLSerializer<Client>(clientPath);
+
+            Random r = new Random();
+            List<int> sendersID = new List<int>();
+            foreach (Package p in pList)
+                if ((p.time_ComeToColcter != null) && (p.time_ComeToColcter.Value.Year != 0001))
+                    if (sendersID.Contains(p.sender) == false)
+                        sendersID.Add(p.sender);
+            List<Location> sendersL = new List<Location>();
+            foreach (Client c in cList)
+                if (sendersID.Contains(c.ID))
+                {
+                    Location l = new Location() { latitude = c.latitude, longitude = c.longitude };
+                    sendersL.Add(l);
+                }
+            if (sendersL.Count != 0)
+            {
+                int x = r.Next(0, sendersL.Count - 1);
+                return sendersL[x];
+            }
+            Client dcli = cList[0];
+            return new Location() { latitude = dcli.latitude, longitude = dcli.longitude };
+
+            XMLTools.SaveListToXMLSerializer<Package>(pList, packagePath);
+            XMLTools.SaveListToXMLSerializer<Client>(cList, clientPath);
+        }
         /// <summary>
         /// accept a location and return the closest base station
         /// </summary>
