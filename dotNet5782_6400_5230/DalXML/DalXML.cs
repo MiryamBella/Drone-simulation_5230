@@ -667,11 +667,53 @@ namespace Dal
         /// <summary>
         /// return location of randomaly station
         /// </summary>
-        public Location randomStationLocation();
+        public Location randomStationLocation()
+        {
+            LoadData_bs();
+
+            List<BaseStation> bs = XMLTools.LoadListFromXMLSerializer<BaseStation>(baseStationPath);
+            Random r = new Random();
+            int x = r.Next(0, bs.Count - 1);
+            Location l = new Location();
+            l.latitude = bs[x].latitude;
+            l.longitude = bs[x].longitude;
+            return l;
+        }
         /// <summary>
         /// return location of randomaly Client the get a package
         /// </summary>
-        public Location randomCwithPLocation();
+        public Location randomCwithPLocation()
+        {
+            LoadData_c();
+            LoadData_p();
+
+            List<Package> pList = XMLTools.LoadListFromXMLSerializer<Package>(packagePath);
+            List<Client> cList = XMLTools.LoadListFromXMLSerializer<Client>(clientPath);
+
+            Random r = new Random();
+            List<int> sendersID = new List<int>();
+            foreach (Package p in pList)
+                if ((p.time_ComeToColcter != null) && (p.time_ComeToColcter.Value.Year != 0001))
+                    if (sendersID.Contains(p.sender) == false)
+                        sendersID.Add(p.sender);
+            List<Location> sendersL = new List<Location>();
+            foreach (Client c in cList)
+                if (sendersID.Contains(c.ID))
+                {
+                    Location l = new Location() { latitude = c.latitude, longitude = c.longitude };
+                    sendersL.Add(l);
+                }
+            if (sendersL.Count != 0)
+            {
+                int x = r.Next(0, sendersL.Count - 1);
+                return sendersL[x];
+            }
+            Client dcli = cList[0];
+            return new Location() { latitude = dcli.latitude, longitude = dcli.longitude };
+
+            XMLTools.SaveListToXMLSerializer<Package>(pList, packagePath);
+            XMLTools.SaveListToXMLSerializer<Client>(cList, clientPath);
+        }
         /// <summary>
         /// accept a location and return the closest base station
         /// </summary>
