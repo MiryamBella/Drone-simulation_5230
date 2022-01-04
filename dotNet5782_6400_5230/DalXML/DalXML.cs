@@ -7,7 +7,6 @@ using System.Text;
 using System.IO;
 using System.Xml.Serialization;
 using DO;
-using System.Collections.Generic;
 
 namespace Dal
 {
@@ -22,11 +21,15 @@ namespace Dal
         XElement packageRoot;
         string packagePath = @"PackageXml.xml";
 
+
         XElement quadocopterRoot;
         string quadocopterPath = @"QuadocopterXml.xml";
 
-        XElement chargingRoot;
-        string chargingPath = @"ChargingXml.xml";
+        XElement chargeRoot;
+        string chargePath = @"ChargeXml.xml";
+
+        XElement configRoot;
+        string configPath = @"ConfigXml.xml";
 
         internal static int runNum = 0;
 
@@ -47,6 +50,52 @@ namespace Dal
             try
             {
                 packageRoot = XElement.Load(packagePath);
+            }
+            catch
+            {
+                Console.WriteLine("File upload problem");
+            }
+        }
+
+        private void LoadData_q()
+        {
+            try
+            {
+                quadocopterRoot = XElement.Load(quadocopterPath);
+            }
+            catch
+            {
+                throw new Exception("File upload problem");
+            }
+        }
+        private void LoadData_c()
+        {
+            try
+            {
+                clientRoot = XElement.Load(clientPath);
+            }
+            catch
+            {
+                throw new Exception("File upload problem");
+            }
+        }
+
+        private void LoadData_charge()
+        {
+            try
+            {
+                chargeRoot = XElement.Load(chargePath);
+            }
+            catch
+            {
+                Console.WriteLine("File upload problem");
+            }
+        }
+        private void LoadData_config()
+        {
+            try
+            {
+                configRoot = XElement.Load(configPath);
             }
             catch
             {
@@ -246,8 +295,8 @@ namespace Dal
                 XElement quadocopter = new XElement("quadocopterID", qID);
                 XElement Charging = new XElement("charging", BaseStation, quadocopter);
 
-                chargingRoot.Add(Charging);
-                chargingRoot.Save(chargingPath);
+                chargeRoot.Add(Charging);
+                chargeRoot.Save(chargePath);
             }
             catch (Exception ex)
             {
@@ -264,7 +313,7 @@ namespace Dal
                 LoadData_bs();
                 LoadData_charge();
                 //find the qudocopter and the base station
-                XElement charge = (from ch in chargingRoot.Elements()
+                XElement charge = (from ch in chargeRoot.Elements()
                               where Convert.ToInt32(ch.Element("Qudocopter").Value) == qID
                               select ch).FirstOrDefault();
                 XElement b = (from bs in baseStationRoot.Elements()
@@ -283,7 +332,7 @@ namespace Dal
                 
                 //remove a item of 'charging'
                 charge.Remove();
-                chargingRoot.Save(chargingPath);
+                chargeRoot.Save(chargePath);
             }
             catch (Exception ex)
             {
@@ -390,22 +439,30 @@ namespace Dal
         {
             IEnumerable<Quadocopter> qList = XMLTools.LoadListFromXMLSerializer<Quadocopter>(quadocopterPath);
             return qList;
+            
         }
-    }
+    
         /// print all the quadocpters acording to the weigh.
         public IEnumerable<Quadocopter> ListOfQ_of_weigh(string w)
     {
+        
+        List<Quadocopter> qList = XMLTools.LoadListFromXMLSerializer<Quadocopter>(quadocopterPath);
+
         WeighCategories weight = new WeighCategories();
         if (w == "easy") weight = WeighCategories.easy;
         else if (w == "middle") weight = WeighCategories.middle;
         else if (w == "heavy") weight = WeighCategories.hevy;
-        List<Quadocopter> qList = XMLTools.LoadListFromXMLSerializer<Quadocopter>(quadocopterPath);
+
         return from q in qList
                where q.weight == weight
                select q;
     }
         /// print all the clients
-        public IEnumerable<Client> ListOfClients();
+        public IEnumerable<Client> ListOfClients()
+        {
+            IEnumerable<Client> cList = XMLTools.LoadListFromXMLSerializer<Client>(clientPath);
+            return cList;
+        }
         /// print all the packages.
         public IEnumerable<Package> ListOfPackages()
         {
