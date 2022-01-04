@@ -19,7 +19,7 @@ namespace DalApi
         public void AddPackage(int sender, int colecter, int weigh, int priority);
         #endregion
 
-        #region updare
+        #region update
         /// update name of quadocopter
         public void updateQd(int id, string modle);
         ///update name and number of charging positions of a base station

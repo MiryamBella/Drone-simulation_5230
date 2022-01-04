@@ -4,6 +4,7 @@ using DalApi;
 using System.Xml.Linq;
 using System.Linq;
 using DO;
+using System.IO;
 
 namespace Dal
 {
@@ -25,6 +26,18 @@ namespace Dal
         string configPath = @"ConfigXml.xml";
 
         internal static int runNum = 0;
+        public DalXML()
+        {
+            if (!File.Exists(clientPath))
+                CreateFiles();
+            else
+                LoadData_c();
+        }
+        private void CreateFiles()
+        {
+            clientRoot = new XElement("students");
+            clientRoot.Save(clientPath);
+        }
 
         #region load data
         private void LoadData_bs()
@@ -192,7 +205,24 @@ namespace Dal
 
 
         /// update package to be belong to a quadocopter.
-        public void AssignPtoQ(Package P, int id_q);
+        public void AssignPtoQ(Package P, int id_q)
+        {
+            LoadData_p();
+
+
+            P.idQuadocopter = id_q;
+            P.time_Belong_quadocopter = DateTime.Now;
+
+            var pack = (from XElement localP in packageRoot.Elements()
+                        where int.Parse(localP.Element("ID").Value) == P.id
+                        select localP).FirstOrDefault();
+
+            pack.Element("IDQ_Quadocopter").Value = id_q.ToString();
+            pack.Element("TimeOfPackage").Element("Time_Belong_quadocopter").Value = DateTime.Now.ToString();
+
+
+            packageRoot.Save(packagePath);
+        }
         /// update package to be collected by quadocopter.
         public void CollectPbyQ(int pID);
         public void DeliveringPtoClient(int pID);
@@ -221,7 +251,7 @@ namespace Dal
                            longitude=int.Parse(bs.Element("Longitude").Value),
                            latitude=int.Parse(bs.Element("Latitude").Value),
                            toBaseSix = new BaseSixtin(),
-                           //decSix = new DmsLocation(toBaseSix.LocationSix(int.Parse(bs.Element("Latitude").Value), int.Parse(bs.Element("Longitude").Value)))
+                           decSix = GetBase(double.Parse(bs.Element("Latitude").Value), double.Parse(bs.Element("Longitude").Value))
                        }).FirstOrDefault();
 
             return station;
@@ -239,21 +269,21 @@ namespace Dal
             Priorities pri = new Priorities();
 
             Package pack=new Package();
-            //pack = (from p in packageRoot.Elements()
-            //        where Convert.ToInt32(p.Element("id").Value) == id
-            //        select new Package()
-            //        {
-            //            id = Convert.ToInt32(p.Element("ID").Value),
-            //            sender = int.Parse(p.Element("ID_Sender").Value),
-            //            receiver = int.Parse(p.Element("ID_Reciver").Value),
-            //            idQuadocopter = int.Parse(p.Element("IDQ_Quadocopter").Value),
-            //            priority = (Priorities)(p.Element("Priority").Value),
-            //            time_Belong_quadocopter = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Belong_quadocopter").Value),
-            //            time_ColctedFromSender = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ColctedFromSender").Value),
-            //            time_ComeToColcter = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ComeToColcter").Value),
-            //            time_Create = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Create").Value),
-            //            weight = (WeighCategories)(p.Element("Weight").Value)
-            //        });.FirstOrDefault();
+            pack = (from p in packageRoot.Elements()
+                    where Convert.ToInt32(p.Element("id").Value) == id
+                    select new Package()
+                    {
+                        id = Convert.ToInt32(p.Element("ID").Value),
+                        sender = int.Parse(p.Element("ID_Sender").Value),
+                        receiver = int.Parse(p.Element("ID_Reciver").Value),
+                        idQuadocopter = int.Parse(p.Element("IDQ_Quadocopter").Value),
+                        priority = (Priorities)(getEnam(p.Element("Priority").Value)),
+                        time_Belong_quadocopter = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Belong_quadocopter").Value),
+                        time_ColctedFromSender = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ColctedFromSender").Value),
+                        time_ComeToColcter = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ComeToColcter").Value),
+                        time_Create = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Create").Value),
+                        weight = (WeighCategories)(getEnam(p.Element("Weight").Value))
+                    }).FirstOrDefault();
 
             return pack;
         }
@@ -275,7 +305,7 @@ namespace Dal
                         longitude = int.Parse(bs.Element("Longitude").Value),
                         latitude = int.Parse(bs.Element("Latitude").Value),
                         toBaseSix = new BaseSixtin(),
-                        //decSix = new DmsLocation(toBaseSix.LocationSix(int.Parse(bs.Element("Latitude").Value), int.Parse(bs.Element("Longitude").Value)))
+                        decSix = GetBase(double.Parse(bs.Element("Latitude").Value), double.Parse(bs.Element("Longitude").Value))
                     };
             return l;
         }
@@ -298,13 +328,14 @@ namespace Dal
                         sender = int.Parse(p.Element("ID_Sender").Value),
                         receiver = int.Parse(p.Element("ID_Reciver").Value),
                         idQuadocopter = int.Parse(p.Element("IDQ_Quadocopter").Value),
-                        priority = (Priorities)(p.Element("Priority").Value),
+                        priority = (Priorities)(getEnam(p.Element("Priority").Value)),
                         time_Belong_quadocopter = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Belong_quadocopter").Value),
                         time_ColctedFromSender = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ColctedFromSender").Value),
                         time_ComeToColcter = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ComeToColcter").Value),
                         time_Create = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Create").Value),
-                        weight = (WeighCategories)(p.Element("Weight").Value)
+                        weight = (WeighCategories)(getEnam(p.Element("Weight").Value))
                     };
+
 
             return l;
         }
@@ -355,11 +386,49 @@ namespace Dal
         /// <summary>
         /// accept a location and return the closest base station with a free charge position
         /// </summary>
-        public BaseStation searchCloseEmptyStation(Location l);
+        public BaseStation searchCloseEmptyStation(Location l)
+        {
+
+        }
         /// <summary>
         /// accept a location of qudocopoter and its battery and return list of package that the q can take
         /// </summary>
-        public List<Package> availablePtoQ(int battery, Location loc);
+        public List<Package> availablePtoQ(int battery, Location loc)
+        {
+            LoadData_p();
+
+
+            List<Package> packages = new List<Package>();
+            foreach (XElement p in packageRoot.Elements())
+            {
+                Location senderLocation = searchLocationOfclient(int.Parse(p.Element("ID_Sender").Value));
+                Location receiverL = searchLocationOfclient(int.Parse(p.Element("ID_Reciver").Value));
+                BaseStation stationL = searchCloseStation(receiverL);
+                Location stationLocation = new Location() { longitude = stationL.longitude, latitude = stationL.latitude };
+                double distance = GetDistance(loc, senderLocation) + GetDistance(senderLocation, receiverL) + GetDistance(receiverL, stationLocation);
+                int minBattery = (int)(distance * askForElectric()[getEnam(p.Element("Weight").Value)]);
+                if (battery >= minBattery)
+                {
+                    Package x = new Package
+                    {
+                        id = int.Parse(p.Element("ID").Value),
+                        idQuadocopter = int.Parse(p.Element("IDQ_Quadocopter").Value),
+                        receiver = int.Parse(p.Element("ID_Reciver").Value),
+                        sender = int.Parse(p.Element("ID_Sender").Value),
+                        time_Belong_quadocopter = DateTime.Parse(p.Element("Time_Belong_quadocopter").Value),
+                        time_ColctedFromSender = DateTime.Parse(p.Element("Time_ColctedFromSender").Value),
+                        time_ComeToColcter = DateTime.Parse(p.Element("Time_ComeToColcter").Value),
+                        time_Create = DateTime.Parse(p.Element("Time_Create").Value),
+                        priority = (Priorities)getEnam(p.Element("Priority").Value),
+                        weight = (WeighCategories)getEnam(p.Element("Weight").Value)
+                    };
+                        
+                    packages.Add(x);
+                }
+            }
+            return packages;
+
+        }
         /// <summary>
         /// accept id of package of id of its sender/receiver and return the another client of this package(receiver/sender)
         /// </summary>
@@ -383,6 +452,32 @@ namespace Dal
             XElement Electric = new XElement("Electric", Available, easy, hevy, middle_toCare, charghingRate);
             configRoot.Add(runNum, Electric);
             configRoot.Save(configPath);
+        }
+
+        DmsLocation GetBase(double lat, double len)
+        {
+            BaseSixtin ba = new BaseSixtin();
+
+            return (ba.LocationSix(lat, len));
+        }
+        public double GetDistance(Location l1, Location l2)
+        {
+            return Math.Sqrt(Math.Pow(l1.latitude - l2.latitude, 2) + Math.Pow(l1.longitude - l2.longitude, 2));
+        }
+
+        int getEnam(string str)
+        {
+            switch (str)
+            {
+                case "easy": return 1;
+                case "middle": return 2;
+                case "hevy": return 3;
+                case "reggular": return 0;
+                case "fast": return 1;
+                case "emergency": return 2;
+                default:
+                    throw new XMLException("the string not exis in the enum priorities.");
+            }
         }
     }
 }
