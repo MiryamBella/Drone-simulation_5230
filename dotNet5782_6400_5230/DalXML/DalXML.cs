@@ -7,7 +7,6 @@ using System.Text;
 using System.IO;
 using System.Xml.Serialization;
 using DO;
-using System.IO;
 
 namespace Dal
 {
@@ -560,13 +559,40 @@ namespace Dal
         /// <summary>
         /// accept a location and return the closest base station
         /// </summary>
-        public BaseStation searchCloseStation(Location l);
+        public BaseStation searchCloseStation(Location l)
+        {
+            IEnumerable<BaseStation> bsList = ListOfStations();
+            BaseStation bs = new BaseStation();
+            double minDistance = 100000000, help = 0;
+            foreach (BaseStation b in bsList)
+            {
+                help = GetDistance(l, new Location() { latitude = b.latitude, longitude = b.longitude });
+                if (help < minDistance)
+                {
+                    minDistance = help;
+                    bs = b;
+                }
+            }
+            return bs;
+        }
         /// <summary>
         /// accept a location and return the closest base station with a free charge position
         /// </summary>
         public BaseStation searchCloseEmptyStation(Location l)
         {
-
+            IEnumerable<BaseStation> bList = ListOfStations();
+            BaseStation bs = new BaseStation();
+            double minDistance = 100000000, help = 0;
+            foreach (BaseStation b in bList)
+            {
+                help = GetDistance(l, new Location() { latitude = b.latitude, longitude = b.longitude });
+                if (help < minDistance && b.freechargingPositions != 0)
+                {
+                    minDistance = help;
+                    bs = b;
+                }
+            }
+            return bs;
         }
         /// <summary>
         /// accept a location of qudocopoter and its battery and return list of package that the q can take
@@ -610,7 +636,28 @@ namespace Dal
         /// <summary>
         /// accept id of package of id of its sender/receiver and return the another client of this package(receiver/sender)
         /// </summary>
-        public Client searchAnotherClient(int pID, int clientID);
+        public Client searchAnotherClient(int pID, int clientID)
+        {
+            IEnumerable<Package> pList = XMLTools.LoadListFromXMLSerializer<Package>(packagePath);
+            IEnumerable<Client> cList = XMLTools.LoadListFromXMLSerializer<Client>(clientPath);
+
+            foreach (Package p in pList)
+                if (p.id == pID)
+                    if (p.sender == clientID)
+                    {
+                        foreach (Client c in cList)
+                            if (c.ID == p.receiver)
+                                return c;
+                    }
+                    else if (p.receiver == clientID)
+                    {
+                        foreach (Client c in cList)
+                            if (c.ID == p.sender)
+                                return c;
+                    }
+                    else throw new DALException("there is no package in this client");
+            throw new DALException("there is no package in this client");
+        }
 
         /// <summary>
         /// active only once to start the data.
