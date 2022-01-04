@@ -2,11 +2,15 @@
 using DalApi;
 using System.Xml.Linq;
 using System.Linq;
+using System.Text;
+using System.IO;
+using System.Xml.Serialization;
 using DO;
+using System.Collections.Generic;
 
 namespace Dal
 {
-    public class DalXML:IDAL
+    public class DalXML : IDAL
     {
         XElement clientRoot;
         string clientPath = @"ClientXml.xml";
@@ -16,6 +20,12 @@ namespace Dal
 
         XElement packageRoot;
         string packagePath = @"PackageXml.xml";
+
+        XElement quadocopterRoot;
+        string quadocopterPath = @"QuadocopterXml.xml";
+
+        XElement chargingRoot;
+        string chargingPath = @"ChargingXml.xml";
 
         internal static int runNum = 0;
 
@@ -40,6 +50,39 @@ namespace Dal
             catch
             {
                 Console.WriteLine("File upload problem");
+            }
+        }
+        private void LoadData_q()
+        {
+            try
+            {
+                quadocopterRoot = XElement.Load(quadocopterPath);
+            }
+            catch
+            {
+                throw new Exception("File upload problem");
+            }
+        }
+        private void LoadData_c()
+        {
+            try
+            {
+                clientRoot = XElement.Load(clientPath);
+            }
+            catch
+            {
+                throw new Exception("File upload problem");
+            }
+        }
+        private void LoadData_charge()
+        {
+            try
+            {
+                chargingRoot = XElement.Load(chargingPath);
+            }
+            catch
+            {
+                throw new Exception("File upload problem");
             }
         }
 
@@ -69,16 +112,33 @@ namespace Dal
             baseStationRoot.Save(baseStationPath);
         }
         ///adding new Quadocopter
-        public void AddQuadocopter(int id, string moodle, int weight);
+        public void AddQuadocopter(int id, string moodle, int weight)
+        {
+            LoadData_q();
+            XElement ID = new XElement("id", id);
+            XElement Moodle = new XElement("moodle", moodle);
+            XElement Weight;
+            if (weight == 1)
+                Weight = new XElement("Weight", WeighCategories.easy);
+            else if (weight == 2)
+                Weight = new XElement("Weight", WeighCategories.middle);
+            else
+                Weight = new XElement("Weight", WeighCategories.hevy);
+            XElement StartCharging = new XElement("startCharging", 0);
+            XElement quadocopter = new XElement("Quadocopter", ID, moodle, weight);
+            quadocopterRoot.Add(quadocopter);
+            quadocopterRoot.Save(quadocopterPath);
+        }
         ///adding new client
         public void AddClient(int id, string name, int phoneNumber, double lon, double lat)
         {
-            XElement ID = new XElement("id",id);
+            LoadData_c();
+            XElement ID = new XElement("id", id);
             XElement Name = new XElement("name", name);
             XElement PhoneNumber = new XElement("phoneNumber", phoneNumber);
             XElement Longitude = new XElement("longitude", lon);
             XElement Latitude = new XElement("latitude", lat);
-            XElement Client = new XElement("Client", ID, Name, PhoneNumber,Longitude, Latitude);
+            XElement Client = new XElement("Client", ID, Name, PhoneNumber, Longitude, Latitude);
 
             clientRoot.Add(Client);
             clientRoot.Save(clientPath);
@@ -125,15 +185,34 @@ namespace Dal
 
         #region update
         /// update name of quadocopter
-        public void updateQd(int id, string modle);
+        public void updateQd(int id, string modle)
+        {
+            try
+            {
+                LoadData_q();
+                XElement q = (from qu in quadocopterRoot.Elements()
+                              where Convert.ToInt32(qu.Element("ID").Value) == id
+                              select qu).FirstOrDefault();
+                if (q == null)
+                    throw new Exception("ID not exist");
+                q.Element("Moodle").Value = modle;
+                quadocopterRoot.Save(quadocopterPath);
+
+            }
+            catch (Exception ex)
+            {
+                throw new DO.XMLException(quadocopterPath, "ERROR", ex);
+            }
+
+        }
         ///update name and number of charging positions of a base station
         public void updateBSdata(int id, string name = null, int chargingPositions = -1)
         {
             LoadData_bs();
 
             XElement bsElement = (from bs in baseStationRoot.Elements()
-                                      where Convert.ToInt32(bs.Element("ID").Value) == id
-                                      select bs).FirstOrDefault();
+                                  where Convert.ToInt32(bs.Element("ID").Value) == id
+                                  select bs).FirstOrDefault();
             if (bsElement == null)
                 throw new XMLException("ID not exist");
             if (name != null) bsElement.Element("Name").Value = name;
@@ -163,9 +242,81 @@ namespace Dal
         public void CollectPbyQ(int pID);
         public void DeliveringPtoClient(int pID);
         /// Send the quadocopter to charging.
-        public void SendQtoCharging(int bID, int qID);
+        public void SendQtoCharging(int bID, int qID)
+        {
+            try
+            {
+                LoadData_q();
+                LoadData_bs();
+                LoadData_charge();
+                //find the qudocopter and the base station
+                XElement q = (from qu in quadocopterRoot.Elements()
+                              where Convert.ToInt32(qu.Element("ID").Value) == qID
+                              select qu).FirstOrDefault();
+                XElement b = (from bs in baseStationRoot.Elements()
+                              where Convert.ToInt32(bs.Element("ID").Value) == bID
+                              select bs).FirstOrDefault();
+                if (q == null || b == null)
+                    throw new Exception("ID not exist");
+                if (Convert.ToInt32(b.Element("FreechargingPositions").Value) <= 0)
+                    throw new Exception("There is no place to charge in this base station.");
+                //change the startCharging of the q to be now, and free positions of charging of bs to be -1
+                q.Element("StartCharging").Value = DateTime.Now.ToString();
+                int free = Convert.ToInt32(b.Element("FreechargingPositions").Value);
+                free--;
+                b.Element("FreechargingPositions").Value = free.ToString();
+
+                quadocopterRoot.Save(quadocopterPath);
+                baseStationRoot.Save(baseStationPath);
+                //add a item of 'charging'
+                XElement BaseStation = new XElement("baseStationID", bID);
+                XElement quadocopter = new XElement("quadocopterID", qID);
+                XElement Charging = new XElement("charging", BaseStation, quadocopter);
+
+                chargingRoot.Add(Charging);
+                chargingRoot.Save(chargingPath);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
         /// release te quadocopter frp charging.
-        public void ReleaseQfromCharging(int qID);
+        public void ReleaseQfromCharging(int qID)
+        {
+            try
+            {
+                LoadData_q();
+                LoadData_bs();
+                LoadData_charge();
+                //find the qudocopter and the base station
+                XElement charge = (from ch in chargingRoot.Elements()
+                              where Convert.ToInt32(ch.Element("Qudocopter").Value) == qID
+                              select ch).FirstOrDefault();
+                XElement b = (from bs in baseStationRoot.Elements()
+                              where bs.Element("ID").Value == charge.Element("BaseStation").Value
+                              select bs).FirstOrDefault();
+                if (b == null)
+                    throw new Exception("ID not exist");
+                
+                //change the free positions of charging of bs to be +1
+                
+                int free = Convert.ToInt32(b.Element("FreechargingPositions").Value);
+                free++;
+                b.Element("FreechargingPositions").Value = free.ToString();
+
+                baseStationRoot.Save(baseStationPath);
+                
+                //remove a item of 'charging'
+                charge.Remove();
+                chargingRoot.Save(chargingPath);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
         #endregion
 
         #region print
@@ -193,9 +344,25 @@ namespace Dal
             return station;
         }
         /// print datails of quadocopter.
-        public Quadocopter QuDisplay(int id);
+        public Quadocopter QuDisplay(int id)
+        {
+            List<Quadocopter> qList = XMLTools.LoadListFromXMLSerializer<Quadocopter>(quadocopterPath);
+            Quadocopter q = (from qu in qList
+                             where qu.id == id
+                             select qu).FirstOrDefault();
+            return q; 
+        }
+
+
         /// print datails of client.
-        public Client ClientDisplay(int id);
+        public Client ClientDisplay(int id)
+        {
+            List<Client> cList = XMLTools.LoadListFromXMLSerializer<Client>(clientPath);
+            Client cli = (from c in cList
+                             where c.ID == id
+                             select c).FirstOrDefault();
+            return cli;
+        }
         /// print datails of package.
         public Package PackageDisplay(int id)
         {
@@ -226,9 +393,24 @@ namespace Dal
         /// print all the stations.
         public IEnumerable<BaseStation> ListOfStations();
         /// print all the quadocpters.
-        public IEnumerable<Quadocopter> ListOfQ();
+        public IEnumerable<Quadocopter> ListOfQ()
+        {
+            IEnumerable<Quadocopter> qList = XMLTools.LoadListFromXMLSerializer<Quadocopter>(quadocopterPath);
+            return qList;
+        }
+    }
         /// print all the quadocpters acording to the weigh.
-        public IEnumerable<Quadocopter> ListOfQ_of_weigh(string w);
+        public IEnumerable<Quadocopter> ListOfQ_of_weigh(string w)
+    {
+        WeighCategories weight = new WeighCategories();
+        if (w == "easy") weight = WeighCategories.easy;
+        else if (w == "middle") weight = WeighCategories.middle;
+        else if (w == "heavy") weight = WeighCategories.hevy;
+        List<Quadocopter> qList = XMLTools.LoadListFromXMLSerializer<Quadocopter>(quadocopterPath);
+        return from q in qList
+               where q.weight == weight
+               select q;
+    }
         /// print all the clients
         public IEnumerable<Client> ListOfClients();
         /// print all the packages.
