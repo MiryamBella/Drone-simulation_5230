@@ -1,15 +1,17 @@
-﻿//using System;
+﻿using System;
 //using DalObject;
-//using System.Collections.Generic;
+using System.Collections.Generic;
 
-//namespace ConsoleUI
-//{
-//    class Program
-//    {
-//        static Program program;
+namespace ConsoleUI
+{
+    class Program
+    {
+        static Program program;
 
-//        DalObject.DalObject dalObject;
-//        static void Main(string[] args)
+        //DalObject.DalObject dalObject;
+        static void Main(string[] args) { }
+    }
+}
 //        {
 //            program = new Program();//start the pogram, so i can use the methods.
 //            program.dalObject = new DalObject.DalObject();//start the dalObject.

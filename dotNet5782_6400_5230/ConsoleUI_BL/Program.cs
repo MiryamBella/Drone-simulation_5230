@@ -1,14 +1,16 @@
-﻿//using System;
+﻿using System;
 
-//namespace ConsoleUI_BL
-//{
-//    class Program
-//    {
-//        static Program program;
-//        BlApi.BL bl;
+namespace ConsoleUI_BL
+{
+    class Program
+    {
+        static Program program;
+        //BlApi.BL bl;
 
-//        static void Main(string[] args)
-//        {
+        static void Main(string[] args)
+        { }
+    }
+}
 //            program = new Program();//start the pogram, so i can use the methods.
 //            program.bl = new BlApi.BL();//start the BL.
 
