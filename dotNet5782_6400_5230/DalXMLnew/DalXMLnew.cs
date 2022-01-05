@@ -10,29 +10,11 @@ using DO;
 
 namespace Dal
 {
-    public class DalXML : IDAL
+    public class DalXMLnew : IDAL
     {
-        #region roots
-        XElement clientRoot;
-        string clientPath = @"ClientXml.xml";
-
-        XElement baseStationRoot;
-        string baseStationPath = @"BaseStationXml.xml";
-
-        XElement packageRoot;
-        string packagePath = @"PackageXml.xml";
-
-        XElement quadocopterRoot;
-        string quadocopterPath = @"QuadocopterXml.xml";
-
-        XElement chargeRoot;
-        string chargePath = @"ChargeXml.xml";
-
-        XElement configRoot;
-        string configPath = @"ConfigXml.xml";
-        #endregion
-
-        public DalXML()
+        static readonly IDAL instance = new DalXMLnew();
+        public static IDAL Instance { get => instance; }
+        public DalXMLnew()
         {
             if (!File.Exists(clientPath))
                 CreateFiles(xmlRoots.clientR);
@@ -64,7 +46,30 @@ namespace Dal
             else
                 LoadData_config();
 
+            //start();
         }
+
+
+        #region roots
+        XElement clientRoot;
+        string clientPath = @"ClientXml.xml";
+
+        XElement baseStationRoot;
+        string baseStationPath = @"BaseStationXml.xml";
+
+        XElement packageRoot;
+        string packagePath = @"PackageXml.xml";
+
+        XElement quadocopterRoot;
+        string quadocopterPath = @"QuadocopterXml.xml";
+
+        XElement chargeRoot;
+        string chargePath = @"ChargeXml.xml";
+
+        XElement configRoot;
+        string configPath = @"ConfigXml.xml";
+        #endregion
+
         private void CreateFiles(xmlRoots root)
         {
             switch (root)
@@ -188,7 +193,7 @@ namespace Dal
             XElement Location_baseSix = new XElement("BaseSix", six.LocationSix(lat, lon).ToString());
 
 
-            XElement BaseStation = new XElement("Client", ID, Name, ChargingPositions, FreechargingPositions, Longitude, Latitude, Location_baseSix);
+            XElement BaseStation = new XElement("BaseStation", ID, Name, ChargingPositions, FreechargingPositions, Longitude, Latitude, Location_baseSix);
 
             baseStationRoot.Add(BaseStation);
             baseStationRoot.Save(baseStationPath);
@@ -418,22 +423,22 @@ namespace Dal
                 LoadData_charge();
                 //find the qudocopter and the base station
                 XElement charge = (from ch in chargeRoot.Elements()
-                              where Convert.ToInt32(ch.Element("Qudocopter").Value) == qID
-                              select ch).FirstOrDefault();
+                                   where Convert.ToInt32(ch.Element("Qudocopter").Value) == qID
+                                   select ch).FirstOrDefault();
                 XElement b = (from bs in baseStationRoot.Elements()
                               where bs.Element("ID").Value == charge.Element("BaseStation").Value
                               select bs).FirstOrDefault();
                 if (b == null)
                     throw new Exception("ID not exist");
-                
+
                 //change the free positions of charging of bs to be +1
-                
+
                 int free = Convert.ToInt32(b.Element("FreechargingPositions").Value);
                 free++;
                 b.Element("FreechargingPositions").Value = free.ToString();
 
                 baseStationRoot.Save(baseStationPath);
-                
+
                 //remove a item of 'charging'
                 charge.Remove();
                 chargeRoot.Save(chargePath);
@@ -459,10 +464,10 @@ namespace Dal
                        {
                            IDnumber = Convert.ToInt32(bs.Element("id").Value),
                            name = bs.Element("Name").Value,
-                           chargingPositions=int.Parse(bs.Element("ChargingPositions").Value),
-                           freechargingPositions=Convert.ToInt32(bs.Element("FreechargingPositions").Value),
-                           longitude=int.Parse(bs.Element("Longitude").Value),
-                           latitude=int.Parse(bs.Element("Latitude").Value),
+                           chargingPositions = int.Parse(bs.Element("ChargingPositions").Value),
+                           freechargingPositions = Convert.ToInt32(bs.Element("FreechargingPositions").Value),
+                           longitude = int.Parse(bs.Element("Longitude").Value),
+                           latitude = int.Parse(bs.Element("Latitude").Value),
                            toBaseSix = new BaseSixtin(),
                            decSix = GetBase(double.Parse(bs.Element("Latitude").Value), double.Parse(bs.Element("Longitude").Value))
                        }).FirstOrDefault();
@@ -476,7 +481,7 @@ namespace Dal
             Quadocopter q = (from qu in qList
                              where qu.id == id
                              select qu).FirstOrDefault();
-            return q; 
+            return q;
         }
 
 
@@ -485,8 +490,8 @@ namespace Dal
         {
             List<Client> cList = XMLTools.LoadListFromXMLSerializer<Client>(clientPath);
             Client cli = (from c in cList
-                             where c.ID == id
-                             select c).FirstOrDefault();
+                          where c.ID == id
+                          select c).FirstOrDefault();
             return cli;
         }
         /// print datails of package.
@@ -494,7 +499,7 @@ namespace Dal
         {
             LoadData_p();
 
-            Package pack=new Package();
+            Package pack = new Package();
             pack = (from p in packageRoot.Elements()
                     where Convert.ToInt32(p.Element("id").Value) == id
                     select new Package()
@@ -522,17 +527,17 @@ namespace Dal
             LoadData_bs();
 
             IEnumerable<BaseStation> l = from bs in baseStationRoot.Elements()
-                    select new BaseStation()
-                    {
-                        IDnumber = Convert.ToInt32(bs.Element("id").Value),
-                        name = bs.Element("Name").Value,
-                        chargingPositions = int.Parse(bs.Element("ChargingPositions").Value),
-                        freechargingPositions = Convert.ToInt32(bs.Element("FreechargingPositions").Value),
-                        longitude = int.Parse(bs.Element("Longitude").Value),
-                        latitude = int.Parse(bs.Element("Latitude").Value),
-                        toBaseSix = new BaseSixtin(),
-                        decSix = GetBase(double.Parse(bs.Element("Latitude").Value), double.Parse(bs.Element("Longitude").Value))
-                    };
+                                         select new BaseStation
+                                         {
+                                             IDnumber = Convert.ToInt32(bs.Element("id").Value),
+                                             name = bs.Element("Name").Value,
+                                             chargingPositions = int.Parse(bs.Element("ChargingPositions").Value),
+                                             freechargingPositions = Convert.ToInt32(bs.Element("FreechargingPositions").Value),
+                                             longitude = int.Parse(bs.Element("Longitude").Value),
+                                             latitude = int.Parse(bs.Element("Latitude").Value),
+                                             toBaseSix = new BaseSixtin(),
+                                             decSix = GetBase(double.Parse(bs.Element("Latitude").Value), double.Parse(bs.Element("Longitude").Value))
+                                         };
             return l;
         }
         /// print all the quadocpters.
@@ -540,23 +545,23 @@ namespace Dal
         {
             IEnumerable<Quadocopter> qList = XMLTools.LoadListFromXMLSerializer<Quadocopter>(quadocopterPath);
             return qList;
-            
+
         }
         /// print all the quadocpters acording to the weigh.
         public IEnumerable<Quadocopter> ListOfQ_of_weigh(string w)
-    {
-        
-        List<Quadocopter> qList = XMLTools.LoadListFromXMLSerializer<Quadocopter>(quadocopterPath);
+        {
 
-        WeighCategories weight = new WeighCategories();
-        if (w == "easy") weight = WeighCategories.easy;
-        else if (w == "middle") weight = WeighCategories.middle;
-        else if (w == "heavy") weight = WeighCategories.hevy;
+            List<Quadocopter> qList = XMLTools.LoadListFromXMLSerializer<Quadocopter>(quadocopterPath);
 
-        return from q in qList
-               where q.weight == weight
-               select q;
-    }
+            WeighCategories weight = new WeighCategories();
+            if (w == "easy") weight = WeighCategories.easy;
+            else if (w == "middle") weight = WeighCategories.middle;
+            else if (w == "heavy") weight = WeighCategories.hevy;
+
+            return from q in qList
+                   where q.weight == weight
+                   select q;
+        }
         /// print all the clients
         public IEnumerable<Client> ListOfClients()
         {
@@ -794,7 +799,7 @@ namespace Dal
                         priority = (Priorities)getEnam(p.Element("Priority").Value),
                         weight = (WeighCategories)getEnam(p.Element("Weight").Value)
                     };
-                        
+
                     packages.Add(x);
                 }
             }
@@ -832,7 +837,7 @@ namespace Dal
         /// </summary>
         void startConfig()
         {
-            LoadData_config();
+            //LoadData_config();
 
             XElement runNum = new XElement("runName", 0);
 
@@ -845,8 +850,150 @@ namespace Dal
             XElement Electric = new XElement("Electric", Available, easy, hevy, middle_toCare, charghingRate);
             configRoot.Add(runNum, Electric);
             configRoot.Save(configPath);
+            start();
         }
 
+        void start()
+        {
+            LoadData_bs();
+            LoadData_c();
+            LoadData_config();
+            LoadData_charge();
+            LoadData_p();
+            LoadData_q();
+
+            //i reset some data.
+            Random r = new Random();
+            #region base station
+            BaseStation b = new BaseStation();//1
+            b.IDnumber = 100;
+            b.name = "Jerusalem";
+            int x = r.Next(1000);
+            b.chargingPositions = x;
+            b.freechargingPositions = x;
+            b.longitude = r.Next(10);
+            b.latitude = r.Next(10);
+            b.toBaseSix = new BaseSixtin();
+            b.decSix = new DmsLocation();
+            b.decSix = b.toBaseSix.LocationSix(b.latitude, b.longitude);
+            AddBaseStation(b.IDnumber, b.name, b.chargingPositions, b.longitude, b.latitude);
+
+            BaseStation baseStation = new BaseStation();//2
+            baseStation.IDnumber = 101;
+            baseStation.name = "Tel Aviv";
+            x = r.Next(1000);
+            baseStation.chargingPositions = x;
+            baseStation.freechargingPositions = x;
+            baseStation.longitude = r.Next(10);
+            baseStation.latitude = r.Next(10);
+            baseStation.toBaseSix = new BaseSixtin();
+            baseStation.decSix = new DmsLocation();
+            baseStation.decSix = baseStation.toBaseSix.LocationSix(baseStation.latitude, baseStation.longitude);
+            AddBaseStation(b.IDnumber, b.name, b.chargingPositions, b.longitude, b.latitude);
+            #endregion
+            #region Quadocopter
+            Quadocopter qa = new Quadocopter();//1
+            qa.id = 100;
+            qa.moodle = "a";
+            qa.weight = WeighCategories.easy;
+            ///qa.battery = r.Next(0, 101);
+            ///qa.mode = statusOfQ.available;
+            AddQuadocopter(qa.id, qa.moodle, (int)qa.weight);
+
+            Quadocopter qb = new Quadocopter();//2
+            qb = new Quadocopter();
+            qb.id = 101;
+            qb.moodle = "b";
+            qb.weight = WeighCategories.hevy;
+            ///qb.battery = r.Next(0, 101);
+            ///qb.mode = statusOfQ.maintenance;
+            AddQuadocopter(qb.id, qb.moodle, (int)qb.weight);
+
+            Quadocopter qc = new Quadocopter();//3
+            qc = new Quadocopter();
+            qc.id = 102;
+            qc.moodle = "c";
+            qc.weight = WeighCategories.middle;
+            ///qc.battery = r.Next(0, 101);
+            ///qc.mode = statusOfQ.delivery;
+            AddQuadocopter(qc.id, qc.moodle, (int)qc.weight);
+
+            Quadocopter qd = new Quadocopter();//4
+            qd = new Quadocopter();
+            qd.id = 103;
+            qd.moodle = "d";
+            qd.weight = (WeighCategories)r.Next(0, 3);
+            AddQuadocopter(qd.id, qd.moodle, (int)qd.weight);
+
+            Quadocopter qe = new Quadocopter();//5
+            qe = new Quadocopter();
+            qe.id = 104;
+            qe.moodle = "e";
+            qe.weight = (WeighCategories)r.Next(0, 3);
+            ///qe.battery = r.Next(0, 101);
+            ///qe.mode = (statusOfQ)r.Next(0, 3);
+            AddQuadocopter(qe.id, qe.moodle, (int)qe.weight);
+            #endregion
+
+            /*client*/
+            for (int i = 1; i <= 10; i++)
+            {
+                Client c = new Client();
+                c.ID = (int)(i * 100000000);
+                c.name = getRandomName(i);
+                c.phoneNumber = r.Next(100000000, 999999999);
+                c.latitude = r.Next(10);
+                c.longitude = r.Next(10);
+                AddClient(c.ID, c.name, c.phoneNumber, c.longitude, c.latitude);
+            }
+
+
+            /*Packagh*/
+            //loop for reset all 10 packaghs.
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    Package p = new Package();
+            //    p.id = int.Parse(configRoot.Element("runNum").Value);
+            //    configRoot.Element("runNum").Value = (int.Parse(configRoot.Element("runNum").Value) + 1).ToString();
+            //    p.sender = int.Parse(clientRoot.Elements("ID").Value);
+            //    p.receiver = cli[r.Next(0, cli.Count)].ID;
+            //    p.weight = (WeighCategories)r.Next(0, 3);
+            //    p.priority = (Priorities)r.Next(0, 3);
+            //    p.idQuadocopter = 0;
+            //    p.time_Belong_quadocopter = null;
+            //    p.time_ColctedFromSender = null;
+            //    p.time_ComeToColcter = null;
+            //    p.time_Create = DateTime.Now;
+
+            //    //the 3 package with difrent privorities and WeighCategories.
+            //    if (i == 0)
+            //    {
+            //        p.weight = WeighCategories.hevy;
+            //        p.priority = Priorities.fast;
+
+            //    }
+            //    else if (i == 1)
+            //    {
+            //        p.weight = WeighCategories.easy;
+            //        p.priority = Priorities.emergency;
+
+            //    }
+            //    else if (i == 2)
+            //    {
+
+            //        p.weight = WeighCategories.middle;
+            //        p.priority = Priorities.reggular;
+
+            //    }
+            //    packagh.Add(p);
+            //}
+
+            baseStationRoot.Save(baseStationPath);
+            chargeRoot.Save(chargePath);
+            clientRoot.Save(clientPath);
+            packageRoot.Save(packagePath);
+            quadocopterRoot.Save(quadocopterPath);
+        }
         DmsLocation GetBase(double lat, double len)
         {
             BaseSixtin ba = new BaseSixtin();
@@ -872,5 +1019,35 @@ namespace Dal
                     throw new XMLException("the string not exis in the enum priorities.");
             }
         }
+        static string getRandomName(int num)
+        {
+            num = num % 10;
+            switch (num)
+            {
+                case 0:
+                    return "Moshe";
+                case 1:
+                    return "Miryam";
+                case 2:
+                    return "Rachel";
+                case 3:
+                    return "David";
+                case 4:
+                    return "Shara";
+                case 5:
+                    return "Rebeka";
+                case 6:
+                    return "Lea";
+                case 7:
+                    return "Yosy";
+                case 8:
+                    return "Yonatan";
+                case 9:
+                    return "Ester";
+                default:
+                    return "Dina";
+            }
+        }
+
     }
 }
