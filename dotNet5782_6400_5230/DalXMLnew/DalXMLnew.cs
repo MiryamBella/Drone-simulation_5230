@@ -202,8 +202,8 @@ namespace Dal
         public void AddQuadocopter(int id, string moodle, int weight)
         {
             LoadData_q();
-            XElement ID = new XElement("id", id);
-            XElement Moodle = new XElement("moodle", moodle);
+            XElement ID = new XElement("ID", id);
+            XElement Moodle = new XElement("Moodle", moodle);
             XElement Weight;
             if (weight == 1)
                 Weight = new XElement("Weight", WeighCategories.easy);
@@ -211,7 +211,7 @@ namespace Dal
                 Weight = new XElement("Weight", WeighCategories.middle);
             else
                 Weight = new XElement("Weight", WeighCategories.hevy);
-            XElement StartCharging = new XElement("startCharging", 0);
+            XElement StartCharging = new XElement("StartCharging", 0);
             XElement quadocopter = new XElement("Quadocopter", ID, moodle, weight);
             quadocopterRoot.Add(quadocopter);
             quadocopterRoot.Save(quadocopterPath);
@@ -220,11 +220,11 @@ namespace Dal
         public void AddClient(int id, string name, int phoneNumber, double lon, double lat)
         {
             LoadData_c();
-            XElement ID = new XElement("id", id);
-            XElement Name = new XElement("name", name);
-            XElement PhoneNumber = new XElement("phoneNumber", phoneNumber);
-            XElement Longitude = new XElement("longitude", lon);
-            XElement Latitude = new XElement("latitude", lat);
+            XElement ID = new XElement("ID", id);
+            XElement Name = new XElement("Name", name);
+            XElement PhoneNumber = new XElement("PhoneNumber", phoneNumber);
+            XElement Longitude = new XElement("Longitude", lon);
+            XElement Latitude = new XElement("Latitude", lat);
             XElement Client = new XElement("Client", ID, Name, PhoneNumber, Longitude, Latitude);
 
             clientRoot.Add(Client);
@@ -521,6 +521,7 @@ namespace Dal
         {
             LoadData_bs();
 
+            #region to reset
             //baseStationRoot.RemoveAll();
             //baseStationRoot.Save(baseStationPath);
             ////i reset some data.
@@ -549,9 +550,9 @@ namespace Dal
             //baseStation.toBaseSix = new BaseSixtin();
             //baseStation.decSix = new DmsLocation();
             //baseStation.decSix = baseStation.toBaseSix.LocationSix(baseStation.latitude, baseStation.longitude);
-            //AddBaseStation(b.IDnumber, b.name, b.chargingPositions, b.longitude, b.latitude);
+            //AddBaseStation(baseStation.IDnumber, baseStation.name, baseStation.chargingPositions, baseStation.longitude, baseStation.latitude);
             //baseStationRoot.Save(baseStationPath);
-
+            #endregion
 
             IEnumerable<BaseStation> l = from bs in baseStationRoot.Elements()
                                          select new BaseStation()
@@ -570,15 +571,23 @@ namespace Dal
         /// print all the quadocpters.
         public IEnumerable<Quadocopter> ListOfQ()
         {
-            IEnumerable<Quadocopter> qList = XMLTools.LoadListFromXMLSerializer<Quadocopter>(quadocopterPath);
-            return qList;
+        IEnumerable<Quadocopter> qList = from q in quadocopterRoot.Elements()
+                                         select new Quadocopter()
+                                         {
+                                             id = Convert.ToInt32(q.Element("ID").Value),
+                                             moodle = q.Element("Moodle").Value,
+                                             weight = (WeighCategories)(getEnam(q.Element("Weight").Value)),
+                                             startCharge = DateTime.Parse((q.Element("StartCharging").Value))
+                                         };
 
+            //IEnumerable<Quadocopter> qList = XMLTools.LoadListFromXMLSerializer<Quadocopter>(quadocopterPath);
+            return qList;
         }
         /// print all the quadocpters acording to the weigh.
         public IEnumerable<Quadocopter> ListOfQ_of_weigh(string w)
         {
 
-            List<Quadocopter> qList = XMLTools.LoadListFromXMLSerializer<Quadocopter>(quadocopterPath);
+            List<Quadocopter> qList = (List<Quadocopter>)ListOfQ();
 
             WeighCategories weight = new WeighCategories();
             if (w == "easy") weight = WeighCategories.easy;
@@ -592,7 +601,17 @@ namespace Dal
         /// print all the clients
         public IEnumerable<Client> ListOfClients()
         {
-            IEnumerable<Client> cList = XMLTools.LoadListFromXMLSerializer<Client>(clientPath);
+
+            IEnumerable<Client> cList = from c in clientRoot.Elements()
+                                        select new Client()
+                                        {
+                                            ID = Convert.ToInt32(c.Element("ID").Value),
+                                            name = c.Element("Name").Value,
+                                            phoneNumber = int.Parse(c.Element("PhoneNumber").Value),
+                                            longitude = int.Parse(c.Element("Longitude").Value),
+                                            latitude = int.Parse(c.Element("Latitude").Value)
+                                        };
+            //IEnumerable<Client> cList = XMLTools.LoadListFromXMLSerializer<Client>(clientPath);
             return cList;
         }
         /// print all the packages.
@@ -622,7 +641,7 @@ namespace Dal
         /// print all the packages that dont assigned to quadocopter.
         public IEnumerable<Package> ListOfPwithoutQ()
         {
-            List<Package> l = XMLTools.LoadListFromXMLSerializer<Package>(packagePath);
+            List<Package> l = (List<Package>)ListOfPackages();
             return from p in l
                    where p.idQuadocopter == 0
                    select p;
@@ -631,7 +650,7 @@ namespace Dal
         public IEnumerable<BaseStation> ListOfStationsForCharging()
         {
             List<BaseStation> l = new List<BaseStation>();
-            l = XMLTools.LoadListFromXMLSerializer<BaseStation>(baseStationPath);
+            l = (List<BaseStation>)ListOfStations();
             return from bs in l
                    where bs.freechargingPositions != 0
                    select bs;
@@ -656,7 +675,7 @@ namespace Dal
         {
             LoadData_p();
 
-            List<Package> l = XMLTools.LoadListFromXMLSerializer<Package>(packagePath);
+            List<Package> l = (List<Package>)ListOfPackages();
             return from p in l
                    where p.sender == id
                    select p;
@@ -666,7 +685,7 @@ namespace Dal
         {
             LoadData_p();
 
-            List<Package> l = XMLTools.LoadListFromXMLSerializer<Package>(packagePath);
+            List<Package> l = (List<Package>)ListOfPackages();
             return from p in l
                    where p.receiver == id
                    select p;
@@ -713,7 +732,7 @@ namespace Dal
         {
             LoadData_bs();
 
-            List<BaseStation> bs = XMLTools.LoadListFromXMLSerializer<BaseStation>(baseStationPath);
+            List<BaseStation> bs = (List<BaseStation>)ListOfStations();
             Random r = new Random();
             int x = r.Next(0, bs.Count - 1);
             Location l = new Location();
@@ -729,8 +748,8 @@ namespace Dal
             LoadData_c();
             LoadData_p();
 
-            List<Package> pList = XMLTools.LoadListFromXMLSerializer<Package>(packagePath);
-            List<Client> cList = XMLTools.LoadListFromXMLSerializer<Client>(clientPath);
+            List<Package> pList = (List<Package>)ListOfPackages();
+            List<Client> cList = (List<Client>)ListOfClients();
 
             Random r = new Random();
             List<int> sendersID = new List<int>();
