@@ -289,7 +289,6 @@ namespace Dal
                     throw new Exception("ID not exist");
                 q.Element("Moodle").Value = modle;
                 quadocopterRoot.Save(quadocopterPath);
-
             }
             catch (Exception ex)
             {
@@ -324,10 +323,6 @@ namespace Dal
 
             clientRoot.Save(clientPath);
         }
-
-
-
-
         /// update package to be belong to a quadocopter.
         public void AssignPtoQ(Package P, int id_q)
         {
@@ -526,17 +521,49 @@ namespace Dal
         {
             LoadData_bs();
 
+            //baseStationRoot.RemoveAll();
+            //baseStationRoot.Save(baseStationPath);
+            ////i reset some data.
+            //Random r = new Random();
+            //BaseStation b = new BaseStation();//1
+            //b.IDnumber = 100;
+            //b.name = "Jerusalem";
+            //int x = r.Next(1000);
+            //b.chargingPositions = x;
+            //b.freechargingPositions = x;
+            //b.longitude = r.Next(10);
+            //b.latitude = r.Next(10);
+            //b.toBaseSix = new BaseSixtin();
+            //b.decSix = new DmsLocation();
+            //b.decSix = b.toBaseSix.LocationSix(b.latitude, b.longitude);
+            //AddBaseStation(b.IDnumber, b.name, b.chargingPositions, b.longitude, b.latitude);
+
+            //BaseStation baseStation = new BaseStation();//2
+            //baseStation.IDnumber = 101;
+            //baseStation.name = "Tel Aviv";
+            //x = r.Next(1000);
+            //baseStation.chargingPositions = x;
+            //baseStation.freechargingPositions = x;
+            //baseStation.longitude = r.Next(10);
+            //baseStation.latitude = r.Next(10);
+            //baseStation.toBaseSix = new BaseSixtin();
+            //baseStation.decSix = new DmsLocation();
+            //baseStation.decSix = baseStation.toBaseSix.LocationSix(baseStation.latitude, baseStation.longitude);
+            //AddBaseStation(b.IDnumber, b.name, b.chargingPositions, b.longitude, b.latitude);
+            //baseStationRoot.Save(baseStationPath);
+
+
             IEnumerable<BaseStation> l = from bs in baseStationRoot.Elements()
-                                         select new BaseStation
+                                         select new BaseStation()
                                          {
-                                             IDnumber = Convert.ToInt32(bs.Element("Client").Element("id").Value),
+                                             IDnumber = Convert.ToInt32(bs.Element("ID").Value),
                                              name = bs.Element("Name").Value,
-                                             chargingPositions = int.Parse(bs.Element("Client").Element("ChargingPositions").Value),
-                                             freechargingPositions = Convert.ToInt32(bs.Element("Client").Element("FreechargingPositions").Value),
-                                             longitude = int.Parse(bs.Element("Client").Element("Longitude").Value),
-                                             latitude = int.Parse(bs.Element("Client").Element("Latitude").Value),
+                                             chargingPositions = int.Parse(bs.Element("ChargingPositions").Value),
+                                             freechargingPositions = Convert.ToInt32(bs.Element("FreechargingPositions").Value),
+                                             longitude = int.Parse(bs.Element("Longitude").Value),
+                                             latitude = int.Parse(bs.Element("Latitude").Value),
                                              toBaseSix = new BaseSixtin(),
-                                             decSix = GetBase(double.Parse(bs.Element("Client").Element("Latitude").Value), double.Parse(bs.Element("Client").Element("Longitude").Value))
+                                             decSix =  GetBase(double.Parse(bs.Element("Latitude").Value), double.Parse(bs.Element("Longitude").Value))
                                          };
             return l;
         }
@@ -724,10 +751,10 @@ namespace Dal
                 return sendersL[x];
             }
             Client dcli = cList[0];
-            return new Location() { latitude = dcli.latitude, longitude = dcli.longitude };
-
             XMLTools.SaveListToXMLSerializer<Package>(pList, packagePath);
             XMLTools.SaveListToXMLSerializer<Client>(cList, clientPath);
+
+            return new Location() { latitude = dcli.latitude, longitude = dcli.longitude };
         }
         /// <summary>
         /// accept a location and return the closest base station
