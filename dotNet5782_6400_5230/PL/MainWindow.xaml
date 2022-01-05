@@ -23,7 +23,7 @@
         <!--backgruond-->
         <TextBlock Grid.Row="0" Grid.Column="0" Background ="Gold" Grid.ColumnSpan="2"/>
 
-        <TextBlock Text="WLCOME USER!" HorizontalAlignment="Center" VerticalAlignment="Center"
+        <TextBlock Text="WELCOME USER!" HorizontalAlignment="Center" VerticalAlignment="Center"
                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="50" FontWeight="Bold"
                    />
 

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="Quadocopter" Height="450" Width="800">
-    <Grid ShowGridLines="True" >
+    <Grid ShowGridLines="False" >
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -32,7 +32,7 @@
         </Canvas>
 
 
-        <TextBlock Text="QUADOCOPTER" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
+        <TextBlock Text="DRONE" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
                  FontSize="22" FontWeight="Bold" TextDecorations="Underline" TextAlignment="Center"
                  />
         <!--any time you see the word delyvery, it is mean the id of the base station-->
@@ -157,7 +157,7 @@
         <Button x:Name="addQ" Click="adding" Background="LawnGreen"
                 HorizontalAlignment="Left" Margin="29,0,0,0" Grid.Row="5" Grid.Column="2" 
                 VerticalAlignment="Center" Height="34" Width="171" Grid.ColumnSpan="2" 
-                Content="add the qudocopter" />
+                Content="add the drone" />
         <Button x:Name="showPackage" Click="showPackage_Click" Background="Coral"
                 HorizontalAlignment="Left" Margin="29,0,0,0" Grid.Row="5" Grid.Column="2"
                 VerticalAlignment="Center" Height="34" Width="171" Grid.ColumnSpan="2" 

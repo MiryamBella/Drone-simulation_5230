@@ -34,11 +34,11 @@
             <Button x:Name="CloseWindow" Content="X" Background="Red" Width="20" Height="20" Canvas.Left="2" Canvas.Top="2"
                     Click="CloseWindow_Click"/>
 
-            <Button Content="Add new Quadocopter" Background="BlueViolet" Width="150" Height="50"  Canvas.Bottom="8" Canvas.Right="55"
+            <Button Content="Add new Drone" Background="BlueViolet" Width="150" Height="50"  Canvas.Bottom="8" Canvas.Right="55"
                     Click="Button_addNewQ"/>
         </Canvas>
-        
-        <TextBlock Text="Quadocopter mode: Please select one before you refres" Grid.Row="0" Grid.Column="1"/>
+
+        <TextBlock Text="Drone mode: Please select one before you refresh" Grid.Row="0" Grid.Column="1"/>
         <ComboBox x:Name="Quadocopter_mode" Grid.Row="1" Grid.Column="1">
             <ComboBoxItem Content="available"/>
             <ComboBoxItem Content="maintenance" />
@@ -46,7 +46,7 @@
             <ComboBoxItem Name="defult" Content="none" />
         </ComboBox>
 
-        <TextBlock Text="Quadocopter whait:" Grid.Row="0" Grid.Column="2"/>
+        <TextBlock Text="Drone whait:" Grid.Row="0" Grid.Column="2"/>
         <ComboBox x:Name="Quadocopter_whait" Grid.Row="1" Grid.Column="2">
             <ComboBoxItem Content="easy" />
             <ComboBoxItem Content="middle" />
@@ -54,7 +54,7 @@
             <ComboBoxItem Content="none" />
         </ComboBox>
 
-        <Button Content="refreshe" Click="Button_refreshe"
+        <Button Content="refresh" Click="Button_refreshe"
                 Grid.Row="2" Grid.Column="2" Width="100" Height="50" Background="Yellow" />
 
             

@@ -529,14 +529,14 @@ namespace Dal
             IEnumerable<BaseStation> l = from bs in baseStationRoot.Elements()
                                          select new BaseStation
                                          {
-                                             IDnumber = Convert.ToInt32(bs.Element("id").Value),
+                                             IDnumber = Convert.ToInt32(bs.Element("Client").Element("id").Value),
                                              name = bs.Element("Name").Value,
-                                             chargingPositions = int.Parse(bs.Element("ChargingPositions").Value),
-                                             freechargingPositions = Convert.ToInt32(bs.Element("FreechargingPositions").Value),
-                                             longitude = int.Parse(bs.Element("Longitude").Value),
-                                             latitude = int.Parse(bs.Element("Latitude").Value),
+                                             chargingPositions = int.Parse(bs.Element("Client").Element("ChargingPositions").Value),
+                                             freechargingPositions = Convert.ToInt32(bs.Element("Client").Element("FreechargingPositions").Value),
+                                             longitude = int.Parse(bs.Element("Client").Element("Longitude").Value),
+                                             latitude = int.Parse(bs.Element("Client").Element("Latitude").Value),
                                              toBaseSix = new BaseSixtin(),
-                                             decSix = GetBase(double.Parse(bs.Element("Latitude").Value), double.Parse(bs.Element("Longitude").Value))
+                                             decSix = GetBase(double.Parse(bs.Element("Client").Element("Latitude").Value), double.Parse(bs.Element("Client").Element("Longitude").Value))
                                          };
             return l;
         }

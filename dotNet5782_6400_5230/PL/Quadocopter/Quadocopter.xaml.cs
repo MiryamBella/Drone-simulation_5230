@@ -56,7 +56,7 @@ namespace PL
             bl = ibl;
             InitializeComponent();
             #region initialize;
-            Title = "quadocopter" + q.ID; //Data adjustment to this constructor(hidden the shows of the second constuctor)
+            Title = "drone" + q.ID; //Data adjustment to this constructor(hidden the shows of the second constuctor)
             enterID.Visibility = Visibility.Hidden;
             enterWeight.Visibility = Visibility.Hidden;
             //enterBattery.Visibility = Visibility.Hidden;

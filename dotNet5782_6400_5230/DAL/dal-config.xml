@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <config>
-	<dal>xml</dal>
+	<dal>list</dal>
 	<dal-packages>
 		<!--<list class ="DalXMLnew" namespace ="Dal">DalXMLnew</list>-->
-		<!--<list class ="DalObject" namespace ="Dal">DalObject</list>-->
+		<list class ="DalObject" namespace ="Dal">DalObject</list>
 
-		<xml>DalXMLnew</xml>
+		<!--<xml>DalXMLnew</xml>-->
 	</dal-packages>
 </config>
