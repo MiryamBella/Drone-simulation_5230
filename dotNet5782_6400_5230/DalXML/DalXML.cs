@@ -197,8 +197,8 @@ namespace Dal
         public void AddQuadocopter(int id, string moodle, int weight)
         {
             LoadData_q();
-            XElement ID = new XElement("id", id);
-            XElement Moodle = new XElement("moodle", moodle);
+            XElement ID = new XElement("ID", id);
+            XElement Moodle = new XElement("Moodle", moodle);
             XElement Weight;
             if (weight == 1)
                 Weight = new XElement("Weight", WeighCategories.easy);

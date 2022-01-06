@@ -9,7 +9,7 @@ namespace DO
         public int id { get; set; }
         public string moodle { get; set; }
         public WeighCategories weight { get; set; }
-        public DateTime startCharge { get; set; }
+        public DateTime? startCharge { get; set; }
         public object Clone()
         {
             return this.MemberwiseClone();

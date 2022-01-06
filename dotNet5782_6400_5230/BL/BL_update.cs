@@ -144,7 +144,7 @@ namespace BlApi
             try
             {
                 double hours = 0;
-                DateTime t= dal.QuDisplay(id).startCharge;
+                DateTime t = DateTime.Parse(dal.QuDisplay(id).startCharge.ToString());
                 hours = (t - DateTime.Now).TotalHours;
                 if (q.mode != statusOfQ.maintenance) throw new BLException("this q not in maintenance.");
                 q.mode = statusOfQ.available;

@@ -212,7 +212,7 @@ namespace Dal
             else
                 Weight = new XElement("Weight", WeighCategories.hevy);
             XElement StartCharging = new XElement("StartCharging", 0);
-            XElement quadocopter = new XElement("Quadocopter", ID, moodle, weight);
+            XElement quadocopter = new XElement("Quadocopter", ID, Moodle, Weight, StartCharging);
             quadocopterRoot.Add(quadocopter);
             quadocopterRoot.Save(quadocopterPath);
         }
@@ -454,10 +454,10 @@ namespace Dal
             DmsLocation dms = new DmsLocation();
             BaseStation station = new BaseStation();
             station = (from bs in baseStationRoot.Elements()
-                       where Convert.ToInt32(bs.Element("id").Value) == id
+                       where Convert.ToInt32(bs.Element("ID").Value) == id
                        select new BaseStation()
                        {
-                           IDnumber = Convert.ToInt32(bs.Element("id").Value),
+                           IDnumber = Convert.ToInt32(bs.Element("ID").Value),
                            name = bs.Element("Name").Value,
                            chargingPositions = int.Parse(bs.Element("ChargingPositions").Value),
                            freechargingPositions = Convert.ToInt32(bs.Element("FreechargingPositions").Value),
@@ -571,14 +571,68 @@ namespace Dal
         /// print all the quadocpters.
         public IEnumerable<Quadocopter> ListOfQ()
         {
-        IEnumerable<Quadocopter> qList = from q in quadocopterRoot.Elements()
-                                         select new Quadocopter()
-                                         {
-                                             id = Convert.ToInt32(q.Element("ID").Value),
-                                             moodle = q.Element("Moodle").Value,
-                                             weight = (WeighCategories)(getEnam(q.Element("Weight").Value)),
-                                             startCharge = DateTime.Parse((q.Element("StartCharging").Value))
-                                         };
+            LoadData_q();
+
+            #region to reset the data
+
+            //quadocopterRoot.RemoveAll();
+            //quadocopterRoot.Save(quadocopterPath);
+            //////i reset some data.
+
+            //Random r = new Random();
+
+            //Quadocopter qa = new Quadocopter();//1
+            //qa.id = 100;
+            //qa.moodle = "a";
+            //qa.weight = WeighCategories.easy;
+            /////qa.battery = r.Next(0, 101);
+            /////qa.mode = statusOfQ.available;
+            //AddQuadocopter(qa.id, qa.moodle, (int)qa.weight);
+
+            //Quadocopter qb = new Quadocopter();//2
+            //qb = new Quadocopter();
+            //qb.id = 101;
+            //qb.moodle = "b";
+            //qb.weight = WeighCategories.hevy;
+            /////qb.battery = r.Next(0, 101);
+            /////qb.mode = statusOfQ.maintenance;
+            //AddQuadocopter(qb.id, qb.moodle, (int)qb.weight);
+
+            //Quadocopter qc = new Quadocopter();//3
+            //qc = new Quadocopter();
+            //qc.id = 102;
+            //qc.moodle = "c";
+            //qc.weight = WeighCategories.middle;
+            /////qc.battery = r.Next(0, 101);
+            /////qc.mode = statusOfQ.delivery;
+            //AddQuadocopter(qc.id, qc.moodle, (int)qc.weight);
+
+            //Quadocopter qd = new Quadocopter();//4
+            //qd = new Quadocopter();
+            //qd.id = 103;
+            //qd.moodle = "d";
+            //qd.weight = (WeighCategories)r.Next(0, 3);
+            //AddQuadocopter(qd.id, qd.moodle, (int)qd.weight);
+
+            //Quadocopter qe = new Quadocopter();//5
+            //qe = new Quadocopter();
+            //qe.id = 104;
+            //qe.moodle = "e";
+            //qe.weight = (WeighCategories)r.Next(0, 3);
+            /////qe.battery = r.Next(0, 101);
+            /////qe.mode = (statusOfQ)r.Next(0, 3);
+            //AddQuadocopter(qe.id, qe.moodle, (int)qe.weight);
+
+            #endregion
+
+            IEnumerable<Quadocopter> qList = from q in quadocopterRoot.Elements()
+                                             select new Quadocopter()
+                                             {
+                                                 id = Convert.ToInt32(q.Element("ID").Value),
+                                                 moodle = q.Element("Moodle").Value,
+                                                 weight = (WeighCategories)(getEnam(q.Element("Weight").Value)),
+                                                 startCharge = getTime(q.Element("StartCharging").Value)
+                                             };
 
             //IEnumerable<Quadocopter> qList = XMLTools.LoadListFromXMLSerializer<Quadocopter>(quadocopterPath);
             return qList;
@@ -601,6 +655,26 @@ namespace Dal
         /// print all the clients
         public IEnumerable<Client> ListOfClients()
         {
+            LoadData_c();
+
+            # region reset
+            //clientRoot.RemoveAll();
+            //clientRoot.Save(clientPath);
+
+            //Random r = new Random();
+            ///*client*/
+            //for (int i = 1; i <= 10; i++)
+            //{
+            //    Client c = new Client();
+            //    c.ID = (int)(i * 100000000);
+            //    c.name = getRandomName(i);
+            //    c.phoneNumber = r.Next(100000000, 999999999);
+            //    c.latitude = r.Next(10);
+            //    c.longitude = r.Next(10);
+            //    AddClient(c.ID, c.name, c.phoneNumber, c.longitude, c.latitude);
+            //}
+            //clientRoot.Save(clientPath);
+            #endregion
 
             IEnumerable<Client> cList = from c in clientRoot.Elements()
                                         select new Client()
@@ -620,7 +694,7 @@ namespace Dal
             LoadData_p();
 
 
-            var l = from p in baseStationRoot.Elements()
+            var l = from p in packageRoot.Elements()
                     select new Package()
                     {
                         id = Convert.ToInt32(p.Element("ID").Value),
@@ -628,10 +702,10 @@ namespace Dal
                         receiver = int.Parse(p.Element("ID_Reciver").Value),
                         idQuadocopter = int.Parse(p.Element("IDQ_Quadocopter").Value),
                         priority = (Priorities)(getEnam(p.Element("Priority").Value)),
-                        time_Belong_quadocopter = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Belong_quadocopter").Value),
-                        time_ColctedFromSender = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ColctedFromSender").Value),
-                        time_ComeToColcter = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ComeToColcter").Value),
-                        time_Create = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Create").Value),
+                        time_Belong_quadocopter = getTime(p.Element("TimeOfPackage").Element("Time_Belong_quadocopter").Value),
+                        time_ColctedFromSender = getTime(p.Element("TimeOfPackage").Element("Time_ColctedFromSender").Value),
+                        time_ComeToColcter = getTime(p.Element("TimeOfPackage").Element("Time_ComeToColcter").Value),
+                        time_Create = getTime(p.Element("TimeOfPackage").Element("Time_Create").Value),
                         weight = (WeighCategories)(getEnam(p.Element("Weight").Value))
                     };
 
@@ -697,11 +771,11 @@ namespace Dal
             LoadData_config();
 
             double[] arry = new double[5];
-            arry[0] = double.Parse(configRoot.Element("available").Value);
-            arry[1] = double.Parse(configRoot.Element("easy").Value);
-            arry[2] = double.Parse(configRoot.Element("hevy").Value);
-            arry[3] = double.Parse(configRoot.Element("middle_toCare").Value);
-            arry[4] = double.Parse(configRoot.Element("charghingRate").Value);
+            arry[0] = double.Parse(configRoot.Element("Electric").Element("available").Value);
+            arry[1] = double.Parse(configRoot.Element("Electric").Element("easy").Value);
+            arry[2] = double.Parse(configRoot.Element("Electric").Element("hevy").Value);
+            arry[3] = double.Parse(configRoot.Element("Electric").Element("middle_toCare").Value);
+            arry[4] = double.Parse(configRoot.Element("Electric").Element("charghingRate").Value);
             return arry;
         }
         /// <summary>
@@ -713,6 +787,8 @@ namespace Dal
             Package? p = (from i in pList
                           where i.id == qID
                           select i).FirstOrDefault();
+            if (p.Value.id == 0)
+                return null;
             return p;
         }
         /// <summary>
@@ -748,30 +824,39 @@ namespace Dal
             LoadData_c();
             LoadData_p();
 
-            List<Package> pList = (List<Package>)ListOfPackages();
-            List<Client> cList = (List<Client>)ListOfClients();
+            List<Package> pList = new List<Package>();// (List<Package>)();
+            List<Client> cList = new List<Client>();// (List<Client>)();
 
             Random r = new Random();
             List<int> sendersID = new List<int>();
-            foreach (Package p in pList)
+            foreach (Package p in ListOfPackages())
+            {
                 if ((p.time_ComeToColcter != null) && (p.time_ComeToColcter.Value.Year != 0001))
                     if (sendersID.Contains(p.sender) == false)
                         sendersID.Add(p.sender);
+                pList.Add(p);
+            }
             List<Location> sendersL = new List<Location>();
-            foreach (Client c in cList)
+            foreach (Client c in ListOfClients())
+            {
                 if (sendersID.Contains(c.ID))
                 {
                     Location l = new Location() { latitude = c.latitude, longitude = c.longitude };
                     sendersL.Add(l);
                 }
+                cList.Add(c);
+            }
             if (sendersL.Count != 0)
             {
                 int x = r.Next(0, sendersL.Count - 1);
                 return sendersL[x];
             }
             Client dcli = cList[0];
-            XMLTools.SaveListToXMLSerializer<Package>(pList, packagePath);
-            XMLTools.SaveListToXMLSerializer<Client>(cList, clientPath);
+
+            clientRoot.Save(clientPath);
+            packageRoot.Save(packagePath);
+            //XMLTools.SaveListToXMLSerializer<Package>(pList, packagePath);
+            //XMLTools.SaveListToXMLSerializer<Client>(cList, clientPath);
 
             return new Location() { latitude = dcli.latitude, longitude = dcli.longitude };
         }
@@ -1050,7 +1135,12 @@ namespace Dal
         {
             return Math.Sqrt(Math.Pow(l1.latitude - l2.latitude, 2) + Math.Pow(l1.longitude - l2.longitude, 2));
         }
-
+        DateTime? getTime(string t)
+        {
+            if (t != "0")
+                return DateTime.Parse(t);
+            return null;
+        }
         int getEnam(string str)
         {
             switch (str)
