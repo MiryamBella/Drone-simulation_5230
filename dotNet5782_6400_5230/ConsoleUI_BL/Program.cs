@@ -103,7 +103,7 @@ namespace ConsoleUI_BL
 //            }
 //        }
 
-//        #region add function
+        #region add function
 //        void AddBaseStation() 
 //        {
 //            Console.WriteLine("Please enter ID to the base station."); ///I get information from the user and enter it into the new station
@@ -172,7 +172,7 @@ namespace ConsoleUI_BL
 //            //program.bl.AddPackage(id_send, id_colect, weigh, priority);
 //        }
 
-//        #endregion
+        #endregion
 
 //        /// <summary>
 //        /// update things to our data base.

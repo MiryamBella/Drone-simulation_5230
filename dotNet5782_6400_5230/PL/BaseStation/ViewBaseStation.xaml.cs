@@ -93,7 +93,6 @@ namespace PL
             else checkNumCharging.Visibility = Visibility.Visible;
         }
 
-
         private void updateBS_Click(object sender, RoutedEventArgs e)
         {
             ///show the boxs to write the new data.
@@ -111,9 +110,6 @@ namespace PL
 
             numCharging.Text = "Number of charge position:";
         }
-
-
-
         private void updateBS_change_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -136,7 +132,6 @@ namespace PL
             }
 
         }
-
         private void updateBS_notchange_Click(object sender, RoutedEventArgs e)
         {
             update_name.Visibility = Visibility.Hidden;
@@ -159,5 +154,7 @@ namespace PL
         {
             this.Close();
         }
+
+
     }
 }

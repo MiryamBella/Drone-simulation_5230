@@ -5,11 +5,8 @@ using DO;
 
 namespace Dal
 {
-    internal class DataSource // evrething is new in this class.
+    internal class DataSource
     {
-
-        /* i warite arrys and not lists because i think it will be more easy for us to get the data.
-         */
         internal static List<Quadocopter> qpter = new List<Quadocopter>();
         internal static List<BaseStation> bstion = new List<BaseStation>();
         internal static List<Client> cli = new List<Client>();

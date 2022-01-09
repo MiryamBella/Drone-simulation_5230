@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace PL
 {
     /// <summary>
@@ -21,6 +22,7 @@ namespace PL
     {
         BlApi.IBL bl;
         BO.Quadocopter localQ = new BO.Quadocopter();
+
         public Quadocopter(BlApi.IBL ibl) //for adding quadocopter
         {
             bl = ibl;
@@ -59,17 +61,14 @@ namespace PL
             Title = "drone" + q.ID; //Data adjustment to this constructor(hidden the shows of the second constuctor)
             enterID.Visibility = Visibility.Hidden;
             enterWeight.Visibility = Visibility.Hidden;
-            //enterBattery.Visibility = Visibility.Hidden;
             ID_baseStation.Visibility = Visibility.Hidden;
-            //enterState.Visibility = Visibility.Hidden;
-            //enterLatitude.Visibility = Visibility.Hidden;
-            //enterLongitude.Visibility = Visibility.Hidden;
+
             addQ.Visibility=Visibility.Hidden;
             uppdate.Visibility = Visibility.Visible;
             charge.Visibility = Visibility.Visible;
 
             //if the drone dont have packes so hiide the butun of the packes.
-            if (q.packageNumber>0)
+            if (q.packageNumber > 0)
                 showPackage.Visibility = Visibility.Visible;
 
             showID.Text = q.ID.ToString();//data adjusment to this qudocopters data
@@ -259,5 +258,16 @@ namespace PL
                 MessageBox.Show(ex.Message);
             }
         }
+
+
+
+        #region simulator
+
+        private void simulator_begin(object sender, RoutedEventArgs e)
+        {
+            SimulatorQuadocopter sq = new SimulatorQuadocopter(bl, localQ);
+            sq.Show();
+        }
+        #endregion
     }
 }

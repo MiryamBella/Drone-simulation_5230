@@ -130,7 +130,7 @@ namespace BlApi
         #endregion
 
         #region cover package
-        //--------cover package---------------------------------------------------
+        //---------------------------------cover package----------------------------------------------------------------------------------
         List<Package> cover_to_our_list(List<DO.Package> old_l)
         {
             return (from x in old_l
@@ -219,7 +219,7 @@ namespace BlApi
         #endregion
 
         #region cover qudocopter
-        //--------cover qudocopter---------------------------------------------------
+        //--------------------------------cover qudocopter---------------------------------------------------
         List<QuadocopterToList> cover_to_our_list(IEnumerable<DO.Quadocopter> old_l)
         {
             List<QuadocopterToList> new_l = new List<QuadocopterToList>();

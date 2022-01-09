@@ -33,9 +33,8 @@
 
 
         <TextBlock Text="DRONE" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
-                 FontSize="22" FontWeight="Bold" TextDecorations="Underline" TextAlignment="Center"
+                 FontSize="40" FontWeight="Bold" TextDecorations="Underline" TextAlignment="Center"
                  />
-        <!--any time you see the word delyvery, it is mean the id of the base station-->
         <TextBlock x:Name="ID" HorizontalAlignment="Right" 
                    Grid.Row="1"  Grid.Column="0" Text="ID:" TextWrapping="Wrap" 
                    VerticalAlignment="Center" Height="25" Width="70"/>
@@ -76,23 +75,10 @@
         <TextBlock x:Name="battery" HorizontalAlignment="Right" 
                    Grid.Row="4"  Grid.Column="0" Text="battery:" TextWrapping="Wrap" 
                    VerticalAlignment="Center" Height="15" Width="70"/>
-        <!--<TextBox x:Name="enterBattery" TextWrapping="Wrap" 
-                 Grid.Row="4" Grid.Column="1"
-                 HorizontalAlignment="Center"  
-                 Height="25" Width="120"
-                 TextChanged ="writedBattery"/>-->
         <TextBlock x:Name="showBattery" HorizontalAlignment="Center" 
                    Grid.Row="4" Grid.Column="1" 
                    Text="TextBlock" TextWrapping="Wrap" 
                    Height="25" Width="120"  />
-        <!--<TextBlock x:Name="checkBattery" HorizontalAlignment="Center" 
-                   Grid.Row="4" Grid.Column="2" Text="enter number between 0 and 100 (%)" 
-                   TextWrapping="Wrap" Height="35" Width="120"
-                   Visibility="Hidden"/>
-        <TextBlock x:Name="checkBattery2" HorizontalAlignment="Center" 
-                   Grid.Row="4" Grid.Column="2" Text="invalid input" 
-                   TextWrapping="Wrap" Height="25" Width="120"
-                   Visibility="Hidden"/>-->
         
         <TextBlock x:Name="ID_bs_text" HorizontalAlignment="Right" 
                    Grid.Row="1"  Grid.Column="3" Text="base station ID:" TextWrapping="Wrap" 
@@ -104,22 +90,9 @@
                    Text="TextBlock" TextWrapping="Wrap" 
                    Height="25" Width="120" Visibility="Hidden"  
                    />
-        <!--
-        <TextBox x:Name="enterDelivery"
-                  TextWrapping="Wrap" 
-        TextChanged ="writedDelivery" 
-        />
-        <TextBlock x:Name="checkDelivery" HorizontalAlignment="Center" 
-                   Grid.Row="1" Grid.Column="5" Text="invalid input" 
-                   TextWrapping="Wrap" Height="25" Width="120"
-                   Visibility="Hidden"/>-->
         <TextBlock x:Name="latitude" HorizontalAlignment="Right" 
                    Text="latitude:" TextWrapping="Wrap" VerticalAlignment="Center" 
                    Height="25" Width="70" Grid.Row="2" Grid.Column="3"/>
-        <!--<TextBox x:Name="enterLatitude" HorizontalAlignment="center" 
-                   Text="" TextWrapping="Wrap" VerticalAlignment="Center" 
-                   Height="25" Width="120" Grid.Row="2" Grid.Column="4"
-                   TextChanged="writedLatitude"/>-->
         <TextBlock x:Name="showLatitude" HorizontalAlignment="Center" 
                   VerticalAlignment="center" Grid.Row="2" Grid.Column="4" 
                   Height="25" Width="120" Text="TextBlock" TextWrapping="Wrap" />
@@ -131,20 +104,10 @@
         <TextBlock x:Name="longitude" HorizontalAlignment="Right" 
                    Grid.Row="3"  Grid.Column="3" Text="longitude:" TextWrapping="Wrap" 
                    VerticalAlignment="Center" Height="15" Width="70"/>
-        <!--<TextBox x:Name="enterLongitude" TextWrapping="Wrap" 
-                 Grid.Row="3" Grid.Column="4"
-                 HorizontalAlignment="Center"
-                 Height="25" Width="120"
-                 TextChanged ="writedLongitude"/>-->
         <TextBlock x:Name="showLongitude" HorizontalAlignment="Center" 
                    Grid.Row="3" Grid.Column="4" 
                    Text="TextBlock" TextWrapping="Wrap" 
                    Height="25" Width="120"  />
-        <!--<TextBlock x:Name="checkLongitude" HorizontalAlignment="Center" 
-                   Grid.Row="3" Grid.Column="5" Text="invalid input" 
-                   TextWrapping="Wrap" Height="25" Width="120"
-                   Visibility="Hidden"/>-->
-        
         <TextBlock x:Name="state" HorizontalAlignment="Right" 
                    Text="state:" TextWrapping="Wrap" VerticalAlignment="Center" 
                    Height="25" Width="70" Grid.Row="4" Grid.Column="3"/>
@@ -167,7 +130,8 @@
                 Height="34" Width="171" Grid.ColumnSpan="2" 
                 Content="update the model" />
         <Button x:Name="charge"  Click="charge_Click" Content="send to charge"
-                Width="100" Height="50" Grid.Column="5" Grid.Row="1"/>
-
+                Width="100" Height="50" Grid.Column="4" Grid.Row="5"/>
+        <Button x:Name="simulator" Content="simulator" Click="simulator_begin"
+                Grid.Column="5" Grid.Row="5" Width="100" Height="50" Background="Pink"/>
     </Grid>
 </Window>

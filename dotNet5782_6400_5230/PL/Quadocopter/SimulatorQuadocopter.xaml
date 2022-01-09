@@ -1,0 +1,59 @@
+﻿<Window x:Class="PL.SimulatorQuadocopter"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="SimulatorQuadocopter" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="DRONE" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+                 FontSize="40" FontWeight="Bold" TextDecorations="Underline" TextAlignment="Center"
+                 />
+
+        <TextBlock Text="ID:" Grid.Row="1" Grid.Column="0"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="ExtraBlack"/>
+        <TextBlock Grid.Row="1" Grid.Column="1"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+        <TextBlock Text="LOCATION:" Grid.Row="2" Grid.Column="0"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="ExtraBlack"/>
+        <TextBlock Grid.Row="2" Grid.Column="1"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+        <TextBlock Text="BUTTERY:" Grid.Row="3" Grid.Column="0"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="ExtraBlack"/>
+        <TextBlock Grid.Row="3" Grid.Column="1"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+
+
+        <TextBlock Text="ID package:" Grid.Row="1" Grid.Column="2"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="ExtraBlack"/>
+        <TextBlock Grid.Row="1" Grid.Column="3"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+        <TextBlock Text="Name sender:" Grid.Row="2" Grid.Column="2"
+                   HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20"/>
+        <TextBlock Text="Name reciver:" Grid.Row="2" Grid.Column="2"
+                   HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="20"/>
+        <TextBlock Text="Name" Grid.Row="2" Grid.Column="2"
+                   HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="20"/>
+        <TextBlock Text="Name" Grid.Row="2" Grid.Column="2"
+                   HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="20"/>
+
+        <Button x:Name="stop" Content="Stop simulator" Click="stop_Click" Background="Red" Margin="10,11,69,44" RenderTransformOrigin="0.159,-0.102"  />
+
+    </Grid>
+</Window>
