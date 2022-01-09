@@ -23,11 +23,17 @@ namespace PL
     {
         BlApi.IBL bl;
         BO.Quadocopter localQ;
+        BackgroundWorker worker; //field
+        bool stopSimulator;
         public SimulatorQuadocopter(BlApi.IBL ibl, BO.Quadocopter q)
         {
             InitializeComponent();
             bl = ibl;
             localQ = q;
+            IdShow.Text = localQ.ID.ToString();
+            locationShwo.Text = localQ.thisLocation.decSix.ToString();
+            localQ.thisLocation.Location60= localQ.thisLocation.decSix.ToString();
+
             worker = new BackgroundWorker();
             worker.DoWork += Worker_DoWork;
             worker.ProgressChanged += Worker_ProgressChanged;
@@ -35,21 +41,14 @@ namespace PL
 
             worker.WorkerReportsProgress = true;
         }
-        BackgroundWorker worker; //field
-        bool F;
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            //object obj = e.Argument;
-            //Thread.Sleep(2000);
-            //worker.ReportProgress(23);
-
-            //e.Result = "finished ok!";
-            while (F) {
+            while (stopSimulator) {
                 try
                 {
                     bl.assignPtoQ(localQ.ID);
-                    int time = bl.getFlyTime(localQ.ID);
-                    int battery = bl.getBatteryToFly(localQ.ID);
+                    int time = bl.getTimeOfFlying(localQ.ID, BO.TargetQ.sender);
+                    int battery = bl.getBatteryToFly(localQ.ID, BO.TargetQ.sender);
                     battery /= time;
                     battery *= -1;
                     while (time > 0)
@@ -60,8 +59,8 @@ namespace PL
                         localQ.battery += battery;
                     }
                     bl.collectPbyQ(localQ.ID);
-                    time = bl.getFlyTime(localQ.ID);
-                    battery = bl.getBatteryToFly(localQ.ID);
+                    time = bl.getTimeOfFlying(localQ.ID, BO.TargetQ.receiver);
+                    battery = bl.getBatteryToFly(localQ.ID, BO.TargetQ.receiver);
                     battery /= time;
                     battery *= -1;
                     while (time > 0)
@@ -107,6 +106,9 @@ namespace PL
             object result = e.Result;
         }
 
-
+        private void stop_Click(object sender, RoutedEventArgs e)
+        {
+            stopSimulator = false;
+        }
     }
 }

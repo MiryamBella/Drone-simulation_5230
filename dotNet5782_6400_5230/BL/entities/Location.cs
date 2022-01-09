@@ -3,25 +3,30 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace BO
+{
+    public class Location
     {
-        public class location
+        public Location()
         {
-            public location()
-            {
-                longitude = 0; latitude = 0; toBaseSix = new BaseSixtin(); decSix = new DmsLocation();
-            }
-            public double longitude { get; set; }
-            public double latitude { get; set; }
-            public BaseSixtin toBaseSix { get; set; }
-            public DmsLocation decSix { get; set; }
-            public override string ToString()
-            {
-                return ("longitude: " + longitude + '\n' +
-                    "latitude: " + latitude + '\n') +
-                    "location in base 60: " + decSix;
-            }
+            Longitude = 0;
+            Latitude = 0;
+            toBaseSix = new BaseSixtin();
+            decSix = new DmsLocation();
+            Location60 = null;
+        }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
+        public BaseSixtin toBaseSix { get; set; }
+        public DmsLocation decSix { get; set; }
+        public string Location60 { get; set; }
+        public override string ToString()
+        {
+            return ("longitude: " + Longitude + '\n' +
+                "latitude: " + Latitude + '\n') +
+                "location in base 60: " + decSix;
         }
     }
+}
 
 class DecimalLocation
 {

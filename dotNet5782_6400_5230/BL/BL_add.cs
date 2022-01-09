@@ -36,7 +36,7 @@ namespace BlApi
             {
                 if (b.ID == id)
                     throw new BLException("The ID exis.");
-                if (b.thisLocation.latitude==lat && b.thisLocation.longitude==lon)
+                if (b.thisLocation.Latitude==lat && b.thisLocation.Longitude==lon)
                     throw new BLException("In this location there is already base station.");
             }
 
@@ -59,8 +59,8 @@ namespace BlApi
                 if (b.IDnumber == id_bs)
                 {
                     chek = true;
-                    q.thisLocation.latitude = b.latitude;
-                    q.thisLocation.longitude = b.longitude;
+                    q.thisLocation.Latitude = b.latitude;
+                    q.thisLocation.Longitude = b.longitude;
                     break;
                 }
             }
@@ -94,7 +94,7 @@ namespace BlApi
             {
                 if (c.ID == id)
                     throw new BLException("ID already exist.");
-                if (c.thisLocation.latitude == lat && c.thisLocation.longitude == lon)
+                if (c.thisLocation.Latitude == lat && c.thisLocation.Longitude == lon)
                     throw new BLException("In this location there is already other client.");
             }
 

@@ -9,12 +9,12 @@ namespace BO
     {
         public BaseStation()
         {
-            ID = 0; name = null; freeChargingPositions = 0; thisLocation = new location();
+            ID = 0; name = null; freeChargingPositions = 0; thisLocation = new Location();
         }
         public int ID { get; set; }
         public string name { get; set; }
         public int freeChargingPositions { get; set; }
-        public location thisLocation { get; set; }
+        public Location thisLocation { get; set; }
 
         public List<QuadocopterInCharge> qudocopters = new List<QuadocopterInCharge>();
         public override string ToString()

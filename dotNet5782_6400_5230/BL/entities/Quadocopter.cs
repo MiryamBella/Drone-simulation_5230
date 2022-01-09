@@ -10,7 +10,7 @@ namespace BO
         {
             ID = 0; moodle = null; weight = 0; battery = 0; mode = 0;
             thisPackage = new PackageInTrans();
-            thisLocation = new location();
+            thisLocation = new Location();
         }
         public int ID { get; set; }
         public string moodle { get; set; }
@@ -18,7 +18,7 @@ namespace BO
         public int battery { get; set; }
         public statusOfQ mode { get; set; }
         public PackageInTrans thisPackage { get; set; }
-        public location thisLocation { get; set; }
+        public Location thisLocation { get; set; }
         public override string ToString()
         {
             return ("ID: " + ID + '\n' +

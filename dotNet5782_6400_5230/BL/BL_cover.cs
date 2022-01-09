@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using DalApi;
 using BO;
-//using System.Device;
 using System.Device.Location;
 using System.Linq;
 
@@ -31,8 +30,8 @@ namespace BlApi
             BaseStation new_bs = new BaseStation();
             new_bs.ID = b.IDnumber;
             new_bs.name = b.name;
-            new_bs.thisLocation.latitude =b.latitude;
-            new_bs.thisLocation.longitude = b.longitude;
+            new_bs.thisLocation.Latitude =b.latitude;
+            new_bs.thisLocation.Longitude = b.longitude;
             new_bs.thisLocation.decSix = new_bs.thisLocation.toBaseSix.LocationSix(b.latitude, b.longitude);
             new_bs.freeChargingPositions = b.freechargingPositions;
             // now we will get the: new_bs.qudocopters.
@@ -106,8 +105,8 @@ namespace BlApi
             //returnC.packageFrom;  thos two we find next.
             //returnC.packageTo;
             new_c.phoneNumber = c.phoneNumber;
-            new_c.thisLocation.latitude = c.latitude;
-            new_c.thisLocation.longitude = c.longitude;
+            new_c.thisLocation.Latitude = c.latitude;
+            new_c.thisLocation.Longitude = c.longitude;
             new_c.thisLocation.decSix = new DmsLocation();
             new_c.thisLocation.toBaseSix = new BaseSixtin();
 
@@ -251,26 +250,26 @@ namespace BlApi
                 if (p.Value.time_ColctedFromSender != null) //if the package was collected
                 {
                     //the location of the q will be the location of the sender
-                    location l = new location();
-                    l.latitude = lSender.latitude;
-                    l.longitude = lSender.longitude;
+                    Location l = new Location();
+                    l.Latitude = lSender.latitude;
+                    l.Longitude = lSender.longitude;
                     new_q.thisLocation = l;
                     //colclute the distance that the q will go in order to estimate the battery it need
                     DO.Location lReceiver = dal.searchLocationOfclient(p.Value.receiver);
                     DO.BaseStation closeB = dal.searchCloseStation(lReceiver);
-                    double distance = GetDistance(l, coverLtoL(lReceiver)) + GetDistance(coverLtoL(lReceiver), new location() {longitude = closeB.longitude, latitude = closeB.latitude, decSix = new DmsLocation(), toBaseSix = new BaseSixtin() });
+                    double distance = GetDistance(l, coverLtoL(lReceiver)) + GetDistance(coverLtoL(lReceiver), new Location() {Longitude = closeB.longitude, Latitude = closeB.latitude, decSix = new DmsLocation(), toBaseSix = new BaseSixtin() });
                     int minBattery = (int)distance * (int)(dal.askForElectric()[(int)p.Value.weight]); //the minimum battery will be the distance*the amount of battery that the q need in km, according to the whigt of its package
                     new_q.battery = r.Next(minBattery, 100);
                 }
                 else //if the package didn't collected
                 {
                     DO.BaseStation b = dal.searchCloseStation(lSender);//the location will be the location of the closest station to the sender
-                    new_q.thisLocation.latitude = b.latitude;
-                    new_q.thisLocation.longitude = b.longitude;
+                    new_q.thisLocation.Latitude = b.latitude;
+                    new_q.thisLocation.Longitude = b.longitude;
                     //colclute the distance that the q will go in order to estimate the battery it need
                     DO.Location lReceiver = dal.searchLocationOfclient(p.Value.receiver);
                     DO.BaseStation closeToReceiver = dal.searchCloseStation(lReceiver);
-                    double distance = GetDistance(coverLtoL(lSender), coverLtoL(lReceiver)) + GetDistance(coverLtoL(lReceiver),new location() { longitude = closeToReceiver.longitude, latitude= closeToReceiver.latitude, decSix = new DmsLocation(), toBaseSix = new BaseSixtin() });
+                    double distance = GetDistance(coverLtoL(lSender), coverLtoL(lReceiver)) + GetDistance(coverLtoL(lReceiver),new Location() { Longitude = closeToReceiver.longitude, Latitude= closeToReceiver.latitude, decSix = new DmsLocation(), toBaseSix = new BaseSixtin() });
                     distance += GetDistance(new_q.thisLocation, coverLtoL(lSender));
                     int minBattery = (int)distance * (int)(dal.askForElectric()[(int)p.Value.weight]); //the minimum battery will be the distance*the amount of battery that the q need in km, according to the whigt of its package
                     new_q.battery = r.Next(minBattery, 100);
@@ -285,11 +284,11 @@ namespace BlApi
                     new_q.mode = statusOfQ.available;
                     DO.Location l = dal.randomCwithPLocation(); //location will in one of the clients that accept a package.
                     if (l == null) throw new BLException("error");
-                    new_q.thisLocation.latitude = l.latitude;
-                    new_q.thisLocation.longitude = l.longitude;
+                    new_q.thisLocation.Latitude = l.latitude;
+                    new_q.thisLocation.Longitude = l.longitude;
                     //colclute the distance that the q will go in order to estimate the battery it need
                     DO.BaseStation close = dal.searchCloseStation(l);
-                    double distance = GetDistance( coverLtoL(l), new location() { longitude = close.longitude, latitude = close.latitude, decSix = new DmsLocation(), toBaseSix = new BaseSixtin() });
+                    double distance = GetDistance( coverLtoL(l), new Location() { Longitude = close.longitude, Latitude = close.latitude, decSix = new DmsLocation(), toBaseSix = new BaseSixtin() });
                     int minBattery = (int)distance * (int)(dal.askForElectric()[0]); //the minimum battery will be the distance*the amount of battery that the q need in km at available state
                     if (minBattery < 100) new_q.battery = r.Next(minBattery, 100);
                     else new_q.battery = 100;
@@ -300,8 +299,9 @@ namespace BlApi
                     new_q.mode = statusOfQ.maintenance;
                     new_q.battery = r.Next(0, 20); 
                     var l = dal.randomStationLocation();
-                    new_q.thisLocation.latitude = l.latitude;
-                    new_q.thisLocation.longitude = l.longitude;
+                    new_q.thisLocation.Latitude = l.latitude;
+                    new_q.thisLocation.Longitude = l.longitude;
+                    new_q.thisLocation.Location60 = new_q.thisLocation.toBaseSix.LocationSix(l.latitude, l.longitude).ToString();
                 }
             }
             return new_q;
@@ -446,26 +446,36 @@ namespace BlApi
 
         #endregion
 
-        double GetDistance(location l1, location l2)
+        double GetDistance(Location l1, Location l2)
         {
-            return Math.Sqrt(Math.Pow(l1.latitude - l2.latitude, 2) + Math.Pow(l1.longitude - l2.longitude, 2));
+            return Math.Sqrt(Math.Pow(l1.Latitude - l2.Latitude, 2) + Math.Pow(l1.Longitude - l2.Longitude, 2));
         }
-        location coverLtoL(DO.Location l)
+        Location coverLtoL(DO.Location l)
         {
-            location newL = new location()
+            Location newL = new Location()
             {
-                longitude = l.longitude,
-                latitude = l.latitude,
+                Longitude = l.longitude,
+                Latitude = l.latitude,
                 decSix = new DmsLocation(),
                 toBaseSix = new BaseSixtin()
             };
             return newL;
 
         }
-        GeoCoordinate coverLtoG(location l)
+        DO.Location cover(Location l)
         {
-            return new GeoCoordinate(l.longitude, l.latitude);
+            DO.Location newL = new DO.Location()
+            {
+                longitude = l.Longitude,
+                latitude = l.Latitude
+            };
+            return newL;
+
         }
 
+        //GeoCoordinate coverLtoG(location l)
+        //{
+        //    return new GeoCoordinate(l.longitude, l.latitude);
+        //}
     }
 }

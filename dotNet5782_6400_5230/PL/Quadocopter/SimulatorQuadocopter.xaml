@@ -28,15 +28,15 @@
 
         <TextBlock Text="ID:" Grid.Row="1" Grid.Column="0"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="ExtraBlack"/>
-        <TextBlock Grid.Row="1" Grid.Column="1"
+        <TextBlock Name="IdShow" Grid.Row="1" Grid.Column="1"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
         <TextBlock Text="LOCATION:" Grid.Row="2" Grid.Column="0"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="ExtraBlack"/>
-        <TextBlock Grid.Row="2" Grid.Column="1"
+        <TextBlock Name="locationShwo" Grid.Row="2" Grid.Column="1"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
         <TextBlock Text="BATTERY:" Grid.Row="3" Grid.Column="0"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="ExtraBlack"/>
-        <TextBlock x:Name="batteryShow" Grid.Row="3" Grid.Column="1"
+        <TextBlock Name="batteryShow" Grid.Row="3" Grid.Column="1"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
 
 

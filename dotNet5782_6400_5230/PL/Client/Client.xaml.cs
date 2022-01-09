@@ -43,9 +43,9 @@ namespace PL
             showID.Visibility = Visibility.Visible;
             showID.Text = c.ID.ToString();
             showLat.Visibility = Visibility.Visible;
-            showLat.Text = c.thisLocation.latitude.ToString();
+            showLat.Text = c.thisLocation.Latitude.ToString();
             showLon.Visibility = Visibility.Visible;
-            showLon.Text = c.thisLocation.longitude.ToString();
+            showLon.Text = c.thisLocation.Longitude.ToString();
             enterName.Text = c.name;
             enterPhoneNumber.Text = c.phoneNumber.ToString();
 

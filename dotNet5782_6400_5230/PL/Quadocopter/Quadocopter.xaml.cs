@@ -89,8 +89,8 @@ namespace PL
             if (q.mode == BO.statusOfQ.available) showState.Text = "available";
             else if (q.mode == BO.statusOfQ.maintenance) showState.Text = "maintence";
             else showState.Text = "delivery";
-            showLatitude.Text = q.thisLocation.latitude.ToString();
-            showLongitude.Text = q.thisLocation.longitude.ToString();
+            showLatitude.Text = q.thisLocation.Latitude.ToString();
+            showLongitude.Text = q.thisLocation.Longitude.ToString();
 
             ///set the data to the local drone.
             localQ = bl.cover(q);

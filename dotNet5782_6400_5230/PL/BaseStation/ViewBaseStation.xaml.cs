@@ -30,9 +30,9 @@ namespace PL
             showName.Text = b.name;
             update_name.Text = b.name;
 
-            showLat.Text = b.thisLocation.latitude.ToString();
-            showLon.Text = b.thisLocation.longitude.ToString();
-            show_location_six.Text = b.thisLocation.toBaseSix.LocationSix(b.thisLocation.latitude, b.thisLocation.longitude).ToString();
+            showLat.Text = b.thisLocation.Latitude.ToString();
+            showLon.Text = b.thisLocation.Longitude.ToString();
+            show_location_six.Text = b.thisLocation.toBaseSix.LocationSix(b.thisLocation.Latitude, b.thisLocation.Longitude).ToString();
 
             showNumCharging.Text = b.freeChargingPositions.ToString();
             uppdate_numCharge.Text = b.freeChargingPositions.ToString();

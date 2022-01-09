@@ -23,10 +23,10 @@ namespace BlApi
         public int releaseQfromChrge(int id);
         public int getBatteryCharge(int id);
         public void assignPtoQ(int qID);//the packge belonge to q.
-        public void collectPbyQ(int qID);//the q take the p and go to the client.
+        public void collectPbyQ(int qID);//the q take the p from the sender.
         public void supplyPbyQ(int qID);//the q come to the client and give ho the p.
-        public int getFlyTime(int id);
-        public int getBatteryToFly(int id);
+        public int getTimeOfFlying(int id, BO.TargetQ target, int id_bs=0);
+        public int getBatteryToFly(int id, BO.TargetQ target, int id_bs=0);
         #endregion
 
         /*print functations*/
