@@ -158,6 +158,11 @@ namespace BlApi
                 throw new BLException(ex.Message);
             }
         }
+
+        public int getBatteryCharge(int id)
+        {
+            return 0;
+        }
         #endregion;
         #region assignPtoQ;
         /// <summary>

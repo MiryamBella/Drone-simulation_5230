@@ -21,9 +21,12 @@ namespace BlApi
         public void updateCdata(int id, string name = null, int phone = -1);
         public int sendQtoChrge(int id);
         public int releaseQfromChrge(int id);
+        public int getBatteryCharge(int id);
         public void assignPtoQ(int qID);//the packge belonge to q.
         public void collectPbyQ(int qID);//the q take the p and go to the client.
         public void supplyPbyQ(int qID);//the q come to the client and give ho the p.
+        public int getFlyTime(int id);
+        public int getBatteryToFly(int id);
         #endregion
 
         /*print functations*/
