@@ -12,12 +12,12 @@ namespace PL
     class Simulator
     {
         readonly double speedQuadocopter;
-        readonly int stopTimeLong;//how long the time to stop.
+        readonly int DELAY;//how long the time to stop.
 
-        internal Simulator(double sq)
+        internal Simulator(BlApi.IBL ibL, BO.Quadocopter q)
         {
-            speedQuadocopter = sq;
-            stopTimeLong = 1000;//one second.
+            //speedQuadocopter = sq;
+            DELAY = 1000;//one second.
         }
 
         internal void startSimulator()

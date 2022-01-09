@@ -9,7 +9,7 @@ namespace BlApi
 {
     public partial class BL: IBL
     {
-        static DalApi.IDAL dal;
+        internal static DalApi.IDAL dal;
         public BL() {
             try
             {

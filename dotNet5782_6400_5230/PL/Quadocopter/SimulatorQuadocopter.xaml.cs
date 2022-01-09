@@ -11,8 +11,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Threading;
-using BlApi;
 
 namespace PL
 {
@@ -21,31 +19,9 @@ namespace PL
     /// </summary>
     public partial class SimulatorQuadocopter : Window
     {
-
-        BlApi.IBL bl;
-        BO.Quadocopter localQ = new BO.Quadocopter();
-        private Thread simulatorQ;
-        bool simulatorIsRun;
-
-
-        public SimulatorQuadocopter(IBL ibl, BO.Quadocopter q)
+        public SimulatorQuadocopter()
         {
             InitializeComponent();
-            bl = ibl;
-            localQ = q;
-        }
-
-        void simulatorBgine()
-        {
-            Simulator sim = new Simulator(1);
-            simulatorQ = new Thread(sim.startSimulator);
-            simulatorQ.Start();
-
-        }
-
-        private void stop_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
