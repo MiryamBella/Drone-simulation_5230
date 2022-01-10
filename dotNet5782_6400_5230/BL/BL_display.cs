@@ -287,7 +287,7 @@ namespace BlApi
                 }
                 //the low it is: distance = time * speed
                 int speed = (int)q.thisPackage.priority;
-                seconds = (int)((distance / speed) * 60 * 60);//to meke hour to minutes, and minutes to seconds.
+                seconds = (int)((distance / speed) /** 60 * 60*/);//to meke hour to minutes, and minutes to seconds.
                 return seconds;
             }
             catch(Exception ex)
@@ -301,7 +301,7 @@ namespace BlApi
         /// <param name="id">The ID of the quadocopter.</param>
         /// <param name="id_bs">If the target it is base station, the functation get olso the ID of the base station, ele this id it's -1.</param>
         /// <returns>The battery the drone need to to have to come to his target.</returns>
-        public int getBatteryToFly(int id, TargetQ target, int id_bs)
+        public int getBatteryToFly(int id, TargetQ target, int id_bs=-1)
         {
             try
             {

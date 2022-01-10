@@ -33,6 +33,8 @@ namespace PL
             IdShow.Text = localQ.ID.ToString();
             locationShwo.Text = localQ.thisLocation.decSix.ToString();
             localQ.thisLocation.Location60 = localQ.thisLocation.decSix.ToString();
+            batteryShow.Text = localQ.battery.ToString();
+            stopSimulator = false;
 
             worker = new BackgroundWorker();
             //delegate void simDELEGETE==(id, rep,stop) => bl.startSimulator(id, rep, stop);
@@ -44,6 +46,7 @@ namespace PL
             worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
 
             worker.WorkerReportsProgress = true;
+            worker.WorkerSupportsCancellation = true;
         }
         void reportProgress(int battery)
         {
@@ -130,6 +133,18 @@ namespace PL
         private void stop_Click(object sender, RoutedEventArgs e)
         {
             stopSimulator = false;
+            stop.Visibility = Visibility.Hidden;
+            start.Visibility = Visibility.Visible;
+            worker.CancelAsync();
+        }
+
+        private void start_Click(object sender, RoutedEventArgs e)
+        {
+            stopSimulator = true;
+            stop.Visibility = Visibility.Visible;
+            start.Visibility = Visibility.Hidden;
+            worker.RunWorkerAsync();
+
         }
     }
 }

@@ -53,7 +53,8 @@
         <TextBlock Text="Name" Grid.Row="2" Grid.Column="2"
                    HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="20"/>
 
-        <Button x:Name="stop" Content="Stop simulator" Click="stop_Click" Background="Red" Margin="10,11,69,44" RenderTransformOrigin="0.159,-0.102"  />
+        <Button x:Name="stop" Content="Stop simulator" Click="stop_Click" Background="Red" Margin="10,11,69,44" RenderTransformOrigin="0.159,-0.102" Visibility="Hidden" />
+        <Button x:Name="start" Content="Start simulator" Click="start_Click" Background="Green" Margin="10,11,69,44" RenderTransformOrigin="0.159,-0.102"  />
 
     </Grid>
 </Window>
