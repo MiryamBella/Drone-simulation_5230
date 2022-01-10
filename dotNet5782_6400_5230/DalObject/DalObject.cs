@@ -458,8 +458,8 @@ namespace Dal
             double[] arry = new double[5];
             arry[0] = DataSource.Config.Available;
             arry[1] = DataSource.Config.easy;
-            arry[2] = DataSource.Config.hevy;
-            arry[3] = DataSource.Config.middle_toCare;
+            arry[2] = DataSource.Config.middle_toCare;
+            arry[3] = DataSource.Config.hevy;
             arry[4] = DataSource.Config.charghingRate;
             return arry;
         }

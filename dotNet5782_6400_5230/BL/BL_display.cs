@@ -170,6 +170,7 @@ namespace BlApi
 
         #endregion
 
+        #region some lists
         /// print all the quadocpters acording to the weigh.
         public List<BO.QuadocopterToList> ListOfQ_of_weigh(string w)
         {
@@ -249,5 +250,113 @@ namespace BlApi
                 l.Add(new Charging { baseStationID = c.baseStationID, quadocopterID = c.quadocopterID });
             return l;
         }
+
+        #endregion
+
+        /// <summary>
+        /// Return the time of the the way the drone will go to his target.
+        /// </summary>
+        /// <param name="id">The ID of the drone</param>
+        /// <param name="target">The target of the the drone, to where he fly.</param>
+        /// <param name="id_bs">The defult it is -1, but if the target it is base station, so the user need to put the id of the base station.</param>
+        /// <returns></returns>
+        public int getTimeOfFlying(int id, BO.TargetQ target, int id_bs)
+        {
+            try
+            {
+                int seconds = 0;
+                double distance = 0;//the distance it is in km, and the speeed it's in km to hour.
+                Quadocopter q = QuDisplay(id);//get the drone with this ID.
+
+                switch (target)
+                {
+                    case TargetQ.sender:
+                        distance= GetDistance(q.thisLocation, q.thisPackage.sender.thisLocation);
+                        break;
+                    case TargetQ.receiver:
+                        distance = GetDistance(q.thisLocation, q.thisPackage.receiver.thisLocation);
+                        break;
+                    case TargetQ.baseStation:
+                        if (id_bs == -1)
+                            throw new BLException("The drone go to base station but you didnt give his ID.");
+                        BaseStation b = baseStationDisplay(id_bs);//b is the closest base station to out location
+                        distance = GetDistance(b.thisLocation, q.thisLocation);
+                        break;
+                    default:
+                        throw new BLException("Thre is some problem in the target.");
+                }
+                //the low it is: distance = time * speed
+                int speed = (int)q.thisPackage.priority;
+                seconds = (int)((distance / speed) * 60 * 60);//to meke hour to minutes, and minutes to seconds.
+                return seconds;
+            }
+            catch(Exception ex)
+            {
+                throw new BLException(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Chek the staus of flying acording to to the package the q is careing.
+        /// </summary>
+        /// <param name="id">The ID of the quadocopter.</param>
+        /// <param name="id_bs">If the target it is base station, the functation get olso the ID of the base station, ele this id it's -1.</param>
+        /// <returns>The battery the drone need to to have to come to his target.</returns>
+        public int getBatteryToFly(int id, TargetQ target, int id_bs)
+        {
+            try
+            {
+                int battery;
+                double distance = 0;
+                Quadocopter q = QuDisplay(id);//get the drone with this ID.
+
+                //now i chek to where the drone want to fly.
+                switch (target)
+                {
+                    case TargetQ.sender:
+                        distance = GetDistance(q.thisLocation, q.thisPackage.sender.thisLocation);
+                        break;
+                    case TargetQ.receiver:
+                        distance = GetDistance(q.thisLocation, q.thisPackage.receiver.thisLocation);
+                        break;
+                    case TargetQ.baseStation:
+                        if (id_bs == -1)
+                            throw new BLException("The drone go to base station but you didnt give his ID.");
+                        BaseStation b = baseStationDisplay(id_bs);//b is the closest base station to out location
+                        distance = GetDistance(q.thisLocation, b.thisLocation);
+                        break;
+                    default:
+                        throw new BLException("ERROR: There is a problem with the target.");
+                }
+                //there is difrent typs of electric, acording the drone, so i chek what index to send to the func to get the true elctric.
+                int index;
+                if (q.mode == statusOfQ.available)
+                    index = 0;
+                else
+                {
+                    switch (q.weight)
+                    {
+                        case WeighCategories.easy:
+                            index = 1;
+                            break;
+                        case WeighCategories.middle:
+                            index = 3;
+                            break;
+                        case WeighCategories.hevy:
+                            index = 2;
+                            break;
+                        default:
+                            throw new BLException("ERROR: There is problem in the wight of the drone.");
+                    }
+                }
+
+                battery = (int)(distance * dal.askForElectric()[index]);
+                return battery;
+            }
+            catch (Exception ex)
+            {
+                throw new BLException(ex.Message);
+            }
+        }
+
     }
 }

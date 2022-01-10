@@ -978,7 +978,7 @@ namespace Dal
             XElement middle_toCare = new XElement("middle_toCare", 4);
             XElement charghingRate = new XElement("charghingRate", 5);
 
-            XElement Electric = new XElement("Electric", Available, easy, hevy, middle_toCare, charghingRate);
+            XElement Electric = new XElement("Electric", Available, easy,middle_toCare, hevy,  charghingRate);
             configRoot.Add(runNum, Electric);
             configRoot.Save(configPath);
             start();

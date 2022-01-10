@@ -80,7 +80,7 @@ namespace PL
                     else if (ex.Message == "add somthing ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg")
                     {
                         bl.sendQtoChrge(localQ.ID);
-                        int i = 0;
+                        int i = -1;
                         while (i < 100)
                         {
                             i = bl.getBatteryCharge(localQ.ID);
