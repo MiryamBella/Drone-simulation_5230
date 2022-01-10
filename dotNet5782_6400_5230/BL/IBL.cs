@@ -55,5 +55,7 @@ namespace BlApi
         public BO.QuadocopterToList cover(BO.Quadocopter q);
         public BO.Client cover(BO.ClientToList c);
         public BO.Package cover(BO.PackageToList p);
+
+        public void startSimulator(int id, Action<int> report, Func<bool> isStop);
     }
 }
