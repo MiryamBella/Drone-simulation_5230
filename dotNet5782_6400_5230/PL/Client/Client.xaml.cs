@@ -141,9 +141,6 @@ namespace PL
                 int phone = int.Parse(enterPhoneNumber.Text);
                 bl.updateCdata(id, name, phone);
                 MessageBox.Show("uppdate complete.");
-                //ListOfClients l = new ListOfClients(bl);
-                //this.Close();
-                //l.Show();
             }
             catch (Exception ex)
             {
