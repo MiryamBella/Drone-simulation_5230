@@ -99,7 +99,7 @@ namespace DalApi
         /// <summary>
         /// accept a location of qudocopoter and its battery and return list of package that the q can take
         /// </summary>
-        public List<Package> availablePtoQ(int battery, Location loc);
+        public List<Package> availablePtoQ(int battery, Location loc, IEnumerable<Package> packages);
         /// <summary>
         /// accept id of package of id of its sender/receiver and return the another client of this package(receiver/sender)
         /// </summary>

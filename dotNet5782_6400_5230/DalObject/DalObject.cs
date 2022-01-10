@@ -587,10 +587,10 @@ namespace Dal
         /// <summary>
         /// accept a location of qudocopoter and its battery and return list of package that the q can take
         /// </summary>
-        public List<Package> availablePtoQ(int battery, Location loc)
+        public List<Package> availablePtoQ(int battery, Location loc, IEnumerable<Package> packages)
         {
-            List<Package> packages = new List<Package>();
-            foreach (Package p in DataSource.packagh)
+            List<Package> newPackages = new List<Package>();
+            foreach (Package p in packages)
             {
                 Location senderLocation = searchLocationOfclient(p.sender);
                 Location receiverL = searchLocationOfclient(p.receiver);
@@ -599,9 +599,9 @@ namespace Dal
                 double distance = GetDistance(loc, senderLocation) + GetDistance(senderLocation, receiverL) + GetDistance(receiverL, stationLocation);
                 int minBattery = (int)(distance * askForElectric()[(int)p.weight]);
                 if (battery >= minBattery)
-                    packages.Add(p);
+                    newPackages.Add(p);
             }
-            return packages;
+            return newPackages;
         }
         ///---------------------------------------------------------------------------------------------------------------
         /// func to help us.

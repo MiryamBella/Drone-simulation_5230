@@ -47,13 +47,14 @@ namespace BlApi
                 {
                     if (ex.Message == "there is no package to assign")
                         Thread.Sleep(500);
-                    else if (ex.Message == "add somthing ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg")
+                    else if (ex.Message == "battery")
                     {
                         bl.sendQtoChrge(id);
-                        int i = -1;
+                        int i = bl.QuDisplay(id).battery;
+                        int batteryPerSecond = bl.getBatteryCharge();
                         while (i < 100)
                         {
-                            i = bl.getBatteryCharge(id);
+                            i += batteryPerSecond;
                             report(i);
                             Thread.Sleep(1000);
                         }

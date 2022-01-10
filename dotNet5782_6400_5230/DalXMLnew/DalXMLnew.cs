@@ -901,41 +901,21 @@ namespace Dal
         /// <summary>
         /// accept a location of qudocopoter and its battery and return list of package that the q can take
         /// </summary>
-        public List<Package> availablePtoQ(int battery, Location loc)
+        public List<Package> availablePtoQ(int battery, Location loc, IEnumerable<Package> packages)
         {
-            LoadData_p();
-
-
-            List<Package> packages = new List<Package>();
-            foreach (XElement p in packageRoot.Elements())
+            List<Package> newPackages = new List<Package>();
+            foreach (Package p in packages)
             {
-                Location senderLocation = searchLocationOfclient(int.Parse(p.Element("ID_Sender").Value));
-                Location receiverL = searchLocationOfclient(int.Parse(p.Element("ID_Reciver").Value));
+                Location senderLocation = searchLocationOfclient(p.sender);
+                Location receiverL = searchLocationOfclient(p.receiver);
                 BaseStation stationL = searchCloseStation(receiverL);
                 Location stationLocation = new Location() { longitude = stationL.longitude, latitude = stationL.latitude };
                 double distance = GetDistance(loc, senderLocation) + GetDistance(senderLocation, receiverL) + GetDistance(receiverL, stationLocation);
-                int minBattery = (int)(distance * askForElectric()[getEnam(p.Element("Weight").Value)]);
+                int minBattery = (int)(distance * askForElectric()[(int)p.weight]);
                 if (battery >= minBattery)
-                {
-                    Package x = new Package
-                    {
-                        id = int.Parse(p.Element("ID").Value),
-                        idQuadocopter = int.Parse(p.Element("IDQ_Quadocopter").Value),
-                        receiver = int.Parse(p.Element("ID_Reciver").Value),
-                        sender = int.Parse(p.Element("ID_Sender").Value),
-                        time_Belong_quadocopter = DateTime.Parse(p.Element("Time_Belong_quadocopter").Value),
-                        time_ColctedFromSender = DateTime.Parse(p.Element("Time_ColctedFromSender").Value),
-                        time_ComeToColcter = DateTime.Parse(p.Element("Time_ComeToColcter").Value),
-                        time_Create = DateTime.Parse(p.Element("Time_Create").Value),
-                        priority = (Priorities)getEnam(p.Element("Priority").Value),
-                        weight = (WeighCategories)getEnam(p.Element("Weight").Value)
-                    };
-
-                    packages.Add(x);
-                }
+                    newPackages.Add(p);
             }
-            return packages;
-
+            return newPackages;
         }
         /// <summary>
         /// accept id of package of id of its sender/receiver and return the another client of this package(receiver/sender)

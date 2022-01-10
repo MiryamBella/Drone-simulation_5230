@@ -162,9 +162,9 @@ namespace BlApi
             }
         }
 
-        public int getBatteryCharge(int id)
-        {
-            return 0;
+        public int getBatteryCharge()
+        { 
+            return (int)dal.askForElectric()[4];
         }
 
 
@@ -175,46 +175,25 @@ namespace BlApi
         /// </summary>
         public void assignPtoQ(int qID)
         {
-            bool flag = false;
-            QuadocopterToList q = new QuadocopterToList();
-            foreach (QuadocopterToList qu in q_list)//check if the quadocopter is exist
-                if (q.ID == qID)
-                {
-                    flag = true;
-                    q = qu;
-                    break;
-                }
-            if (!flag) throw new BLException("this ID dont exist");
+            Quadocopter q = new Quadocopter();
+            //to find the qudocopter that with thie ID
+            try { q = QuDisplay(qID); }
+            catch (Exception ex) { throw new BLException(ex.Message); }
 
             try
             {
-                var packages = dal.availablePtoQ(q.ID, new DO.Location() { longitude = q.thisLocation.Longitude, latitude = q.thisLocation.Latitude });//list of package that it can take according to this battery
-                if (packages.Count == 0) throw new BLException("there is no package to assign");
-                var package = packages.OrderBy(s => (int)s.priority).ThenBy(s => s.weight);
-                DO.Priorities pr = new DO.Priorities();
-                foreach (var a in package) { pr = a.priority; break; };
-                var packagesInHighPri = from DO.Package p in package //list of the packages with the highest priority
-                                        where p.priority == pr
-                                        select p;
-                var packageInHighWeight = from DO.Package p in package
-                                          where (int)p.weight <= (int)q.weight
-                                          select p;
-                int w = 0;
-                foreach (var a in packageInHighWeight) { w = (int)a.weight; break; }
-                packageInHighWeight = from DO.Package p in package
-                                      where (int)p.weight == w
-                                      select p;
-                bool isfirst = true;
-                double distance = 0;
-                DO.Package thePackage = new DO.Package();
-                foreach (DO.Package p in packageInHighWeight)
-                {
-                    double d = GetDistance(q.thisLocation, coverLtoL(dal.searchLocationOfclient(p.sender)));
-                    if (isfirst) { distance = d; thePackage = p; }
-                    else if (d < distance) { distance = d; thePackage = p; }
-                }
-                dal.AssignPtoQ(thePackage, q.ID);
-                q.mode = statusOfQ.delivery;
+                var packages = from p in dal.ListOfPackages() //list of package in weight that the q can take
+                               where (int)p.weight <= (int)q.weight
+                               select p;
+                if (packages.Count() == 0) throw new BLException("there is no package to assign");//if there are no packages 
+                DO.Location loc = new DO.Location() { latitude = q.thisLocation.Latitude, longitude = q.thisLocation.Longitude };
+                //run on the list packages and return into it only the packages that the battery is good to them
+                packages = dal.availablePtoQ(q.battery, loc, packages);
+                if (packages.Count() == 0) throw new BLException("battery");//if there is no battery
+
+                packages = packages.OrderBy(s => (int)s.priority).ThenBy(s => s.weight);
+                
+                dal.AssignPtoQ(packages.Last(), q.ID);
             }
             catch(Exception ex)
             {
