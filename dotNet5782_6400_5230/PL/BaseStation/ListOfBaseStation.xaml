@@ -54,10 +54,10 @@
         <WrapPanel Grid.Row="2" Grid.Column="0" Grid.RowSpan="2">
             <!--<ListBox x:Name="q_list" SelectionMode="Single"  ItemsSource="{Binding}"/>-->
             <ListView x:Name="bs_list" MouseDoubleClick="MouseDoubleClick_showBS"/>
-        </WrapPanel>        <Image Source="/images/3d-house-icon-vectorjunky_web.jpg" 
+        </WrapPanel>        <Image Source="/BaseStation/3d-house-icon-vectorjunky_web.jpg" 
                Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
                Width="300" />
-        <Image Source="/images/drone-icon-isolated-whiteiconQuadocopter.jpg" 
+        <Image Source="/BaseStation/drone-icon-isolated-whiteiconQuadocopter.jpg" 
                Grid.Row="2" Grid.Column="1"  HorizontalAlignment="Right" VerticalAlignment="Center" 
                Width="100" />
     </Grid>

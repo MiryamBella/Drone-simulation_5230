@@ -41,6 +41,6 @@
                 Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" 
                 Height="45" Width="155" />
 
-        <Image Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" Source="/images/manage2r.png" Margin="65,27,-10,-20" />
+        <Image Grid.Row="1" Grid.RowSpan="4" Source="/manage2r.png" Margin="248,27,-10,-27" Grid.ColumnSpan="2" />
     </Grid>
 </Window>

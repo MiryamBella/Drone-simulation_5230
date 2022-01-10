@@ -7,7 +7,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="357-3572808_images-for-train-station-clip-art-train-station.png" />
+    <None Remove="4300.jpg" />
+    <None Remove="BaseStation\3d-house-icon-vectorjunky_web.jpg" />
+    <None Remove="BaseStation\drone-icon-isolated-whiteiconQuadocopter.jpg" />
+    <None Remove="manage2r.png" />
+    <None Remove="Quadcopter_camera_drone_in_flight.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="357-3572808_images-for-train-station-clip-art-train-station.png" />
+    <Resource Include="4300.jpg" />
+    <Resource Include="BaseStation\3d-house-icon-vectorjunky_web.jpg" />
+    <Resource Include="BaseStation\drone-icon-isolated-whiteiconQuadocopter.jpg" />
+    <Resource Include="manage2r.png" />
+    <Resource Include="Quadcopter_camera_drone_in_flight.jpg" />
   </ItemGroup>
 
 </Project>

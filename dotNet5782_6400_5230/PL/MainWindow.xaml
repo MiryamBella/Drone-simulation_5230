@@ -40,6 +40,6 @@
                 Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" 
                 Height="45" Width="155" />
 
-        <Image Grid.Column="1" Grid.RowSpan="4" Source="/images/Quadcopter_camera_drone_in_flight.jpg" Margin="38,58,17,0" />
+        <Image Grid.Column="1" Grid.RowSpan="4" Source="/Quadcopter_camera_drone_in_flight.jpg" Margin="38,58,17,0" />
     </Grid>
 </Window>
