@@ -128,7 +128,7 @@ namespace Dal
             bool exist = false;
             //i did normal for and not forheach becose i need the object himself and not iteretor of the object.
             for (int i = 0; i < DataSource.qpter.Count; i++)
-                if (DataSource.qpter[i].id == bID)
+                if (DataSource.qpter[i].id == qID)
                 {
                     Quadocopter q = DataSource.qpter[i];
                     q.startCharge = DateTime.Now;

@@ -237,10 +237,11 @@ namespace PL
                 switch (localQ.mode)
                 {
                     case BO.statusOfQ.available:
-                        localQ.battery=bl.sendQtoChrge(localQ.ID);
+                        localQ=bl.cover(bl.sendQtoChrge(localQ.ID));
                         charge.Content = "relese from charge";
-                        localQ.mode = BO.statusOfQ.maintenance;
                         showBattery.Text = localQ.battery.ToString();
+                        showLongitude.Text = localQ.thisLocation.Longitude.ToString();
+                        showLatitude.Text = localQ.thisLocation.Latitude.ToString();
                         break;
 
                     case BO.statusOfQ.maintenance:

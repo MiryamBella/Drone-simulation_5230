@@ -79,7 +79,7 @@ namespace BlApi
         #endregion;
         #region send/release Q to Charge;
         /// update qudocopter to be send to a charging position
-        public int sendQtoChrge(int id)
+        public QuadocopterToList sendQtoChrge(int id)
         {
             bool flag = false;
             //i search the qudocopter in the q_list
@@ -108,13 +108,15 @@ namespace BlApi
                 dal.SendQtoCharging(b.IDnumber, q.ID);//update the data at the dal
 
                 q.battery -= minBattery;//update the list of qudocopter in the BL
-                q.thisLocation.Longitude = dalL.longitude;
-                q.thisLocation.Latitude = dalL.latitude;
+                q.thisLocation.Longitude = b.longitude;//the drone get the location of the base station.
+                q.thisLocation.Latitude = b.latitude;
                 q.thisLocation.decSix = new DmsLocation();
                 q.thisLocation.toBaseSix = new BaseSixtin();
+                q.thisLocation.decSix = q.thisLocation.toBaseSix.LocationSix(b.latitude, b.longitude);
+                q.thisLocation.Location60 = q.thisLocation.decSix.ToString();
                 q.mode = statusOfQ.maintenance;
 
-                return q.battery;
+                return q;
             }
             catch(Exception ex)
             {
@@ -144,8 +146,9 @@ namespace BlApi
             try
             {
                 double hours = 0;
-                DateTime t = DateTime.Parse(dal.QuDisplay(id).startCharge.ToString());
-                hours = (t - DateTime.Now).TotalHours;
+                DO.Quadocopter dalQ = dal.QuDisplay(id);
+                DateTime t = dalQ.startCharge.Value;
+                hours = (DateTime.Now-t).TotalHours;
                 if (q.mode != statusOfQ.maintenance) throw new BLException("this q not in maintenance.");
                 q.mode = statusOfQ.available;
                 q.battery += (int)(dal.askForElectric()[4] * hours);
