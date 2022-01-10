@@ -124,6 +124,7 @@ namespace PL
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             object result = e.Result;
+            this.Close();
         }
 
         private void stop_Click(object sender, RoutedEventArgs e)

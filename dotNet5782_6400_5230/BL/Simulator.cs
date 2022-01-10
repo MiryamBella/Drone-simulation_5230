@@ -18,7 +18,7 @@ namespace BlApi
             {
                 try
                 {
-                             BL.assignPtoQ(id);
+                    bl.assignPtoQ(id);
                     int time = bl.getTimeOfFlying(id, BO.TargetQ.sender, -1);
                     int battery = bl.getBatteryToFly(id, BO.TargetQ.sender, -1);
                     battery /= time;
