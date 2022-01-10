@@ -132,23 +132,19 @@ namespace BlApi
                 throw new BLException("Invalid id.");
             //if (hours < 0)
             //    throw new BLException("Number of hours must to be positive.");
-            bool flag = false;
+           
             QuadocopterToList q = new QuadocopterToList();//i search the qudocopter in the q_list
-            foreach (QuadocopterToList i in q_list)
-                if (i.ID == id)
-                {
-                    flag = true;
-                    q = i;
-                    break;
-                }
-            if (!flag) throw new BLException("Id not found.");
+            q = (from i in q_list
+                 where i.ID == id
+                 select i).FirstOrDefault();
+            if (q == default) throw new BLException("Id not found.");
 
             try
             {
                 double hours = 0;
                 DO.Quadocopter dalQ = dal.QuDisplay(id);
                 DateTime t = dalQ.startCharge.Value;
-                hours = (DateTime.Now-t).TotalHours;
+                hours = (DateTime.Now-t).TotalSeconds;
                 if (q.mode != statusOfQ.maintenance) throw new BLException("this q not in maintenance.");
                 q.mode = statusOfQ.available;
                 q.battery += (int)(dal.askForElectric()[4] * hours);

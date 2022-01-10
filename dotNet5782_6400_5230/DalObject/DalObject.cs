@@ -134,6 +134,7 @@ namespace Dal
                     q.startCharge = DateTime.Now;
                     DataSource.qpter[i] = q;
                     exist = true;
+                    break;
                 }
             if (!exist)
                 throw new DALException("the drone not exist.");
