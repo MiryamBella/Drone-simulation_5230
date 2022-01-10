@@ -141,13 +141,13 @@ namespace BlApi
 
             try
             {
-                double hours = 0;
+                double seconds = 0;
                 DO.Quadocopter dalQ = dal.QuDisplay(id);
                 DateTime t = dalQ.startCharge.Value;
-                hours = (DateTime.Now-t).TotalSeconds;
+                seconds = (DateTime.Now-t).Seconds;
                 if (q.mode != statusOfQ.maintenance) throw new BLException("this q not in maintenance.");
                 q.mode = statusOfQ.available;
-                q.battery += (int)(dal.askForElectric()[4] * hours);
+                q.battery += (int)(dal.askForElectric()[4] * seconds);
                 if (q.battery > 100) q.battery = 100;
                 dal.ReleaseQfromCharging(id);
                 return q.battery;
