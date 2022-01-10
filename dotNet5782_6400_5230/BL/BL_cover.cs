@@ -213,7 +213,16 @@ namespace BlApi
         }
         public Package cover(PackageToList p)
         {
-            return cover(dal.PackageDisplay(p.ID));
+                try
+                {
+                    Package newP = new Package();
+                    newP = PackageDisplay(p.ID);
+                    return newP;
+                }
+                catch (Exception ex)
+                {
+                    throw new BLException(ex.Message);
+                }
         }
         #endregion
 

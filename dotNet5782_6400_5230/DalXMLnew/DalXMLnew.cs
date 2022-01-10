@@ -231,13 +231,13 @@ namespace Dal
             clientRoot.Save(clientPath);
         }
         /// adding new package.
-        public void AddPackage(int sender, int colecter, int weight, int priority)
+        public void AddPackage(int id, int sender, int colecter, int weight, int priority)
         {
             LoadData_p();
             LoadData_config();
 
-            int id = int.Parse(configRoot.Element("runNum").Value);
-            configRoot.Element("runName").Value = (id + 1).ToString();
+            int run = int.Parse(configRoot.Element("runNum").Value);
+            configRoot.Element("runName").Value = (run + 1).ToString();
             configRoot.Save(configPath);
 
             XElement ID = new XElement("ID", id);// the id of the package will be according the run number

@@ -32,7 +32,7 @@
         <Canvas>
             <Button x:Name="CloseWindow" Content="X" Background="Red" Width="20" Height="20" Canvas.Left="2" Canvas.Top="2"
                     Click="CloseWindow_Click"/>
-            
+
             <Button Content="Add new Client" Background="BlueViolet" Width="150" Height="50"  Canvas.Bottom="8" Canvas.Right="55"
                     Click="Button_addNewC"/>
         </Canvas>
@@ -40,6 +40,7 @@
             <!--<ListBox x:Name="q_list" SelectionMode="Single"  ItemsSource="{Binding}"/>-->
             <ListView x:Name="c_list" MouseDoubleClick="MouseDoubleClick_showC"/>
         </WrapPanel>
+        <Image Grid.Column="1" Grid.RowSpan="3"  Margin="167,19,79,11" Source="/Client/client.jpg" Grid.ColumnSpan="2" />
 
     </Grid>
 </Window>

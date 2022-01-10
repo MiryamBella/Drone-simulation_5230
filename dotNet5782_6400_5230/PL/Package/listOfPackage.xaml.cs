@@ -57,8 +57,11 @@ namespace PL
         {
             try
             {
-                BO.PackageToList pToList = (BO.PackageToList)p_list.SelectedItem;
-                BO.Package c = bl.cover(pToList);
+                BO.PackageToList pToList = new BO.PackageToList();
+                pToList = (BO.PackageToList)p_list.SelectedItem;
+                if (pToList == null) return;
+                BO.Package c = new BO.Package();
+                c = bl.cover(pToList);
                 Package cl = new Package(bl, c);
                 cl.ShowDialog();
             }

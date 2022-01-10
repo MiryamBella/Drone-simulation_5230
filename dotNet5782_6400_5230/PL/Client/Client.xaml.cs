@@ -58,14 +58,18 @@ namespace PL
                     select p;
             foreach (BO.PackageToList pa in a)
                 packageToList.Add(pa);
+            packageTo.ItemsSource = packageToList;
             var b = from p in bl.ListOfPackages()
                     where p.receiverName == c.name
                     select p;
-            foreach (BO.PackageToList pa in a)
+            foreach (BO.PackageToList pa in b)
                 packageFromList.Add(pa);
+            packageFrom.ItemsSource = packageFromList;
 
             packageTo.Visibility = Visibility.Visible;
             packageFrom.Visibility = Visibility.Visible;
+            pTo.Visibility = Visibility.Visible;
+            pFrom.Visibility = Visibility.Visible;
 
             #endregion;
         }
@@ -155,7 +159,8 @@ namespace PL
         {
             try
             {
-                BO.Package p = (BO.Package)packageTo.SelectedItem;
+                BO.Package p = bl.cover((BO.PackageToList)packageTo.SelectedItem);
+                if (p == null) return;
                 Package p_w = new Package(bl, p);
                 Close();
                 p_w.ShowDialog();
@@ -170,6 +175,7 @@ namespace PL
             try
             {
                 BO.Package p = (BO.Package)packageFrom.SelectedItem;
+                if (p == null) return;
                 Package p_w = new Package(bl, p);
                 Close();
                 p_w.ShowDialog();

@@ -104,17 +104,25 @@
                 HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="6" Grid.Column="2" 
                 VerticalAlignment="Top" Height="34" Width="172" Grid.ColumnSpan="2" 
                 Content="update the client" Visibility="Hidden" />
-        <ListView x:Name="packageTo" MouseDoubleClick="MouseDoubleClick_packageTo" Visibility="Hidden"
+        <TextBlock x:Name="pTo" HorizontalAlignment="Center" 
+                   Grid.Row="1"  Grid.Column="3" Text="package to you:" TextWrapping="Wrap" 
+                   VerticalAlignment="Top" Height="15" Width="113" Margin="0,62,0,0" Grid.RowSpan="2"
+                   Visibility="Hidden"/>
+        <ComboBox x:Name="packageTo" MouseDoubleClick="MouseDoubleClick_packageTo" Visibility="Hidden"
                   Grid.Row="2" Grid.Column="3"
                   HorizontalAlignment="Center"  
                   Height="25" Width="120"/>
-        <ListView x:Name="packageFrom" MouseDoubleClick="MouseDoubleClick_packageFrom" Visibility="Hidden"
+        <TextBlock x:Name="pFrom" HorizontalAlignment="Center" 
+                   Grid.Row="1"  Grid.Column="4" Text="package from you:" TextWrapping="Wrap" 
+                   VerticalAlignment="Top" Height="15" Width="113" Margin="0,62,0,0" Grid.RowSpan="2"
+                   Visibility="Hidden"/>
+        <ComboBox x:Name="packageFrom" MouseDoubleClick="MouseDoubleClick_packageFrom" Visibility="Hidden"
                   Grid.Row="2" Grid.Column="4"
                   HorizontalAlignment="Center"  
                   Height="25" Width="120" >
-            <ListView.View>
+            <!--<ComboBox.View>
                 <GridView/>
-            </ListView.View>
-        </ListView>
+            </ComboBox.View>-->
+        </ComboBox>
     </Grid>
 </Window>
