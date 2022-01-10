@@ -21,6 +21,8 @@ namespace BO
         public string Location60 { get; set; }
         public override string ToString()
         {
+            decSix = toBaseSix.LocationSix(Latitude, Longitude);
+            Location60 = decSix.ToString();
             return ("longitude: " + Longitude + '\n' +
                 "latitude: " + Latitude + '\n') +
                 "location in base 60: " + decSix;

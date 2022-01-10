@@ -25,7 +25,7 @@ namespace BO
                 "the weight: " + weight + '\n' +
                 "the state of the bettery: " + battery + '\n' +
                 "the status: " + mode + '\n' +
-                "the location: " + thisLocation + '\n' +
+                "the location:\n" + thisLocation + '\n' +
                 "number of packages that it carried:" + packageNumber);
         }
     }
