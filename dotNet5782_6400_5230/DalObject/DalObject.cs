@@ -648,59 +648,5 @@ namespace Dal
         {
             return Math.Sqrt(Math.Pow(l1.latitude - l2.latitude, 2) + Math.Pow(l1.longitude - l2.longitude, 2));
         }
-
-        /// <summary>
-        /// the func get quadocopter's id and base station's id from the user and chak if they in our data.
-        /// </summary>
-        /// <returns>if all datails from the user are treu</returns>
-        //bool allwoToCharge(int[] indexs, bool charge=true)
-        //{
-        //    Console.WriteLine("Please enter the ID of the quadocopter you want to charge."); //accepting the id of the quadocopter
-        //    string temp_str = Console.ReadLine();
-        //    int id = int.Parse(temp_str);
-        //    int i;
-        //    bool exist = false;//to chak if we find the quadocopter's ID.
-        //    for (i = 0; i < DataSource.Config.index_quadocopter; i++) //look for index of the quadocopter with the quadocopter ID the user put.
-        //        if (DataSource.qpter[i].id == id)
-        //        {
-        //            exist = true;//we find the quadocopter.
-        //            break;
-        //        }
-        //    if (!exist)//if we didnt find the quadocopter.
-        //    {
-        //        Console.WriteLine("The quadocopter's ID not exist in our data.");
-        //        return false;
-        //    }
-
-        //    if (DataSource.qpter[i].mode != statusOfQ.available)
-        //    {
-        //        Console.WriteLine("The quadocopter are " + DataSource.qpter[i].mode + '.');
-        //        return false;
-        //    }
-
-        //    if (charge)
-        //        ListOfStationsForCharging();
-        //    else
-        //        ListOfStations();
-        //    Console.WriteLine("Please enter the ID of the base station you want to charge in."); //accepting the id of the quadocopter
-        //    temp_str = Console.ReadLine();
-        //    id = int.Parse(temp_str);
-        //    int j;
-        //    exist = false;//to chak if we find the base station's ID.
-        //    for (j = 0; j < DataSource.Config.index_baseStation; j++) //look for index of the base station with the base station ID the user put.
-        //        if (DataSource.bstion[j].IDnumber == id)
-        //        {
-        //            exist = true;//we find the quadocopter.
-        //            break;
-        //        }
-        //    if (!exist)//if we didnt find the quadocopter.
-        //    {
-        //        Console.WriteLine("The base station's ID not exist in our data.");
-        //        return false;
-        //    }
-        //    indexs[0] = i;
-        //    indexs[1] = j;
-        //    return true;
-        //}
     }
 }

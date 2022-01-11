@@ -320,6 +320,7 @@ namespace BlApi
                         temp.thisLocation.Latitude = receiverL.latitude;
                         temp.thisLocation.decSix = new DmsLocation(receiverL.latitude, receiverL.longitude);
                         temp.thisLocation.toBaseSix = new BaseSixtin();
+                        temp.mode = statusOfQ.available;
                         dal.DeliveringPtoClient(p.Value.id);
                         break;
                     }
