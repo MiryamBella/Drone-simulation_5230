@@ -116,6 +116,9 @@ namespace BlApi
                 q.thisLocation.Location60 = q.thisLocation.decSix.ToString();
                 q.mode = statusOfQ.maintenance;
 
+                //update the data in BL listt.
+                q_list.Remove(cover(QuDisplay(q.ID)));
+                q_list.Add(q);
                 return q;
             }
             catch(Exception ex)
@@ -150,6 +153,11 @@ namespace BlApi
                 q.battery += (int)(dal.askForElectric()[4] * seconds);
                 if (q.battery > 100) q.battery = 100;
                 dal.ReleaseQfromCharging(id);
+
+                //update the data in BL listt.
+                q_list.Remove(cover(QuDisplay(q.ID)));
+                q_list.Add(q);
+
                 return q.battery;
             }
             catch(Exception ex)
@@ -225,7 +233,6 @@ namespace BlApi
         /// </summary>
         public void collectPbyQ(int qID)
         {
-            
             Quadocopter q = new Quadocopter();
             try
             {
@@ -251,6 +258,10 @@ namespace BlApi
                 q.thisLocation.decSix = new DmsLocation(senderL.latitude, senderL.longitude);
                 q.thisLocation.toBaseSix = new BaseSixtin();
                 dal.CollectPbyQ(p.Value.id);
+
+                //update the data in BL listt.
+                q_list.Remove(cover(QuDisplay(q.ID)));
+                q_list.Add(cover(q));
             }
             catch(Exception ex)
             {
@@ -271,6 +282,7 @@ namespace BlApi
                 {
                     flag = true;
                     q = qu;
+                    break;
                 };
             if (!flag) throw new BLException("this ID not exist");
             if (q.mode != statusOfQ.delivery) throw new BLException("this qudocopter dont associated to a package");
@@ -287,6 +299,10 @@ namespace BlApi
                 q.thisLocation.decSix = new DmsLocation(receiverL.latitude, receiverL.longitude);
                 q.thisLocation.toBaseSix = new BaseSixtin();
                 dal.DeliveringPtoClient(p.Value.id);
+
+                //update the data in BL listt.
+                q_list.Remove(cover(QuDisplay(q.ID)));
+                q_list.Add(q);
             }
             catch (Exception ex)
             {

@@ -75,7 +75,7 @@ namespace BlApi
                         while (i < 100)
                         {
                             i += batteryPerSecond;
-                            report(i, null);
+                            report(batteryPerSecond, null);
                             Thread.Sleep(1000);
                         }
                         bl.releaseQfromChrge(id);

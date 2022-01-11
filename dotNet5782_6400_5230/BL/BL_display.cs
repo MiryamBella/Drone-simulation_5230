@@ -338,10 +338,10 @@ namespace BlApi
                             index = 1;
                             break;
                         case WeighCategories.middle:
-                            index = 3;
+                            index = 2;
                             break;
                         case WeighCategories.hevy:
-                            index = 2;
+                            index = 3;
                             break;
                         default:
                             throw new BLException("ERROR: There is problem in the wight of the drone.");

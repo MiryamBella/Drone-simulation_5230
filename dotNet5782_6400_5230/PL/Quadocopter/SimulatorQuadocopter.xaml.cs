@@ -87,17 +87,16 @@ namespace PL
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             int addToBattery = e.ProgressPercentage;
-            batteryShow.Text = (localQ.battery + addToBattery).ToString();
-            if (localQ.battery + addToBattery > 100)
-            {
-                batteryShow.Text = (100).ToString();
-                VisualBattery.Value = 100;
-            }
-            else
-            {
-                batteryShow.Text = (localQ.battery + addToBattery).ToString();
-                VisualBattery.Value = localQ.battery + addToBattery;
-            }
+            localQ.battery += addToBattery;
+            //batteryShow.Text = (localQ.battery + addToBattery).ToString();
+            if (localQ.battery > 100)
+                localQ.battery = 100;
+            //batteryShow.Text = (100).ToString();
+            //VisualBattery.Value = 100;
+
+            batteryShow.Text = localQ.battery.ToString();
+            VisualBattery.Value = localQ.battery;
+            
 
             //if (e.UserState != null)
             //{
