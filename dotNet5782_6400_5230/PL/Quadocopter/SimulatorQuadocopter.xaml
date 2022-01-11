@@ -38,9 +38,10 @@
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="ExtraBlack"/>
         <TextBlock Name="batteryShow" Grid.Row="3" Grid.Column="1"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+        <ProgressBar Name="VisualBattery" Grid.Row="4" Grid.Column="1" Height="30" Minimum="0"
+                     Maximum="100" />
 
-
-        <TextBlock x:Name="ID_p" Text="ID package:" Grid.Row="1" Grid.Column="2"
+            <TextBlock x:Name="ID_p" Text="ID package:" Grid.Row="1" Grid.Column="2"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="ExtraBlack"/>
         <TextBlock Name="IDShow_p" Grid.Row="1" Grid.Column="3"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>

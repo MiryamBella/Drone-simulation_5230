@@ -495,7 +495,6 @@ namespace Dal
                         default:
                             break;
                     }
-                    return p;
                 }
             return null;
         }

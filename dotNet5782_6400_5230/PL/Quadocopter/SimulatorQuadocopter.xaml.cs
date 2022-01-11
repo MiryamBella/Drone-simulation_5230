@@ -34,6 +34,7 @@ namespace PL
             locationShwo.Text = localQ.thisLocation.decSix.ToString();
             localQ.thisLocation.Location60 = localQ.thisLocation.decSix.ToString();
             batteryShow.Text = localQ.battery.ToString();
+            VisualBattery.Value = localQ.battery;
             stopSimulator = false;
             //if (localQ.thisPackage == null)
             //{
@@ -81,63 +82,21 @@ namespace PL
             {
                 MessageBox.Show(ex.Message);
             }
-            //while (stopSimulator) {
-            //    try
-            //    {
-            //        bl.assignPtoQ(localQ.ID);
-            //        int time = bl.getTimeOfFlying(localQ.ID, BO.TargetQ.sender);
-            //        int battery = bl.getBatteryToFly(localQ.ID, BO.TargetQ.sender);
-            //        battery /= time;
-            //        battery *= -1;
-            //        while (time > 0)
-            //        {
-            //            Thread.Sleep(1000);
-            //            time -= 1;
-            //            worker.ReportProgress(battery);
-            //            localQ.battery += battery;
-            //        }
-            //        bl.collectPbyQ(localQ.ID);
-            //        time = bl.getTimeOfFlying(localQ.ID, BO.TargetQ.receiver);
-            //        battery = bl.getBatteryToFly(localQ.ID, BO.TargetQ.receiver);
-            //        battery /= time;
-            //        battery *= -1;
-            //        while (time > 0)
-            //        {
-            //            Thread.Sleep(1000);
-            //            time -= 1;
-            //            worker.ReportProgress(battery);
-            //            localQ.battery += battery;
-            //        }
-
-            //        bl.supplyPbyQ(localQ.ID);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        if (ex.Message == "there is no package to assign")
-            //            Thread.Sleep(500);
-            //        else if (ex.Message == "add somthing ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg")
-            //        {
-            //            bl.sendQtoChrge(localQ.ID);
-            //            int i = -1;
-            //            while (i < 100)
-            //            {
-            //                i = bl.getBatteryCharge(localQ.ID);
-            //                worker.ReportProgress(i);
-            //                Thread.Sleep(1000);
-            //                localQ.battery += i;
-            //            }
-            //            bl.releaseQfromChrge(localQ.ID);
-            //        }
-            //        else
-            //            MessageBox.Show(ex.Message);
-            //    }
-
-            //}
         } 
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             int addToBattery = e.ProgressPercentage;
-            batteryShow.Text = (localQ.battery + addToBattery).ToString();
+            if (localQ.battery + addToBattery > 100)
+            {
+                batteryShow.Text = (100).ToString();
+                VisualBattery.Value = 100;
+            }
+            else
+            {
+                batteryShow.Text = (localQ.battery + addToBattery).ToString();
+                VisualBattery.Value = localQ.battery + addToBattery;
+            }
+
             //if (e.UserState != null)
             //{
             //    IDShow_p.Text = ((BO.Package)e.UserState).ID.ToString();
@@ -158,23 +117,38 @@ namespace PL
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             object result = e.Result;
-            this.Close();
+            //this.Close();
+            MessageBox.Show("End of the simulator.");
         }
 
         private void stop_Click(object sender, RoutedEventArgs e)
         {
-            stopSimulator = false;
-            stop.Visibility = Visibility.Hidden;
-            start.Visibility = Visibility.Visible;
-            worker.CancelAsync();
+            try
+            {
+                stopSimulator = false;
+                stop.Visibility = Visibility.Hidden;
+                start.Visibility = Visibility.Visible;
+                //worker.CancelAsync();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void start_Click(object sender, RoutedEventArgs e)
         {
-            stopSimulator = true;
-            stop.Visibility = Visibility.Visible;
-            start.Visibility = Visibility.Hidden;
-            worker.RunWorkerAsync();
+            try
+            {
+                stopSimulator = true;
+                stop.Visibility = Visibility.Visible;
+                start.Visibility = Visibility.Hidden;
+                worker.RunWorkerAsync();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
     }

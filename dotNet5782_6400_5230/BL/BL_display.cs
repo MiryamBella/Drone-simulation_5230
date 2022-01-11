@@ -260,7 +260,7 @@ namespace BlApi
         /// <param name="target">The target of the the drone, to where he fly.</param>
         /// <param name="id_bs">The defult it is -1, but if the target it is base station, so the user need to put the id of the base station.</param>
         /// <returns></returns>
-        public int getTimeOfFlying(int id, BO.TargetQ target, int id_bs)
+        public int getTimeOfFlying(int id,int speed, BO.TargetQ target, int id_bs)
         {
             try
             {
@@ -286,9 +286,7 @@ namespace BlApi
                         throw new BLException("Thre is some problem in the target.");
                 }
                 //the low it is: distance = time * speed
-                int speed = (int)q.thisPackage.priority;
-                speed++;
-                seconds = (int)((distance / speed) /** 60 * 60*/);//to meke hour to minutes, and minutes to seconds.
+                seconds = (int)((distance / speed) );//to meke minutes to seconds.
                 return seconds;
             }
             catch(Exception ex)

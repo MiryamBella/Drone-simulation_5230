@@ -181,7 +181,7 @@ namespace BlApi
                 var packages = from p in dal.ListOfPackages() //list of package in weight that the q can take
                                where (int)p.weight <= (int)q.weight
                                select p;
-                if (packages.Count() == 0) throw new BLException("there is no package to assign");//if there are no packages 
+                if (packages.Count() == 0) throw new BLException("There is no package to assign.");//if there are no packages 
                 DO.Location loc = new DO.Location() { latitude = q.thisLocation.Latitude, longitude = q.thisLocation.Longitude };
                 //run on the list packages and return into it only the packages that the battery is good to them
                 packages = dal.availablePtoQ(q.battery, loc, packages);
@@ -190,18 +190,18 @@ namespace BlApi
                 packages = packages.OrderBy(s => (int)s.priority).ThenBy(s => s.weight);
                 var p_list = packages.ToList();
                 p_list.Reverse();
-                
-                foreach(var p in packages)
+                bool flag = false;
+                foreach(var p in p_list)
                 {
-                    if(p.time_Belong_quadocopter==null &&
-                        p.time_ColctedFromSender==null &&
-                        p.time_ComeToColcter == null)
+                    if(p.time_Belong_quadocopter==null)
                     {
                         dal.AssignPtoQ(p, q.ID);
+                        flag = true;
                         break;
                     }
                 }
-
+                if (!flag)
+                    throw new BLException("There is no package to assign.");
                 foreach (QuadocopterToList quadocopter in q_list)
                 {
                     if (quadocopter.ID == qID)
