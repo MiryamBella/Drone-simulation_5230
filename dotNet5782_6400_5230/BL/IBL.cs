@@ -22,7 +22,7 @@ namespace BlApi
         public BO.QuadocopterToList sendQtoChrge(int id);
         public int releaseQfromChrge(int id);
         public int getBatteryCharge();
-        public void assignPtoQ(int qID);//the packge belonge to q.
+        public BO.Package assignPtoQ(int qID);//the packge belonge to q.
         public void collectPbyQ(int qID);//the q take the p from the sender.
         public void supplyPbyQ(int qID);//the q come to the client and give ho the p.
         public int getTimeOfFlying(int id, BO.TargetQ target, int id_bs=-1);
@@ -56,6 +56,6 @@ namespace BlApi
         public BO.Client cover(BO.ClientToList c);
         public BO.Package cover(BO.PackageToList p);
 
-        public void startSimulator(int id, Action<int> report, Func<bool> isStop);
+        public void startSimulator(int id, Action<int, BO.Package> report, Func<bool> isStop);
     }
 }

@@ -126,7 +126,7 @@ namespace BlApi
         #endregion;
 
 
-        public void startSimulator(int id, Action<int> report, Func<bool> isStop)
+        public void startSimulator(int id, Action<int, BO.Package> report, Func<bool> isStop)
         {
             BL bl = new BL();
             Simulator simulator = new Simulator(bl, id, report, isStop);

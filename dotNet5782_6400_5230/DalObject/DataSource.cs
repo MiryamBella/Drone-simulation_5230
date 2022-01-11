@@ -19,7 +19,7 @@ namespace Dal
         internal static List<Charging> charge=new List<Charging>();
         internal class Config
         {
-            internal static int runNum = 0;//for the id packagh.
+            internal static int runNum = 1;//for the id packagh.
                                            //i did the integger as static becuse i think it need to be only one like that because any id need to be difrent.
             internal static double Available { get { return 1; } }
             internal static double easy { get { return 2; } }
@@ -130,7 +130,7 @@ namespace Dal
                 Config.runNum++;
                 p.sender = cli[r.Next(0, cli.Count)].ID;
                 p.receiver = cli[r.Next(0, cli.Count)].ID;
-                p.weight = (WeighCategories)r.Next(0, 3);
+                p.weight = (WeighCategories)r.Next(1, 3);
                 p.priority = (Priorities)r.Next(0, 3);
                 p.idQuadocopter = 0;
                 p.time_Belong_quadocopter = null;

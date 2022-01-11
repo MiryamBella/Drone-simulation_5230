@@ -169,7 +169,7 @@ namespace BlApi
         /// <summary>
         /// update package to be assigned to a qudocopter
         /// </summary>
-        public void assignPtoQ(int qID)
+        public Package assignPtoQ(int qID)
         {
             Quadocopter q = new Quadocopter();
             //to find the qudocopter that with thie ID
@@ -188,8 +188,29 @@ namespace BlApi
                 if (packages.Count() == 0) throw new BLException("battery");//if there is no battery
 
                 packages = packages.OrderBy(s => (int)s.priority).ThenBy(s => s.weight);
+                var p_list = packages.ToList();
+                p_list.Reverse();
                 
-                dal.AssignPtoQ(packages.Last(), q.ID);
+                foreach(var p in packages)
+                {
+                    if(p.time_Belong_quadocopter==null &&
+                        p.time_ColctedFromSender==null &&
+                        p.time_ComeToColcter == null)
+                    {
+                        dal.AssignPtoQ(p, q.ID);
+                        break;
+                    }
+                }
+
+                foreach (QuadocopterToList quadocopter in q_list)
+                {
+                    if (quadocopter.ID == qID)
+                    {
+                        quadocopter.mode = statusOfQ.delivery;
+                        quadocopter.packageNumber++;
+                    }
+                }
+                return cover(packages.Last());
             }
             catch(Exception ex)
             {
@@ -203,20 +224,23 @@ namespace BlApi
         /// </summary>
         public void collectPbyQ(int qID)
         {
-            bool flag = false;
-            QuadocopterToList q = new QuadocopterToList();
-            foreach (QuadocopterToList qu in q_list)
-                if (qu.ID == qID)
-                {
-                    flag = true;
-                    q = qu;
-                };
-            if (!flag) throw new BLException("this ID not exist");
+            
+            Quadocopter q = new Quadocopter();
+            try
+            {
+                q = QuDisplay(qID);
+            }
+            catch(Exception ex)
+            {
+                throw new BLException(ex.Message);
+            }
             if (q.mode != statusOfQ.delivery) throw new BLException("this qudocopter dont associated to a package");
             try
             {
-                DO.Package? p = dal.searchPinQ(qID);
-                if (p.Value.time_ColctedFromSender.Value.Year != 0001) throw new BLException("the package was collocted already");
+                DO.Package? p = dal.searchPinQ(qID, DO.p_thet.ColctedFromSender);
+                if (p == null)
+                    throw new BLException("There is no pakage in this drone.");
+                if (p.Value.time_ColctedFromSender != null) throw new BLException("the package was collocted already");
                 //update the data of the qudocopter
                 DO.Location senderL = dal.searchLocationOfclient(p.Value.sender);//update the battery
                 double distance = GetDistance(q.thisLocation, new Location() { Longitude = senderL.longitude, Latitude = senderL.latitude, decSix = new DmsLocation(), toBaseSix = new BaseSixtin() });
@@ -251,8 +275,8 @@ namespace BlApi
             if (q.mode != statusOfQ.delivery) throw new BLException("this qudocopter dont associated to a package");
             try
             {
-                DO.Package? p = dal.searchPinQ(qID);
-                if (p.Value.time_ComeToColcter.Value.Year != 0001) throw new BLException("the package was collocted already");
+                DO.Package? p = dal.searchPinQ(qID, DO.p_thet.ComeToColcter);
+                if (p.Value.time_ComeToColcter != null) throw new BLException("the package was collocted already");
                 //update the data of the qudocopter
                 DO.Location receiverL = dal.searchLocationOfclient(p.Value.receiver);//update the battery
                 double distance = GetDistance(q.thisLocation, new Location() { Longitude = receiverL.longitude, Latitude = receiverL.latitude });

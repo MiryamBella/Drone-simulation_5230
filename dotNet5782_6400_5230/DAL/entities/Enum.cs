@@ -8,5 +8,5 @@ namespace DO
     public enum Priorities { reggular, fast, emergency }
     //public enum statusOfQ { available, maintenance, delivery }
     public enum xmlRoots { clientR, baseStationR, packageR, quadocopterR, chargeR, configR }
-
+    public enum p_thet {Create, Belong, ColctedFromSender, ComeToColcter }
 }

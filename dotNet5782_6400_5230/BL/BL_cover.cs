@@ -250,7 +250,7 @@ namespace BlApi
             else if (q.weight == DO.WeighCategories.middle) new_q.weight = WeighCategories.middle;
             else new_q.weight = WeighCategories.hevy;
 
-            DO.Package? p = dal.searchPinQ(q.id);//p is the package that assign to the q or null if it have not package
+            DO.Package? p = dal.searchPinQ(q.id,DO.p_thet.Create);//p is the package that assign to the q or null if it have not package
             if (p != null) //if the quadocopter have a package
             {
                 new_q.mode = statusOfQ.delivery; //mode

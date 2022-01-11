@@ -40,21 +40,25 @@
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
 
 
-        <TextBlock Text="ID package:" Grid.Row="1" Grid.Column="2"
+        <TextBlock x:Name="ID_p" Text="ID package:" Grid.Row="1" Grid.Column="2"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="ExtraBlack"/>
-        <TextBlock Grid.Row="1" Grid.Column="3"
+        <TextBlock Name="IDShow_p" Grid.Row="1" Grid.Column="3"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-        <TextBlock Text="Name sender:" Grid.Row="2" Grid.Column="2"
+        <TextBlock x:Name="nameS" Text="Name sender:" Grid.Row="2" Grid.Column="2"
                    HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20"/>
-        <TextBlock Text="Name reciver:" Grid.Row="2" Grid.Column="2"
+        <TextBlock x:Name="nameR" Text="Name reciver:" Grid.Row="2" Grid.Column="2" 
                    HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="20"/>
-        <TextBlock Text="Name" Grid.Row="2" Grid.Column="2"
+        <TextBlock x:Name="senderName" Text="Name" Grid.Row="2" Grid.Column="2"
                    HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="20"/>
-        <TextBlock Text="Name" Grid.Row="2" Grid.Column="2"
+        <TextBlock x:Name="reciverName" Text="Name" Grid.Row="2" Grid.Column="2"
                    HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="20"/>
 
         <Button x:Name="stop" Content="Stop simulator" Click="stop_Click" Background="Red" Margin="10,11,69,44" RenderTransformOrigin="0.159,-0.102" Visibility="Hidden" />
         <Button x:Name="start" Content="Start simulator" Click="start_Click" Background="Green" Margin="10,11,69,44" RenderTransformOrigin="0.159,-0.102"  />
+        <!--<Image x:Name="Iloading" Source="/Quadocopter/loading-icon-on-black-vector-24545831.jpg"
+               Grid.ColumnSpan="3" Margin="138,9,-88,10" Grid.RowSpan="4" Grid.Row="1" Grid.Column="1" />
+        <Image x:Name="Ipackage" Source="/Quadocopter/1200px-Package.svg.png" Grid.ColumnSpan="3" Grid.Column="1" 
+               Margin="158,43,-78,-42" Grid.RowSpan="3" Grid.Row="2" Visibility="Hidden" />-->
 
     </Grid>
 </Window>

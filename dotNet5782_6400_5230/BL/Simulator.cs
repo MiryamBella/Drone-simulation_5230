@@ -12,13 +12,14 @@ namespace BlApi
     class Simulator
     {
         static BlApi.BL bL;
-        internal Simulator(BL bl, int id, Action<int> report, Func<bool> isStop)
+        internal Simulator(BL bl, int id, Action<int, BO.Package> report, Func<bool> isStop)
         {
             while (isStop())
             {
                 try
                 {
-                    bl.assignPtoQ(id);
+                    BO.Package package = new Package();
+                    package =bl.assignPtoQ(id);
                     int time = bl.getTimeOfFlying(id, BO.TargetQ.sender, -1);
                     int battery = bl.getBatteryToFly(id, BO.TargetQ.sender, -1);
                     battery /= time;
@@ -27,7 +28,7 @@ namespace BlApi
                     {
                         Thread.Sleep(1000);
                         time -= 1;
-                        report(battery);
+                        report(battery,package);
                     }
                     bl.collectPbyQ(id);
                     time = bl.getTimeOfFlying(id, BO.TargetQ.receiver, -1);
@@ -38,7 +39,7 @@ namespace BlApi
                     {
                         Thread.Sleep(1000);
                         time -= 1;
-                        report(battery);
+                        report(battery, package);
                     }
 
                     bl.supplyPbyQ(id);
@@ -55,7 +56,7 @@ namespace BlApi
                         while (i < 100)
                         {
                             i += batteryPerSecond;
-                            report(i);
+                            report(i, null);
                             Thread.Sleep(1000);
                         }
                         bl.releaseQfromChrge(id);

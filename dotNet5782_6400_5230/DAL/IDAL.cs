@@ -75,7 +75,7 @@ namespace DalApi
         /// <summary>
         ///accept id of qudocopter and return package that in it or null 
         /// </summary>
-        public Package? searchPinQ(int qID);
+        public Package? searchPinQ(int qID, p_thet sitoation);
         /// <summary>
         /// accept id of package and return the location of its sender
         /// </summary>

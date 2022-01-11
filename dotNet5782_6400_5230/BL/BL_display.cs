@@ -287,6 +287,7 @@ namespace BlApi
                 }
                 //the low it is: distance = time * speed
                 int speed = (int)q.thisPackage.priority;
+                speed++;
                 seconds = (int)((distance / speed) /** 60 * 60*/);//to meke hour to minutes, and minutes to seconds.
                 return seconds;
             }

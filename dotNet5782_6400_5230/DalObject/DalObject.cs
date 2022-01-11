@@ -469,12 +469,34 @@ namespace Dal
         /// accept id of qudocopter and return the package in it or null
         /// </summary>
         /// <param name="qID"><>
-        /// <returns><int>
-        public Package? searchPinQ(int qID)
+        /// <paramref name="sitoation">defulte is create</paramref>
+        /// <returns>package in some sitiotion in q<int>
+        public Package? searchPinQ(int qID, p_thet sitoation)
         {
             foreach (Package p in DataSource.packagh)
-                if (p.id == qID)
+                if (p.idQuadocopter == qID)
+                {
+                    switch (sitoation)
+                    {
+                        case p_thet.Create:
+                                return p;
+                        case p_thet.Belong:
+                            if (p.time_Belong_quadocopter == null)
+                                return p;
+                            break;
+                        case p_thet.ColctedFromSender:
+                            if (p.time_ColctedFromSender == null)
+                                return p;
+                            break;
+                        case p_thet.ComeToColcter:
+                            if (p.time_ComeToColcter == null)
+                                return p;
+                            break;
+                        default:
+                            break;
+                    }
                     return p;
+                }
             return null;
         }
         /// <summary>

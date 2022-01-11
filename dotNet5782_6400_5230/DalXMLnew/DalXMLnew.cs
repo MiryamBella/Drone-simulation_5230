@@ -478,8 +478,6 @@ namespace Dal
                              select qu).FirstOrDefault();
             return q;
         }
-
-
         /// print datails of client.
         public Client ClientDisplay(int id)
         {
@@ -781,15 +779,42 @@ namespace Dal
         /// <summary>
         ///accept id of qudocopter and return package that in it or null 
         /// </summary>
-        public Package? searchPinQ(int qID)
+        public Package? searchPinQ(int qID, DO.p_thet sitoationNOT)
         {
             IEnumerable<Package> pList = ListOfPackages();
-            Package? p = (from i in pList
-                          where i.id == qID
-                          select i).FirstOrDefault();
-            if (p.Value.id == 0)
+            var packages = (from i in pList
+                            where i.idQuadocopter == qID
+                            select i).ToList();
+            if (packages.Count == 0)
                 return null;
-            return p;
+            foreach (Package p in packages)
+                if (p.idQuadocopter == qID)
+                {
+                    switch (sitoationNOT)
+                    {
+                        case p_thet.Create:
+                            if (p.time_Create == null)
+                                return p;
+                            break;
+                        case p_thet.Belong:
+                            if (p.time_Belong_quadocopter == null)
+                                return p;
+                            break;
+                        case p_thet.ColctedFromSender:
+                            if (p.time_ColctedFromSender == null)
+                                return p;
+                            break;
+                        case p_thet.ComeToColcter:
+                            if (p.time_ComeToColcter == null)
+                                return p;
+                            break;
+                        default:
+                            break;
+                    }
+                    return p;
+                }
+
+            return null;
         }
         /// <summary>
         /// accept id of package and return the location of its sender

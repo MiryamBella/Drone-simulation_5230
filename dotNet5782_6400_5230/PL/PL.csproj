@@ -14,6 +14,8 @@
     <None Remove="Client\client.jpg" />
     <None Remove="manage2r.png" />
     <None Remove="Quadcopter_camera_drone_in_flight.jpg" />
+    <None Remove="Quadocopter\1200px-Package.svg.png" />
+    <None Remove="Quadocopter\loading-icon-on-black-vector-24545831.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +30,8 @@
     <Resource Include="Client\client.jpg" />
     <Resource Include="manage2r.png" />
     <Resource Include="Quadcopter_camera_drone_in_flight.jpg" />
+    <Resource Include="Quadocopter\1200px-Package.svg.png" />
+    <Resource Include="Quadocopter\loading-icon-on-black-vector-24545831.jpg" />
   </ItemGroup>
 
 </Project>

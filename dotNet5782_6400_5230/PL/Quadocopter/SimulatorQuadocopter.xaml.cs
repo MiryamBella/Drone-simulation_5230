@@ -35,6 +35,21 @@ namespace PL
             localQ.thisLocation.Location60 = localQ.thisLocation.decSix.ToString();
             batteryShow.Text = localQ.battery.ToString();
             stopSimulator = false;
+            //if (localQ.thisPackage == null)
+            //{
+            //    ID_p.Visibility = Visibility.Hidden;
+            //    IDShow_p.Visibility = Visibility.Hidden;
+            //    nameS.Visibility = Visibility.Hidden;
+            //    nameR.Visibility = Visibility.Hidden;
+            //    senderName.Visibility = Visibility.Hidden;
+            //    reciverName.Visibility = Visibility.Hidden;
+            //}
+            //else
+            //{
+            //    IDShow_p.Text = localQ.thisPackage.ID.ToString();
+            //    senderName.Text = localQ.thisPackage.sender.name;
+            //    reciverName.Text = localQ.thisPackage.receiver.name;
+            //}
 
             worker = new BackgroundWorker();
             //delegate void simDELEGETE==(id, rep,stop) => bl.startSimulator(id, rep, stop);
@@ -48,9 +63,9 @@ namespace PL
             worker.WorkerReportsProgress = true;
             worker.WorkerSupportsCancellation = true;
         }
-        void reportProgress(int battery)
+        void reportProgress(int battery, BO.Package p)
         {
-            worker.ReportProgress(battery);
+            worker.ReportProgress(battery, p);
         }
         bool isSTOP()
         {
@@ -123,6 +138,22 @@ namespace PL
         {
             int addToBattery = e.ProgressPercentage;
             batteryShow.Text = (localQ.battery + addToBattery).ToString();
+            //if (e.UserState != null)
+            //{
+            //    IDShow_p.Text = ((BO.Package)e.UserState).ID.ToString();
+            //    senderName.Text = ((BO.Package)e.UserState).sender.name;
+            //    reciverName.Text = ((BO.Package)e.UserState).receiver.name;
+            //    Ipackage.Visibility = Visibility.Visible;
+            //    Iloading.Visibility = Visibility.Hidden;
+            //}
+            //else
+            //{
+            //    IDShow_p.Visibility = Visibility.Hidden;
+            //    senderName.Visibility = Visibility.Hidden;
+            //    reciverName.Visibility = Visibility.Hidden;
+            //    Iloading.Visibility = Visibility.Visible;
+            //    Ipackage.Visibility = Visibility.Hidden;
+            //}
         }
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
