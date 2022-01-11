@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="SimulatorQuadocopter" Height="450" Width="800">
-    <Grid>
+    <Grid Background="AliceBlue">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -33,15 +33,15 @@
         <TextBlock Text="LOCATION:" Grid.Row="2" Grid.Column="0"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="ExtraBlack"/>
         <TextBlock Name="locationShwo" Grid.Row="2" Grid.Column="1"
-                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
         <TextBlock Text="BATTERY:" Grid.Row="3" Grid.Column="0"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="ExtraBlack"/>
-        <TextBlock Name="batteryShow" Grid.Row="3" Grid.Column="1"
-                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-        <ProgressBar Name="VisualBattery" Grid.Row="4" Grid.Column="1" Height="30" Minimum="0"
-                     Maximum="100" />
+        <TextBlock Text="0" Name="batteryShow" Grid.Row="3" Grid.Column="1"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+        <ProgressBar  Name="VisualBattery" Grid.Row="3" Grid.Column="1" VerticalAlignment="Bottom"
+                      Height="30" Minimum="0" Maximum="100"  />
 
-            <TextBlock x:Name="ID_p" Text="ID package:" Grid.Row="1" Grid.Column="2"
+        <TextBlock x:Name="ID_p" Text="ID package:" Grid.Row="1" Grid.Column="2"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="ExtraBlack"/>
         <TextBlock Name="IDShow_p" Grid.Row="1" Grid.Column="3"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
@@ -49,17 +49,17 @@
                    HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20"/>
         <TextBlock x:Name="nameR" Text="Name reciver:" Grid.Row="2" Grid.Column="2" 
                    HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="20"/>
-        <TextBlock x:Name="senderName" Text="Name" Grid.Row="2" Grid.Column="2"
-                   HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="20"/>
-        <TextBlock x:Name="reciverName" Text="Name" Grid.Row="2" Grid.Column="2"
-                   HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="20"/>
+        <TextBlock x:Name="senderName" Text="Name" Grid.Row="2" Grid.Column="3"
+                   HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20"/>
+        <TextBlock x:Name="reciverName" Text="Name" Grid.Row="2" Grid.Column="3"
+                   HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="20"/>
 
         <Button x:Name="stop" Content="Stop simulator" Click="stop_Click" Background="Red" Margin="10,11,69,44" RenderTransformOrigin="0.159,-0.102" Visibility="Hidden" />
-        <Button x:Name="start" Content="Start simulator" Click="start_Click" Background="Green" Margin="10,11,69,44" RenderTransformOrigin="0.159,-0.102"  />
-        <!--<Image x:Name="Iloading" Source="/Quadocopter/loading-icon-on-black-vector-24545831.jpg"
+        <Button x:Name="start" Content="Start simulator" Click="start_Click" Background="GreenYellow" Margin="10,11,69,44" RenderTransformOrigin="0.159,-0.102"  />
+        <Image x:Name="Iloading" Source="/Quadocopter/loading-icon-on-black-vector-24545831.jpg" Visibility="Hidden" 
                Grid.ColumnSpan="3" Margin="138,9,-88,10" Grid.RowSpan="4" Grid.Row="1" Grid.Column="1" />
         <Image x:Name="Ipackage" Source="/Quadocopter/1200px-Package.svg.png" Grid.ColumnSpan="3" Grid.Column="1" 
-               Margin="158,43,-78,-42" Grid.RowSpan="3" Grid.Row="2" Visibility="Hidden" />-->
+               Margin="158,43,-78,-42" Grid.RowSpan="3" Grid.Row="2" />
 
     </Grid>
 </Window>

@@ -32,10 +32,8 @@
                 HorizontalAlignment="Center" VerticalAlignment="Center" Height="45"
                 Width="155" Click="manager_Click" />
         <Button Content="client enter" Click="client_Click" Background="GreenYellow" 
-                Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center"
+                Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
                 Height="45" Width="155" />
-        <TextBlock Text="enter ID:" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,23,28,0"/>
-        <TextBox x:Name="enterID"  Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="20"/>
         <Button Content="new client" Click="clientNEW_Click" Background="GreenYellow"
                 Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" 
                 Height="45" Width="155" />

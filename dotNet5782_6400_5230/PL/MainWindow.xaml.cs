@@ -41,8 +41,7 @@ namespace PL
         {
             try
             {
-                Manager m = new Manager(bl);
-                m.Show();
+                EnterAccess enter = new EnterAccess(bl, "manager");
             }
             catch (Exception ex)
             {
@@ -53,31 +52,8 @@ namespace PL
         {
             try
             {
-                if (enterID.Text == null)
-                {
-                    MessageBox.Show("you didnt enter any ID:");
-                    return;
-                }
-                    int id;
-                if (!(int.TryParse(enterID.Text, out id)))
-                {
-                    MessageBox.Show("invalid ID:"); 
-                    return;
-                }
-                id = int.Parse(enterID.Text);
-                Client c=new Client(bl);
-                bool exist = false;
-                foreach (BO.ClientToList cl in bl.ListOfClients())
-                    if (cl.ID == id)
-                    {
-                        c = new Client(bl, bl.cover(cl));
-                        exist = true;
-                        break;
-                    }
-                if (exist)
-                    c.Show();
-                else
-                    MessageBox.Show("ERROR: the ID not exist in our data.");
+                EnterAccess enter = new EnterAccess(bl, "client");
+                enter.Show();
             }
             catch (BO.BLException ex)
             {

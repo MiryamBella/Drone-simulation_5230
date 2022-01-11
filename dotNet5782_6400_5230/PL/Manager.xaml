@@ -23,12 +23,12 @@
         <!--backgruond-->
         <TextBlock Grid.Row="0" Grid.Column="0" Background ="Gold" Grid.ColumnSpan="2"/>
 
-        <TextBlock Text="WLCOME MANAGER!" HorizontalAlignment="Center" VerticalAlignment="Center"
+        <TextBlock Text="WELCOME MANAGER!" HorizontalAlignment="Center" VerticalAlignment="Center"
                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="50" FontWeight="Bold"
                    />
 
         <TextBlock x:Name="a" Text="press the button to manage our data:" Grid.Row="1" Grid.Column="0"/>
-        <Button Content="quadocopters" Background="GreenYellow" Grid.Column="0" Grid.Row="1" 
+        <Button Content="drone" Background="GreenYellow" Grid.Column="0" Grid.Row="1" 
                 HorizontalAlignment="Center" VerticalAlignment="Center" Height="45"
                 Width="155" Click="listQ_Click" />
         <Button Content="base station" Click="listBS_Click" Background="GreenYellow" 
