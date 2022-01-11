@@ -56,6 +56,6 @@ namespace BlApi
         public BO.Client cover(BO.ClientToList c);
         public BO.Package cover(BO.PackageToList p);
 
-        public void startSimulator(int id, Action<int, BO.Package> report, Func<bool> isStop);
+        public void startSimulator(int id, Action<int, BO.Package> report, Func<bool> isStop, IBL bl);
     }
 }

@@ -11,9 +11,9 @@ namespace BlApi
 {
     class Simulator
     {
-        static BlApi.BL bL;
+        ///static BlApi.BL bL;
         int speedDrone = 1;
-        internal Simulator(BL bl, int id, Action<int, BO.Package> report, Func<bool> isStop)
+        internal Simulator(IBL bl, int id, Action<int, BO.Package> report, Func<bool> isStop)
         {
             while (isStop())
             {

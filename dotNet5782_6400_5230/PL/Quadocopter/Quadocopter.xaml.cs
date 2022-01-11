@@ -266,7 +266,7 @@ namespace PL
 
         private void simulator_begin(object sender, RoutedEventArgs e)
         {
-            SimulatorQuadocopter sq = new SimulatorQuadocopter(bl, localQ);
+            SimulatorQuadocopter sq = new SimulatorQuadocopter(bl, localQ.ID);
             sq.Show();
         }
         #endregion

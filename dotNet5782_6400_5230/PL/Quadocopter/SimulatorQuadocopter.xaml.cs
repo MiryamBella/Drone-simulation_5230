@@ -25,11 +25,11 @@ namespace PL
         BO.Quadocopter localQ;
         BackgroundWorker worker; //field
         bool stopSimulator;
-        public SimulatorQuadocopter(BlApi.IBL ibl, BO.Quadocopter q)
+        public SimulatorQuadocopter(BlApi.IBL ibl, int id)
         {
             InitializeComponent();
             bl = ibl;
-            localQ = q;
+            localQ = bl.QuDisplay(id);
             IdShow.Text = localQ.ID.ToString();
             locationShwo.Text = localQ.thisLocation.decSix.ToString();
             localQ.thisLocation.Location60 = localQ.thisLocation.decSix.ToString();
@@ -77,7 +77,7 @@ namespace PL
         {
             try
             {
-                bl.startSimulator(localQ.ID, reportProgress, isSTOP);
+                bl.startSimulator(localQ.ID, reportProgress, isSTOP, bl);
             }
             catch(Exception ex)
             {
