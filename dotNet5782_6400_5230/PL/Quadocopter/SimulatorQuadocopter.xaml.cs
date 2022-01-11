@@ -88,6 +88,17 @@ namespace PL
         {
             int addToBattery = e.ProgressPercentage;
             batteryShow.Text = (localQ.battery + addToBattery).ToString();
+            if (localQ.battery + addToBattery > 100)
+            {
+                batteryShow.Text = (100).ToString();
+                VisualBattery.Value = 100;
+            }
+            else
+            {
+                batteryShow.Text = (localQ.battery + addToBattery).ToString();
+                VisualBattery.Value = localQ.battery + addToBattery;
+            }
+
             //if (e.UserState != null)
             //{
             //    IDShow_p.Text = ((BO.Package)e.UserState).ID.ToString();
