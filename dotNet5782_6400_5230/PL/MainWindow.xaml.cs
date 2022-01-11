@@ -42,6 +42,7 @@ namespace PL
             try
             {
                 EnterAccess enter = new EnterAccess(bl, "manager");
+                enter.Show();
             }
             catch (Exception ex)
             {

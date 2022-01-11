@@ -39,12 +39,13 @@ namespace PL
 
             if (localQ.thisPackage == null)
             {
-                ID_p.Visibility = Visibility.Hidden;
-                IDShow_p.Visibility = Visibility.Hidden;
-                nameS.Visibility = Visibility.Hidden;
-                nameR.Visibility = Visibility.Hidden;
-                senderName.Visibility = Visibility.Hidden;
-                reciverName.Visibility = Visibility.Hidden;
+                changeVisubility(Visibility.Hidden);
+                //ID_p.Visibility = Visibility.Hidden;
+                //IDShow_p.Visibility = Visibility.Hidden;
+                //nameS.Visibility = Visibility.Hidden;
+                //nameR.Visibility = Visibility.Hidden;
+                //senderName.Visibility = Visibility.Hidden;
+                //reciverName.Visibility = Visibility.Hidden;
             }
             else
             {
@@ -77,6 +78,7 @@ namespace PL
             }
             catch(Exception ex)
             {
+                //if(ex==)
                 MessageBox.Show(ex.Message);
             }
         } 
@@ -89,6 +91,9 @@ namespace PL
             batteryShow.Text = localQ.battery.ToString();
             VisualBattery.Value = localQ.battery;
 
+            BO.Quadocopter q = bl.QuDisplay(localQ.ID);
+            locationShwo.Text = q.thisLocation.Location60;
+            localQ.thisLocation = q.thisLocation;
 
             if (e.UserState != null)
             {
@@ -122,8 +127,15 @@ namespace PL
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             object result = e.Result;
+            if (stopSimulator)
+                MessageBox.Show("There is no packages to take.");
+            else
+                MessageBox.Show("End of the simulator.");
+
+            stopSimulator = false;
+            stop.Visibility = Visibility.Hidden;
+            start.Visibility = Visibility.Visible;
             //this.Close();
-            MessageBox.Show("End of the simulator.");
         }
 
         private void stop_Click(object sender, RoutedEventArgs e)
@@ -160,14 +172,14 @@ namespace PL
 
 
 
-        //void changeVisubility( Visibility v)
-        //{
-        //    ID_p.Visibility = v;
-        //    IDShow_p.Visibility = v;
-        //    nameS.Visibility = v;
-        //    nameR.Visibility = v;
-        //    senderName.Visibility = v;
-        //    reciverName.Visibility = v;
-        //}
+        void changeVisubility(Visibility v)
+        {
+            ID_p.Visibility = v;
+            IDShow_p.Visibility = v;
+            nameS.Visibility = v;
+            nameR.Visibility = v;
+            senderName.Visibility = v;
+            reciverName.Visibility = v;
+        }
     }
 }

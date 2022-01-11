@@ -263,6 +263,9 @@ namespace BlApi
                     l.Latitude = lSender.latitude;
                     l.Longitude = lSender.longitude;
                     new_q.thisLocation = l;
+                    new_q.thisLocation.decSix = new DmsLocation();
+                    new_q.thisLocation.decSix = new_q.thisLocation.toBaseSix.LocationSix(l.Latitude, l.Longitude);
+                    new_q.thisLocation.Location60 = new_q.thisLocation.decSix.ToString();
                     //colclute the distance that the q will go in order to estimate the battery it need
                     DO.Location lReceiver = dal.searchLocationOfclient(p.Value.receiver);
                     DO.BaseStation closeB = dal.searchCloseStation(lReceiver);
@@ -275,6 +278,9 @@ namespace BlApi
                     DO.BaseStation b = dal.searchCloseStation(lSender);//the location will be the location of the closest station to the sender
                     new_q.thisLocation.Latitude = b.latitude;
                     new_q.thisLocation.Longitude = b.longitude;
+                    new_q.thisLocation.decSix = new DmsLocation();
+                    new_q.thisLocation.decSix = new_q.thisLocation.toBaseSix.LocationSix(b.latitude, b.longitude);
+                    new_q.thisLocation.Location60 = new_q.thisLocation.decSix.ToString();
                     //colclute the distance that the q will go in order to estimate the battery it need
                     DO.Location lReceiver = dal.searchLocationOfclient(p.Value.receiver);
                     DO.BaseStation closeToReceiver = dal.searchCloseStation(lReceiver);
@@ -295,6 +301,10 @@ namespace BlApi
                     if (l == null) throw new BLException("error");
                     new_q.thisLocation.Latitude = l.latitude;
                     new_q.thisLocation.Longitude = l.longitude;
+                    new_q.thisLocation.decSix = new DmsLocation();
+                    new_q.thisLocation.decSix = new_q.thisLocation.toBaseSix.LocationSix(l.latitude, l.longitude);
+                    new_q.thisLocation.Location60 = new_q.thisLocation.decSix.ToString();
+
                     //colclute the distance that the q will go in order to estimate the battery it need
                     DO.BaseStation close = dal.searchCloseStation(l);
                     double distance = GetDistance( coverLtoL(l), new Location() { Longitude = close.longitude, Latitude = close.latitude, decSix = new DmsLocation(), toBaseSix = new BaseSixtin() });
@@ -461,12 +471,14 @@ namespace BlApi
         }
         Location coverLtoL(DO.Location l)
         {
+            BaseSixtin help = new BaseSixtin();
             Location newL = new Location()
             {
                 Longitude = l.longitude,
                 Latitude = l.latitude,
                 decSix = new DmsLocation(),
-                toBaseSix = new BaseSixtin()
+                toBaseSix = new BaseSixtin(),
+                Location60 = help.LocationSix(l.latitude, l.longitude).ToString()
             };
             return newL;
 
@@ -479,7 +491,6 @@ namespace BlApi
                 latitude = l.Latitude
             };
             return newL;
-
         }
 
         //GeoCoordinate coverLtoG(location l)

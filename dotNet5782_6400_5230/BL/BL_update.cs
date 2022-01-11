@@ -107,18 +107,23 @@ namespace BlApi
 
                 dal.SendQtoCharging(b.IDnumber, q.ID);//update the data at the dal
 
-                q.battery -= minBattery;//update the list of qudocopter in the BL
-                q.thisLocation.Longitude = b.longitude;//the drone get the location of the base station.
-                q.thisLocation.Latitude = b.latitude;
-                q.thisLocation.decSix = new DmsLocation();
-                q.thisLocation.toBaseSix = new BaseSixtin();
-                q.thisLocation.decSix = q.thisLocation.toBaseSix.LocationSix(b.latitude, b.longitude);
-                q.thisLocation.Location60 = q.thisLocation.decSix.ToString();
-                q.mode = statusOfQ.maintenance;
 
                 //update the data in BL listt.
-                q_list.Remove(cover(QuDisplay(q.ID)));
-                q_list.Add(q);
+                foreach (var temp in q_list)
+                {
+                    if (q.ID == temp.ID)
+                    {
+                        temp.battery -= minBattery;//update the list of qudocopter in the BL
+                        temp.thisLocation.Longitude = b.longitude;//the drone get the location of the base station.
+                        temp.thisLocation.Latitude = b.latitude;
+                        temp.thisLocation.decSix = new DmsLocation();
+                        temp.thisLocation.toBaseSix = new BaseSixtin();
+                        temp.thisLocation.decSix = temp.thisLocation.toBaseSix.LocationSix(b.latitude, b.longitude);
+                        temp.thisLocation.Location60 = temp.thisLocation.decSix.ToString();
+                        temp.mode = statusOfQ.maintenance;
+                        break;
+                    }
+                }
                 return q;
             }
             catch(Exception ex)
@@ -149,14 +154,19 @@ namespace BlApi
                 DateTime t = dalQ.startCharge.Value;
                 seconds = (DateTime.Now-t).Seconds;
                 if (q.mode != statusOfQ.maintenance) throw new BLException("this q not in maintenance.");
-                q.mode = statusOfQ.available;
-                q.battery += (int)(dal.askForElectric()[4] * seconds);
-                if (q.battery > 100) q.battery = 100;
                 dal.ReleaseQfromCharging(id);
 
                 //update the data in BL listt.
-                q_list.Remove(cover(QuDisplay(q.ID)));
-                q_list.Add(q);
+                foreach (var temp in q_list)
+                {
+                    if (q.ID == temp.ID)
+                    {
+                        temp.mode = statusOfQ.available;
+                        temp.battery += (int)(dal.askForElectric()[4] * seconds);
+                        if (temp.battery > 100) temp.battery = 100;
+                        break;
+                    }
+                }
 
                 return q.battery;
             }
@@ -252,16 +262,22 @@ namespace BlApi
                 //update the data of the qudocopter
                 DO.Location senderL = dal.searchLocationOfclient(p.Value.sender);//update the battery
                 double distance = GetDistance(q.thisLocation, new Location() { Longitude = senderL.longitude, Latitude = senderL.latitude, decSix = new DmsLocation(), toBaseSix = new BaseSixtin() });
-                q.battery -= (int)(distance * dal.askForElectric()[(int)p.Value.weight]);
-                q.thisLocation.Longitude = senderL.longitude;//update the location 
-                q.thisLocation.Latitude = senderL.latitude;
-                q.thisLocation.decSix = new DmsLocation(senderL.latitude, senderL.longitude);
-                q.thisLocation.toBaseSix = new BaseSixtin();
-                dal.CollectPbyQ(p.Value.id);
 
                 //update the data in BL listt.
-                q_list.Remove(cover(QuDisplay(q.ID)));
-                q_list.Add(cover(q));
+                foreach(var temp in q_list)
+                {
+                    if (q.ID == temp.ID)
+                    {
+                        temp.battery -= (int)(distance * dal.askForElectric()[(int)p.Value.weight]);
+                        temp.thisLocation.Longitude = senderL.longitude;//update the location 
+                        temp.thisLocation.Latitude = senderL.latitude;
+                        temp.thisLocation.decSix = new DmsLocation(senderL.latitude, senderL.longitude);
+                        temp.thisLocation.toBaseSix = new BaseSixtin();
+                        dal.CollectPbyQ(p.Value.id);
+                        break;
+                    }
+                }
+
             }
             catch(Exception ex)
             {
@@ -293,16 +309,21 @@ namespace BlApi
                 //update the data of the qudocopter
                 DO.Location receiverL = dal.searchLocationOfclient(p.Value.receiver);//update the battery
                 double distance = GetDistance(q.thisLocation, new Location() { Longitude = receiverL.longitude, Latitude = receiverL.latitude });
-                q.battery -= (int)(distance * dal.askForElectric()[(int)p.Value.weight]);
-                q.thisLocation.Longitude = receiverL.longitude;//update the location 
-                q.thisLocation.Latitude = receiverL.latitude;
-                q.thisLocation.decSix = new DmsLocation(receiverL.latitude, receiverL.longitude);
-                q.thisLocation.toBaseSix = new BaseSixtin();
-                dal.DeliveringPtoClient(p.Value.id);
 
                 //update the data in BL listt.
-                q_list.Remove(cover(QuDisplay(q.ID)));
-                q_list.Add(q);
+                foreach (var temp in q_list)
+                {
+                    if (q.ID == temp.ID)
+                    {
+                        temp.battery -= (int)(distance * dal.askForElectric()[(int)p.Value.weight]);
+                        temp.thisLocation.Longitude = receiverL.longitude;//update the location 
+                        temp.thisLocation.Latitude = receiverL.latitude;
+                        temp.thisLocation.decSix = new DmsLocation(receiverL.latitude, receiverL.longitude);
+                        temp.thisLocation.toBaseSix = new BaseSixtin();
+                        dal.DeliveringPtoClient(p.Value.id);
+                        break;
+                    }
+                }
             }
             catch (Exception ex)
             {

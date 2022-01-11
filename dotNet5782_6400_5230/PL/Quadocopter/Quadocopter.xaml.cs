@@ -91,7 +91,7 @@ namespace PL
             else showState.Text = "delivery";
             showLatitude.Text = q.thisLocation.Latitude.ToString();
             showLongitude.Text = q.thisLocation.Longitude.ToString();
-
+            showLocation.Text = q.thisLocation.Location60;
             ///set the data to the local drone.
             localQ = bl.cover(q);
             if (q.mode == BO.statusOfQ.maintenance)
@@ -268,6 +268,12 @@ namespace PL
         {
             SimulatorQuadocopter sq = new SimulatorQuadocopter(bl, localQ.ID);
             sq.Show();
+
+            localQ = bl.QuDisplay(localQ.ID);
+            showBattery.Text = localQ.battery.ToString();
+            showLatitude.Text = localQ.thisLocation.Latitude.ToString();
+            showLongitude.Text = localQ.thisLocation.Longitude.ToString();
+            showLocation.Text = localQ.thisLocation.Location60;
         }
         #endregion
     }

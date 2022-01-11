@@ -114,6 +114,9 @@
         <TextBlock x:Name="showState" HorizontalAlignment="Center" 
                   VerticalAlignment="center" Grid.Row="4" Grid.Column="4" 
                   Height="25" Width="120" Text="TextBlock" TextWrapping="Wrap" />
+        <TextBlock x:Name="showLocation" HorizontalAlignment="Center" 
+                  VerticalAlignment="center" Grid.Row="2" Grid.Column="5" 
+                  Height="25" Width="120" Text="TextBlock" TextWrapping="Wrap" />
 
 
 

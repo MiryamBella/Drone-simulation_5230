@@ -69,8 +69,7 @@ namespace BlApi
                         break;
                     else if (ex.Message == "battery")
                     {
-                        bl.sendQtoChrge(id);
-                        int i = bl.QuDisplay(id).battery;
+                        int i = bl.sendQtoChrge(id).battery;
                         int batteryPerSecond = bl.getBatteryCharge();
                         while (i < 100)
                         {
