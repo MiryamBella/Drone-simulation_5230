@@ -10,7 +10,7 @@ using DO;
 
 namespace Dal
 {
-    public class DalXML : IDAL
+    public class DalXML //: IDAL
     {
         #region roots
         XElement clientRoot;
@@ -226,16 +226,16 @@ namespace Dal
             clientRoot.Save(clientPath);
         }
         /// adding new package.
-        public void AddPackage(int id, int sender, int colecter, int weight, int priority)
+        public void AddPackage(int sender, int colecter, int weight, int priority)
         {
             LoadData_p();
             LoadData_config();
 
-            int run = int.Parse(configRoot.Element("runNum").Value);
+            int run = int.Parse(configRoot.Element("runName").Value);
             configRoot.Element("runName").Value = (run + 1).ToString();
             configRoot.Save(configPath);
 
-            XElement ID = new XElement("ID", id);// the id of the package will be according the accepter number
+            XElement ID = new XElement("ID", run);// the id of the package will be according the accepter number
             XElement ID_Sender = new XElement("ID_Sender", sender);
             XElement ID_Reciver = new XElement("ID_Reciver", colecter);
             XElement ID_Quadocopter = new XElement("IDQ_Quadocopter", 0);// the package have not quadocopter

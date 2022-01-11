@@ -238,8 +238,8 @@ namespace Dal
             LoadData_p();
             LoadData_config();
 
-            int run = int.Parse(configRoot.Element("runNum").Value);
-            configRoot.Element("runNum").Value = (run + 1).ToString();
+            int run = int.Parse(configRoot.Element("runName").Value);
+            configRoot.Element("runName").Value = (run + 1).ToString();
             configRoot.Save(configPath);
 
             XElement ID = new XElement("ID", run);// the id of the package will be according the run number
@@ -273,7 +273,7 @@ namespace Dal
             XElement Package = new XElement("Package", ID, ID_Sender, ID_Reciver, ID_Quadocopter, Weight, Priority, Times);
 
             packageRoot.Add(Package);// enter the new package into the list
-            packageRoot.Save(baseStationPath);
+            packageRoot.Save(packagePath);
         }
         #endregion
 
@@ -493,25 +493,33 @@ namespace Dal
         public Package PackageDisplay(int id)
         {
             LoadData_p();
+            IEnumerable<Package> pList = ListOfPackages();
+            foreach (Package temp in pList)
+            {
+                if (temp.id == id)
+                    return temp;
+            }
+            Package p = new Package { id = 0 };
 
-            Package pack = new Package();
-            pack = (from p in packageRoot.Elements()
-                    where Convert.ToInt32(p.Element("id").Value) == id
-                    select new Package()
-                    {
-                        id = Convert.ToInt32(p.Element("ID").Value),
-                        sender = int.Parse(p.Element("ID_Sender").Value),
-                        receiver = int.Parse(p.Element("ID_Reciver").Value),
-                        idQuadocopter = int.Parse(p.Element("IDQ_Quadocopter").Value),
-                        priority = (Priorities)(getEnam(p.Element("Priority").Value)),
-                        time_Belong_quadocopter = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Belong_quadocopter").Value),
-                        time_ColctedFromSender = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ColctedFromSender").Value),
-                        time_ComeToColcter = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ComeToColcter").Value),
-                        time_Create = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Create").Value),
-                        weight = (WeighCategories)(getEnam(p.Element("Weight").Value))
-                    }).FirstOrDefault();
+            return p;
+            //Package pack = new Package();
+            //pack = (from p in packageRoot.Elements()
+            //        where Convert.ToInt32(p.Element("ID").Value) == id
+            //        select new Package()
+            //        {
+            //            id = Convert.ToInt32(p.Element("ID").Value),
+            //            sender = int.Parse(p.Element("ID_Sender").Value),
+            //            receiver = int.Parse(p.Element("ID_Reciver").Value),
+            //            idQuadocopter = int.Parse(p.Element("IDQ_Quadocopter").Value),
+            //            priority = (Priorities)(getEnam(p.Element("Priority").Value)),
+            //            time_Belong_quadocopter = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Belong_quadocopter").Value),
+            //            time_ColctedFromSender = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ColctedFromSender").Value),
+            //            time_ComeToColcter = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_ComeToColcter").Value),
+            //            time_Create = DateTime.Parse(p.Element("TimeOfPackage").Element("Time_Create").Value),
+            //            weight = (WeighCategories)(getEnam(p.Element("Weight").Value))
+            //        }).FirstOrDefault();
 
-            return pack;
+            //return pack;
         }
         #endregion
 
@@ -1104,7 +1112,7 @@ namespace Dal
         }
         DateTime? getTime(string t)
         {
-            if (t != "0")
+            if (t != "" && t!=null && t!="0")
                 return DateTime.Parse(t);
             return null;
         }
