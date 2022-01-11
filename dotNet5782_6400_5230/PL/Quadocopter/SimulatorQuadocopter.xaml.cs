@@ -36,6 +36,7 @@ namespace PL
             batteryShow.Text = localQ.battery.ToString();
             VisualBattery.Value = localQ.battery;
             stopSimulator = false;
+
             //if (localQ.thisPackage == null)
             //{
             //    ID_p.Visibility = Visibility.Hidden;
@@ -86,17 +87,7 @@ namespace PL
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             int addToBattery = e.ProgressPercentage;
-            if (localQ.battery + addToBattery > 100)
-            {
-                batteryShow.Text = (100).ToString();
-                VisualBattery.Value = 100;
-            }
-            else
-            {
-                batteryShow.Text = (localQ.battery + addToBattery).ToString();
-                VisualBattery.Value = localQ.battery + addToBattery;
-            }
-
+            batteryShow.Text = (localQ.battery + addToBattery).ToString();
             //if (e.UserState != null)
             //{
             //    IDShow_p.Text = ((BO.Package)e.UserState).ID.ToString();
@@ -143,9 +134,10 @@ namespace PL
                 stopSimulator = true;
                 stop.Visibility = Visibility.Visible;
                 start.Visibility = Visibility.Hidden;
-                worker.RunWorkerAsync();
+                if (worker.IsBusy == false)
+                    worker.RunWorkerAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
