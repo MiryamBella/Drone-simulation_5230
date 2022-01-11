@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="EnterAccess" Height="450" Width="800">
-    <Grid>
+    <Grid Background="#FF9FD9EE">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="1.5*"/>
@@ -22,12 +22,17 @@
                     Click="CloseWindow_Click"/>
         </Canvas>
 
+        <TextBlock Grid.Row="0" Grid.Column="0" Background="#FF3198D7" Grid.ColumnSpan="2"/>
 
-        <TextBlock Text="CODE ACCESS" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+        <TextBlock Text="CODE ACCESS" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" FontWeight="UltraLight"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50" />
+        
+        
         <TextBlock x:Name="asks" Text="enter ID:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center"
                    VerticalAlignment="Bottom" FontSize="30"/>
         <TextBox x:Name="enterAccass"  Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="300" Height="50"/>
         <Button x:Name="enter" Content="enter" FontSize="30" Click="enter_Click" Margin="50,82,200,25" Grid.Row="2"/>
+
+        <Image Source="/personAnnone.png" Margin="320,10,-15,0" Grid.RowSpan="2" Grid.Row="1" Grid.ColumnSpan="2" />
     </Grid>
 </Window>
