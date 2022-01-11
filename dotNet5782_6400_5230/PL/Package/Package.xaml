@@ -32,19 +32,12 @@
                  />
         <TextBlock x:Name="ID" HorizontalAlignment="Center" 
                    Grid.Row="1"  Grid.Column="0" Text="ID:" TextWrapping="Wrap" 
-                   VerticalAlignment="Center" Height="25" Width="70"/>
-        <TextBox x:Name="enterID" TextWrapping="Wrap" 
-                 Grid.Row="1" Grid.Column="1" MaxLength="9"
-                 TextChanged ="writedID" HorizontalAlignment="Center"
-                 Height="25" Width="120"/>
+                   VerticalAlignment="Center" Height="25" Width="70" Visibility="Hidden"/>
         <TextBlock x:Name="showID" TextWrapping="Wrap" 
                  Grid.Row="1" Grid.Column="1"
                  HorizontalAlignment="Center"
                  Height="25" Width="120" Visibility="Hidden"/>
-        <TextBlock x:Name="checkID" HorizontalAlignment="Center"  Text="Invalid id"
-                   Grid.Row="1" Grid.Column="2" TextWrapping="Wrap" 
-                   Height="25" Width="120"
-                   Visibility="Hidden"/>
+        
 
         <TextBlock x:Name="sender" HorizontalAlignment="Center" 
                    Text="ID of sender:" TextWrapping="Wrap" VerticalAlignment="Center" 

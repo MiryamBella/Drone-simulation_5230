@@ -11,7 +11,7 @@ namespace BlApi
         public void AddBaseStation(int id, string name, double lon, double lat, int numCharge);
         public void AddQuadocopter(int id, string moodle, int weight, int id_bs);
         public void AddClient(int id, string name, double lon, double lat, int phoneNumber);
-        public void AddPackage(int id, int id_sender, int id_colecter, BO.WeighCategories weight, BO.Priorities priority);
+        public void AddPackage(int id_sender, int id_colecter, BO.WeighCategories weight, BO.Priorities priority);
         #endregion
 
         /*update functations*/

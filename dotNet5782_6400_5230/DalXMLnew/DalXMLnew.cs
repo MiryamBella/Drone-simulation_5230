@@ -103,6 +103,7 @@ namespace Dal
                     Console.WriteLine("error criet files");
                     break;
             }
+
         }
 
         #region load data
@@ -166,6 +167,7 @@ namespace Dal
             try
             {
                 configRoot = XElement.Load(configPath);
+                //startConfig();
             }
             catch
             {
@@ -231,16 +233,16 @@ namespace Dal
             clientRoot.Save(clientPath);
         }
         /// adding new package.
-        public void AddPackage(int id, int sender, int colecter, int weight, int priority)
+        public void AddPackage(int sender, int colecter, int weight, int priority)
         {
             LoadData_p();
             LoadData_config();
 
             int run = int.Parse(configRoot.Element("runNum").Value);
-            configRoot.Element("runName").Value = (run + 1).ToString();
+            configRoot.Element("runNum").Value = (run + 1).ToString();
             configRoot.Save(configPath);
 
-            XElement ID = new XElement("ID", id);// the id of the package will be according the run number
+            XElement ID = new XElement("ID", run);// the id of the package will be according the run number
             XElement ID_Sender = new XElement("ID_Sender", sender);
             XElement ID_Reciver = new XElement("ID_Reciver", colecter);
             XElement ID_Quadocopter = new XElement("IDQ_Quadocopter", 0);// the package have not quadocopter
@@ -974,7 +976,7 @@ namespace Dal
         {
             //LoadData_config();
 
-            XElement runNum = new XElement("runName", 0);
+            XElement runNum = new XElement("runNum", 0);
 
             XElement Available = new XElement("available", 1);
             XElement easy = new XElement("easy", 2);
@@ -985,7 +987,7 @@ namespace Dal
             XElement Electric = new XElement("Electric", Available, easy,middle_toCare, hevy,  charghingRate);
             configRoot.Add(runNum, Electric);
             configRoot.Save(configPath);
-            start();
+            //start();
         }
 
         void start()
@@ -1083,45 +1085,6 @@ namespace Dal
             }
 
 
-            /*Packagh*/
-            //loop for reset all 10 packaghs.
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    Package p = new Package();
-            //    p.id = int.Parse(configRoot.Element("runNum").Value);
-            //    configRoot.Element("runNum").Value = (int.Parse(configRoot.Element("runNum").Value) + 1).ToString();
-            //    p.sender = int.Parse(clientRoot.Elements("ID").Value);
-            //    p.receiver = cli[r.Next(0, cli.Count)].ID;
-            //    p.weight = (WeighCategories)r.Next(0, 3);
-            //    p.priority = (Priorities)r.Next(0, 3);
-            //    p.idQuadocopter = 0;
-            //    p.time_Belong_quadocopter = null;
-            //    p.time_ColctedFromSender = null;
-            //    p.time_ComeToColcter = null;
-            //    p.time_Create = DateTime.Now;
-
-            //    //the 3 package with difrent privorities and WeighCategories.
-            //    if (i == 0)
-            //    {
-            //        p.weight = WeighCategories.hevy;
-            //        p.priority = Priorities.fast;
-
-            //    }
-            //    else if (i == 1)
-            //    {
-            //        p.weight = WeighCategories.easy;
-            //        p.priority = Priorities.emergency;
-
-            //    }
-            //    else if (i == 2)
-            //    {
-
-            //        p.weight = WeighCategories.middle;
-            //        p.priority = Priorities.reggular;
-
-            //    }
-            //    packagh.Add(p);
-            //}
 
             baseStationRoot.Save(baseStationPath);
             chargeRoot.Save(chargePath);

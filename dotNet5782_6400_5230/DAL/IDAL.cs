@@ -16,7 +16,7 @@ namespace DalApi
         ///adding new client
         public void AddClient(int id, string name, int phoneNumber, double lon, double lat);
         /// adding new package.
-        public void AddPackage(int id, int sender, int colecter, int weigh, int priority);
+        public void AddPackage(int sender, int colecter, int weigh, int priority);
         #endregion
 
         #region update

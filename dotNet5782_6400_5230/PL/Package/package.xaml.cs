@@ -34,7 +34,6 @@ namespace PL
 
             #region initialize;
             
-            enterID.Visibility = Visibility.Hidden;
             enterSender.Visibility = Visibility.Hidden;
             enterReceiver.Visibility = Visibility.Hidden;
             enterPriority.Visibility = Visibility.Hidden;
@@ -46,6 +45,7 @@ namespace PL
             showPriority.Text = p.priority.ToString();
             showWeight.Text = p.weight.ToString();
 
+            ID.Visibility = Visibility.Visible;
             showID.Visibility = Visibility.Visible;
             showSender.Visibility = Visibility.Visible;
             showReceiver.Visibility = Visibility.Visible;
@@ -66,17 +66,6 @@ namespace PL
             #endregion;
         }
         #region check input and enter into the new p
-
-        private void writedID(object sender, RoutedEventArgs e)
-        {
-            int id;
-            if (int.TryParse(enterID.Text, out id))
-            {
-                checkID.Visibility = Visibility.Hidden;
-                p.ID = id;
-            }
-            else checkID.Visibility = Visibility.Visible;
-        }
 
         private void writedSender(object sender, RoutedEventArgs e)
         {
@@ -119,12 +108,12 @@ namespace PL
         {
             try
             {
-                if (checkID.Visibility == Visibility.Visible || checkReceiver.Visibility == Visibility.Visible
-                    || checkSender.Visibility == Visibility.Visible ||p.ID == 0 || p.receiver.ID == 0 || p.sender.ID == 0
+                if (checkReceiver.Visibility == Visibility.Visible
+                    || checkSender.Visibility == Visibility.Visible|| p.receiver.ID == 0 || p.sender.ID == 0
                     ||!isWeight || !isPriority)
                     throw new Exception("ERROR! check if all the data are correct.");
                 
-                bl.AddPackage(p.ID, p.sender.ID, p.receiver.ID, p.weight, p.priority);
+                bl.AddPackage(p.sender.ID, p.receiver.ID, p.weight, p.priority);
                 ListOfPackage l = new ListOfPackage(bl);
                 this.Close();
                 l.Show();

@@ -88,7 +88,7 @@ namespace PL
                     this.Close();
                 }
             }
-            catch (BO.BLException ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Error! " + ex.Message);
             }

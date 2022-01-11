@@ -59,7 +59,7 @@ namespace Dal
         /// adding new package.
         /// </summary>
         /// <returns>The pacjagh ID we add.</returns>
-        public void AddPackage(int id, int sender, int colecter, int weight, int priority)
+        public void AddPackage(int sender, int colecter, int weight, int priority)
         {
             Package p = new Package();
 
@@ -76,7 +76,6 @@ namespace Dal
                 p.priority = Priorities.fast;
             else p.priority = Priorities.emergency;
             p.id = DataSource.Config.runNum++;   // the id of the package will be according the run number
-            p.id = id; //the id will be now the accepted id
             p.idQuadocopter = 0;  // the package have not quadocopter
             p.time_Create = DateTime.Now;  // the time of the create is now
             p.time_Belong_quadocopter = null;
