@@ -208,6 +208,7 @@ namespace BlApi
                     {
                         quadocopter.mode = statusOfQ.delivery;
                         quadocopter.packageNumber++;
+                        break;
                     }
                 }
                 return cover(packages.Last());
