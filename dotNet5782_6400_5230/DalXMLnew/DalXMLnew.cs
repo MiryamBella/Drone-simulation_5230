@@ -458,25 +458,11 @@ namespace Dal
         /// print datails of statin
         public BaseStation StationDisplay(int id)
         {
-            LoadData_bs();
-
-            DmsLocation dms = new DmsLocation();
-            BaseStation station = new BaseStation();
-            station = (from bs in baseStationRoot.Elements()
-                       where Convert.ToInt32(bs.Element("ID").Value) == id
-                       select new BaseStation()
-                       {
-                           IDnumber = Convert.ToInt32(bs.Element("ID").Value),
-                           name = bs.Element("Name").Value,
-                           chargingPositions = int.Parse(bs.Element("ChargingPositions").Value),
-                           freechargingPositions = Convert.ToInt32(bs.Element("FreechargingPositions").Value),
-                           longitude = int.Parse(bs.Element("Longitude").Value),
-                           latitude = int.Parse(bs.Element("Latitude").Value),
-                           toBaseSix = new BaseSixtin(),
-                           decSix = GetBase(double.Parse(bs.Element("Latitude").Value), double.Parse(bs.Element("Longitude").Value))
-                       }).FirstOrDefault();
-
-            return station;
+            IEnumerable<BaseStation> bsList = ListOfStations();
+            BaseStation bs = (from BS in bsList
+                             where BS.IDnumber == id
+                             select BS).FirstOrDefault();
+            return bs;
         }
         /// print datails of quadocopter.
         public Quadocopter QuDisplay(int id)
@@ -499,15 +485,10 @@ namespace Dal
         /// print datails of package.
         public Package PackageDisplay(int id)
         {
-            LoadData_p();
             IEnumerable<Package> pList = ListOfPackages();
-            foreach (Package temp in pList)
-            {
-                if (temp.id == id)
-                    return temp;
-            }
-            Package p = new Package { id = 0 };
-
+            Package p = (from i in pList
+                         where i.id == id
+                         select i).FirstOrDefault();
             return p;
             //Package pack = new Package();
             //pack = (from p in packageRoot.Elements()
