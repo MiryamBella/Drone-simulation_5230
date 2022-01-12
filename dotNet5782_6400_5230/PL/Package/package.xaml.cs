@@ -139,31 +139,12 @@ namespace PL
             }
         }
         #endregion;
-        #region collected;
+        #region collected/provided;
+        /// the two functation do nothing but we did them as button for the buty.
         private void colected(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                bl.collectPbyQ(p.ID);
-            }
-            catch (BO.BLException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-        #endregion;
-        #region provided;
+        { }
         private void provided(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                bl.supplyPbyQ(p.ID);
-            }
-            catch (BO.BLException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
+        { }
         #endregion;
     }
 }

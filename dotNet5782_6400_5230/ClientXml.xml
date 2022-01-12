@@ -70,4 +70,11 @@
     <Longitude>8</Longitude>
     <Latitude>0</Latitude>
   </Client>
+  <Client>
+    <ID>123456789</ID>
+    <Name>Simon</Name>
+    <PhoneNumber>987654321</PhoneNumber>
+    <Longitude>2.3</Longitude>
+    <Latitude>2.3</Latitude>
+  </Client>
 </Clients>
