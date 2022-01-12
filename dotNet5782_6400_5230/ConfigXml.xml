@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Config>
+  <runNum>1</runNum>
+  <Electric>
+    <available>1</available>
+    <easy>2</easy>
+    <middle_toCare>4</middle_toCare>
+    <hevy>3</hevy>
+    <charghingRate>5</charghingRate>
+  </Electric>
+</Config>

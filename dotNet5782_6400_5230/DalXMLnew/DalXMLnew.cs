@@ -46,7 +46,7 @@ namespace Dal
             else
                 LoadData_config();
 
-            //start();
+            ///startConfig(); IT IS FOR US to reset in the first time.
         }
 
 
@@ -75,28 +75,27 @@ namespace Dal
             switch (root)
             {
                 case xmlRoots.clientR:
-                    clientRoot = new XElement("clients");
+                    clientRoot = new XElement("Clients");
                     clientRoot.Save(clientPath);
                     break;
                 case xmlRoots.baseStationR:
-                    baseStationRoot = new XElement("baseStations");
+                    baseStationRoot = new XElement("BaseStations");
                     baseStationRoot.Save(baseStationPath);
                     break;
                 case xmlRoots.packageR:
-                    packageRoot = new XElement("packages");
+                    packageRoot = new XElement("Packages");
                     packageRoot.Save(packagePath);
                     break;
                 case xmlRoots.quadocopterR:
-                    quadocopterRoot = new XElement("quadocopters");
+                    quadocopterRoot = new XElement("Quadocopters");
                     quadocopterRoot.Save(quadocopterPath);
                     break;
                 case xmlRoots.chargeR:
-                    chargeRoot = new XElement("chargeing");
+                    chargeRoot = new XElement("Chargeing");
                     chargeRoot.Save(chargePath);
                     break;
                 case xmlRoots.configR:
-                    configRoot = new XElement("config");
-                    startConfig();
+                    configRoot = new XElement("Config");
                     configRoot.Save(configPath);
                     break;
                 default:
@@ -982,7 +981,7 @@ namespace Dal
             XElement Electric = new XElement("Electric", Available, easy,middle_toCare, hevy,  charghingRate);
             configRoot.Add(runNum, Electric);
             configRoot.Save(configPath);
-            //start();
+            start();
         }
 
         void start()

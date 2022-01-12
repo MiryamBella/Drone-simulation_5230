@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Quadocopters>
+  <Quadocopter>
+    <ID>100</ID>
+    <Moodle>a</Moodle>
+    <Weight>easy</Weight>
+    <StartCharging>0</StartCharging>
+  </Quadocopter>
+  <Quadocopter>
+    <ID>101</ID>
+    <Moodle>b</Moodle>
+    <Weight>hevy</Weight>
+    <StartCharging>0</StartCharging>
+  </Quadocopter>
+  <Quadocopter>
+    <ID>102</ID>
+    <Moodle>c</Moodle>
+    <Weight>middle</Weight>
+    <StartCharging>0</StartCharging>
+  </Quadocopter>
+  <Quadocopter>
+    <ID>103</ID>
+    <Moodle>d</Moodle>
+    <Weight>hevy</Weight>
+    <StartCharging>0</StartCharging>
+  </Quadocopter>
+  <Quadocopter>
+    <ID>104</ID>
+    <Moodle>e</Moodle>
+    <Weight>hevy</Weight>
+    <StartCharging>0</StartCharging>
+  </Quadocopter>
+</Quadocopters>

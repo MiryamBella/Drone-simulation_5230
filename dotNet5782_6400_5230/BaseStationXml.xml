@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BaseStations>
+  <BaseStation>
+    <ID>100</ID>
+    <Name>Jerusalem</Name>
+    <ChargingPositions>386</ChargingPositions>
+    <FreechargingPositions>386</FreechargingPositions>
+    <Longitude>9</Longitude>
+    <Latitude>9</Latitude>
+    <BaseSix>9 0 0 N, 9 0 0 E</BaseSix>
+  </BaseStation>
+  <BaseStation>
+    <ID>100</ID>
+    <Name>Jerusalem</Name>
+    <ChargingPositions>386</ChargingPositions>
+    <FreechargingPositions>386</FreechargingPositions>
+    <Longitude>9</Longitude>
+    <Latitude>9</Latitude>
+    <BaseSix>9 0 0 N, 9 0 0 E</BaseSix>
+  </BaseStation>
+</BaseStations>

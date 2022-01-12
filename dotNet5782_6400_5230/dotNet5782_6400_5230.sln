@@ -31,6 +31,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXML", "DalXML\DalXML.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXMLnew", "DalXMLnew\DalXMLnew.csproj", "{AAA6BA12-5DD9-4FEF-85B2-7FD01C9F30BD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xmlFiles", "xmlFiles", "{0521DA95-C55C-4384-B6CD-A7E8C45BCA32}"
+	ProjectSection(SolutionItems) = preProject
+		BaseStationXml.xml = BaseStationXml.xml
+		ChargeXml.xml = ChargeXml.xml
+		ClientXml.xml = ClientXml.xml
+		ConfigXml.xml = ConfigXml.xml
+		dal-config.xml = dal-config.xml
+		PackageXml.xml = PackageXml.xml
+		QuadocopterXml.xml = QuadocopterXml.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
