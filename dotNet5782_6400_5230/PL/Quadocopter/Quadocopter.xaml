@@ -44,7 +44,7 @@
                  Height="25" Width="120"/>
         <TextBlock x:Name="showID" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" 
                    Text="TextBlock" TextWrapping="Wrap" 
-                   Height="25" Width="120"  />
+                   Height="25" Width="120" Background="LightBlue"  />
         <TextBlock x:Name="checkID" HorizontalAlignment="Center" 
                    Grid.Row="1" Grid.Column="2" Text="invalid id" TextWrapping="Wrap" 
                    Height="25" Width="120"
@@ -76,7 +76,7 @@
                    Grid.Row="4"  Grid.Column="0" Text="battery:" TextWrapping="Wrap" 
                    VerticalAlignment="Center" Height="15" Width="70"/>
         <TextBlock x:Name="showBattery" HorizontalAlignment="Center" 
-                   Grid.Row="4" Grid.Column="1" 
+                   Grid.Row="4" Grid.Column="1" Background="LightBlue"
                    Text="TextBlock" TextWrapping="Wrap" 
                    Height="25" Width="120"  />
         
@@ -94,7 +94,7 @@
                    Text="latitude:" TextWrapping="Wrap" VerticalAlignment="Center" 
                    Height="25" Width="70" Grid.Row="2" Grid.Column="3"/>
         <TextBlock x:Name="showLatitude" HorizontalAlignment="Center" 
-                  VerticalAlignment="center" Grid.Row="2" Grid.Column="4" 
+                  VerticalAlignment="center" Grid.Row="2" Grid.Column="4" Background="LightBlue"
                   Height="25" Width="120" Text="TextBlock" TextWrapping="Wrap" />
         <TextBlock x:Name="checkLatitude" HorizontalAlignment="Center" 
                    Grid.Row="2" Grid.Column="5" Text="invalid input" 
@@ -106,14 +106,15 @@
                    VerticalAlignment="Center" Height="15" Width="70"/>
         <TextBlock x:Name="showLongitude" HorizontalAlignment="Center" 
                    Grid.Row="3" Grid.Column="4" 
-                   Text="TextBlock" TextWrapping="Wrap" 
+                   Text="TextBlock" TextWrapping="Wrap" Background="LightBlue"
                    Height="25" Width="120"  />
         <TextBlock x:Name="state" HorizontalAlignment="Right" 
                    Text="state:" TextWrapping="Wrap" VerticalAlignment="Center" 
                    Height="25" Width="70" Grid.Row="4" Grid.Column="3"/>
         <TextBlock x:Name="showState" HorizontalAlignment="Center" 
                   VerticalAlignment="center" Grid.Row="4" Grid.Column="4" 
-                  Height="25" Width="120" Text="TextBlock" TextWrapping="Wrap" />
+                  Height="25" Width="120" Text="TextBlock" TextWrapping="Wrap"
+                   Background="LightBlue"/>
         <TextBlock x:Name="showLocation" HorizontalAlignment="Center" 
                   VerticalAlignment="center" Grid.Row="2" Grid.Column="5" 
                   Height="25" Width="120" Text="TextBlock" TextWrapping="Wrap" />

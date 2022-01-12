@@ -22,6 +22,7 @@ namespace PL
         BlApi.IBL bl;
         BO.Package p = new BO.Package();
         bool isPriority = false, isWeight = false;
+        bool isFromClient = false;
         public Package(BlApi.IBL ibl)
         {
             InitializeComponent();
@@ -65,6 +66,18 @@ namespace PL
             
             #endregion;
         }
+        public Package(BlApi.IBL ibl, string id)
+        {
+            InitializeComponent();
+            bl = ibl;
+            p.sender = new BO.clientInPackage();
+            p.sender.ID = int.Parse(id);
+            enterSender.Visibility = Visibility.Hidden;
+            showSender.Text = id;
+            showSender.Visibility = Visibility.Visible;
+            isFromClient = true;
+        }
+
         #region check input and enter into the new p
 
         private void writedSender(object sender, RoutedEventArgs e)
@@ -114,9 +127,11 @@ namespace PL
                     throw new Exception("ERROR! check if all the data are correct.");
                 
                 bl.AddPackage(p.sender.ID, p.receiver.ID, p.weight, p.priority);
-                ListOfPackage l = new ListOfPackage(bl);
-                this.Close();
-                l.Show();
+               
+                    ListOfPackage l = new ListOfPackage(bl);
+                    this.Close();
+                if (!isFromClient)
+                    l.Show();
             }
             catch (Exception ex)
             {

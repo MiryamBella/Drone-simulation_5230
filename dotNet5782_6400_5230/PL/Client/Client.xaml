@@ -42,7 +42,7 @@
                  Height="25" Width="120"/>
         <TextBlock x:Name="showID" TextWrapping="Wrap" 
                  Grid.Row="1" Grid.Column="1"
-                 HorizontalAlignment="Center"
+                 HorizontalAlignment="Center" Background="LightBlue"
                  Height="25" Width="120" Visibility="Hidden"/>
         <TextBlock x:Name="checkID" HorizontalAlignment="Center"  Text="Invalid id"
                    Grid.Row="1" Grid.Column="2" TextWrapping="Wrap" 
@@ -73,7 +73,7 @@
                    Height="25" Width="120" Grid.Row="4" Grid.Column="1"
                    TextChanged="writedLongitude"/>
         <TextBlock x:Name="showLon" HorizontalAlignment="center" 
-                   Text="" TextWrapping="Wrap" VerticalAlignment="Center" 
+                   Text="" TextWrapping="Wrap" VerticalAlignment="Center" Background="LightBlue"
                    Height="25" Width="120" Grid.Row="4" Grid.Column="1" Visibility="Hidden"/>
         <TextBlock x:Name="checkLon" HorizontalAlignment="Center" 
                    Grid.Row="4" Grid.Column="2" Text="Invalid longitude" TextWrapping="Wrap" 
@@ -90,7 +90,7 @@
                  TextChanged ="writedLatitude"/>
         <TextBlock x:Name="showLat" TextWrapping="Wrap" 
                  Grid.Row="5" Grid.Column="1"
-                 HorizontalAlignment="Center"  
+                 HorizontalAlignment="Center"  Background="LightBlue"
                  Height="25" Width="120" Visibility="Hidden"/>
         <TextBlock x:Name="checkLat" HorizontalAlignment="Center" 
                    Grid.Row="5" Grid.Column="2" Text="Invalid latitude" TextWrapping="Wrap" 
@@ -105,6 +105,10 @@
                 HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="6" Grid.Column="2" 
                 VerticalAlignment="Top" Height="34" Width="172" Grid.ColumnSpan="2" 
                 Content="update the client" Visibility="Hidden" />
+        <Button x:Name="addP" Click="addP_click" Background="LightSeaGreen"
+                HorizontalAlignment="Center" Grid.Row="4" Grid.Column="3" 
+                VerticalAlignment="Top" Height="34" Width="172" Grid.ColumnSpan="2" 
+                Content="add new package" Visibility="Visible" />
         <TextBlock x:Name="pTo" HorizontalAlignment="Center" 
                    Grid.Row="1"  Grid.Column="3" Text="package to you:" TextWrapping="Wrap" 
                    VerticalAlignment="Top" Height="15" Width="113" Margin="0,62,0,0" Grid.RowSpan="2"
