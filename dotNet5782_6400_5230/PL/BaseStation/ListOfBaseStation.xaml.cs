@@ -103,7 +103,6 @@ namespace PL
             {
                 BO.BaseStationToList bs = (BO.BaseStationToList)bs_list.SelectedItem;
                 ViewBaseStation bs_w = new ViewBaseStation(bl, bs);
-                //Close();
                 bs_w.ShowDialog();
 
                 //reset the data if the user update.

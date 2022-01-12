@@ -39,6 +39,7 @@ namespace PL
 
             try
             {
+                //look for the drones in that charge un our base station.
                 int ourID = int.Parse(showID.Text);
                 var l = (from BO.QuadocopterToList q in bl.ListOfQ()
                          from BO.Charging c in bl.GetChargings()
@@ -54,7 +55,6 @@ namespace PL
                     }
 
                 }
-                //else MessageBox.Show("There is no quadocopters in charge in this base station.");
             }
             catch (Exception ex)
             {

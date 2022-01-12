@@ -159,9 +159,18 @@ namespace BlApi
                 p_tl.priority = temp.priority;
                 p_tl.receiverName = temp.receiver.name;
                 p_tl.senderName = temp.sender.name;
-                //p_tl.state = temp;     need to fix//*************************************!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!************************************!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*****************************************************
-                p_tl.weight = temp.weight;
 
+                ///find the state of the package.
+                if (temp.time_ComeToColcter != null)
+                    p_tl.state = stateOfP.provided;
+                else if (temp.time_ColctedFromSender != null)
+                    p_tl.state = stateOfP.collected;
+                else if (temp.time_Belong_quadocopter != null)
+                    p_tl.state = stateOfP.associated;
+                else
+                    p_tl.state = stateOfP.Defined;
+
+                p_tl.weight = temp.weight;
                 p_l.Add(p_tl);
             }
 
