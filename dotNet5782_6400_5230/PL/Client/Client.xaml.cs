@@ -122,9 +122,7 @@ namespace PL
                 double lat = double.Parse(enterLon.Text);
                 int phone = int.Parse(enterPhoneNumber.Text);
                 bl.AddClient(id, name, lon, lat, phone);
-                //ListOfClients l = new ListOfClients(bl);
                 this.Close();
-                //l.Show();
             }
             catch (Exception ex)
             {

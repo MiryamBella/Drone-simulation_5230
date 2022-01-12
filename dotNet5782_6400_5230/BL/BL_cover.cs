@@ -98,7 +98,6 @@ namespace BlApi
         }
         public Client cover(DO.Client c)
         {
-            
             Client new_c = new Client();
             new_c.ID = c.ID;
             new_c.name = c.name;
@@ -139,8 +138,8 @@ namespace BlApi
         {
             Package new_p = new Package();
             new_p.ID = p.id;
-            new_p.priority =(Priorities)p.priority;
-            ///new_p.q we find him in line 142. 
+            new_p.priority =(Priorities)(1+p.priority);//because we did that in the BL it start in 1, in Dal it start in 0.
+            ///new_p.q=? we find him next in line 170. 
             new_p.time_Belong_quadocopter = p.time_Belong_quadocopter;
             new_p.time_ColctedFromSender = p.time_ColctedFromSender;
             new_p.time_ComeToColcter = p.time_ComeToColcter;
@@ -213,16 +212,16 @@ namespace BlApi
         }
         public Package cover(PackageToList p)
         {
-                try
-                {
-                    Package newP = new Package();
-                    newP = PackageDisplay(p.ID);
-                    return newP;
-                }
-                catch (Exception ex)
-                {
-                    throw new BLException(ex.Message);
-                }
+            try
+            {
+                Package newP = new Package();
+                newP = PackageDisplay(p.ID);
+                return newP;
+            }
+            catch (Exception ex)
+            {
+                throw new BLException(ex.Message);
+            }
         }
         #endregion
 

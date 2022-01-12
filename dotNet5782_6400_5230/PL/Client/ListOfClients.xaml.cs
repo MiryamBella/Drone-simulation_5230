@@ -51,11 +51,6 @@ namespace PL
 
         }
 
-        public void addQfromWindowQ(BO.ClientToList c)
-        {
-            myCollection.Add(c);
-        }
-
 
         private void MouseDoubleClick_showC(object sender, MouseButtonEventArgs e)
         {

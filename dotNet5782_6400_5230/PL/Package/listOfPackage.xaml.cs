@@ -47,11 +47,6 @@ namespace PL
             p.ShowDialog();
         }
 
-        public void addPfromWindowP(BO.PackageToList p)
-        {
-            myCollection.Add(p);
-        }
-
 
         private void MouseDoubleClick_showP(object sender, MouseButtonEventArgs e)
         {

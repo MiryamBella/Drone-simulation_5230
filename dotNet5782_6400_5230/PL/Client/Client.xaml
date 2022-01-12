@@ -26,6 +26,7 @@
             <ColumnDefinition Width="*"/>
 
         </Grid.ColumnDefinitions>
+        
         <!--The title-->
         <TextBlock Text="CLIENT" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
                  FontSize="22" FontWeight="Bold" TextDecorations="Underline" TextAlignment="Center"

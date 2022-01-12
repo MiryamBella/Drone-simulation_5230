@@ -238,8 +238,8 @@ namespace Dal
             LoadData_p();
             LoadData_config();
 
-            int run = int.Parse(configRoot.Element("runName").Value);
-            configRoot.Element("runName").Value = (run + 1).ToString();
+            int run = int.Parse(configRoot.Element("runNum").Value);
+            configRoot.Element("runNum").Value = (run + 1).ToString();
             configRoot.Save(configPath);
 
             XElement ID = new XElement("ID", run);// the id of the package will be according the run number
@@ -397,11 +397,18 @@ namespace Dal
                 quadocopterRoot.Save(quadocopterPath);
                 baseStationRoot.Save(baseStationPath);
                 //add a item of 'charging'
-                XElement BaseStation = new XElement("baseStationID", bID);
-                XElement quadocopter = new XElement("quadocopterID", qID);
-                XElement Charging = new XElement("charging", BaseStation, quadocopter);
+                XElement charge = (from ch in chargeRoot.Elements()
+                                   where Convert.ToInt32(ch.Element("quadocopterID").Value) == qID
+                                   select ch).FirstOrDefault();
 
-                chargeRoot.Add(Charging);
+                if (charge == null)
+                {
+                    XElement BaseStation = new XElement("baseStationID", bID);
+                    XElement quadocopter = new XElement("quadocopterID", qID);
+                    XElement Charging = new XElement("charging", BaseStation, quadocopter);
+
+                    chargeRoot.Add(Charging);
+                }
                 chargeRoot.Save(chargePath);
             }
             catch (Exception ex)
@@ -420,10 +427,10 @@ namespace Dal
                 LoadData_charge();
                 //find the qudocopter and the base station
                 XElement charge = (from ch in chargeRoot.Elements()
-                                   where Convert.ToInt32(ch.Element("Qudocopter").Value) == qID
+                                   where Convert.ToInt32(ch.Element("quadocopterID").Value) == qID
                                    select ch).FirstOrDefault();
                 XElement b = (from bs in baseStationRoot.Elements()
-                              where bs.Element("ID").Value == charge.Element("BaseStation").Value
+                              where bs.Element("ID").Value == charge.Element("baseStationID").Value
                               select bs).FirstOrDefault();
                 if (b == null)
                     throw new Exception("ID not exist");
@@ -474,7 +481,7 @@ namespace Dal
         /// print datails of quadocopter.
         public Quadocopter QuDisplay(int id)
         {
-            List<Quadocopter> qList = XMLTools.LoadListFromXMLSerializer<Quadocopter>(quadocopterPath);
+            IEnumerable<Quadocopter> qList = ListOfQ();
             Quadocopter q = (from qu in qList
                              where qu.id == id
                              select qu).FirstOrDefault();
@@ -483,7 +490,7 @@ namespace Dal
         /// print datails of client.
         public Client ClientDisplay(int id)
         {
-            List<Client> cList = XMLTools.LoadListFromXMLSerializer<Client>(clientPath);
+            IEnumerable<Client> cList = ListOfClients();
             Client cli = (from c in cList
                           where c.ID == id
                           select c).FirstOrDefault();
@@ -531,6 +538,7 @@ namespace Dal
 
             #region to reset
             //baseStationRoot.RemoveAll();
+            //baseStationRoot = new XElement("BaseStations");
             //baseStationRoot.Save(baseStationPath);
             ////i reset some data.
             //Random r = new Random();
@@ -690,8 +698,8 @@ namespace Dal
                                             ID = Convert.ToInt32(c.Element("ID").Value),
                                             name = c.Element("Name").Value,
                                             phoneNumber = int.Parse(c.Element("PhoneNumber").Value),
-                                            longitude = int.Parse(c.Element("Longitude").Value),
-                                            latitude = int.Parse(c.Element("Latitude").Value)
+                                            longitude = double.Parse(c.Element("Longitude").Value),
+                                            latitude = double.Parse(c.Element("Latitude").Value)
                                         };
             //IEnumerable<Client> cList = XMLTools.LoadListFromXMLSerializer<Client>(clientPath);
             return cList;
@@ -889,8 +897,6 @@ namespace Dal
 
             clientRoot.Save(clientPath);
             packageRoot.Save(packagePath);
-            //XMLTools.SaveListToXMLSerializer<Package>(pList, packagePath);
-            //XMLTools.SaveListToXMLSerializer<Client>(cList, clientPath);
 
             return new Location() { latitude = dcli.latitude, longitude = dcli.longitude };
         }
@@ -956,8 +962,8 @@ namespace Dal
         /// </summary>
         public Client searchAnotherClient(int pID, int clientID)
         {
-            IEnumerable<Package> pList = XMLTools.LoadListFromXMLSerializer<Package>(packagePath);
-            IEnumerable<Client> cList = XMLTools.LoadListFromXMLSerializer<Client>(clientPath);
+            IEnumerable<Package> pList = ListOfPackages();
+            IEnumerable<Client> cList = ListOfClients();
 
             foreach (Package p in pList)
                 if (p.id == pID)
