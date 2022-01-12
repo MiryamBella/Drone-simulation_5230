@@ -47,7 +47,7 @@
                   Height="25" Width="120" TextChanged="writedSender"/>
         <TextBlock x:Name="showSender" HorizontalAlignment="Center" 
                    Grid.Row="2" Grid.Column="1" Text="" TextWrapping="Wrap" 
-                   Height="25" Width="120"
+                   Height="25" Width="120" Background="LightBlue"
                    Visibility="Hidden"/>
         <TextBlock x:Name="checkSender" HorizontalAlignment="Center" 
                    Grid.Row="2" Grid.Column="2" Text="invalid ID" TextWrapping="Wrap" 
@@ -61,7 +61,7 @@
                   TextChanged ="writedReceiver" />
         <TextBlock x:Name="showReceiver" HorizontalAlignment="Center" 
                    Grid.Row="3" Grid.Column="1" Text="" TextWrapping="Wrap" 
-                   Height="25" Width="120"
+                   Height="25" Width="120" Background="LightBlue"
                    Visibility="Hidden"/>
         <TextBlock x:Name="checkReceiver" HorizontalAlignment="Center" 
                    Grid.Row="3" Grid.Column="2" Text="invalid ID" TextWrapping="Wrap" 

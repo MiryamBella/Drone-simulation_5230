@@ -39,6 +39,8 @@ namespace PL
             enterID.Visibility = Visibility.Hidden;
             enterLat.Visibility = Visibility.Hidden;
             enterLon.Visibility = Visibility.Hidden;
+           
+            addP.Visibility = Visibility.Visible;
 
             showID.Visibility = Visibility.Visible;
             showID.Text = c.ID.ToString();
@@ -184,5 +186,12 @@ namespace PL
             }
         }
         #endregion;
+
+        private void addP_click(object sender, RoutedEventArgs e)
+        {
+            string id = showID.Text;
+            Package p = new Package(bl, id);
+            p.Show();
+        }
     }
 }
