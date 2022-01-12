@@ -558,8 +558,8 @@ namespace Dal
                                              name = bs.Element("Name").Value,
                                              chargingPositions = int.Parse(bs.Element("ChargingPositions").Value),
                                              freechargingPositions = Convert.ToInt32(bs.Element("FreechargingPositions").Value),
-                                             longitude = int.Parse(bs.Element("Longitude").Value),
-                                             latitude = int.Parse(bs.Element("Latitude").Value),
+                                             longitude = double.Parse(bs.Element("Longitude").Value),
+                                             latitude = double.Parse(bs.Element("Latitude").Value),
                                              toBaseSix = new BaseSixtin(),
                                              decSix =  GetBase(double.Parse(bs.Element("Latitude").Value), double.Parse(bs.Element("Longitude").Value))
                                          };
