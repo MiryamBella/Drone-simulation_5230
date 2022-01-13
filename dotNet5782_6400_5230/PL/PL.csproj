@@ -13,6 +13,7 @@
     <None Remove="BaseStation\drone-icon-isolated-whiteiconQuadocopter.jpg" />
     <None Remove="Client\client.jpg" />
     <None Remove="manage2r.png" />
+    <None Remove="Package\1200px-Package.svg.png" />
     <None Remove="personAnnone.png" />
     <None Remove="Quadcopter_camera_drone_in_flight.jpg" />
     <None Remove="Quadocopter\1200px-Package.svg.png" />
@@ -30,6 +31,7 @@
     <Resource Include="BaseStation\drone-icon-isolated-whiteiconQuadocopter.jpg" />
     <Resource Include="Client\client.jpg" />
     <Resource Include="manage2r.png" />
+    <Resource Include="Package\1200px-Package.svg.png" />
     <Resource Include="personAnnone.png" />
     <Resource Include="Quadcopter_camera_drone_in_flight.jpg" />
     <Resource Include="Quadocopter\1200px-Package.svg.png" />

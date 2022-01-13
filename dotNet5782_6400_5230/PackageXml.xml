@@ -1,20 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Packages>
   <Package>
-    <ID>0</ID>
-    <ID_Sender>100000000</ID_Sender>
-    <ID_Reciver>200000000</ID_Reciver>
-    <IDQ_Quadocopter>100</IDQ_Quadocopter>
-    <Weight>easy</Weight>
-    <Priority>reggular</Priority>
-    <TimeOfPackage>
-      <Time_Create>2022-01-13T00:21:40.5874221+02:00</Time_Create>
-      <Time_Belong_quadocopter>13/01/2022 00:41:26</Time_Belong_quadocopter>
-      <Time_ColctedFromSender>13/01/2022 00:41:29</Time_ColctedFromSender>
-      <Time_ComeToColcter>13/01/2022 00:41:30</Time_ComeToColcter>
-    </TimeOfPackage>
-  </Package>
-  <Package>
     <ID>1</ID>
     <ID_Sender>200000000</ID_Sender>
     <ID_Reciver>100000000</ID_Reciver>

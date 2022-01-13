@@ -37,7 +37,7 @@
                  Grid.Row="1" Grid.Column="1"
                  HorizontalAlignment="Center"
                  Height="25" Width="120" Visibility="Hidden"/>
-        
+
 
         <TextBlock x:Name="sender" HorizontalAlignment="Center" 
                    Text="ID of sender:" TextWrapping="Wrap" VerticalAlignment="Center" 
@@ -119,15 +119,15 @@
             </TextBlock.OpacityMask>
         </TextBlock>
         <Button x:Name="collect" Click="colected" Background="DeepSkyBlue"
-                HorizontalAlignment="Left"  Grid.Row="3" Grid.Column="3" 
+                HorizontalAlignment="Left"  Grid.Row="3" Grid.Column="2" 
                 VerticalAlignment="Center" Height="34" Width="168" Grid.ColumnSpan="2" 
-                Content="the package was colected" Margin="46,0,0,0" 
-                Visibility="Hidden"/>
+                Content="the package was colected" Margin="46,0,0,0" Visibility="Hidden" />
         <Button x:Name="provide" Click="provided" Background="DeepSkyBlue"
-                HorizontalAlignment="Left" Grid.Row="4" Grid.Column="3" 
+                HorizontalAlignment="Left" Grid.Row="4" Grid.Column="2" 
                 VerticalAlignment="Top" Height="34" Width="168" Grid.ColumnSpan="2" 
-                Content="the package was provided" Margin="46,13,0,0"
-                Visibility="Hidden"/>
+                Content="the package was provided" Margin="46,13,0,0" Visibility="Hidden" />
+
+        <Image Source="/Package/1200px-Package.svg.png" Grid.ColumnSpan="3" Grid.Column="3" Margin="39,47,-100,-77" Grid.RowSpan="5" Grid.Row="2" />
 
     </Grid>
 </Window>
