@@ -4,11 +4,11 @@
     <ID>100</ID>
     <Moodle>a</Moodle>
     <Weight>easy</Weight>
-    <StartCharging>13/01/2022 00:40:39</StartCharging>
+    <StartCharging>13/01/2022 13:11:21</StartCharging>
   </Quadocopter>
   <Quadocopter>
     <ID>101</ID>
-    <Moodle>b</Moodle>
+    <Moodle>mod</Moodle>
     <Weight>hevy</Weight>
     <StartCharging>13/01/2022 12:39:02</StartCharging>
   </Quadocopter>
@@ -29,5 +29,11 @@
     <Moodle>e</Moodle>
     <Weight>hevy</Weight>
     <StartCharging>0</StartCharging>
+  </Quadocopter>
+  <Quadocopter>
+    <ID>108</ID>
+    <Moodle>zoar</Moodle>
+    <Weight>easy</Weight>
+    <StartCharging>13/01/2022 13:12:00</StartCharging>
   </Quadocopter>
 </Quadocopters>

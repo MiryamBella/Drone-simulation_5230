@@ -13,9 +13,18 @@
     <ID>101</ID>
     <Name>Tel Aviv</Name>
     <ChargingPositions>20</ChargingPositions>
-    <FreechargingPositions>20</FreechargingPositions>
+    <FreechargingPositions>19</FreechargingPositions>
     <Longitude>5.3</Longitude>
     <Latitude>5.3</Latitude>
     <BaseSix>5 18 0 N, 5 18 0 E</BaseSix>
+  </BaseStation>
+  <BaseStation>
+    <ID>103</ID>
+    <Name>Elat</Name>
+    <ChargingPositions>1</ChargingPositions>
+    <FreechargingPositions>1</FreechargingPositions>
+    <Longitude>5.6</Longitude>
+    <Latitude>5.6</Latitude>
+    <BaseSix>5 36 0 N, 5 36 0 E</BaseSix>
   </BaseStation>
 </BaseStations>
