@@ -387,6 +387,7 @@ namespace Dal
                     throw new Exception("ID not exist");
                 if (Convert.ToInt32(b.Element("FreechargingPositions").Value) <= 0)
                     throw new Exception("There is no place to charge in this base station.");
+
                 //change the startCharging of the q to be now, and free positions of charging of bs to be -1
                 q.Element("StartCharging").Value = DateTime.Now.ToString();
                 int free = Convert.ToInt32(b.Element("FreechargingPositions").Value);
@@ -769,8 +770,8 @@ namespace Dal
             double[] arry = new double[5];
             arry[0] = double.Parse(configRoot.Element("Electric").Element("available").Value);
             arry[1] = double.Parse(configRoot.Element("Electric").Element("easy").Value);
-            arry[2] = double.Parse(configRoot.Element("Electric").Element("hevy").Value);
-            arry[3] = double.Parse(configRoot.Element("Electric").Element("middle_toCare").Value);
+            arry[2] = double.Parse(configRoot.Element("Electric").Element("middle_toCare").Value);
+            arry[3] = double.Parse(configRoot.Element("Electric").Element("hevy").Value);
             arry[4] = double.Parse(configRoot.Element("Electric").Element("charghingRate").Value);
             return arry;
         }
@@ -791,9 +792,7 @@ namespace Dal
                     switch (sitoationNOT)
                     {
                         case p_thet.Create:
-                            if (p.time_Create == null)
                                 return p;
-                            break;
                         case p_thet.Belong:
                             if (p.time_Belong_quadocopter == null)
                                 return p;
@@ -926,14 +925,17 @@ namespace Dal
             List<Package> newPackages = new List<Package>();
             foreach (Package p in packages)
             {
-                Location senderLocation = searchLocationOfclient(p.sender);
-                Location receiverL = searchLocationOfclient(p.receiver);
-                BaseStation stationL = searchCloseStation(receiverL);
-                Location stationLocation = new Location() { longitude = stationL.longitude, latitude = stationL.latitude };
-                double distance = GetDistance(loc, senderLocation) + GetDistance(senderLocation, receiverL) + GetDistance(receiverL, stationLocation);
-                int minBattery = (int)(distance * askForElectric()[(int)p.weight]);
-                if (battery >= minBattery)
-                    newPackages.Add(p);
+                if (p.time_Belong_quadocopter == null)
+                {
+                    Location senderLocation = searchLocationOfclient(p.sender);
+                    Location receiverL = searchLocationOfclient(p.receiver);
+                    BaseStation stationL = searchCloseStation(receiverL);
+                    Location stationLocation = new Location() { longitude = stationL.longitude, latitude = stationL.latitude };
+                    double distance = GetDistance(loc, senderLocation) + GetDistance(senderLocation, receiverL) + GetDistance(receiverL, stationLocation);
+                    int minBattery = (int)(distance * askForElectric()[(int)p.weight]);
+                    if (battery >= minBattery)
+                        newPackages.Add(p);
+                }
             }
             return newPackages;
         }
@@ -981,7 +983,7 @@ namespace Dal
             XElement Electric = new XElement("Electric", Available, easy,middle_toCare, hevy,  charghingRate);
             configRoot.Add(runNum, Electric);
             configRoot.Save(configPath);
-            start();
+            //start();
         }
 
         void start()

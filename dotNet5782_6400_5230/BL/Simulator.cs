@@ -22,7 +22,7 @@ namespace BlApi
                     BO.Package package = new Package();
                     package =bl.assignPtoQ(id);
                     int time = bl.getTimeOfFlying(id, speedDrone, BO.TargetQ.sender, -1);
-                    int battery = bl.getBatteryToFly(id, BO.TargetQ.sender, -1);
+                    int battery = bl.getBatteryToFly(id, BO.TargetQ.sender,package.ID, -1);
                     if (time == 0)
                     {
                         battery *= -1;
@@ -42,7 +42,7 @@ namespace BlApi
                     }
                     bl.collectPbyQ(id);
                     time = bl.getTimeOfFlying(id, speedDrone, BO.TargetQ.receiver, -1);
-                    battery = bl.getBatteryToFly(id, BO.TargetQ.receiver, -1);
+                    battery = bl.getBatteryToFly(id, BO.TargetQ.receiver,package.ID, -1);
                     if (time == 0)
                     {
                         battery *= -1;

@@ -24,27 +24,6 @@ namespace DalApi
 
         }
 
-
-
-
-
-        //static DalConfig()
-        //{
-        //    XElement dalConfig = XElement.Load(@"config.xml");
-        //    DalName = dalConfig.Element("dal").Value;
-        //    DalPackages = (from pkg in dalConfig.Element("dal-packages").Elements()
-        //                   select pkg).ToDictionary(p => "" + p.Name, p => p.Value);
-        //}
-
-        ///// <summary>
-        ///// Represents errors during DalApi initialization
-        ///// </summary>
-        //[Serializable]
-        //public class DalConfigException : Exception
-        //{
-        //    public DalConfigException(string message) : base(message) { }
-        //    public DalConfigException(string message, Exception inner) : base(message, inner) { }
-        //}
     }
 
 }

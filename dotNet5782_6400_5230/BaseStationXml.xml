@@ -10,12 +10,12 @@
     <BaseSix>9 0 0 N, 9 0 0 E</BaseSix>
   </BaseStation>
   <BaseStation>
-    <ID>100</ID>
-    <Name>Jerusalem</Name>
-    <ChargingPositions>386</ChargingPositions>
-    <FreechargingPositions>386</FreechargingPositions>
-    <Longitude>9</Longitude>
-    <Latitude>9</Latitude>
-    <BaseSix>9 0 0 N, 9 0 0 E</BaseSix>
+    <ID>101</ID>
+    <Name>Tel Aviv</Name>
+    <ChargingPositions>20</ChargingPositions>
+    <FreechargingPositions>20</FreechargingPositions>
+    <Longitude>5.3</Longitude>
+    <Latitude>5.3</Latitude>
+    <BaseSix>5 18 0 N, 5 18 0 E</BaseSix>
   </BaseStation>
 </BaseStations>

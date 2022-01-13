@@ -309,7 +309,7 @@ namespace BlApi
         /// <param name="id">The ID of the quadocopter.</param>
         /// <param name="id_bs">If the target it is base station, the functation get olso the ID of the base station, ele this id it's -1.</param>
         /// <returns>The battery the drone need to to have to come to his target.</returns>
-        public int getBatteryToFly(int id, TargetQ target, int id_bs=-1)
+        public int getBatteryToFly(int id, TargetQ target,int pID, int id_bs=-1)
         {
             try
             {
@@ -337,24 +337,32 @@ namespace BlApi
                 }
                 //there is difrent typs of electric, acording the drone, so i chek what index to send to the func to get the true elctric.
                 int index;
-                if (q.mode == statusOfQ.available)
-                    index = 0;
+                if (target == TargetQ.baseStation)
+                {
+                    if (q.mode == statusOfQ.available)
+                        index = 0;
+                    else
+                    {
+                        switch (q.weight)
+                        {
+                            case WeighCategories.easy:
+                                index = 1;
+                                break;
+                            case WeighCategories.middle:
+                                index = 2;
+                                break;
+                            case WeighCategories.hevy:
+                                index = 3;
+                                break;
+                            default:
+                                throw new BLException("ERROR: There is problem in the wight of the drone.");
+                        }
+                    }
+                }
                 else
                 {
-                    switch (q.weight)
-                    {
-                        case WeighCategories.easy:
-                            index = 1;
-                            break;
-                        case WeighCategories.middle:
-                            index = 2;
-                            break;
-                        case WeighCategories.hevy:
-                            index = 3;
-                            break;
-                        default:
-                            throw new BLException("ERROR: There is problem in the wight of the drone.");
-                    }
+                    Package p = PackageDisplay(pID);
+                    index = (int)p.weight;
                 }
 
                 battery = (int)(distance * dal.askForElectric()[index]);

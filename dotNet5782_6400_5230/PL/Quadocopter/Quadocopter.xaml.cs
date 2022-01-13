@@ -267,13 +267,8 @@ namespace PL
         private void simulator_begin(object sender, RoutedEventArgs e)
         {
             SimulatorQuadocopter sq = new SimulatorQuadocopter(bl, localQ.ID);
+            this.Close();
             sq.Show();
-
-            localQ = bl.QuDisplay(localQ.ID);
-            showBattery.Text = localQ.battery.ToString();
-            showLatitude.Text = localQ.thisLocation.Latitude.ToString();
-            showLongitude.Text = localQ.thisLocation.Longitude.ToString();
-            showLocation.Text = localQ.thisLocation.Location60;
         }
         #endregion
     }

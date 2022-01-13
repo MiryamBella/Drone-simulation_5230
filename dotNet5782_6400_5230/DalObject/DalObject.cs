@@ -265,6 +265,7 @@ namespace Dal
                     DataSource.packagh[i] = p;
                     break;
                 }
+
         }
         #endregion;
 
@@ -614,14 +615,17 @@ namespace Dal
             List<Package> newPackages = new List<Package>();
             foreach (Package p in packages)
             {
-                Location senderLocation = searchLocationOfclient(p.sender);
-                Location receiverL = searchLocationOfclient(p.receiver);
-                BaseStation stationL = searchCloseStation(receiverL);
-                Location stationLocation = new Location() { longitude = stationL.longitude, latitude = stationL.latitude };
-                double distance = GetDistance(loc, senderLocation) + GetDistance(senderLocation, receiverL) + GetDistance(receiverL, stationLocation);
-                int minBattery = (int)(distance * askForElectric()[(int)p.weight]);
-                if (battery >= minBattery)
-                    newPackages.Add(p);
+                if (p.time_Belong_quadocopter == null)
+                {
+                    Location senderLocation = searchLocationOfclient(p.sender);
+                    Location receiverL = searchLocationOfclient(p.receiver);
+                    BaseStation stationL = searchCloseStation(receiverL);
+                    Location stationLocation = new Location() { longitude = stationL.longitude, latitude = stationL.latitude };
+                    double distance = GetDistance(loc, senderLocation) + GetDistance(senderLocation, receiverL) + GetDistance(receiverL, stationLocation);
+                    int minBattery = (int)(distance * askForElectric()[(int)p.weight]);
+                    if (battery >= minBattery)
+                        newPackages.Add(p);
+                }
             }
             return newPackages;
         }

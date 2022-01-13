@@ -206,20 +206,7 @@ namespace BlApi
                 if (packages.Count() == 0) throw new BLException("battery");//if there is no battery
 
                 packages = packages.OrderBy(s => (int)s.priority).ThenBy(s => s.weight);
-                var p_list = packages.ToList();
-                p_list.Reverse();
-                bool flag = false;
-                foreach(var p in p_list)
-                {
-                    if(p.time_Belong_quadocopter==null)
-                    {
-                        dal.AssignPtoQ(p, q.ID);
-                        flag = true;
-                        break;
-                    }
-                }
-                if (!flag)
-                    throw new BLException("There is no package to assign.");
+                dal.AssignPtoQ(packages.Last(), q.ID);
                 foreach (QuadocopterToList quadocopter in q_list)
                 {
                     if (quadocopter.ID == qID)

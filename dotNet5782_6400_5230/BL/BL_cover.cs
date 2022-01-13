@@ -352,13 +352,13 @@ namespace BlApi
             q.mode = ql.mode;
             q.moodle = ql.moodle;
             q.thisLocation = ql.thisLocation;
-            //q.thisPackageneed to find
+            q.thisPackage = null;//if not we will change that in the loop.
             q.weight = ql.weight;
             q.battery = ql.battery;
-            
+
             foreach (DO.Package p in dal.ListOfPackages())
             {
-                if(p.idQuadocopter==q.ID)
+                if(p.idQuadocopter==q.ID && p.time_ComeToColcter==null)
                 {
                     q.thisPackage.ID = p.id;
                     if (q.mode == statusOfQ.delivery)

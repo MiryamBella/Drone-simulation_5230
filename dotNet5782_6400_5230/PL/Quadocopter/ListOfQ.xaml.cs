@@ -70,6 +70,11 @@ namespace PL
                 BO.QuadocopterToList ql = (BO.QuadocopterToList)q_list.SelectedItem;
                 Quadocopter qw = new Quadocopter(bl, ql);
                 qw.ShowDialog();
+
+                myCollection.Clear();
+                foreach (BO.QuadocopterToList q in bl.ListOfQ())
+                    myCollection.Add(q);
+                q_list.ItemsSource = myCollection;
             }
             catch (BO.BLException ex)
             {

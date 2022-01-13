@@ -64,13 +64,6 @@
     <Latitude>5</Latitude>
   </Client>
   <Client>
-    <ID>1000000000</ID>
-    <Name>Moshe</Name>
-    <PhoneNumber>750580802</PhoneNumber>
-    <Longitude>8</Longitude>
-    <Latitude>0</Latitude>
-  </Client>
-  <Client>
     <ID>123456789</ID>
     <Name>Simon</Name>
     <PhoneNumber>987654321</PhoneNumber>

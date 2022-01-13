@@ -123,7 +123,7 @@ namespace Dal
 
             /*Packagh*/
             //loop for reset all 10 packaghs.
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 9; i++)
             {
                 Package p = new Package();
                 p.id = Config.runNum;

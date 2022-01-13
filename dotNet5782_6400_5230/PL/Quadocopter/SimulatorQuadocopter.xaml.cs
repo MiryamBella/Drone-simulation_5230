@@ -135,7 +135,9 @@ namespace PL
             stopSimulator = false;
             stop.Visibility = Visibility.Hidden;
             start.Visibility = Visibility.Visible;
-            //this.Close();
+            Quadocopter q = new Quadocopter(bl, bl.cover(localQ));
+            this.Close();
+            q.Show();
         }
 
         private void stop_Click(object sender, RoutedEventArgs e)

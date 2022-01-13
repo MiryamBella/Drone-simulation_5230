@@ -26,7 +26,7 @@ namespace BlApi
         public void collectPbyQ(int qID);//the q take the p from the sender.
         public void supplyPbyQ(int qID);//the q come to the client and give ho the p.
         public int getTimeOfFlying(int id, int speed, BO.TargetQ target, int id_bs=-1);
-        public int getBatteryToFly(int id, BO.TargetQ target, int id_bs=-1);
+        public int getBatteryToFly(int id, BO.TargetQ target,int pID, int id_bs=-1);
         #endregion
 
         /*print functations*/
